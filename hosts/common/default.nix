@@ -6,8 +6,14 @@
     ./users.nix
   ];
 
+  # Enable zsh since it's used as the default shell
+  programs.zsh.enable = true;
+
   # Basic system configuration shared across all hosts
-  boot.cleanTmpDir = true;
+  boot = {
+    tmp.cleanOnBoot = true;
+    readOnlyNixStore = true;
+  };
   
   # System-wide packages
   environment.systemPackages = with pkgs; [
@@ -28,7 +34,7 @@
   security = {
     sudo.enable = true;
     # Enable PAM
-    pam.enableSSHAgentAuth = true;
+    pam.sshAgentAuth.enable = true;
   };
 
   # System-wide SSH configuration

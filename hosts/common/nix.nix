@@ -30,11 +30,7 @@
       options = "--delete-older-than 30d";
     };
 
-    # Prevent mutations of /nix/store
-    readOnlyStore = true;
-
-    # Auto repair store paths
-    autoOptimiseStore = true;
+    # Auto repair store paths (moved to settings)
 
     # Enable nixops state linking
     extraOptions = ''
@@ -43,7 +39,12 @@
     '';
 
     # Registry
-    registry.nixpkgs.flake = pkgs.path;
+    registry.nixpkgs.to = {
+      type = "github";
+      owner = "nixos";
+      repo = "nixpkgs";
+      ref = "nixos-unstable";
+    };
   };
 
   # Allow proprietary software

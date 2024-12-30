@@ -18,6 +18,13 @@
       settings = {
         PasswordAuthentication = false;
         PermitRootLogin = "no";
+        # Stricter SSH configuration
+        TCPKeepAlive = "yes";
+        MaxAuthTries = 3;
+        MaxSessions = 2;
+        AllowAgentForwarding = "no";
+        AllowStreamLocalForwarding = "no";
+        AllowTcpForwarding = "no";
       };
     };
   };
@@ -44,16 +51,6 @@
     audit.enable = true;
     auditd.enable = true;
     
-    # Stricter SSH configuration
-    sshd = {
-      allowTcpForwarding = false;
-      extraConfig = ''
-        MaxAuthTries 3
-        MaxSessions 2
-        AllowAgentForwarding no
-        AllowStreamLocalForwarding no
-      '';
-    };
   };
 
   # Networking
@@ -65,9 +62,11 @@
     };
   };
 
-  # Disable sound
-  sound.enable = false;
+  # Disable audio
   hardware.pulseaudio.enable = false;
+
+  # Enable zsh
+  programs.zsh.enable = true;
 
   # Disable bluetooth
   hardware.bluetooth.enable = false;
@@ -83,12 +82,12 @@
     ];
     
     # Clean /tmp on boot
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
   };
 
   # Disable unnecessary hardware services
-  services.udisks2.enable = false;
-  services.upower.enable = false;
-  services.acpid.enable = false;
-  services.thermald.enable = false;
+  services.udisks2.enable = lib.mkForce false;
+  services.upower.enable = lib.mkForce false;
+  services.acpid.enable = lib.mkForce false;
+  services.thermald.enable = lib.mkForce false;
 }

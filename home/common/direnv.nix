@@ -5,8 +5,13 @@
     enable = true;
     nix-direnv.enable = true;
     
-    # Enable logging
+    # Common functions and settings
     stdlib = ''
+      # Configure direnv settings
+      : ''${DIRENV_LOG_FORMAT:=""}
+      : ''${DIRENV_WARN_TIMEOUT:="5s"}
+      
+      # Enable logging and layout directory management
       : ''${XDG_CACHE_HOME:=$HOME/.cache}
       declare -A direnv_layout_dirs
       direnv_layout_dir() {
@@ -15,19 +20,7 @@
           echo -n "$PWD" | shasum | cut -d ' ' -f 1
         )}"
       }
-    '';
 
-    config = {
-      # Improve shell startup time
-      global = {
-        load_dotenv = true;
-        strict_env = true;
-        warn_timeout = "5s";
-      };
-    };
-
-    # Common .envrc templates
-    stdlib = ''
       # Load a .env file if it exists
       dotenv_if_exists() {
         local path="$1"

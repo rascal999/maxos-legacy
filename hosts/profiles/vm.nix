@@ -1,21 +1,19 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ../common/default.nix
-  ];
+  imports = [ ];
 
   # VM-specific configuration
   virtualisation = {
     # Optimize for running as a VM guest
     vmware.guest.enable = lib.mkDefault false;
     virtualbox.guest.enable = lib.mkDefault false;
-    qemu.guest.enable = lib.mkDefault true;
+    qemu.guestAgent.enable = lib.mkDefault true;
   };
 
   # Basic display configuration for VMs
   services.xserver = {
-    enable = true;
+    enable = lib.mkForce true;
     
     # Use a lightweight desktop environment
     desktopManager = {
@@ -23,10 +21,7 @@
       xfce.enable = true;
     };
     
-    displayManager = {
-      lightdm.enable = true;
-      defaultSession = "xfce";
-    };
+    displayManager.lightdm.enable = true;
   };
 
   # VM-optimized packages
@@ -45,6 +40,9 @@
     firefox
   ];
 
+  # Set default desktop session
+  services.displayManager.defaultSession = "xfce";
+
   # VM-specific services
   services = {
     # Enable SPICE agent for better integration
@@ -54,37 +52,14 @@
     spice-webdavd.enable = true;
     
     # Minimal printing support
-    printing.enable = false;
+    printing.enable = lib.mkDefault false;
     
     # Disable power management
     acpid.enable = false;
     thermald.enable = false;
   };
 
-  # Networking optimizations for VMs
-  networking = {
-    firewall = {
-      enable = true;
-      # Allow SPICE ports if needed
-      allowedTCPPorts = [ 5900 ];
-    };
-    
-    # Use simpler networking for VMs
-    useDHCP = true;
-    useNetworkd = false;
-  };
-
   # Hardware configuration
-  hardware = {
-    # Disable unnecessary hardware support
-    bluetooth.enable = false;
-    pulseaudio.enable = false;
-    
-    # Enable basic audio
-    sound.enable = true;
-  };
-
-  # Boot configuration
   boot = {
     # VM-specific kernel parameters
     kernelParams = [
@@ -101,22 +76,29 @@
     };
     
     # Clean /tmp on boot
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
   };
 
-  # System optimization
-  nix = {
-    # Reduce system closure size
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
-    };
+  # Basic filesystem setup for VM
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nixos";
+    fsType = "ext4";
   };
 
-  # Reduce swapping
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 10;
-    "vm.vfs_cache_pressure" = 50;
+  # No swap for test VM
+  swapDevices = [ ];
+
+  # VM-specific settings
+  networking.useDHCP = lib.mkDefault true;
+
+  # Audio configuration
+  hardware.pulseaudio.enable = false;  # Using pipewire instead
+  services.pipewire = {
+    enable = lib.mkForce true;
+    alsa.enable = lib.mkForce true;
+    pulse.enable = lib.mkForce true;
   };
+
+  # Basic hardware settings
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

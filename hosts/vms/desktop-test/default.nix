@@ -2,22 +2,21 @@
 
 {
   imports = [
-    ../../profiles/vm.nix             # VM-specific optimizations
+    ../../profiles/vm.nix             # VM-specific optimizations and hardware config
     ../../profiles/desktop.nix        # Desktop profile to test
-    ../../profiles/vm-hardware.nix    # Shared VM hardware config
   ];
 
   # VM-specific configuration
   networking = {
-    hostName = "desktop-test-vm";
-    useDHCP = true;  # Simplified networking for VM
+    hostName = "desktop-test";  # Remove -vm suffix since qemu-vm.nix will add it
+    useDHCP = lib.mkForce true;  # Simplified networking for VM
   };
 
   # Override some desktop profile settings for VM
   services = {
     # Disable power management in VM
-    thermald.enable = false;
-    tlp.enable = false;
+    thermald.enable = lib.mkForce false;
+    tlp.enable = lib.mkForce false;
     
     # Enable SPICE agent for better integration
     spice-vdagentd.enable = true;
@@ -53,6 +52,9 @@
       peek           # Screen recorder
     ];
   };
+
+  # Set initial password for testing
+  users.users.user.initialPassword = "nixos";
 
   # System state version
   system.stateVersion = "23.11";

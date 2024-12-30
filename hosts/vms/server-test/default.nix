@@ -2,15 +2,14 @@
 
 {
   imports = [
-    ../../profiles/vm.nix             # VM-specific optimizations
+    ../../profiles/vm.nix             # VM-specific optimizations and hardware config
     ../../profiles/server.nix         # Server profile to test
-    ../../profiles/vm-hardware.nix    # Shared VM hardware config
   ];
 
   # VM-specific configuration
   networking = {
-    hostName = "server-test-vm";
-    useDHCP = true;  # Simplified networking for VM
+    hostName = "server-test";  # Remove -vm suffix since qemu-vm.nix will add it
+    useDHCP = lib.mkForce true;  # Simplified networking for VM
   };
 
   # Test services
@@ -29,7 +28,7 @@
   # Additional packages for testing
   environment.systemPackages = with pkgs; [
     # Testing tools
-    apache-bench
+    apacheHttpd # Provides ab (apache bench)
     siege
     wrk
   ];

@@ -80,8 +80,6 @@
       core = {
         # Use persistent git credentials
         askPass = "";
-        # Use custom pager
-        pager = "delta";
         # Ignore file permission changes
         fileMode = false;
         # Enable parallel index preload for operations like git diff

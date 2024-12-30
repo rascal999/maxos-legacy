@@ -38,7 +38,7 @@
           inherit system;
           modules = [
             # VM base configuration
-            ({ modulesPath, ... }: {
+            ({ modulesPath, config, ... }: {
               imports = [
                 (modulesPath + "/virtualisation/qemu-vm.nix")
               ];
@@ -47,6 +47,8 @@
                 memorySize = 4096;
                 diskSize = 8192;
               };
+              # Set VM-specific options
+              virtualisation.vmVariant.virtualisation.graphics = false;
             })
           ] ++ modules;
           specialArgs = { inherit inputs; };

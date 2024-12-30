@@ -20,7 +20,6 @@
     yq
     
     # Development
-    neovim
     tmux
     fzf
     
@@ -37,7 +36,7 @@
     
     # Misc
     bat # Better cat
-    exa # Better ls
+    eza # Better ls
     du-dust # Better du
     duf # Better df
   ];
