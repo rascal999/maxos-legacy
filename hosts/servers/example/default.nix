@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../profiles/server.nix           # Common server configuration
+    ../../profiles/server.nix        # Common server configuration
     ./hardware-configuration.nix      # Machine-specific hardware config
   ];
 

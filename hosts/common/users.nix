@@ -7,22 +7,37 @@
   # Default shell for all users
   users.defaultUserShell = pkgs.zsh;
 
-  users.users.user = {
-    isNormalUser = true;
-    extraGroups = [ 
-      "wheel"    # Enable sudo
-      "networkmanager"
-      "docker"
-      "audio"
-      "video"
-      "input"
-    ];
-    # Password will be set via agenix
-    hashedPassword = null;
-    
-    # Enable home-manager for this user
-    home = "/home/user";
-    createHome = true;
+  users.users = {
+    # Root user configuration
+    root = {
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICxYneUbKLM8Bw/+WIqXplOtOoOmnGmWh9lg/7wliAUn user@rig"
+      ];
+    };
+
+    # Normal user configuration
+    user = {
+      isNormalUser = true;
+      extraGroups = [ 
+        "wheel"    # Enable sudo
+        "networkmanager"
+        "docker"
+        "audio"
+        "video"
+        "input"
+      ];
+      # Password will be set via agenix
+      hashedPassword = null;
+      
+      # SSH key for remote access
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICxYneUbKLM8Bw/+WIqXplOtOoOmnGmWh9lg/7wliAUn user@rig"
+      ];
+      
+      # Enable home-manager for this user
+      home = "/home/user";
+      createHome = true;
+    };
   };
 
   # Home Manager configuration

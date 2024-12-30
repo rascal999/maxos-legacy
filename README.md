@@ -138,10 +138,15 @@ mkdir -p hosts/servers/new-server
 And import the server profile:
 ```nix
 imports = [
-  ../../profiles/server.nix
+  ../../profiles/server.nix        # Note: Path relative to hosts/servers/new-server/
   ./hardware-configuration.nix
 ];
 ```
+
+Note: When importing profiles, ensure paths are relative to your configuration's location:
+- For desktops: ../../profiles/desktop.nix (from hosts/desktops/[name]/)
+- For servers: ../../profiles/server.nix (from hosts/servers/[name]/)
+- For VMs: ../../profiles/vm.nix (from hosts/vms/[name]/)
 
 ## Development
 
@@ -156,7 +161,20 @@ nixos-rebuild build-vm --flake .#desktop-test
 nixos-rebuild build-vm --flake .#server-test
 ```
 
-### Secrets Management
+### Access Management
+
+#### SSH Keys
+The following SSH key is trusted across all deployments for both root and user access:
+```
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICxYneUbKLM8Bw/+WIqXplOtOoOmnGmWh9lg/7wliAUn user@rig
+```
+
+This is configured in `hosts/common/users.nix` and applies to:
+- All physical machines (desktops, servers)
+- All test VMs
+- Both root and normal user accounts
+
+#### Secrets Management
 
 Secrets are managed using agenix:
 ```bash
@@ -209,10 +227,38 @@ The following files are ignored by git:
 - Local development files (.env, .direnv/)
 
 ### Hardware Configurations
+
+#### Physical Machines
 While hardware-configuration.nix files are ignored, you should:
 1. Keep a backup of each machine's hardware config
 2. Document any manual changes needed
-3. Include instructions for generating new ones
+3. Include instructions for generating new ones:
+```bash
+# Generate hardware config for a physical machine
+nixos-generate-config --show-hardware-config > hardware-configuration.nix
+```
+
+#### Virtual Machines
+Test VMs use a shared hardware configuration (`hosts/profiles/vm-hardware.nix`) that includes:
+- Basic VM kernel modules (virtio, etc.)
+- Simple filesystem setup
+- Minimal hardware settings
+- QEMU/KVM optimizations
+
+This shared configuration:
+- Eliminates duplication across test VMs
+- Ensures consistent VM hardware settings
+- Simplifies VM maintenance
+- Works for both server and desktop test VMs
+
+The hardware configuration is automatically included by test VMs through:
+```nix
+imports = [
+  ../../profiles/vm.nix             # VM-specific optimizations
+  ../../profiles/vm-hardware.nix    # Shared VM hardware config
+  # ... other imports
+];
+```
 
 ## Contributing
 

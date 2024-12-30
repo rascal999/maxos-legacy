@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ../../profiles/vm.nix            # VM-specific optimizations
-    ../../profiles/server.nix        # Server profile to test
-    ./hardware-configuration.nix     # VM hardware config
+    ../../profiles/vm.nix             # VM-specific optimizations
+    ../../profiles/server.nix         # Server profile to test
+    ../../profiles/vm-hardware.nix    # Shared VM hardware config
   ];
 
   # VM-specific configuration
