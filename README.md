@@ -1,179 +1,227 @@
-# MaxOS Nix Flake Deployment
+# MaxOS
 
-A Nix flake deployment configuration for managing both physical machines and virtual machines, with a focus on desktop configuration and Home Manager integration. Uses deploy-rs for deployment management.
+A NixOS configuration system for managing multiple machines with different profiles.
 
-## Features
-
-- Modular system configuration with Nix Flakes
-- Home Manager integration for user environment management
-- Secure secrets management with agenix
-- VM-based testing environment
-- Comprehensive desktop environment setup with Sway
-- Advanced audio configuration with PipeWire
-- Robust networking setup with security features
-
-## Directory Structure
+## Structure
 
 ```
 .
-├── flake.nix                 # Main entry point and configuration
-├── hosts/                    # Machine-specific configurations
-│   ├── common/              # Shared configurations
-│   ├── desktop/             # Desktop-specific config
-│   └── vms/                 # VM configurations
-├── home/                    # Home Manager configurations
-│   ├── common/             # Shared home configurations
-│   └── profiles/           # Different user profiles
-├── secrets/                # Encrypted secrets (handled by agenix)
-├── scripts/               # Utility scripts
-└── lib/                   # Helper functions
+├── flake.nix          # Main configuration entry point
+├── home/              # Home-manager configurations
+│   ├── common/        # Shared home-manager modules
+│   └── profiles/      # User environment profiles
+├── hosts/             # Host configurations
+│   ├── common/        # Shared system configurations
+│   ├── profiles/      # Base profiles for different machine types
+│   │   ├── desktop.nix   # Desktop environment profile
+│   │   ├── server.nix    # Server profile
+│   │   └── vm.nix        # VM optimizations
+│   ├── desktops/     # Desktop machine configurations
+│   │   ├── hero/        # Primary desktop
+│   │   └── rig/         # Gaming/Development rig
+│   ├── servers/      # Server configurations
+│   │   └── example/     # Example server
+│   └── vms/          # Test VMs
+│       ├── desktop-test/  # Desktop profile testing
+│       └── server-test/   # Server profile testing
+├── modules/          # Custom NixOS modules
+├── overlays/         # Package overlays
+├── scripts/         # Utility scripts
+└── secrets/         # Secret management (agenix)
 ```
 
-## Getting Started
+## Profiles
 
-1. Install required dependencies:
-   ```bash
-   # Enable flakes
-   mkdir -p ~/.config/nix
-   echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+### Desktop Profile
+Base configuration for desktop machines including:
+- Full desktop environment
+- Common applications
+- Audio/Bluetooth support
+- Printing capabilities
+- Font configuration
 
-   # Install tools
-   nix profile install github:serokell/deploy-rs
-   nix profile install github:ryantm/agenix
-   ```
+### Server Profile
+Base configuration for servers including:
+- Security hardening
+- Minimal package set
+- Optimized for headless operation
+- Network configuration
 
-2. Clone the repository:
-   ```bash
-   git clone <repository-url> maxos
-   cd maxos
-   ```
+### VM Profile
+Base configuration for virtual machines including:
+- QEMU/SPICE integration
+- VM-specific optimizations
+- Basic desktop environment for testing
 
-3. Generate SSH keys for secrets management:
-   ```bash
-   ./scripts/manage-secrets.sh rotate
-   ```
+## Deployments
 
-4. Create initial secrets:
-   ```bash
-   ./scripts/manage-secrets.sh create user-password
-   ./scripts/manage-secrets.sh create wireguard-private-key
-   ```
+### Desktop Machines
 
-5. Deploy to VM for testing:
-   ```bash
-   deploy .#vm-test
-   ```
+#### Hero
+Primary desktop configuration:
+```bash
+nixos-rebuild switch --flake .#desktops/hero
+```
 
-6. Once tested, deploy to physical machine:
-   ```bash
-   deploy .#desktop
-   ```
+#### Rig
+Gaming and development machine:
+```bash
+nixos-rebuild switch --flake .#desktops/rig
+```
 
-## VM Testing
+### Servers
 
-Test changes safely in a VM before deploying to physical hardware:
+Example server:
+```bash
+nixos-rebuild switch --flake .#servers/example
+```
 
-1. Build and run the test VM:
-   ```bash
-   # Build the VM
-   nix build .#nixosConfigurations.vm-test.config.system.build.vm
-   # Run the VM
-   ./result/bin/run-nixos-vm
-   # Or deploy directly to VM
-   deploy .#vm-test
-   ```
+### Test VMs
 
-2. Test secrets decryption:
-   ```bash
-   ./scripts/manage-secrets.sh test
-   ```
+Test desktop configuration:
+```bash
+nixos-rebuild build-vm --flake .#desktop-test
+./result/bin/run-nixos-vm
+```
 
-## Secrets Management
+Test server configuration:
+```bash
+nixos-rebuild build-vm --flake .#server-test
+./result/bin/run-nixos-vm
+```
 
-Secrets are managed using [agenix](https://github.com/ryantm/agenix) and the included management script:
+## Adding New Machines
 
-- Create new secrets: `./scripts/manage-secrets.sh create SECRET_NAME`
-- Edit existing secrets: `./scripts/manage-secrets.sh edit SECRET_NAME`
-- Rotate encryption keys: `./scripts/manage-secrets.sh rotate`
-- List all secrets: `./scripts/manage-secrets.sh list`
+### New Desktop
 
-## Home Manager Integration
+1. Create new directory:
+```bash
+mkdir -p hosts/desktops/new-desktop
+```
 
-User environments are managed through Home Manager:
+2. Create configuration:
+```nix
+# hosts/desktops/new-desktop/default.nix
+{
+  imports = [
+    ../../profiles/desktop.nix
+    ./hardware-configuration.nix
+  ];
+  networking.hostName = "new-desktop";
+  # Add machine-specific configurations
+}
+```
 
-1. Base configuration in `home/common/`
-2. Profile-specific configurations in `home/profiles/`
-3. Machine-specific overrides in respective host configurations
+3. Add to flake.nix:
+```nix
+nixosConfigurations."desktops/new-desktop" = lib.nixosSystem {
+  inherit system;
+  modules = [
+    ./hosts/desktops/new-desktop
+    home-manager.nixosModules.home-manager
+    {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+    }
+  ];
+  specialArgs = { inherit inputs; };
+};
+```
 
-## Best Practices
+### New Server
 
-1. **Testing Changes**:
-   - Always test changes in VM first
-   - Use `nix flake check` before deployment
-   - Keep VM configuration as close to physical hardware as possible
+Similar process as desktop, but use:
+```bash
+mkdir -p hosts/servers/new-server
+```
 
-2. **Secrets Management**:
-   - Never commit unencrypted secrets
-   - Regularly rotate encryption keys
-   - Use separate keys for different security levels
-   - Backup keys securely
+And import the server profile:
+```nix
+imports = [
+  ../../profiles/server.nix
+  ./hardware-configuration.nix
+];
+```
 
-3. **Configuration Management**:
-   - Keep configurations modular
-   - Use common configurations where possible
-   - Document machine-specific overrides
-   - Version control all changes
+## Development
 
-4. **Updates and Maintenance**:
-   - Regularly update nixpkgs
-   - Test updates in VM before deploying
-   - Keep deployment generations for rollback
-   - Monitor system health and logs
+### Testing Changes
 
-## Customization
+Use the test VMs to verify changes:
+```bash
+# Test desktop changes
+nixos-rebuild build-vm --flake .#desktop-test
 
-1. **Adding New Machines**:
-   - Copy and modify existing configurations
-   - Generate new encryption keys
-   - Add to secrets.nix
-   - Test in VM before deployment
+# Test server changes
+nixos-rebuild build-vm --flake .#server-test
+```
 
-2. **Modifying User Environment**:
-   - Edit relevant files in `home/`
-   - Test changes with Home Manager
-   - Deploy to VM for verification
+### Secrets Management
 
-3. **Adding New Services**:
-   - Create service configuration
-   - Add to relevant host configurations
-   - Test thoroughly in VM
+Secrets are managed using agenix:
+```bash
+# Edit secrets
+agenix -e secrets/secrets.age
 
-## Troubleshooting
+# Add new secret
+scripts/manage-secrets.sh add my-secret
+```
 
-1. **Deployment Issues**:
-   - Check system logs: `journalctl -xeu deploy-rs`
-   - Verify network connectivity
-   - Check secret accessibility
-   - Try deployment with `--debug` flag
+## Common Tasks
 
-2. **Secret Management**:
-   - Verify key permissions
-   - Check agenix logs
-   - Ensure keys are properly distributed
+### Update System
+```bash
+# Update flake inputs
+nix flake update
 
-3. **VM Testing**:
-   - Verify VM resources
-   - Check network configuration
-   - Compare with physical hardware
+# Update and switch to new configuration
+nixos-rebuild switch --flake .#desktops/hero
+```
+
+### Clean Up
+```bash
+# Remove old generations
+sudo nix-collect-garbage -d
+
+# Remove specific generation
+sudo nix-env --delete-generations old
+```
+
+### Debug
+```bash
+# Show system closure size
+nix path-info -Sh /run/current-system
+
+# Show dependency graph
+nix-store -q --graph /run/current-system | dot -Tsvg > system-graph.svg
+```
+
+## Version Control
+
+### Ignored Files
+The following files are ignored by git:
+- Build outputs (result, result-*)
+- Hardware configurations (hardware-configuration.nix)
+- VM images and disks (*.qcow2, *.img)
+- Secrets and keys (*.age, *.key, *.pem)
+- Editor and OS files (.DS_Store, .vscode/)
+- Build artifacts and caches
+- Local development files (.env, .direnv/)
+
+### Hardware Configurations
+While hardware-configuration.nix files are ignored, you should:
+1. Keep a backup of each machine's hardware config
+2. Document any manual changes needed
+3. Include instructions for generating new ones
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test in VM
+1. Create a new branch for your changes
+2. Test changes using the appropriate test VM
+3. Update documentation if adding new features
+4. Ensure no sensitive data or machine-specific configs are committed
 5. Submit a pull request
 
 ## License
 
-MIT License - See LICENSE file for details
+MIT

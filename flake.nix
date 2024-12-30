@@ -23,82 +23,139 @@
   outputs = { self, nixpkgs, home-manager, agenix, deploy-rs, ... } @ inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config = {
+          allowUnfree = true;
+        };
+      };
       
       lib = nixpkgs.lib;
       
-      # Helper to make machine configurations
-      mkHost = name: { system ? "x86_64-linux", ... } @ args:
+      # Helper function for VM configurations
+      mkVM = { system ? "x86_64-linux", modules ? [], ... }: 
         lib.nixosSystem {
           inherit system;
           modules = [
-            # Base configuration
-            ./hosts/common
-            # Machine-specific configuration
-            ./hosts/${name}
-            # Home-manager module
+            # VM base configuration
+            ({ modulesPath, ... }: {
+              imports = [
+                (modulesPath + "/virtualisation/qemu-vm.nix")
+              ];
+              virtualisation = {
+                cores = 2;
+                memorySize = 4096;
+                diskSize = 8192;
+              };
+            })
+          ] ++ modules;
+          specialArgs = { inherit inputs; };
+        };
+    in {
+      nixosConfigurations = {
+        # Desktop configurations
+        "desktops/hero" = lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/desktops/hero
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {
-                inherit inputs;
-                inherit (self) outputs;
-              };
             }
-            # Secrets management
-            agenix.nixosModules.age
           ];
-          specialArgs = {
-            inherit inputs;
-            inherit (self) outputs;
-          };
+          specialArgs = { inherit inputs; };
         };
-    in {
-      nixosConfigurations = {
-        # Desktop configuration
-        desktop = mkHost "desktop" {
-          system = "x86_64-linux";
+
+        "desktops/rig" = lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/desktops/rig
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
+          ];
+          specialArgs = { inherit inputs; };
         };
-        
-        # Example VM configuration
-        vm-test = mkHost "vms/test" {
-          system = "x86_64-linux";
+
+        # Server configurations
+        "servers/example" = lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/servers/example
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
+          ];
+          specialArgs = { inherit inputs; };
+        };
+
+        # Test VMs
+        server-test = mkVM {
+          modules = [
+            ./hosts/vms/server-test
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
+          ];
+        };
+
+        desktop-test = mkVM {
+          modules = [
+            ./hosts/vms/desktop-test
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
+          ];
         };
       };
 
       # Deployment configuration using deploy-rs
-      deploy.nodes = {
-        desktop = {
-          hostname = "localhost";
-          profiles.system = {
-            user = "root";
-            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.desktop;
+      deploy = {
+        nodes = {
+          server-test = {
+            hostname = "localhost";
+            sshUser = "root";
+            fastConnection = true;
+            profiles.system = {
+              user = "root";
+              path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.server-test;
+              sshOpts = [
+                "-o" "StrictHostKeyChecking=no"
+                "-o" "UserKnownHostsFile=/dev/null"
+              ];
+            };
           };
-        };
-        
-        vm-test = {
-          hostname = "localhost";
-          profiles.system = {
-            user = "root";
-            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.vm-test;
+
+          desktop-test = {
+            hostname = "localhost";
+            sshUser = "root";
+            fastConnection = true;
+            profiles.system = {
+              user = "root";
+              path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.desktop-test;
+              sshOpts = [
+                "-o" "StrictHostKeyChecking=no"
+                "-o" "UserKnownHostsFile=/dev/null"
+              ];
+            };
           };
         };
       };
 
       # System checks
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-      
-      # Overlay for custom packages
-      overlays = import ./overlays;
-      
-      # Custom packages
-      packages.${system} = import ./packages { inherit pkgs; };
-      
-      # Custom NixOS modules
-      nixosModules = import ./modules;
-      
-      # Custom Home Manager modules
-      homeManagerModules = import ./home/modules;
+
+      # Overlays and packages will be added as needed
+      overlays = {};
+      packages.${system} = {};
     };
 }

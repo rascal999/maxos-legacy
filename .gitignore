@@ -1,0 +1,65 @@
+# Nix build outputs
+result
+result-*
+
+# Nix store paths
+/nix/store/*
+
+# System-specific configurations
+hardware-configuration.nix
+**/hardware-configuration.nix
+
+# VM images and disks
+*.qcow2
+*.img
+*.vdi
+*.vmdk
+
+# Secrets
+/secrets/*.age
+.agenix.toml
+*.key
+*.pem
+*.p12
+id_*
+*.gpg
+
+# Editor and OS files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
+
+# Build artifacts
+*.o
+*.so
+*.dylib
+*.dll
+*.class
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+.direnv/
+.envrc
+tmp/
+.tmp/
+*.tmp
+*.bak
+
+# Cache directories
+.cache/
+__pycache__/
+*.py[cod]
+node_modules/
+.npm/
+
+# Local development
+.env
+.env.local
+.env.*.local
