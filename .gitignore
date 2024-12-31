@@ -63,3 +63,6 @@ node_modules/
 .env
 .env.local
 .env.*.local
+
+# Build output
+output.txt

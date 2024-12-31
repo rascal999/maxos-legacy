@@ -8,7 +8,7 @@ let
   # Helper function to create age secret for a user's SSH keys
   mkUserKeySecret = username: {
     name = "ssh-keys-${username}";
-    file = ../secrets/ssh/authorized-keys/${username}.age;  # Path relative to this module
+    file = toString ./. + "/../secrets/ssh/authorized-keys/${username}.age";  # Path relative to flake root
     owner = username;
     group = if username == "root" then "root" else "users";
     mode = "0400";
@@ -32,11 +32,10 @@ in {
     );
 
     # Apply keys to users
-    users.users = listToAttrs (map
-      (username: nameValuePair username {
-        openssh.authorizedKeys.keyFiles = [
-          config.age.secrets."ssh-keys-${username}".path
-        ];
+    environment.etc = listToAttrs (map
+      (username: nameValuePair "ssh/authorized_keys.d/${username}" {
+        source = config.age.secrets."ssh-keys-${username}".path;
+        mode = "0444";
       })
       cfg.users
     );

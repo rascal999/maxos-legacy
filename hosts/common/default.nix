@@ -65,6 +65,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Enable SSH key management
+  sshKeys.enable = true;
+
   # Basic program configurations
   programs.ccache = {
     enable = lib.mkForce false;  # Explicitly disable ccache system-wide
