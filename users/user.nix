@@ -19,7 +19,7 @@ in {
       "libvirtd"
     ];
     hashedPassword = null;
-    openssh.authorizedKeys.keys = [];
+    # SSH keys are managed centrally through the ssh-keys module
     shell = pkgs.zsh;
   };
 

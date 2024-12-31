@@ -12,6 +12,10 @@ let
   administrators = [ user ];
 in
 {
+  # SSH authorized keys
+  "ssh/authorized-keys/root.age".publicKeys = allSystems ++ administrators;
+  "ssh/authorized-keys/user.age".publicKeys = allSystems ++ administrators;
+
   # System secrets
   "wireguard-private-key.age".publicKeys = allSystems ++ administrators;
   "user-password.age".publicKeys = allSystems ++ administrators;

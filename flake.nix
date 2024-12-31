@@ -69,6 +69,8 @@
         "desktops/hero" = lib.nixosSystem {
           inherit system;
           modules = [
+            ./modules            # Custom modules including ssh-keys
+            agenix.nixosModules.default  # For age encryption
             ./hosts/desktops/hero
             home-manager.nixosModules.home-manager
             {
@@ -82,6 +84,8 @@
         "desktops/rig" = lib.nixosSystem {
           inherit system;
           modules = [
+            ./modules            # Custom modules including ssh-keys
+            agenix.nixosModules.default  # For age encryption
             ./hosts/desktops/rig
             home-manager.nixosModules.home-manager
             {
@@ -96,6 +100,8 @@
         "servers/example" = lib.nixosSystem {
           inherit system;
           modules = [
+            ./modules            # Custom modules including ssh-keys
+            agenix.nixosModules.default  # For age encryption
             ./hosts/servers/example
             home-manager.nixosModules.home-manager
             {
@@ -109,6 +115,8 @@
         # Test VMs
         server-test = mkVM {
           modules = [
+            ./modules            # Custom modules including ssh-keys
+            agenix.nixosModules.default  # For age encryption
             ./hosts/vms/server-test
             home-manager.nixosModules.home-manager
             {
@@ -120,7 +128,8 @@
 
         desktop-test = mkVM {
           modules = [
-            ./modules            # Custom modules including user-config
+            ./modules            # Custom modules including ssh-keys
+            agenix.nixosModules.default  # For age encryption
             ./hosts/vms/desktop-test
             home-manager.nixosModules.home-manager
             {
