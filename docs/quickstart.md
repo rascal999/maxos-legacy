@@ -18,7 +18,7 @@ The VM comes with:
 - Dark theme and modern fonts
 
 Want to customize? Check out:
-- [Default User Template](../templates/user.nix) - Default configuration with comments
+- [Default User Template](../users/user.nix) - Default configuration with comments
 - [Example User Configuration](../users/docs/example.nix) - Complete example with all options
 
 Then override what you need:
