@@ -1,14 +1,10 @@
-# Example User Configuration
-#
-# This is an example of how to configure a user in MaxOS.
-# Copy this file and modify it according to your needs.
-
+# Default User Configuration Template
 { config, pkgs, lib, ... }:
 
 let
-  username = "alice";
-  fullName = "Alice Smith";
-  email = "alice@example.com";
+  username = "user";
+  fullName = "Example User";
+  email = "user@example.com";
 in {
   users.users.${username} = {
     isNormalUser = true;
@@ -22,12 +18,8 @@ in {
       "input"
       "libvirtd"
     ];
-    hashedPassword = null;  # Set this using mkpasswd -m sha-512 or through agenix
+    hashedPassword = null;
     # SSH keys are managed centrally through the ssh-keys module
-    # See:
-    # - modules/ssh-keys.nix for the implementation
-    # - secrets/secrets.nix for the encrypted keys
-    # - hosts/common/users.nix for enabling key management
     shell = pkgs.zsh;
   };
 
@@ -38,38 +30,13 @@ in {
       homeDirectory = "/home/${username}";
       
       packages = with pkgs; [
-        # Development
         python3
         nodejs
-        go
-        rustc
-        cargo
-        
-        # Editors
         vscode
-        neovim
-        
-        # Browsers
-        firefox
-        chromium
-        
-        # Communication
-        slack
-        discord
-        signal-desktop
-        
-        # Media
-        vlc
-        spotify
-        
-        # Utils
+        htop
         ripgrep
         fd
         bat
-        eza
-        fzf
-        tmux
-        htop
       ];
     };
 
@@ -92,9 +59,6 @@ in {
         shellAliases = {
           ll = "ls -la";
           ".." = "cd ..";
-          "..." = "cd ../..";
-          g = "git";
-          k = "kubectl";
         };
       };
     };
@@ -114,26 +78,7 @@ in {
     };
 
     services = {
-      gpg-agent = {
-        enable = true;
-        enableSshSupport = true;
-      };
-      
-      syncthing = {
-        enable = true;
-      };
+      gpg-agent.enable = false;
     };
-
-    # Optional: Configure additional services
-    # systemd.user.services = {
-    #   backup = {
-    #     Unit = {
-    #       Description = "Backup personal files";
-    #     };
-    #     Service = {
-    #       ExecStart = "${pkgs.rsync}/bin/rsync -av --delete ~/Documents /mnt/backup/";
-    #     };
-    #   };
-    # };
   };
 }
