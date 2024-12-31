@@ -38,9 +38,19 @@
     firefox           # Web browser for testing
   ];
 
-  # VM-specific home-manager configuration
-  home-manager.users.${config.users.users.user.name} = { pkgs, ... }: {
-    # Test user configuration
+  # User configuration
+  users.users.user = {
+    isNormalUser = true;
+    initialPassword = "nixos";
+    extraGroups = [ "wheel" ];
+    shell = lib.mkForce pkgs.zsh;
+  };
+
+  # Enable zsh
+  programs.zsh.enable = true;
+
+  # Home manager configuration
+  home-manager.users.user = { pkgs, ... }: {
     home.packages = with pkgs; [
       # Development tools for testing
       vscode
@@ -53,9 +63,6 @@
       peek           # Screen recorder
     ];
   };
-
-  # Set initial password for testing
-  users.users.user.initialPassword = "nixos";
 
   # System state version
   system.stateVersion = "23.11";

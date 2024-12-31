@@ -1,0 +1,346 @@
+building the system configuration...
+warning: Git tree '/home/user/git/github/monorepo' is dirty
+error:
+       … while calling the 'seq' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:334:18:
+          333|         options = checked options;
+          334|         config = checked (removeAttrs config [ "_module" ]);
+             |                  ^
+          335|         _module = checked (config._module);
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:273:9:
+          272|       checkUnmatched =
+          273|         if config._module.check && config._module.freeformType == null && merged.unmatchedDefns != [] then
+             |         ^
+          274|           let
+
+       … in the right operand of the AND (&&) operator
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:273:72:
+          272|       checkUnmatched =
+          273|         if config._module.check && config._module.freeformType == null && merged.unmatchedDefns != [] then
+             |                                                                        ^
+          274|           let
+
+       … while evaluating the attribute 'unmatchedDefns'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:695:7:
+          694|       # Transforms unmatchedDefnsByName into a list of definitions
+          695|       unmatchedDefns =
+             |       ^
+          696|         if configs == []
+
+       … while calling the 'concatLists' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:702:11:
+          701|         else
+          702|           concatLists (mapAttrsToList (name: defs:
+             |           ^
+          703|             map (def: def // {
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1095:10:
+         1094|     attrs:
+         1095|     map (name: f name attrs.${name}) (attrNames attrs);
+             |          ^
+         1096|
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1095:16:
+         1094|     attrs:
+         1095|     map (name: f name attrs.${name}) (attrNames attrs);
+             |                ^
+         1096|
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:702:46:
+          701|         else
+          702|           concatLists (mapAttrsToList (name: defs:
+             |                                              ^
+          703|             map (def: def // {
+
+       … while calling the 'map' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:703:13:
+          702|           concatLists (mapAttrsToList (name: defs:
+          703|             map (def: def // {
+             |             ^
+          704|               # Set this so we know when the definition first left unmatched territory
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1095:23:
+         1094|     attrs:
+         1095|     map (name: f name attrs.${name}) (attrNames attrs);
+             |                       ^
+         1096|
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:688:22:
+          687|         # Propagate all unmatched definitions from nested option sets
+          688|         mapAttrs (n: v: v.unmatchedDefns) resultsByName
+             |                      ^
+          689|         # Plus the definitions for the current prefix that don't have a matching option
+
+       (9 duplicate frames omitted)
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:696:9:
+          695|       unmatchedDefns =
+          696|         if configs == []
+             |         ^
+          697|         then
+
+       … while calling the 'concatLists' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:640:19:
+          639|           loc = prefix ++ [name];
+          640|           defns = pushedDownDefinitionsByName.${name} or [];
+             |                   ^
+          641|           defns' = rawDefinitionsByName.${name} or [];
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:600:21:
+          599|               mapAttrs
+          600|                 (n: value:
+             |                     ^
+          601|                   map (config: { inherit (module) file; inherit config; }) (pushDownProperties value)
+
+       … while calling the 'map' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:601:19:
+          600|                 (n: value:
+          601|                   map (config: { inherit (module) file; inherit config; }) (pushDownProperties value)
+             |                   ^
+          602|                 )
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:601:77:
+          600|                 (n: value:
+          601|                   map (config: { inherit (module) file; inherit config; }) (pushDownProperties value)
+             |                                                                             ^
+          602|                 )
+
+       … while calling 'pushDownProperties'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:913:24:
+          912|   */
+          913|   pushDownProperties = cfg:
+             |                        ^
+          914|     if cfg._type or "" == "merge" then
+
+       … while calling the 'map' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:917:7:
+          916|     else if cfg._type or "" == "if" then
+          917|       map (mapAttrs (n: v: mkIf cfg.condition v)) (pushDownProperties cfg.content)
+             |       ^
+          918|     else if cfg._type or "" == "override" then
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:917:52:
+          916|     else if cfg._type or "" == "if" then
+          917|       map (mapAttrs (n: v: mkIf cfg.condition v)) (pushDownProperties cfg.content)
+             |                                                    ^
+          918|     else if cfg._type or "" == "override" then
+
+       … while calling 'pushDownProperties'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:913:24:
+          912|   */
+          913|   pushDownProperties = cfg:
+             |                        ^
+          914|     if cfg._type or "" == "merge" then
+
+       … while calling the 'concatMap' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:915:7:
+          914|     if cfg._type or "" == "merge" then
+          915|       concatMap pushDownProperties cfg.contents
+             |       ^
+          916|     else if cfg._type or "" == "if" then
+
+       … while calling 'pushDownProperties'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:913:24:
+          912|   */
+          913|   pushDownProperties = cfg:
+             |                        ^
+          914|     if cfg._type or "" == "merge" then
+
+       … while calling the 'map' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:917:7:
+          916|     else if cfg._type or "" == "if" then
+          917|       map (mapAttrs (n: v: mkIf cfg.condition v)) (pushDownProperties cfg.content)
+             |       ^
+          918|     else if cfg._type or "" == "override" then
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:917:52:
+          916|     else if cfg._type or "" == "if" then
+          917|       map (mapAttrs (n: v: mkIf cfg.condition v)) (pushDownProperties cfg.content)
+             |                                                    ^
+          918|     else if cfg._type or "" == "override" then
+
+       … while calling 'pushDownProperties'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:913:24:
+          912|   */
+          913|   pushDownProperties = cfg:
+             |                        ^
+          914|     if cfg._type or "" == "merge" then
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:914:5:
+          913|   pushDownProperties = cfg:
+          914|     if cfg._type or "" == "merge" then
+             |     ^
+          915|       concatMap pushDownProperties cfg.contents
+
+       … while evaluating the attribute 'content'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:1038:25:
+         1037|     { _type = "if";
+         1038|       inherit condition content;
+             |                         ^
+         1039|     };
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/services/torrent/transmission.nix:513:9:
+          512|       (mkIf cfg.openPeerPorts (
+          513|         if cfg.settings.peer-port-random-on-start then
+             |         ^
+          514|           {
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/services/torrent/transmission.nix:513:12:
+          512|       (mkIf cfg.openPeerPorts (
+          513|         if cfg.settings.peer-port-random-on-start then
+             |            ^
+          514|           {
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1204:18:
+         1203|         mapAttrs
+         1204|           (name: value:
+             |                  ^
+         1205|             if isAttrs value && cond value
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1207:18:
+         1206|             then recurse (path ++ [ name ]) value
+         1207|             else f (path ++ [ name ]) value);
+             |                  ^
+         1208|     in
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:254:72:
+          253|           # For definitions that have an associated option
+          254|           declaredConfig = mapAttrsRecursiveCond (v: ! isOption v) (_: v: v.value) options;
+             |                                                                        ^
+          255|
+
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:846:9:
+          845|     in warnDeprecation opt //
+          846|       { value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |         ^
+          847|         inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `services.transmission.settings':
+
+       … while evaluating the attribute 'mergedValue'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:881:5:
+          880|     # Type-check the remaining definitions, and merge them. Or throw if no definitions.
+          881|     mergedValue =
+             |     ^
+          882|       if isDefined then
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:882:7:
+          881|     mergedValue =
+          882|       if isDefined then
+             |       ^
+          883|         if all (def: type.check def.value) defsFinal then type.merge loc defsFinal
+
+       … while evaluating the attribute 'values'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:875:9:
+          874|       in {
+          875|         values = defs''';
+             |         ^
+          876|         inherit (defs'') highestPrio;
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:871:11:
+          870|           # Avoid sorting if we don't have to.
+          871|           if any (def: def.value._type or "" == "order") defs''.values
+             |           ^
+          872|           then sortProperties defs''.values
+
+       … while calling the 'any' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:871:14:
+          870|           # Avoid sorting if we don't have to.
+          871|           if any (def: def.value._type or "" == "order") defs''.values
+             |              ^
+          872|           then sortProperties defs''.values
+
+       … while evaluating the attribute 'values'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:974:7:
+          973|     in {
+          974|       values = concatMap (def: if getPrio def == highestPrio then [(strip def)] else []) defs;
+             |       ^
+          975|       inherit highestPrio;
+
+       … while calling the 'concatMap' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:974:16:
+          973|     in {
+          974|       values = concatMap (def: if getPrio def == highestPrio then [(strip def)] else []) defs;
+             |                ^
+          975|       inherit highestPrio;
+
+       … while calling the 'concatMap' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:861:17:
+          860|         # Process mkMerge and mkIf properties.
+          861|         defs' = concatMap (m:
+             |                 ^
+          862|           map (value: { inherit (m) file; inherit value; }) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
+
+       … while calling the 'zipAttrsWith' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:608:9:
+          607|       rawDefinitionsByName =
+          608|         zipAttrsWith
+             |         ^
+          609|           (n: concatLists)
+
+       … while calling the 'map' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:610:12:
+          609|           (n: concatLists)
+          610|           (map
+             |            ^
+          611|             (module:
+
+       … in the condition of the assert statement
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:574:9:
+          573|       checkedConfigs =
+          574|         assert
+             |         ^
+          575|           all
+
+       … while calling the 'all' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:575:11:
+          574|         assert
+          575|           all
+             |           ^
+          576|             (c:
+
+       … while calling the 'zipAttrsWith' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:595:9:
+          594|       pushedDownDefinitionsByName =
+          595|         zipAttrsWith
+             |         ^
+          596|           (n: concatLists)
+
+       … while calling the 'map' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:597:12:
+          596|           (n: concatLists)
+          597|           (map
+             |            ^
+          598|             (module:
+
+       (17 duplicate frames omitted)
+
+       … while selecting an attribute
+         at /nix/store/ny2nm0iba1dmj946hxj4pkjmsxpqyr1r-source/maxos/modules/user-config/system.nix:108:34:
+          107|       # User-defined services
+          108|       (mkIf (cfg.services != {}) cfg.services)
+             |                                  ^
+          109|     ];
+
+       error: expected a set but found null: null

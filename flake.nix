@@ -37,11 +37,17 @@
       
       # Helper function for VM configurations
       mkVM = { system ? "x86_64-linux", modules ? [], ... }: 
-        lib.nixosSystem {
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [];
+          };
+        in lib.nixosSystem {
           inherit system;
           modules = [
             # VM base configuration
-            ({ config, pkgs, lib, modulesPath, ... }: {
+            ({ config, lib, modulesPath, ... }: {
               imports = [
                 (modulesPath + "/virtualisation/qemu-vm.nix")
               ];
@@ -53,34 +59,9 @@
                 diskSize = 8192;
               };
               virtualisation.vmVariant.virtualisation.graphics = false;
-
-              # Ensure consistent nixpkgs configuration
-              nixpkgs = {
-                config = {
-                  allowUnfree = true;
-                };
-                overlays = [];
-              };
-
-              # Disable problematic services in VM
-              services = {
-                thermald.enable = lib.mkForce false;
-                tlp.enable = lib.mkForce false;
-              };
-
-              # Disable hardware features not needed in VM
-              hardware = {
-                bluetooth.enable = lib.mkForce false;
-              };
-
-              # Ensure ccache is properly configured
-              programs.ccache = {
-                enable = lib.mkForce false;
-                packageNames = lib.mkForce [];
-              };
             })
           ] ++ modules;
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs pkgs; };
         };
     in {
       nixosConfigurations = {

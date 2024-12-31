@@ -8,7 +8,7 @@ let
 in {
   users.users.${username} = {
     isNormalUser = true;
-    description = fullName;
+    description = lib.mkDefault fullName;
     extraGroups = [ 
       "wheel"    # Enable sudo
       "networkmanager"
@@ -55,7 +55,7 @@ in {
       zsh = {
         enable = true;
         enableCompletion = true;
-        enableSyntaxHighlighting = true;
+        syntaxHighlighting.enable = true;
         shellAliases = {
           ll = "ls -la";
           ".." = "cd ..";
