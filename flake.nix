@@ -28,6 +28,9 @@
         config = {
           allowUnfree = true;
         };
+        overlays = [
+          (final: prev: {})  # Empty overlay to avoid null issues
+        ];
       };
       
       lib = nixpkgs.lib;
@@ -157,8 +160,10 @@
       # System checks
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
-      # Overlays and packages will be added as needed
-      overlays = {};
+      # Define empty overlays list to avoid null issues
+      overlays = {
+        default = final: prev: {};  # Empty overlay to avoid null
+      };
       packages.${system} = {};
     };
 }

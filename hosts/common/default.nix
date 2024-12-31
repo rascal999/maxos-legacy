@@ -38,6 +38,12 @@
     pam.sshAgentAuth.enable = true;
   };
 
+  # Disable unnecessary services
+  disabledModules = [
+    "services/security/hologram-agent.nix"
+    "services/networking/tayga.nix"
+  ];
+
   # System-wide SSH configuration
   services.openssh = {
     enable = true;
@@ -58,4 +64,10 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Basic program configurations
+  programs.ccache = {
+    enable = lib.mkForce false;  # Explicitly disable ccache system-wide
+    packageNames = lib.mkForce [];  # Ensure packageNames is set even when disabled
+  };
 }

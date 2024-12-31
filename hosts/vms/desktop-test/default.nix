@@ -9,7 +9,6 @@
   # VM-specific configuration
   networking = {
     hostName = "desktop-test";   # Remove -vm suffix since qemu-vm.nix will add it
-    useDHCP = lib.mkForce true;  # Simplified networking for VM
   };
 
   # Override some desktop profile settings for VM
@@ -17,14 +16,13 @@
     # Disable power management in VM
     thermald.enable = lib.mkForce false;
     tlp.enable = lib.mkForce false;
-    
-    # Enable SPICE agent for better integration
-    spice-vdagentd.enable = true;
-    spice-webdavd.enable = true;
-
-    # Disable hologram agent in VM
-    hologram-agent.enable = lib.mkForce false;
   };
+
+  # Disable hardware features not needed in VM
+  hardware.bluetooth.enable = lib.mkForce false;
+
+  # Ensure overlays are properly configured
+  nixpkgs.overlays = [];
 
   # Additional packages for testing desktop features
   environment.systemPackages = with pkgs; [
@@ -41,7 +39,7 @@
   ];
 
   # VM-specific home-manager configuration
-  home-manager.users.user = { pkgs, ... }: {
+  home-manager.users.${config.users.users.user.name} = { pkgs, ... }: {
     # Test user configuration
     home.packages = with pkgs; [
       # Development tools for testing
