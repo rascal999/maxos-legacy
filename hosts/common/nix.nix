@@ -45,15 +45,10 @@
     };
   };
 
-  # Allow proprietary software
-  nixpkgs.config.allowUnfree = true;
-
   # System-wide nixpkgs configuration
   nixpkgs.config = {
+    allowUnfree = true;
     allowBroken = false;
     allowUnsupportedSystem = false;
-    permittedInsecurePackages = [
-      "electron-27.3.11"  # Required by Logseq
-    ];
   };
 }

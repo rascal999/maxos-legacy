@@ -27,6 +27,9 @@
         inherit system;
         config = {
           allowUnfree = true;
+          permittedInsecurePackages = [
+            "electron-27.3.11"  # Required by Logseq
+          ];
         };
         overlays = [
           (final: prev: {})  # Empty overlay to avoid null issues
@@ -40,7 +43,12 @@
         let
           pkgs = import nixpkgs {
             inherit system;
-            config.allowUnfree = true;
+            config = {
+              allowUnfree = true;
+              permittedInsecurePackages = [
+                "electron-27.3.11"  # Required by Logseq
+              ];
+            };
             overlays = [];
           };
         in lib.nixosSystem {

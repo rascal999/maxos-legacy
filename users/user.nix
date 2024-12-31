@@ -61,6 +61,13 @@ in {
           ".." = "cd ..";
         };
       };
+
+      alacritty = {
+        enable = true;
+        settings = {
+          font.size = lib.mkForce 16.0;
+        };
+      };
     };
 
     gtk = {
