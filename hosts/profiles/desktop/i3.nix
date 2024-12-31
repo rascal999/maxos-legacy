@@ -1,6 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
+  # Allow insecure packages required by some applications
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-27.3.11"
+  ];
+
   # i3 window manager configuration
   services.xserver = {
     enable = true;
@@ -13,6 +18,22 @@
         i3status       # Status bar
         i3lock        # Screen locker
         i3blocks      # Status bar blocks
+        firefox
+        alacritty
+        tmux
+        gimp
+        logseq
+        vlc
+        virtualbox
+        xlockmore
+        flameshot
+        tesseract
+        xclip
+        obs-studio
+        networkmanager_dmenu
+        light
+        rofi
+        dmenu
       ];
     };
     
@@ -173,13 +194,32 @@
         ];
 
         keybindings = let mod = "Mod1"; in {
+          # Basic controls
           "${mod}+Return" = "exec ${pkgs.rofi}/bin/rofi -show run";
           "${mod}+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
-          "${mod}+Shift+q" = "kill";
-          "${mod}+f" = "fullscreen";
-          "${mod}+Shift+c" = "reload";
-          "${mod}+Shift+r" = "restart";
+          "${mod}+Shift+c" = "kill";
+          "${mod}+u" = "fullscreen";
+          "${mod}+Shift+p" = "restart";
+          "${mod}+grave" = "exec i3-input -F 'workspace %s' -P 'goto: '";
+          "${mod}+Tab" = "exec i3-input -F 'move container to workspace %s' -P 'move: '";
+
+          # Applications
+          "Mod4+Return" = "exec ${pkgs.firefox}/bin/firefox";
+          "Mod4+Shift+Return" = "exec ${pkgs.firefox}/bin/firefox -P \"Burp\"";
+          "${mod}+t" = "exec ${pkgs.alacritty}/bin/alacritty -o font.size=16 --config-file /home/user/.config/alacritty/alacritty.toml --command ${pkgs.tmux}/bin/tmux";
+          "${mod}+g" = "exec ${pkgs.gimp}/bin/gimp";
+          "${mod}+l" = "exec ${pkgs.logseq}/bin/logseq";
+          "${mod}+v" = "exec QT_SCALE_FACTOR=2.5 ${pkgs.vlc}/bin/vlc";
+          "${mod}+Shift+v" = "exec ${pkgs.virtualbox}/bin/VirtualBox";
+          "${mod}+x" = "exec ${pkgs.xlockmore}/bin/xlock -mode clock";
+          "${mod}+o" = "exec ${pkgs.flameshot}/bin/flameshot gui --raw | ${pkgs.tesseract}/bin/tesseract stdin stdout | ${pkgs.xclip}/bin/xclip -in -selection clipboard";
+          "${mod}+Shift+o" = "exec ${pkgs.obs-studio}/bin/obs";
+          "${mod}+n" = "exec ${pkgs.networkmanager_dmenu}/bin/networkmanager_dmenu";
           
+          # Screen brightness
+          "F2" = "exec ${pkgs.light}/bin/light -U 5";
+          "F3" = "exec ${pkgs.light}/bin/light -A 5";
+
           # Focus
           "${mod}+Left" = "focus left";
           "${mod}+Down" = "focus down";
