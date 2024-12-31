@@ -2,11 +2,45 @@
 
 A NixOS configuration system for managing multiple machines with different profiles.
 
+## Quickstart
+
+Test the system immediately with a desktop VM:
+```bash
+# Build and run desktop test VM
+nixos-rebuild build-vm --flake .#desktop-test
+./result/bin/run-nixos-vm
+
+# Login credentials:
+# Username: user
+# Password: nixos
+```
+
+The VM comes with:
+- i3 desktop environment
+- Development tools (Python, Node.js)
+- Common utilities
+- Dark theme and modern fonts
+
+Want to customize? Check out:
+- templates/user.nix - Default configuration with comments
+- templates/example-user.nix - Complete example with all options
+
+Then override what you need:
+```nix
+# hosts/desktops/your-machine/default.nix
+{
+  userConfig.desktop.environment = "gnome";  # Just switch to GNOME
+}
+```
+
 ## Structure
 
 ```
 .
 ├── flake.nix          # Main configuration entry point
+├── templates/         # Configuration templates
+│   ├── user.nix         # Default user configuration template
+│   └── example-user.nix # Example user configuration with all options
 ├── home/              # Home-manager configurations
 │   ├── common/        # Shared home-manager modules
 │   └── profiles/      # User environment profiles
@@ -29,6 +63,126 @@ A NixOS configuration system for managing multiple machines with different profi
 ├── scripts/         # Utility scripts
 └── secrets/         # Secret management (agenix)
 ```
+
+## User Configuration
+
+MaxOS provides a unified user configuration system that makes it easy to set up new machines with your preferred settings. By default, all systems use the configuration from `templates/user.nix`, which provides:
+
+- Default username ("user") and password ("nixos")
+- US keyboard layout
+- i3 desktop environment with dark theme
+- Basic development tools (Python, Node.js)
+- Common system utilities
+- Secure defaults (firewall enabled, SSH password auth disabled)
+
+You can override these defaults in your machine's configuration:
+
+```nix
+# hosts/desktops/your-machine/default.nix
+{
+  userConfig = {
+    identity = {
+      username = "alice";      # Override default username
+      fullName = "Alice Smith";
+      email = "alice@example.com";
+    };
+    desktop.environment = "gnome";  # Use GNOME instead of i3
+  };
+}
+```
+
+All user-specific settings can be managed in a single file, including:
+
+- User identity and authentication
+- Keyboard layout and options
+- Shell preferences and aliases
+- Desktop environment settings
+- Development tools and preferences
+- Security and privacy settings
+- Backup configuration
+
+### Getting Started
+
+The default user configuration in `templates/user.nix` is automatically included in all systems. You can either:
+
+1. Use the defaults and override specific settings in your machine configuration:
+```nix
+# hosts/desktops/your-machine/default.nix
+{
+  imports = [
+    ../../profiles/desktop.nix
+    ./hardware-configuration.nix
+  ];
+  
+  # Override specific settings
+  userConfig = {
+    identity = {
+      username = "alice";
+      fullName = "Alice Smith";
+      email = "alice@example.com";
+    };
+  };
+  
+  networking.hostName = "your-machine";
+}
+```
+
+2. Or create a complete custom configuration:
+```bash
+# Copy template to users directory
+cp templates/user.nix users/your-username.nix
+
+# Edit with your settings
+$EDITOR users/your-username.nix
+
+# Import in your machine configuration
+# hosts/desktops/your-machine/default.nix
+{
+  imports = [
+    ../../profiles/desktop.nix
+    ./hardware-configuration.nix
+    ../../../users/your-username.nix  # Your custom configuration
+  ];
+  
+  networking.hostName = "your-machine";
+}
+```
+
+The template includes:
+- Required settings (username, authentication, keyboard)
+- Common customizations (shell, desktop, development)
+- Advanced settings (security, backup, network mounts)
+
+See `templates/example-user.nix` for a complete example with all available options.
+
+### Configuration Sections
+
+#### Required Settings
+- Identity (username, full name, email)
+- Authentication (password, SSH keys)
+- Keyboard layout and options
+
+#### Common Customizations
+- Shell configuration (zsh/bash, aliases, completion)
+- Desktop environment (i3/gnome/kde, theme, fonts)
+- Development setup (git, languages, editors)
+
+#### Advanced Settings
+- Additional system groups
+- Extra packages
+- System services
+- Network mounts
+- Security settings (GPG, YubiKey, firewall)
+- Backup configuration
+
+### Example Configuration
+
+See `templates/example-user.nix` for a detailed example that includes:
+- Development environment setup
+- Desktop customization
+- Common applications
+- Security settings
+- Backup configuration
 
 ## Profiles
 

@@ -17,11 +17,11 @@
     };
     
     # Set i3 as default
-    displayManager = {
-      defaultSession = lib.mkForce "none+i3";
-      lightdm.enable = true;
-    };
+    displayManager.lightdm.enable = true;
   };
+
+  # Set i3 as default session
+  services.displayManager.defaultSession = lib.mkForce "none+i3";
 
   # i3status-rust configuration for all users
   home-manager.users.user = { pkgs, ... }: {
