@@ -87,9 +87,12 @@ in {
         enable = true;
         windowManager.i3 = {
           enable = true;
-          config = lib.mkForce {
+          config = {
             terminal = cfg.desktop.terminal.program;
-            modifier = "Mod4";  # Windows key
+            modifier = "Mod1";  # Alt key
+            keybindings = {
+              "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -o font.size=16 --config-file /home/${cfg.identity.username}/.config/alacritty/alacritty.toml --command ${pkgs.tmux}/bin/tmux";
+            };
           };
         };
       };

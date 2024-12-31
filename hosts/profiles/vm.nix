@@ -15,10 +15,9 @@
   services.xserver = {
     enable = lib.mkForce true;
     
-    # Use a lightweight desktop environment
+    # Let specific profiles decide desktop environment
     desktopManager = {
       xterm.enable = false;
-      xfce.enable = true;
     };
     
     displayManager.lightdm.enable = true;
@@ -35,13 +34,8 @@
     spice-vdagent
     
     # Basic desktop utilities
-    xfce.thunar
-    xfce.xfce4-terminal
     firefox
   ];
-
-  # Set default desktop session
-  services.displayManager.defaultSession = "xfce";
 
   # VM-specific services
   services = {

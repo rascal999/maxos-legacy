@@ -110,6 +110,8 @@ in {
 
     # Home Manager configuration
     home-manager.users.${cfg.identity.username} = { pkgs, ... }: {
+      home.stateVersion = "23.11";  # Match system state version
+      
       # XDG Base Directory specification
       xdg = {
         enable = true;

@@ -1,22 +1,21 @@
-# Import all user configurations in this directory
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
-let
-  # Get all files in this directory
-  files = builtins.readDir ./.;
+{
+  # This module manages user accounts and their configurations.
+  # It defines user properties like permissions, groups, and initial passwords.
   
-  # Filter for .nix files that are not default.nix or in docs/
-  userFiles = lib.filterAttrs (name: type:
-    type == "regular" &&
-    lib.hasSuffix ".nix" name &&
-    name != "default.nix" &&
-    !lib.hasPrefix "docs/" name
-  ) files;
-  
-  # Convert filenames to paths
-  userPaths = map (name: ./. + "/${name}") (builtins.attrNames userFiles);
-
-in {
-  # Import all user configurations
-  imports = userPaths;
+  users.users = {
+    # Define your user configurations here.
+    # Each user should be configured as an attribute set with appropriate properties.
+    #
+    # Example user configuration:
+    # myuser = {
+    #   isNormalUser = true;      # Creates a normal user account
+    #   extraGroups = [           # Additional groups for the user
+    #     "wheel"                 # Sudo access
+    #     "networkmanager"        # Network management permissions
+    #   ];
+    #   initialPassword = "changeme";  # Initial password (change after first login)
+    # };
+  };
 }
