@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ../common/shell.nix      # Shell configuration (zsh, aliases, etc)
-    ../common/git.nix        # Git configuration
-    ../common/direnv.nix     # direnv for project-specific environments
+    ../common/shell.nix       # Shell configuration (zsh, aliases, etc)
+    ../common/git.nix         # Git configuration
+    ../common/direnv.nix      # direnv for project-specific environments
     ../common/development.nix # Development tools
   ];
 
@@ -35,10 +35,10 @@
     p7zip
     
     # Misc
-    bat # Better cat
-    eza # Better ls
-    du-dust # Better du
-    duf # Better df
+    bat       # Better cat
+    eza       # Better ls
+    du-dust   # Better du
+    duf       # Better df
   ];
 
   # XDG Base Directory specification

@@ -8,7 +8,7 @@
 
   # VM-specific configuration
   networking = {
-    hostName = "server-test";  # Remove -vm suffix since qemu-vm.nix will add it
+    hostName = "server-test";    # Remove -vm suffix since qemu-vm.nix will add it
     useDHCP = lib.mkForce true;  # Simplified networking for VM
   };
 

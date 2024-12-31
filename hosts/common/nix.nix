@@ -30,8 +30,6 @@
       options = "--delete-older-than 30d";
     };
 
-    # Auto repair store paths (moved to settings)
-
     # Enable nixops state linking
     extraOptions = ''
       keep-outputs = true

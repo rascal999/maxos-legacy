@@ -10,7 +10,7 @@
   ];
 
   # Machine-specific configuration
-  networking.hostName = "desktop";
+  networking.hostName = "hero";
 
   # Boot configuration
   boot = {
