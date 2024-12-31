@@ -3,7 +3,7 @@
 {
   imports = [
     ../../profiles/vm.nix             # VM-specific optimizations and hardware config
-    ../../profiles/desktop.nix        # Desktop profile to test
+    ../../profiles/vm-minimal.nix     # Minimal desktop environment for testing
   ];
 
   # VM-specific configuration

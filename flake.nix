@@ -41,17 +41,43 @@
           inherit system;
           modules = [
             # VM base configuration
-            ({ modulesPath, config, ... }: {
+            ({ config, pkgs, lib, modulesPath, ... }: {
               imports = [
                 (modulesPath + "/virtualisation/qemu-vm.nix")
               ];
+              
+              # VM hardware configuration
               virtualisation = {
                 cores = 2;
                 memorySize = 4096;
                 diskSize = 8192;
               };
-              # Set VM-specific options
               virtualisation.vmVariant.virtualisation.graphics = false;
+
+              # Ensure consistent nixpkgs configuration
+              nixpkgs = {
+                config = {
+                  allowUnfree = true;
+                };
+                overlays = [];
+              };
+
+              # Disable problematic services in VM
+              services = {
+                thermald.enable = lib.mkForce false;
+                tlp.enable = lib.mkForce false;
+              };
+
+              # Disable hardware features not needed in VM
+              hardware = {
+                bluetooth.enable = lib.mkForce false;
+              };
+
+              # Ensure ccache is properly configured
+              programs.ccache = {
+                enable = lib.mkForce false;
+                packageNames = lib.mkForce [];
+              };
             })
           ] ++ modules;
           specialArgs = { inherit inputs; };
