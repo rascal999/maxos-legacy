@@ -69,9 +69,11 @@ in {
       # X server configuration
       {
         xserver = {
-          layout = cfg.keyboard.layout;
-          xkbVariant = cfg.keyboard.variant;
-          xkbOptions = concatStringsSep "," cfg.keyboard.options;
+          xkb = {
+            layout = cfg.keyboard.layout;
+            variant = cfg.keyboard.variant;
+            options = concatStringsSep "," cfg.keyboard.options;
+          };
         };
       }
 
@@ -130,7 +132,7 @@ in {
       programs.${cfg.shell.default} = {
         enable = true;
         enableCompletion = cfg.shell.enableCompletion;
-        enableSyntaxHighlighting = cfg.shell.enableSyntaxHighlighting;
+        syntaxHighlighting.enable = cfg.shell.enableSyntaxHighlighting;
         shellAliases = lib.mkForce cfg.shell.aliases;
       };
 

@@ -6,7 +6,7 @@ This directory contains user-specific configurations for MaxOS. Each file in thi
 
 1. Copy the example configuration:
 ```bash
-cp example-user.nix your-username.nix
+cp ./docs/example-user.nix your-username.nix
 ```
 
 2. Edit the configuration file with your settings:
@@ -17,7 +17,7 @@ cp example-user.nix your-username.nix
 - Add development tools
 - Configure security settings
 
-See `example-user.nix` for a complete example with common settings, or use `user.nix` as a minimal template.
+See `./docs/example-user.nix` for a complete example with common settings, or use `user.nix` as a minimal template.
 
 ## Using Your Configuration
 

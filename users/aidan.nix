@@ -1,10 +1,10 @@
-# Default User Configuration Template
+# Test VM User Configuration
 { config, pkgs, lib, ... }:
 
 let
-  username = "user";
-  fullName = "Example User";
-  email = "user@example.com";
+  username = "aidan";
+  fullName = "Aidan Marlin";
+  email = "aidan.marlin@gmail.com";
 in {
   users.users.${username} = {
     isNormalUser = true;

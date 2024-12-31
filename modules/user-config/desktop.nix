@@ -16,27 +16,29 @@ let
 in {
   config = mkIf (cfg != null && cfg.desktop.enable) {
     # Desktop environment
-    services.xserver = {
-      enable = true;
+    services = {
+      displayManager.defaultSession = lib.mkForce (
+        if cfg.desktop.environment == "i3" then "none+i3"
+        else if cfg.desktop.environment == "gnome" then "gnome"
+        else if cfg.desktop.environment == "kde" then "plasma"
+        else "xfce"
+      );
       
-      # Desktop manager configuration
-      desktopManager = {
-        gnome.enable = lib.mkForce (cfg.desktop.environment == "gnome");
-        plasma5.enable = lib.mkForce (cfg.desktop.environment == "kde");
-        xfce.enable = lib.mkForce (cfg.desktop.environment == "xfce");
-      };
+      xserver = {
+        enable = true;
+        
+        # Desktop manager configuration
+        desktopManager = {
+          gnome.enable = lib.mkForce (cfg.desktop.environment == "gnome");
+          plasma5.enable = lib.mkForce (cfg.desktop.environment == "kde");
+          xfce.enable = lib.mkForce (cfg.desktop.environment == "xfce");
+        };
 
-      # Window manager configuration
-      windowManager.i3.enable = cfg.desktop.environment == "i3";
+        # Window manager configuration
+        windowManager.i3.enable = cfg.desktop.environment == "i3";
 
-      # Display manager configuration
-      displayManager = {
-        defaultSession = lib.mkForce (
-          if cfg.desktop.environment == "i3" then "none+i3"
-          else if cfg.desktop.environment == "gnome" then "gnome"
-          else if cfg.desktop.environment == "kde" then "plasma"
-          else "xfce"
-        );
+        # Display manager configuration
+        displayManager.lightdm.enable = true;
       };
     };
 

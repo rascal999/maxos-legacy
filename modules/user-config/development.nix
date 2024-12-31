@@ -113,7 +113,7 @@ in {
       };
 
       # Editor configurations
-      programs.neovim = mkIf (builtins.elem pkgs.neovim cfg.development.editors) {
+      programs.neovim = {
         enable = true;
         viAlias = true;
         vimAlias = true;

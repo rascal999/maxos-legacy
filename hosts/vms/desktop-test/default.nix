@@ -21,6 +21,9 @@
     # Enable SPICE agent for better integration
     spice-vdagentd.enable = true;
     spice-webdavd.enable = true;
+
+    # Disable hologram agent in VM
+    hologram-agent.enable = lib.mkForce false;
   };
 
   # Additional packages for testing desktop features
