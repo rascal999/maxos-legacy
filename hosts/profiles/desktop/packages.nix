@@ -77,6 +77,7 @@
       
       # Office
       libreoffice
+      logseq
       
       # Utilities
       flameshot

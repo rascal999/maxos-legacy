@@ -1,370 +1,1098 @@
 building the system configuration...
 warning: Git tree '/home/user/git/github/monorepo' is dirty
+evaluation warning: No password set for user user. Set auth.hashedPassword or use agenix.
 error:
-       … while calling the 'seq' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:334:18:
-          333|         options = checked options;
-          334|         config = checked (removeAttrs config [ "_module" ]);
-             |                  ^
-          335|         _module = checked (config._module);
-
-       … while evaluating a branch condition
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:273:9:
-          272|       checkUnmatched =
-          273|         if config._module.check && config._module.freeformType == null && merged.unmatchedDefns != [] then
-             |         ^
-          274|           let
-
-       … in the left operand of the AND (&&) operator
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:273:72:
-          272|       checkUnmatched =
-          273|         if config._module.check && config._module.freeformType == null && merged.unmatchedDefns != [] then
-             |                                                                        ^
-          274|           let
-
-       … in the left operand of the AND (&&) operator
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:273:33:
-          272|       checkUnmatched =
-          273|         if config._module.check && config._module.freeformType == null && merged.unmatchedDefns != [] then
-             |                                 ^
-          274|           let
-
-       … while evaluating a branch condition
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:266:12:
-          265|
-          266|         in if declaredConfig._module.freeformType == null then declaredConfig
+       … while calling the 'derivationStrict' builtin
+         at <nix/derivation-internal.nix>:34:12:
+           33|
+           34|   strict = derivationStrict drvAttrs;
              |            ^
-          267|           # Because all definitions that had an associated option ended in
+           35|
+
+       … while evaluating derivation 'nixos-vm'
+         whose name attribute is located at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/make-derivation.nix:375:7
+
+       … while evaluating attribute 'buildCommand' of derivation 'nixos-vm'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/trivial-builders/default.nix:59:17:
+           58|         enableParallelBuilding = true;
+           59|         inherit buildCommand name;
+             |                 ^
+           60|         passAsFile = [ "buildCommand" ]
 
        … from call site
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:254:28:
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/virtualisation/qemu-vm.nix:1388:19:
+         1387|           mkdir -p $out/bin
+         1388|           ln -s ${config.system.build.toplevel} $out/system
+             |                   ^
+         1389|           ln -s ${hostPkgs.writeScript "run-nixos-vm" startVM} $out/bin/run-${config.system.name}-vm
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1570:24:
+         1569|     let f = attrPath:
+         1570|       zipAttrsWith (n: values:
+             |                        ^
+         1571|         let here = attrPath ++ [n]; in
+
+       … while calling the 'head' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1574:11:
+         1573|         || pred here (elemAt values 1) (head values) then
+         1574|           head values
+             |           ^
+         1575|         else
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1204:18:
+         1203|         mapAttrs
+         1204|           (name: value:
+             |                  ^
+         1205|             if isAttrs value && cond value
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1207:18:
+         1206|             then recurse (path ++ [ name ]) value
+         1207|             else f (path ++ [ name ]) value);
+             |                  ^
+         1208|     in
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:254:72:
           253|           # For definitions that have an associated option
           254|           declaredConfig = mapAttrsRecursiveCond (v: ! isOption v) (_: v: v.value) options;
-             |                            ^
+             |                                                                        ^
           255|
 
-       … while calling 'mapAttrsRecursiveCond'
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1200:5:
-         1199|     f:
-         1200|     set:
-             |     ^
-         1201|     let
-
-       … while calling the 'mapAttrs' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1209:5:
-         1208|     in
-         1209|     recurse [ ] set;
-             |     ^
-         1210|
-
-       … while evaluating the attribute 'matchedOptions'
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:692:15:
-          691|     in {
-          692|       inherit matchedOptions;
-             |               ^
-          693|
-
-       … while calling the 'mapAttrs' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:683:24:
-          682|
-          683|       matchedOptions = mapAttrs (n: v: v.matchedOptions) resultsByName;
-             |                        ^
-          684|
-
-       … while calling the 'mapAttrs' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:636:23:
-          635|
-          636|       resultsByName = mapAttrs (name: decls:
-             |                       ^
-          637|         # We're descending into attribute ‘name’.
-
-       … while calling the 'zipAttrsWith' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:553:9:
-          552|       declsByName =
-          553|         zipAttrsWith
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:846:9:
+          845|     in warnDeprecation opt //
+          846|       { value = addErrorContext "while evaluating the option `${showOption loc}':" value;
              |         ^
-          554|           (n: concatLists)
+          847|         inherit (res.defsFinal') highestPrio;
 
-       … while calling the 'map' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:555:12:
-          554|           (n: concatLists)
-          555|           (map
-             |            ^
-          556|             (module: let subtree = module.options; in
+       … while evaluating the option `system.build.toplevel':
 
-       … from call site
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:246:33:
-          245|           ({ inherit lib options config specialArgs; } // specialArgs);
-          246|         in mergeModules prefix (reverseList collected);
-             |                                 ^
-          247|
+       … while evaluating the attribute 'mergedValue'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:881:5:
+          880|     # Type-check the remaining definitions, and merge them. Or throw if no definitions.
+          881|     mergedValue =
+             |     ^
+          882|       if isDefined then
 
-       … while calling 'reverseList'
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/lists.nix:1116:17:
-         1115|   */
-         1116|   reverseList = xs:
-             |                 ^
-         1117|     let l = length xs; in genList (n: elemAt xs (l - n - 1)) l;
-
-       … while calling the 'genList' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/lists.nix:1117:27:
-         1116|   reverseList = xs:
-         1117|     let l = length xs; in genList (n: elemAt xs (l - n - 1)) l;
-             |                           ^
-         1118|
-
-       … while evaluating the second argument passed to builtins.genList
-
-       … while calling the 'length' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/lists.nix:1117:13:
-         1116|   reverseList = xs:
-         1117|     let l = length xs; in genList (n: elemAt xs (l - n - 1)) l;
-             |             ^
-         1118|
-
-       … from call site
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:241:25:
-          240|       merged =
-          241|         let collected = collectModules
-             |                         ^
-          242|           class
-
-       … while calling anonymous lambda
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:452:37:
-          451|
-          452|     in modulesPath: initialModules: args:
-             |                                     ^
-          453|       filterModules modulesPath (collectStructuredModules unknownModule "" initialModules args);
-
-       … from call site
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:453:7:
-          452|     in modulesPath: initialModules: args:
-          453|       filterModules modulesPath (collectStructuredModules unknownModule "" initialModules args);
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:882:7:
+          881|     mergedValue =
+          882|       if isDefined then
              |       ^
-          454|
+          883|         if all (def: type.check def.value) defsFinal then type.merge loc defsFinal
 
-       … while calling 'filterModules'
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:420:36:
-          419|       # modules recursively. It returns the final list of unique-by-key modules
-          420|       filterModules = modulesPath: { disabled, modules }:
-             |                                    ^
-          421|         let
+       … while evaluating the attribute 'values'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:875:9:
+          874|       in {
+          875|         values = defs''';
+             |         ^
+          876|         inherit (defs'') highestPrio;
 
-       … while calling the 'map' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:447:12:
-          446|           keyFilter = filter (attrs: ! elem attrs.key disabledKeys);
-          447|         in map (attrs: attrs.module) (genericClosure {
-             |            ^
-          448|           startSet = keyFilter modules;
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:871:11:
+          870|           # Avoid sorting if we don't have to.
+          871|           if any (def: def.value._type or "" == "order") defs''.values
+             |           ^
+          872|           then sortProperties defs''.values
 
-       … while calling the 'genericClosure' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:447:39:
-          446|           keyFilter = filter (attrs: ! elem attrs.key disabledKeys);
-          447|         in map (attrs: attrs.module) (genericClosure {
-             |                                       ^
-          448|           startSet = keyFilter modules;
+       … while calling the 'any' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:871:14:
+          870|           # Avoid sorting if we don't have to.
+          871|           if any (def: def.value._type or "" == "order") defs''.values
+             |              ^
+          872|           then sortProperties defs''.values
 
-       … while calling the 'filter' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:448:22:
-          447|         in map (attrs: attrs.module) (genericClosure {
-          448|           startSet = keyFilter modules;
-             |                      ^
-          449|           operator = attrs: keyFilter attrs.modules;
-
-       … while calling anonymous lambda
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:446:31:
-          445|           disabledKeys = concatMap ({ file, disabled }: map (moduleKey file) disabled) disabled;
-          446|           keyFilter = filter (attrs: ! elem attrs.key disabledKeys);
-             |                               ^
-          447|         in map (attrs: attrs.module) (genericClosure {
-
-       … in the argument of the not operator
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:446:40:
-          445|           disabledKeys = concatMap ({ file, disabled }: map (moduleKey file) disabled) disabled;
-          446|           keyFilter = filter (attrs: ! elem attrs.key disabledKeys);
-             |                                        ^
-          447|         in map (attrs: attrs.module) (genericClosure {
-
-       … while calling the 'elem' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:446:40:
-          445|           disabledKeys = concatMap ({ file, disabled }: map (moduleKey file) disabled) disabled;
-          446|           keyFilter = filter (attrs: ! elem attrs.key disabledKeys);
-             |                                        ^
-          447|         in map (attrs: attrs.module) (genericClosure {
+       … while evaluating the attribute 'values'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:974:7:
+          973|     in {
+          974|       values = concatMap (def: if getPrio def == highestPrio then [(strip def)] else []) defs;
+             |       ^
+          975|       inherit highestPrio;
 
        … while calling the 'concatMap' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:445:26:
-          444|
-          445|           disabledKeys = concatMap ({ file, disabled }: map (moduleKey file) disabled) disabled;
-             |                          ^
-          446|           keyFilter = filter (attrs: ! elem attrs.key disabledKeys);
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:974:16:
+          973|     in {
+          974|       values = concatMap (def: if getPrio def == highestPrio then [(strip def)] else []) defs;
+             |                ^
+          975|       inherit highestPrio;
 
-       … while calling the 'concatLists' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:402:24:
-          401|           collectResults = modules: {
-          402|             disabled = concatLists (catAttrs "disabled" modules);
-             |                        ^
-          403|             inherit modules;
-
-       … while evaluating the attribute 'disabled'
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:402:13:
-          401|           collectResults = modules: {
-          402|             disabled = concatLists (catAttrs "disabled" modules);
-             |             ^
-          403|             inherit modules;
-
-       … while calling the 'concatLists' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:402:24:
-          401|           collectResults = modules: {
-          402|             disabled = concatLists (catAttrs "disabled" modules);
-             |                        ^
-          403|             inherit modules;
-
-       … while evaluating the attribute 'disabled'
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:402:13:
-          401|           collectResults = modules: {
-          402|             disabled = concatLists (catAttrs "disabled" modules);
-             |             ^
-          403|             inherit modules;
-
-       … while calling the 'concatLists' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:402:24:
-          401|           collectResults = modules: {
-          402|             disabled = concatLists (catAttrs "disabled" modules);
-             |                        ^
-          403|             inherit modules;
-
-       … while evaluating a branch condition
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:413:25:
-          412|             modules = collectedImports.modules;
-          413|             disabled = (if module.disabledModules != [] then [{ file = module._file; disabled = module.disabledModules; }] else []) ++ collectedImports.disabled;
-             |                         ^
-          414|           }) initialModules);
-
-       … from call site
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:407:22:
-          406|           let
-          407|             module = checkModule (loadModule args parentFile "${parentKey}:anon-${toString n}" x);
-             |                      ^
-          408|             collectedImports = collectStructuredModules module._file module.key module.imports args;
+       … while calling the 'concatMap' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:861:17:
+          860|         # Process mkMerge and mkIf properties.
+          861|         defs' = concatMap (m:
+             |                 ^
+          862|           map (value: { inherit (m) file; inherit value; }) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
 
        … while calling anonymous lambda
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:366:11:
-          365|         then
-          366|           m:
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:861:28:
+          860|         # Process mkMerge and mkIf properties.
+          861|         defs' = concatMap (m:
+             |                            ^
+          862|           map (value: { inherit (m) file; inherit value; }) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
+
+       … while calling the 'map' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:862:11:
+          861|         defs' = concatMap (m:
+          862|           map (value: { inherit (m) file; inherit value; }) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
              |           ^
-          367|             if m._class != null -> m._class == class
+          863|         ) defs;
 
-       … while evaluating a branch condition
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:367:13:
-          366|           m:
-          367|             if m._class != null -> m._class == class
-             |             ^
-          368|             then m
-
-       … in the left operand of the IMPL (->) operator
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:367:33:
-          366|           m:
-          367|             if m._class != null -> m._class == class
-             |                                 ^
-          368|             then m
+       … while evaluating definitions from `/nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/top-level.nix':
 
        … from call site
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:407:35:
-          406|           let
-          407|             module = checkModule (loadModule args parentFile "${parentKey}:anon-${toString n}" x);
-             |                                   ^
-          408|             collectedImports = collectStructuredModules module._file module.key module.imports args;
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:862:128:
+          861|         defs' = concatMap (m:
+          862|           map (value: { inherit (m) file; inherit value; }) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
+             |                                                                                                                                ^
+          863|         ) defs;
 
-       … while calling 'loadModule'
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:348:53:
-          347|       # Like unifyModuleSyntax, but also imports paths and calls functions if necessary
-          348|       loadModule = args: fallbackFile: fallbackKey: m:
+       … while calling 'dischargeProperties'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:933:25:
+          932|   */
+          933|   dischargeProperties = def:
+             |                         ^
+          934|     if def._type or "" == "merge" then
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:934:5:
+          933|   dischargeProperties = def:
+          934|     if def._type or "" == "merge" then
+             |     ^
+          935|       concatMap dischargeProperties def.contents
+
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:614:53:
+          613|                 (n: value:
+          614|                   [{ inherit (module) file; inherit value; }]
              |                                                     ^
-          349|         if isFunction m then
+          615|                 )
 
        … from call site
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:361:14:
-          360|           throw "Module imports can't be nested lists. Perhaps you meant to remove one level of lists? Definitions: ${showDefs defs}"
-          361|         else unifyModuleSyntax (toString m) (toString m) (applyModuleArgsIfFunction (toString m) (import m) args);
-             |              ^
-          362|
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/top-level.nix:74:10:
+           73|     then throw "\nFailed assertions:\n${concatStringsSep "\n" (map (x: "- ${x}") failedAssertions)}"
+           74|     else showWarnings config.warnings baseSystem;
+             |          ^
+           75|
 
-       … while calling 'unifyModuleSyntax'
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:461:34:
-          460|      of ‘options’, ‘config’ and ‘imports’ attributes. */
-          461|   unifyModuleSyntax = file: key: m:
-             |                                  ^
-          462|     let
-
-       … while evaluating a branch condition
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:470:5:
-          469|     in
-          470|     if m ? config || m ? options then
-             |     ^
-          471|       let badAttrs = removeAttrs m ["_class" "_file" "key" "disabledModules" "imports" "options" "config" "meta" "freeformType"]; in
-
-       … in the left operand of the OR (||) operator
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:470:19:
-          469|     in
-          470|     if m ? config || m ? options then
-             |                   ^
-          471|       let badAttrs = removeAttrs m ["_class" "_file" "key" "disabledModules" "imports" "options" "config" "meta" "freeformType"]; in
+       … while calling 'showWarnings'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/trivial.nix:972:28:
+          971|
+          972|   showWarnings = warnings: res: lib.foldr (w: x: warn w x) res warnings;
+             |                            ^
+          973|
 
        … from call site
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:361:59:
-          360|           throw "Module imports can't be nested lists. Perhaps you meant to remove one level of lists? Definitions: ${showDefs defs}"
-          361|         else unifyModuleSyntax (toString m) (toString m) (applyModuleArgsIfFunction (toString m) (import m) args);
-             |                                                           ^
-          362|
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/trivial.nix:972:33:
+          971|
+          972|   showWarnings = warnings: res: lib.foldr (w: x: warn w x) res warnings;
+             |                                 ^
+          973|
 
-       … while calling 'applyModuleArgsIfFunction'
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:495:39:
-          494|
-          495|   applyModuleArgsIfFunction = key: f: args@{ config, ... }:
-             |                                       ^
-          496|     if isFunction f then applyModuleArgs key f args else f;
-
-       … while evaluating a branch condition
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:496:5:
-          495|   applyModuleArgsIfFunction = key: f: args@{ config, ... }:
-          496|     if isFunction f then applyModuleArgs key f args else f;
-             |     ^
-          497|
+       … while calling 'foldr'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/lists.nix:121:20:
+          120|   */
+          121|   foldr = op: nul: list:
+             |                    ^
+          122|     let
 
        … from call site
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:496:8:
-          495|   applyModuleArgsIfFunction = key: f: args@{ config, ... }:
-          496|     if isFunction f then applyModuleArgs key f args else f;
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/lists.nix:128:8:
+          127|         else op (elemAt list n) (fold' (n + 1));
+          128|     in fold' 0;
              |        ^
-          497|
+          129|
 
-       … while calling 'isFunction'
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/trivial.nix:1034:16:
-         1033|   */
-         1034|   isFunction = f: builtins.isFunction f ||
+       … while calling 'fold''
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/lists.nix:124:15:
+          123|       len = length list;
+          124|       fold' = n:
+             |               ^
+          125|         if n == len
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/lists.nix:127:14:
+          126|         then nul
+          127|         else op (elemAt list n) (fold' (n + 1));
+             |              ^
+          128|     in fold' 0;
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/trivial.nix:972:47:
+          971|
+          972|   showWarnings = warnings: res: lib.foldr (w: x: warn w x) res warnings;
+             |                                               ^
+          973|
+
+       … while calling the 'warn' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/trivial.nix:972:50:
+          971|
+          972|   showWarnings = warnings: res: lib.foldr (w: x: warn w x) res warnings;
+             |                                                  ^
+          973|
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/lists.nix:127:34:
+          126|         then nul
+          127|         else op (elemAt list n) (fold' (n + 1));
+             |                                  ^
+          128|     in fold' 0;
+
+       … while calling 'fold''
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/lists.nix:124:15:
+          123|       len = length list;
+          124|       fold' = n:
+             |               ^
+          125|         if n == len
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/top-level.nix:54:16:
+           53|   # makes it bootable. See `activatable-system.nix`.
+           54|   baseSystem = pkgs.stdenvNoCC.mkDerivation ({
              |                ^
-         1035|     (f ? __functor && isFunction (f.__functor f));
+           55|     name = "nixos-system-${config.system.name}-${config.system.nixos.label}";
 
-       … in the left operand of the OR (||) operator
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/trivial.nix:1034:41:
-         1033|   */
-         1034|   isFunction = f: builtins.isFunction f ||
-             |                                         ^
-         1035|     (f ? __functor && isFunction (f.__functor f));
+       … while calling 'mkDerivation'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/make-derivation.nix:65:5:
+           64|   mkDerivation =
+           65|     fnOrAttrs:
+             |     ^
+           66|       if builtins.isFunction fnOrAttrs
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/make-derivation.nix:66:7:
+           65|     fnOrAttrs:
+           66|       if builtins.isFunction fnOrAttrs
+             |       ^
+           67|       then makeDerivationExtensible fnOrAttrs
 
        … while calling the 'isFunction' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/trivial.nix:1034:19:
-         1033|   */
-         1034|   isFunction = f: builtins.isFunction f ||
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/make-derivation.nix:66:10:
+           65|     fnOrAttrs:
+           66|       if builtins.isFunction fnOrAttrs
+             |          ^
+           67|       then makeDerivationExtensible fnOrAttrs
+
+       … in the right operand of the update (//) operator
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/top-level.nix:66:5:
+           65|     inherit (config.system) extraDependencies;
+           66|   } // config.system.systemBuilderArgs);
+             |     ^
+           67|
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/top-level.nix:66:8:
+           65|     inherit (config.system) extraDependencies;
+           66|   } // config.system.systemBuilderArgs);
+             |        ^
+           67|
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1204:18:
+         1203|         mapAttrs
+         1204|           (name: value:
+             |                  ^
+         1205|             if isAttrs value && cond value
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1207:18:
+         1206|             then recurse (path ++ [ name ]) value
+         1207|             else f (path ++ [ name ]) value);
+             |                  ^
+         1208|     in
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:254:72:
+          253|           # For definitions that have an associated option
+          254|           declaredConfig = mapAttrsRecursiveCond (v: ! isOption v) (_: v: v.value) options;
+             |                                                                        ^
+          255|
+
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:846:9:
+          845|     in warnDeprecation opt //
+          846|       { value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |         ^
+          847|         inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.systemBuilderArgs':
+
+       … while evaluating the attribute 'mergedValue'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:881:5:
+          880|     # Type-check the remaining definitions, and merge them. Or throw if no definitions.
+          881|     mergedValue =
+             |     ^
+          882|       if isDefined then
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:883:59:
+          882|       if isDefined then
+          883|         if all (def: type.check def.value) defsFinal then type.merge loc defsFinal
+             |                                                           ^
+          884|         else let allInvalid = filter (def: ! type.check def.value) defsFinal;
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:656:14:
+          655|         # Non-lazy merge Function
+          656|         loc: defs:
+             |              ^
+          657|           mapAttrs (n: v: v.value) (filterAttrs (n: v: v ? value) (zipAttrsWith (name: defs:
+
+       … while calling the 'mapAttrs' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:657:11:
+          656|         loc: defs:
+          657|           mapAttrs (n: v: v.value) (filterAttrs (n: v: v ? value) (zipAttrsWith (name: defs:
+             |           ^
+          658|               (mergeDefinitions (loc ++ [name]) elemType (defs)).optionalValue
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:657:37:
+          656|         loc: defs:
+          657|           mapAttrs (n: v: v.value) (filterAttrs (n: v: v ? value) (zipAttrsWith (name: defs:
+             |                                     ^
+          658|               (mergeDefinitions (loc ++ [name]) elemType (defs)).optionalValue
+
+       … while calling 'filterAttrs'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:646:5:
+          645|     pred:
+          646|     set:
+             |     ^
+          647|     removeAttrs set (filter (name: ! pred name set.${name}) (attrNames set));
+
+       … while calling the 'removeAttrs' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:647:5:
+          646|     set:
+          647|     removeAttrs set (filter (name: ! pred name set.${name}) (attrNames set));
+             |     ^
+          648|
+
+       … while calling the 'filter' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:647:22:
+          646|     set:
+          647|     removeAttrs set (filter (name: ! pred name set.${name}) (attrNames set));
+             |                      ^
+          648|
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:647:30:
+          646|     set:
+          647|     removeAttrs set (filter (name: ! pred name set.${name}) (attrNames set));
+             |                              ^
+          648|
+
+       … in the argument of the not operator
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:647:38:
+          646|     set:
+          647|     removeAttrs set (filter (name: ! pred name set.${name}) (attrNames set));
+             |                                      ^
+          648|
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:647:38:
+          646|     set:
+          647|     removeAttrs set (filter (name: ! pred name set.${name}) (attrNames set));
+             |                                      ^
+          648|
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:657:53:
+          656|         loc: defs:
+          657|           mapAttrs (n: v: v.value) (filterAttrs (n: v: v ? value) (zipAttrsWith (name: defs:
+             |                                                     ^
+          658|               (mergeDefinitions (loc ++ [name]) elemType (defs)).optionalValue
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:647:48:
+          646|     set:
+          647|     removeAttrs set (filter (name: ! pred name set.${name}) (attrNames set));
+             |                                                ^
+          648|
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:657:88:
+          656|         loc: defs:
+          657|           mapAttrs (n: v: v.value) (filterAttrs (n: v: v ? value) (zipAttrsWith (name: defs:
+             |                                                                                        ^
+          658|               (mergeDefinitions (loc ++ [name]) elemType (defs)).optionalValue
+
+       … while evaluating the attribute 'optionalValue'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:893:5:
+          892|
+          893|     optionalValue =
+             |     ^
+          894|       if isDefined then { value = mergedValue; }
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:894:7:
+          893|     optionalValue =
+          894|       if isDefined then { value = mergedValue; }
+             |       ^
+          895|       else {};
+
+       (8 duplicate frames omitted)
+
+       … while evaluating definitions from `/nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/activatable-system.nix':
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:862:128:
+          861|         defs' = concatMap (m:
+          862|           map (value: { inherit (m) file; inherit value; }) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
+             |                                                                                                                                ^
+          863|         ) defs;
+
+       … while calling 'dischargeProperties'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:933:25:
+          932|   */
+          933|   dischargeProperties = def:
+             |                         ^
+          934|     if def._type or "" == "merge" then
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:934:5:
+          933|   dischargeProperties = def:
+          934|     if def._type or "" == "merge" then
+             |     ^
+          935|       concatMap dischargeProperties def.contents
+
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:608:71:
+          607|       # Push down position info.
+          608|       pushPositions = map (def: mapAttrs (n: v: { inherit (def) file; value = v; }) def.value);
+             |                                                                       ^
+          609|       binOp = lhs: rhs:
+
+       … while evaluating the attribute 'system.activationScripts.script'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/activation-script.nix:140:9:
+          139|       apply = set: set // {
+          140|         script = systemActivationScript set false;
+             |         ^
+          141|       };
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/activation-script.nix:140:18:
+          139|       apply = set: set // {
+          140|         script = systemActivationScript set false;
+             |                  ^
+          141|       };
+
+       … while calling 'systemActivationScript'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/activation-script.nix:20:33:
+           19|
+           20|   systemActivationScript = set: onlyDry: let
+             |                                 ^
+           21|     set' = mapAttrs (_: v: if isString v then (noDepEntry v) // { supportsDryActivation = false; } else v) set;
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/activation-script.nix:51:9:
+           50|
+           51|       ${textClosureMap id (withDrySnippets) (attrNames withDrySnippets)}
+             |         ^
+           52|
+
+       … while calling 'textClosureMap'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings-with-deps.nix:75:35:
+           74|
+           75|   textClosureMap = f: predefined: names:
+             |                                   ^
+           76|     concatStringsSep "\n" (map f (textClosureList predefined names));
+
+       … while calling the 'concatStringsSep' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings-with-deps.nix:76:5:
+           75|   textClosureMap = f: predefined: names:
+           76|     concatStringsSep "\n" (map f (textClosureList predefined names));
+             |     ^
+           77|
+
+       … while calling 'id'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/trivial.nix:39:8:
+           38|   */
+           39|   id = x: x;
+             |        ^
+           40|
+
+       … while evaluating the attribute 'text'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/activation-script.nix:9:5:
+            8|   addAttributeName = mapAttrs (a: v: v // {
+            9|     text = ''
+             |     ^
+           10|       #### Activation script snippet ${a}:
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/activation/activation-script.nix:12:9:
+           11|       _localstatus=0
+           12|       ${v.text}
+             |         ^
+           13|
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1204:18:
+         1203|         mapAttrs
+         1204|           (name: value:
+             |                  ^
+         1205|             if isAttrs value && cond value
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1207:18:
+         1206|             then recurse (path ++ [ name ]) value
+         1207|             else f (path ++ [ name ]) value);
+             |                  ^
+         1208|     in
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:254:72:
+          253|           # For definitions that have an associated option
+          254|           declaredConfig = mapAttrsRecursiveCond (v: ! isOption v) (_: v: v.value) options;
+             |                                                                        ^
+          255|
+
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:846:9:
+          845|     in warnDeprecation opt //
+          846|       { value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |         ^
+          847|         inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.activationScripts.etc.text':
+
+       (10 duplicate frames omitted)
+
+       … while evaluating definitions from `/nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/etc/etc-activation.nix':
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:862:128:
+          861|         defs' = concatMap (m:
+          862|           map (value: { inherit (m) file; inherit value; }) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
+             |                                                                                                                                ^
+          863|         ) defs;
+
+       … while calling 'dischargeProperties'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:933:25:
+          932|   */
+          933|   dischargeProperties = def:
+             |                         ^
+          934|     if def._type or "" == "merge" then
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:934:5:
+          933|   dischargeProperties = def:
+          934|     if def._type or "" == "merge" then
+             |     ^
+          935|       concatMap dischargeProperties def.contents
+
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:614:53:
+          613|                 (n: value:
+          614|                   [{ inherit (module) file; inherit value; }]
+             |                                                     ^
+          615|                 )
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/etc/etc-activation.nix:18:9:
+           17|         "groups"
+           18|       ] config.system.build.etcActivationCommands;
+             |         ^
+           19|     }
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1570:24:
+         1569|     let f = attrPath:
+         1570|       zipAttrsWith (n: values:
+             |                        ^
+         1571|         let here = attrPath ++ [n]; in
+
+       … while calling the 'head' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1574:11:
+         1573|         || pred here (elemAt values 1) (head values) then
+         1574|           head values
+             |           ^
+         1575|         else
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:647:31:
+          646|         loc: defs:
+          647|           zipAttrsWith (name: defs:
+             |                               ^
+          648|             let merged = mergeDefinitions (loc ++ [name]) elemType defs;
+
+       … while evaluating the attribute 'optionalValue.value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:893:5:
+          892|
+          893|     optionalValue =
+             |     ^
+          894|       if isDefined then { value = mergedValue; }
+
+       (9 duplicate frames omitted)
+
+       … while evaluating definitions from `/nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/etc/etc.nix':
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:862:128:
+          861|         defs' = concatMap (m:
+          862|           map (value: { inherit (m) file; inherit value; }) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
+             |                                                                                                                                ^
+          863|         ) defs;
+
+       … while calling 'dischargeProperties'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:933:25:
+          932|   */
+          933|   dischargeProperties = def:
+             |                         ^
+          934|     if def._type or "" == "merge" then
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:934:5:
+          933|   dischargeProperties = def:
+          934|     if def._type or "" == "merge" then
+             |     ^
+          935|       concatMap dischargeProperties def.contents
+
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:608:71:
+          607|       # Push down position info.
+          608|       pushPositions = map (def: mapAttrs (n: v: { inherit (def) file; value = v; }) def.value);
+             |                                                                       ^
+          609|       binOp = lhs: rhs:
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:273:39:
+          272|         then value
+          273|         else { ${elemAt attrPath n} = atDepth (n + 1); };
+             |                                       ^
+          274|     in atDepth 0;
+
+       … while calling 'atDepth'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:270:17:
+          269|       len = length attrPath;
+          270|       atDepth = n:
+             |                 ^
+          271|         if n == len
+
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:614:53:
+          613|                 (n: value:
+          614|                   [{ inherit (module) file; inherit value; }]
+             |                                                     ^
+          615|                 )
+
+       … while calling the 'getAttr' builtin
+         at <nix/derivation-internal.nix>:44:19:
+           43|       value = commonAttrs // {
+           44|         outPath = builtins.getAttr outputName strict;
              |                   ^
-         1035|     (f ? __functor && isFunction (f.__functor f));
+           45|         drvPath = strict.drvPath;
 
-       … while calling the 'import' builtin
-         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:361:99:
-          360|           throw "Module imports can't be nested lists. Perhaps you meant to remove one level of lists? Definitions: ${showDefs defs}"
-          361|         else unifyModuleSyntax (toString m) (toString m) (applyModuleArgsIfFunction (toString m) (import m) args);
-             |                                                                                                   ^
-          362|
+       … while calling the 'derivationStrict' builtin
+         at <nix/derivation-internal.nix>:34:12:
+           33|
+           34|   strict = derivationStrict drvAttrs;
+             |            ^
+           35|
 
-       error: path '/nix/store/1n7vgzl5k5q0smxnl5smjc3nrwpdd4z0-source/maxos/modules/ssh-keys.nix' does not exist
+       … while evaluating derivation 'etc'
+         whose name attribute is located at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/make-derivation.nix:375:7
+
+       … while evaluating attribute 'buildCommand' of derivation 'etc'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/trivial-builders/default.nix:59:17:
+           58|         enableParallelBuilding = true;
+           59|         inherit buildCommand name;
+             |                 ^
+           60|         passAsFile = [ "buildCommand" ]
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/etc/etc.nix:58:11:
+           57|         mkdir -p "$out/etc"
+           58|         ${lib.concatMapStringsSep "\n" (
+             |           ^
+           59|           etcEntry:
+
+       … while calling 'concatMapStringsSep'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings.nix:232:5:
+          231|     f:
+          232|     list: concatStringsSep sep (map f list);
+             |     ^
+          233|
+
+       … while calling the 'concatStringsSep' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings.nix:232:11:
+          231|     f:
+          232|     list: concatStringsSep sep (map f list);
+             |           ^
+          233|
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/etc/etc.nix:59:11:
+           58|         ${lib.concatMapStringsSep "\n" (
+           59|           etcEntry:
+             |           ^
+           60|           lib.escapeShellArgs [
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/etc/etc.nix:60:11:
+           59|           etcEntry:
+           60|           lib.escapeShellArgs [
+             |           ^
+           61|             "makeEtcEntry"
+
+       … while calling 'concatMapStringsSep'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings.nix:232:5:
+          231|     f:
+          232|     list: concatStringsSep sep (map f list);
+             |     ^
+          233|
+
+       … while calling the 'concatStringsSep' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings.nix:232:11:
+          231|     f:
+          232|     list: concatStringsSep sep (map f list);
+             |           ^
+          233|
+
+       … while calling 'escapeShellArg'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings.nix:1093:20:
+         1092|   */
+         1093|   escapeShellArg = arg:
+             |                    ^
+         1094|     let
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings.nix:1097:7:
+         1096|     in
+         1097|       if match "[[:alnum:],._+:@%/-]+" string == null
+             |       ^
+         1098|       then "'${replaceStrings ["'"] ["'\\''"] string}'"
+
+       … while calling the 'match' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings.nix:1097:10:
+         1096|     in
+         1097|       if match "[[:alnum:],._+:@%/-]+" string == null
+             |          ^
+         1098|       then "'${replaceStrings ["'"] ["'\\''"] string}'"
+
+       … while evaluating the second argument passed to builtins.match
+
+       … while calling the 'toString' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings.nix:1095:16:
+         1094|     let
+         1095|       string = toString arg;
+             |                ^
+         1096|     in
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/nixos/modules/system/etc/etc.nix:63:16:
+           62|             # Force local source paths to be added to the store
+           63|             "${etcEntry.source}"
+             |                ^
+           64|             etcEntry.target
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1204:18:
+         1203|         mapAttrs
+         1204|           (name: value:
+             |                  ^
+         1205|             if isAttrs value && cond value
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/attrsets.nix:1207:18:
+         1206|             then recurse (path ++ [ name ]) value
+         1207|             else f (path ++ [ name ]) value);
+             |                  ^
+         1208|     in
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:254:72:
+          253|           # For definitions that have an associated option
+          254|           declaredConfig = mapAttrsRecursiveCond (v: ! isOption v) (_: v: v.value) options;
+             |                                                                        ^
+          255|
+
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:846:9:
+          845|     in warnDeprecation opt //
+          846|       { value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |         ^
+          847|         inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `environment.etc.dbus-1.source':
+
+       … while evaluating the attribute 'mergedValue'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:881:5:
+          880|     # Type-check the remaining definitions, and merge them. Or throw if no definitions.
+          881|     mergedValue =
+             |     ^
+          882|       if isDefined then
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:883:9:
+          882|       if isDefined then
+          883|         if all (def: type.check def.value) defsFinal then type.merge loc defsFinal
+             |         ^
+          884|         else let allInvalid = filter (def: ! type.check def.value) defsFinal;
+
+       … while calling the 'all' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:883:12:
+          882|       if isDefined then
+          883|         if all (def: type.check def.value) defsFinal then type.merge loc defsFinal
+             |            ^
+          884|         else let allInvalid = filter (def: ! type.check def.value) defsFinal;
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:883:17:
+          882|       if isDefined then
+          883|         if all (def: type.check def.value) defsFinal then type.merge loc defsFinal
+             |                 ^
+          884|         else let allInvalid = filter (def: ! type.check def.value) defsFinal;
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:883:22:
+          882|       if isDefined then
+          883|         if all (def: type.check def.value) defsFinal then type.merge loc defsFinal
+             |                      ^
+          884|         else let allInvalid = filter (def: ! type.check def.value) defsFinal;
+
+       … while calling 'check'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:552:15:
+          551|       descriptionClass = "noun";
+          552|       check = x: isStringLike x && builtins.substring 0 1 (toString x) == "/";
+             |               ^
+          553|       merge = mergeEqualOption;
+
+       … in the right operand of the AND (&&) operator
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:552:33:
+          551|       descriptionClass = "noun";
+          552|       check = x: isStringLike x && builtins.substring 0 1 (toString x) == "/";
+             |                                 ^
+          553|       merge = mergeEqualOption;
+
+       … while calling the 'substring' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:552:36:
+          551|       descriptionClass = "noun";
+          552|       check = x: isStringLike x && builtins.substring 0 1 (toString x) == "/";
+             |                                    ^
+          553|       merge = mergeEqualOption;
+
+       … while calling the 'toString' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:552:60:
+          551|       descriptionClass = "noun";
+          552|       check = x: isStringLike x && builtins.substring 0 1 (toString x) == "/";
+             |                                                            ^
+          553|       merge = mergeEqualOption;
+
+       … while calling the 'getAttr' builtin
+         at <nix/derivation-internal.nix>:44:19:
+           43|       value = commonAttrs // {
+           44|         outPath = builtins.getAttr outputName strict;
+             |                   ^
+           45|         drvPath = strict.drvPath;
+
+       … while calling the 'derivationStrict' builtin
+         at <nix/derivation-internal.nix>:34:12:
+           33|
+           34|   strict = derivationStrict drvAttrs;
+             |            ^
+           35|
+
+       … while evaluating derivation 'dbus-1'
+         whose name attribute is located at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/make-derivation.nix:375:7
+
+       … while evaluating attribute 'serviceDirectories' of derivation 'dbus-1'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/development/libraries/dbus/make-dbus-conf.nix:19:13:
+           18|   {
+           19|     inherit serviceDirectories suidHelper apparmor;
+             |             ^
+           20|     preferLocalBuild = true;
+
+       … while calling anonymous lambda
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/types.nix:570:14:
+          569|       merge = loc: defs:
+          570|         map (x: x.value) (filter (x: x ? value) (concatLists (imap1 (n: def:
+             |              ^
+          571|           imap1 (m: def':
+
+       … while evaluating the attribute 'value'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/modules.nix:894:27:
+          893|     optionalValue =
+          894|       if isDefined then { value = mergedValue; }
+             |                           ^
+          895|       else {};
+
+       (10 duplicate frames omitted)
+
+       … while evaluating derivation 'system-path'
+         whose name attribute is located at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/make-derivation.nix:375:7
+
+       … while evaluating attribute 'passAsFile' of derivation 'system-path'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/trivial-builders/default.nix:60:9:
+           59|         inherit buildCommand name;
+           60|         passAsFile = [ "buildCommand" ]
+             |         ^
+           61|           ++ (derivationArgs.passAsFile or [ ]);
+
+       … while evaluating the attribute 'passAsFile'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/buildenv/default.nix:114:9:
+          113|         # XXX: The size is somewhat arbitrary
+          114|         passAsFile = if builtins.stringLength pkgs >= 128 * 1024 then [ "pkgs" ] else [ ];
+             |         ^
+          115|       }
+
+       … while evaluating a branch condition
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/buildenv/default.nix:114:22:
+          113|         # XXX: The size is somewhat arbitrary
+          114|         passAsFile = if builtins.stringLength pkgs >= 128 * 1024 then [ "pkgs" ] else [ ];
+             |                      ^
+          115|       }
+
+       … in the argument of the not operator
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/buildenv/default.nix:114:52:
+          113|         # XXX: The size is somewhat arbitrary
+          114|         passAsFile = if builtins.stringLength pkgs >= 128 * 1024 then [ "pkgs" ] else [ ];
+             |                                                    ^
+          115|       }
+
+       … while calling the 'lessThan' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/buildenv/default.nix:114:52:
+          113|         # XXX: The size is somewhat arbitrary
+          114|         passAsFile = if builtins.stringLength pkgs >= 128 * 1024 then [ "pkgs" ] else [ ];
+             |                                                    ^
+          115|       }
+
+       … while calling the 'stringLength' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/buildenv/default.nix:114:25:
+          113|         # XXX: The size is somewhat arbitrary
+          114|         passAsFile = if builtins.stringLength pkgs >= 128 * 1024 then [ "pkgs" ] else [ ];
+             |                         ^
+          115|       }
+
+       … while calling the 'toJSON' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/buildenv/default.nix:109:16:
+          108|           ;
+          109|         pkgs = builtins.toJSON chosenOutputs;
+             |                ^
+          110|         extraPathsFrom = lib.optional includeClosures (writeClosure pathsForClosure);
+
+       … while evaluating list element at index 37
+
+       … while evaluating attribute 'paths'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/buildenv/default.nix:69:7:
+           68|     chosenOutputs = map (drv: {
+           69|       paths =
+             |       ^
+           70|         # First add the usual output(s): respect if user has chosen explicitly,
+
+       … while evaluating list element at index 0
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/build-support/buildenv/default.nix:69:7:
+           68|     chosenOutputs = map (drv: {
+           69|       paths =
+             |       ^
+           70|         # First add the usual output(s): respect if user has chosen explicitly,
+
+       … while calling the 'getAttr' builtin
+         at <nix/derivation-internal.nix>:44:19:
+           43|       value = commonAttrs // {
+           44|         outPath = builtins.getAttr outputName strict;
+             |                   ^
+           45|         drvPath = strict.drvPath;
+
+       … while calling the 'derivationStrict' builtin
+         at <nix/derivation-internal.nix>:34:12:
+           33|
+           34|   strict = derivationStrict drvAttrs;
+             |            ^
+           35|
+
+       … while evaluating derivation 'logseq-0.10.9'
+         whose name attribute is located at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/make-derivation.nix:375:7
+
+       … while evaluating attribute 'postFixup' of derivation 'logseq-0.10.9'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/by-name/lo/logseq/package.nix:82:3:
+           81|
+           82|   postFixup = lib.optionalString stdenv.hostPlatform.isLinux ''
+             |   ^
+           83|     # set the env "LOCAL_GIT_DIRECTORY" for dugite so that we can use the git in nixpkgs
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/by-name/lo/logseq/package.nix:82:15:
+           81|
+           82|   postFixup = lib.optionalString stdenv.hostPlatform.isLinux ''
+             |               ^
+           83|     # set the env "LOCAL_GIT_DIRECTORY" for dugite so that we can use the git in nixpkgs
+
+       … while calling 'optionalString'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/strings.nix:715:5:
+          714|     cond:
+          715|     string: if cond then string else "";
+             |     ^
+          716|
+
+       … in the condition of the assert statement
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/lib/customisation.nix:420:9:
+          419|       outPath =
+          420|         assert condition;
+             |         ^
+          421|         drv.outPath;
+
+       … while evaluating the attribute 'handled'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/check-meta.nix:507:7:
+          506|       # or, alternatively, just output a warning message.
+          507|       handled =
+             |       ^
+          508|         (
+
+       … from call site
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/check-meta.nix:511:13:
+          510|           else if valid == "no" then (
+          511|             handleEvalIssue { inherit meta attrs; } { inherit (validity) reason errormsg; }
+             |             ^
+          512|           )
+
+       … while calling 'handleEvalIssue'
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/check-meta.nix:269:38:
+          268|
+          269|   handleEvalIssue = { meta, attrs }: { reason , errormsg ? "" }:
+             |                                      ^
+          270|     let
+
+       … while calling the 'throw' builtin
+         at /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/stdenv/generic/check-meta.nix:281:8:
+          280|         else throw;
+          281|     in handler msg;
+             |        ^
+          282|
+
+       error: Package ‘electron-27.3.11’ in /nix/store/8vz84mqgnm1gz5yk7hgnnb5gir5hjxas-source/pkgs/development/tools/electron/binary/generic.nix:37 is marked as insecure, refusing to evaluate.
+
+
+       Known issues:
+        - Electron version 27.3.11 is EOL
+
+       You can install it anyway by allowing this package, using the
+       following methods:
+
+       a) To temporarily allow all insecure packages, you can use an environment
+          variable for a single invocation of the nix tools:
+
+            $ export NIXPKGS_ALLOW_INSECURE=1
+
+          Note: When using `nix shell`, `nix build`, `nix develop`, etc with a flake,
+                then pass `--impure` in order to allow use of environment variables.
+
+       b) for `nixos-rebuild` you can add ‘electron-27.3.11’ to
+          `nixpkgs.config.permittedInsecurePackages` in the configuration.nix,
+          like so:
+
+            {
+              nixpkgs.config.permittedInsecurePackages = [
+                "electron-27.3.11"
+              ];
+            }
+
+       c) For `nix-env`, `nix-build`, `nix-shell` or any other Nix command you can add
+          ‘electron-27.3.11’ to `permittedInsecurePackages` in
+          ~/.config/nixpkgs/config.nix, like so:
+
+            {
+              permittedInsecurePackages = [
+                "electron-27.3.11"
+              ];
+            }

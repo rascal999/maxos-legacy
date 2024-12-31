@@ -52,5 +52,8 @@
   nixpkgs.config = {
     allowBroken = false;
     allowUnsupportedSystem = false;
+    permittedInsecurePackages = [
+      "electron-27.3.11"  # Required by Logseq
+    ];
   };
 }

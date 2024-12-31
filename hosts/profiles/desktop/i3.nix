@@ -1,11 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Allow insecure packages required by some applications
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-27.3.11"
-  ];
-
   # i3 window manager configuration
   services.xserver = {
     enable = true;
