@@ -1,23 +1,23 @@
 # Test VM User Configuration
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Enable the user configuration module
   userConfig = {
     # Basic Identity (Required)
     identity = {
-      username = "user";
-      fullName = "Test User";
-      email = "user@example.com";
+      username = lib.mkForce "user";
+      fullName = lib.mkForce "Test User";
+      email = lib.mkForce "user@example.com";
     };
 
     # Authentication (Required)
     auth = {
       # Password is set via users.users.user.initialPassword in the VM config
-      hashedPassword = null;
+      hashedPassword = lib.mkForce null;
       
       # No SSH keys needed for VM testing
-      sshKeys = [];
+      sshKeys = lib.mkForce [];
     };
 
     # Keyboard Configuration (Required)
@@ -32,7 +32,7 @@
       default = "zsh";
       enableCompletion = true;
       enableSyntaxHighlighting = true;
-      aliases = {
+      aliases = lib.mkForce {
         ll = "ls -la";
         ".." = "cd ..";
       };
@@ -73,10 +73,10 @@
         enable = true;
         userName = config.userConfig.identity.fullName;
         userEmail = config.userConfig.identity.email;
-        editor = "nvim";
+        editor = lib.mkForce "nvim";
       };
       containers = {
-        enable = true;
+        enable = lib.mkForce true;
         virtualisation = true;
       };
       # Basic development tools for testing

@@ -8,7 +8,8 @@
 with lib;
 
 let
-  types = import ./types.nix { inherit lib; };
+  cfg = config.userConfig;
+  customTypes = import ./types.nix { inherit lib; };
 in {
   imports = [
     ./desktop.nix    # Desktop environment configuration
@@ -19,79 +20,133 @@ in {
 
   options = {
     userConfig = mkOption {
-      type = types.nullOr (types.submodule {
+      type = with lib.types; nullOr (submodule {
         options = {
           # Identity
           identity = mkOption {
-            type = types.identityType;
+            type = customTypes.identityType;
             description = "User identity information";
           };
 
           # Authentication
           auth = mkOption {
-            type = types.authType;
+            type = customTypes.authType;
             description = "User authentication settings";
           };
 
           # Keyboard
           keyboard = mkOption {
-            type = types.keyboardType;
+            type = customTypes.keyboardType;
             description = "Keyboard configuration";
           };
 
           # Shell
           shell = mkOption {
-            type = types.shellType;
+            type = customTypes.shellType;
             description = "Shell configuration";
           };
 
           # Desktop Environment
           desktop = mkOption {
-            type = types.desktopType;
+            type = customTypes.desktopType;
             description = "Desktop environment configuration";
           };
 
           # Development
           development = mkOption {
-            type = types.developmentType;
+            type = customTypes.developmentType;
             description = "Development environment configuration";
           };
 
           # Security
           security = mkOption {
-            type = types.securityType;
+            type = customTypes.securityType;
             description = "Security configuration";
           };
 
           # System
           extraGroups = mkOption {
-            type = types.systemType.options.extraGroups.type;
-            default = types.systemType.options.extraGroups.default;
-            description = types.systemType.options.extraGroups.description;
+            type = types.listOf types.str;
+            default = [];
+            description = "Additional groups for the user";
           };
 
           extraPackages = mkOption {
-            type = types.systemType.options.extraPackages.type;
-            default = types.systemType.options.extraPackages.default;
-            description = types.systemType.options.extraPackages.description;
+            type = types.listOf types.package;
+            default = [];
+            description = "Additional packages to install";
           };
 
           services = mkOption {
-            type = types.systemType.options.services.type;
-            default = types.systemType.options.services.default;
-            description = types.systemType.options.services.description;
+            type = types.attrs;
+            default = {};
+            description = "Service configurations";
           };
 
           mounts = mkOption {
-            type = types.systemType.options.mounts.type;
-            default = types.systemType.options.mounts.default;
-            description = types.systemType.options.mounts.description;
+            type = types.listOf (types.submodule {
+              options = {
+                source = mkOption {
+                  type = types.str;
+                  description = "Mount source";
+                };
+                target = mkOption {
+                  type = types.str;
+                  description = "Mount target";
+                };
+                type = mkOption {
+                  type = types.str;
+                  description = "Filesystem type";
+                };
+                options = mkOption {
+                  type = types.listOf types.str;
+                  default = [ "auto" "nofail" ];
+                  description = "Mount options";
+                };
+              };
+            });
+            default = [];
+            description = "Network mounts";
           };
 
           backup = mkOption {
-            type = types.systemType.options.backup.type;
-            default = types.systemType.options.backup.default;
-            description = types.systemType.options.backup.description;
+            type = types.submodule {
+              options = {
+                enable = mkOption {
+                  type = types.bool;
+                  default = false;
+                  description = "Enable backup configuration";
+                };
+                locations = mkOption {
+                  type = types.listOf (types.submodule {
+                    options = {
+                      path = mkOption {
+                        type = types.str;
+                        description = "Path to backup";
+                      };
+                      destination = mkOption {
+                        type = types.str;
+                        description = "Backup destination";
+                      };
+                      frequency = mkOption {
+                        type = types.str;
+                        default = "daily";
+                        description = "Backup frequency";
+                      };
+                      retention = mkOption {
+                        type = types.str;
+                        default = "30d";
+                        description = "Backup retention period";
+                      };
+                    };
+                  });
+                  default = [];
+                  description = "Backup locations";
+                };
+              };
+            };
+            default = { enable = false; locations = []; };
+            description = "Backup configuration";
           };
         };
       });

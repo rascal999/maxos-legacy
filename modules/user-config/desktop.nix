@@ -21,9 +21,9 @@ in {
       
       # Desktop manager configuration
       desktopManager = {
-        gnome.enable = cfg.desktop.environment == "gnome";
-        plasma5.enable = cfg.desktop.environment == "kde";
-        xfce.enable = cfg.desktop.environment == "xfce";
+        gnome.enable = lib.mkForce (cfg.desktop.environment == "gnome");
+        plasma5.enable = lib.mkForce (cfg.desktop.environment == "kde");
+        xfce.enable = lib.mkForce (cfg.desktop.environment == "xfce");
       };
 
       # Window manager configuration
@@ -31,11 +31,12 @@ in {
 
       # Display manager configuration
       displayManager = {
-        defaultSession = 
+        defaultSession = lib.mkForce (
           if cfg.desktop.environment == "i3" then "none+i3"
           else if cfg.desktop.environment == "gnome" then "gnome"
           else if cfg.desktop.environment == "kde" then "plasma"
-          else "xfce";
+          else "xfce"
+        );
       };
     };
 
@@ -46,11 +47,7 @@ in {
         enable = true;
         theme = {
           name = cfg.desktop.theme.gtk.theme;
-          package = pkgs.${
-            if cfg.desktop.theme.name == "dark"
-            then "adwaita-dark"
-            else "adwaita"
-          };
+          package = pkgs.gnome-themes-extra;
         };
         iconTheme = {
           name = cfg.desktop.theme.gtk.iconTheme;
@@ -63,13 +60,13 @@ in {
       };
 
       # Font configuration
-      fonts = {
-        fontconfig.enable = true;
-        packages = with pkgs; [
-          (nerdfonts.override { fonts = [ cfg.desktop.fonts.monospace ]; })
-          inter  # Interface font
-        ];
-      };
+      fonts.fontconfig.enable = true;
+      
+      # Font packages
+      home.packages = with pkgs; [
+        nerd-fonts.jetbrains-mono  # JetBrains Mono Nerd Font
+        inter  # Interface font
+      ];
 
       # Terminal configuration
       programs.${cfg.desktop.terminal.program} = {
@@ -88,7 +85,7 @@ in {
         enable = true;
         windowManager.i3 = {
           enable = true;
-          config = {
+          config = lib.mkForce {
             terminal = cfg.desktop.terminal.program;
             modifier = "Mod4";  # Windows key
           };
@@ -110,7 +107,7 @@ in {
       fontDir.enable = true;
       packages = with pkgs; [
         noto-fonts
-        noto-fonts-cjk
+        noto-fonts-cjk-sans
         noto-fonts-emoji
       ];
       fontconfig = {

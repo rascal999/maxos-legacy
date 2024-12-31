@@ -113,61 +113,6 @@
     };
   };
 
-  # Neovim configuration
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    
-    extraConfig = ''
-      " Basic Settings
-      set number
-      set relativenumber
-      set expandtab
-      set shiftwidth=2
-      set tabstop=2
-      set smartindent
-      set termguicolors
-      set ignorecase
-      set smartcase
-      set mouse=a
-      set clipboard+=unnamedplus
-      
-      " Key mappings
-      let mapleader = " "
-      nnoremap <leader>ff <cmd>Telescope find_files<cr>
-      nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-      nnoremap <leader>fb <cmd>Telescope buffers<cr>
-      nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-    '';
-    
-    plugins = with pkgs.vimPlugins; [
-      # Theme
-      dracula-vim
-      
-      # Status Line
-      vim-airline
-      vim-airline-themes
-      
-      # Git
-      vim-fugitive
-      vim-gitgutter
-      
-      # File Navigation
-      telescope-nvim
-      nvim-tree-lua
-      
-      # LSP
-      nvim-lspconfig
-      nvim-cmp
-      
-      # Syntax
-      vim-nix
-      vim-go
-      rust-vim
-    ];
-  };
-
   # SSH configuration
   programs.ssh = {
     enable = true;

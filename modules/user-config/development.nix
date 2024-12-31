@@ -48,27 +48,25 @@ in {
       # Git configuration
       programs.git = mkIf cfg.development.git.enable {
         enable = true;
-        userName = cfg.development.git.userName;
-        userEmail = cfg.development.git.userEmail;
-        extraConfig = {
+        userName = lib.mkForce cfg.development.git.userName;
+        userEmail = lib.mkForce cfg.development.git.userEmail;
+        extraConfig = lib.mkForce {
           core.editor = cfg.development.git.editor;
           init.defaultBranch = "main";
           pull.rebase = false;
-          ${optionalString (cfg.development.git.signingKey != null) "commit"} = {
+          commit = mkIf (cfg.development.git.signingKey != null) {
             gpgSign = true;
-            ${optionalString (cfg.development.git.signingKey != null) "signingKey"} = 
-              cfg.development.git.signingKey;
+            signingKey = cfg.development.git.signingKey;
           };
-        };
-        # Common aliases
-        aliases = {
-          st = "status";
-          ci = "commit";
-          co = "checkout";
-          br = "branch";
-          unstage = "reset HEAD --";
-          last = "log -1 HEAD";
-          visual = "!gitk";
+          alias = {
+            st = "status";
+            ci = "commit";
+            co = "checkout";
+            br = "branch";
+            unstage = "reset HEAD --";
+            last = "log -1 HEAD";
+            visual = "!gitk";
+          };
         };
         # Useful ignores
         ignores = [
@@ -120,6 +118,54 @@ in {
         viAlias = true;
         vimAlias = true;
         defaultEditor = true;
+        
+        extraConfig = ''
+          " Basic Settings
+          set number
+          set relativenumber
+          set expandtab
+          set shiftwidth=2
+          set tabstop=2
+          set smartindent
+          set termguicolors
+          set ignorecase
+          set smartcase
+          set mouse=a
+          set clipboard+=unnamedplus
+          
+          " Key mappings
+          let mapleader = " "
+          nnoremap <leader>ff <cmd>Telescope find_files<cr>
+          nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+          nnoremap <leader>fb <cmd>Telescope buffers<cr>
+          nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+        '';
+        
+        plugins = with pkgs.vimPlugins; [
+          # Theme
+          dracula-vim
+          
+          # Status Line
+          vim-airline
+          vim-airline-themes
+          
+          # Git
+          vim-fugitive
+          vim-gitgutter
+          
+          # File Navigation
+          telescope-nvim
+          nvim-tree-lua
+          
+          # LSP
+          nvim-lspconfig
+          nvim-cmp
+          
+          # Syntax
+          vim-nix
+          vim-go
+          rust-vim
+        ];
       };
 
       programs.vscode = mkIf (builtins.elem pkgs.vscode cfg.development.editors) {
@@ -141,7 +187,7 @@ in {
           # Theme
           dracula-theme.theme-dracula
         ];
-        userSettings = {
+        userSettings = lib.mkForce {
           "editor.fontFamily" = cfg.desktop.fonts.monospace;
           "editor.fontSize" = 14;
           "editor.lineNumbers" = "relative";

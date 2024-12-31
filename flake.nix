@@ -110,6 +110,7 @@
 
         desktop-test = mkVM {
           modules = [
+            ./modules            # Custom modules including user-config
             ./hosts/vms/desktop-test
             home-manager.nixosModules.home-manager
             {

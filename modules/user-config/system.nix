@@ -52,36 +52,6 @@ in {
       };
     }) cfg.mounts);
 
-    # Backup service
-    services.borgbackup.jobs = mkIf cfg.backup.enable (
-      builtins.listToAttrs (map (location: {
-        name = builtins.replaceStrings ["/"] ["-"] location.path;
-        value = {
-          paths = [ location.path ];
-          repo = location.destination;
-          encryption = {
-            mode = "repokey";
-            passCommand = "cat /run/secrets/borgbackup-passphrase";
-          };
-          compression = "auto,lz4";
-          startAt = location.frequency;
-          prune.keep = {
-            within = location.retention;
-            daily = 7;
-            weekly = 4;
-            monthly = 6;
-          };
-          environment = {
-            BORG_RELOCATED_REPO_ACCESS_IS_OK = "yes";
-            BORG_RSH = "ssh -i /run/secrets/borgbackup-ssh-key";
-          };
-        };
-      }) cfg.backup.locations)
-    );
-
-    # System services from user configuration
-    services = cfg.services;
-
     # Shell configuration
     programs.${cfg.shell.default} = {
       enable = true;
@@ -93,11 +63,48 @@ in {
 
     # Keyboard configuration
     console.keyMap = cfg.keyboard.layout;
-    services.xserver = {
-      layout = cfg.keyboard.layout;
-      xkbVariant = cfg.keyboard.variant;
-      xkbOptions = cfg.keyboard.options;
-    };
+
+    # Services configuration
+    services = mkMerge [
+      # X server configuration
+      {
+        xserver = {
+          layout = cfg.keyboard.layout;
+          xkbVariant = cfg.keyboard.variant;
+          xkbOptions = concatStringsSep "," cfg.keyboard.options;
+        };
+      }
+
+      # Backup service
+      (mkIf cfg.backup.enable {
+        borgbackup.jobs = builtins.listToAttrs (map (location: {
+          name = builtins.replaceStrings ["/"] ["-"] location.path;
+          value = {
+            paths = [ location.path ];
+            repo = location.destination;
+            encryption = {
+              mode = "repokey";
+              passCommand = "cat /run/secrets/borgbackup-passphrase";
+            };
+            compression = "auto,lz4";
+            startAt = location.frequency;
+            prune.keep = {
+              within = location.retention;
+              daily = 7;
+              weekly = 4;
+              monthly = 6;
+            };
+            environment = {
+              BORG_RELOCATED_REPO_ACCESS_IS_OK = "yes";
+              BORG_RSH = "ssh -i /run/secrets/borgbackup-ssh-key";
+            };
+          };
+        }) cfg.backup.locations);
+      })
+      
+      # User-defined services
+      (mkIf (cfg.services != {}) cfg.services)
+    ];
 
     # Home Manager configuration
     home-manager.users.${cfg.identity.username} = { pkgs, ... }: {
@@ -124,7 +131,7 @@ in {
         enable = true;
         enableCompletion = cfg.shell.enableCompletion;
         enableSyntaxHighlighting = cfg.shell.enableSyntaxHighlighting;
-        shellAliases = cfg.shell.aliases;
+        shellAliases = lib.mkForce cfg.shell.aliases;
       };
 
       # Basic user packages
