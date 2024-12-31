@@ -3,9 +3,10 @@
 ```
 .
 ├── flake.nix          # Main configuration entry point
-├── templates/         # Configuration templates
+├── users/             # User configurations
 │   ├── user.nix         # Default user configuration template
-│   └── example-user.nix # Example user configuration with all options
+│   └── docs/            # Documentation and examples
+│       └── example.nix  # Example user configuration with all options
 ├── home/              # Home-manager configurations
 │   ├── common/        # Shared home-manager modules
 │   └── profiles/      # User environment profiles

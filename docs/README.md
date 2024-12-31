@@ -24,5 +24,5 @@ This directory contains the comprehensive documentation for MaxOS, a NixOS confi
 ## Quick Links
 
 - [Main README](../README.md) - Project overview
-- [Example User Configuration](../templates/example-user.nix) - Complete example with all options
-- [Default User Template](../templates/user.nix) - Default configuration template
+- [Example User Configuration](../users/docs/example.nix) - Complete example with all options
+- [Default User Template](../templates/user.nix) - Default configuration template with comments
