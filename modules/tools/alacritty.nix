@@ -34,7 +34,7 @@
           family = "JetBrainsMono Nerd Font";
           style = "Italic";
         };
-        size = 11.0;
+        size = 16.0;
         offset = {
           x = 0;
           y = 1;
@@ -45,55 +45,36 @@
         };
       };
 
-      # Nord theme colors
+      # GitHub Dark Colorblind theme
       colors = {
         primary = {
-          background = "#2e3440";
-          foreground = "#d8dee9";
-          dim_foreground = "#a5abb6";
-        };
-        cursor = {
-          text = "#2e3440";
-          cursor = "#d8dee9";
-        };
-        vi_mode_cursor = {
-          text = "#2e3440";
-          cursor = "#d8dee9";
-        };
-        selection = {
-          text = "CellForeground";
-          background = "#4c566a";
+          background = "#0d1117";
+          foreground = "#b3b1ad";
         };
         normal = {
-          black = "#3b4252";
-          red = "#bf616a";
-          green = "#a3be8c";
-          yellow = "#ebcb8b";
-          blue = "#81a1c1";
-          magenta = "#b48ead";
-          cyan = "#88c0d0";
-          white = "#e5e9f0";
+          black = "#484f58";
+          red = "#ff7b72";
+          green = "#3fb950";
+          yellow = "#d29922";
+          blue = "#58a6ff";
+          magenta = "#bc8cff";
+          cyan = "#39c5cf";
+          white = "#b1bac4";
         };
         bright = {
-          black = "#4c566a";
-          red = "#bf616a";
-          green = "#a3be8c";
-          yellow = "#ebcb8b";
-          blue = "#81a1c1";
-          magenta = "#b48ead";
-          cyan = "#8fbcbb";
-          white = "#eceff4";
+          black = "#6e7681";
+          red = "#ffa198";
+          green = "#56d364";
+          yellow = "#e3b341";
+          blue = "#79c0ff";
+          magenta = "#d2a8ff";
+          cyan = "#56d4dd";
+          white = "#f0f6fc";
         };
-        dim = {
-          black = "#373e4d";
-          red = "#94545d";
-          green = "#809575";
-          yellow = "#b29e75";
-          blue = "#68809a";
-          magenta = "#8c738c";
-          cyan = "#6d96a5";
-          white = "#aeb3bb";
-        };
+        indexed_colors = [
+          { index = 16; color = "#d18616"; }
+          { index = 17; color = "#ffa198"; }
+        ];
       };
 
       cursor = {

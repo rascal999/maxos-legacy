@@ -12,41 +12,41 @@
   xsession.windowManager.i3 = {
     enable = true;
     config = {
-      modifier = "Mod4";  # Use Super key as modifier
+      modifier = "Mod1";  # Use Alt key as modifier
 
       # Basic keybindings
       keybindings = lib.mkOptionDefault {
         # Terminal
-        "Mod4+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+        "Mod1+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
         
         # Program launcher
-        "Mod4+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
+        "Mod1+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
         
         # Window management
-        "Mod4+Shift+q" = "kill";
-        "Mod4+f" = "fullscreen toggle";
-        "Mod4+Shift+space" = "floating toggle";
+        "Mod1+Shift+q" = "kill";
+        "Mod1+f" = "fullscreen toggle";
+        "Mod1+Shift+space" = "floating toggle";
         
         # Layout management
-        "Mod4+s" = "layout stacking";
-        "Mod4+w" = "layout tabbed";
-        "Mod4+e" = "layout toggle split";
+        "Mod1+s" = "layout stacking";
+        "Mod1+w" = "layout tabbed";
+        "Mod1+e" = "layout toggle split";
         
         # Focus
-        "Mod4+Left" = "focus left";
-        "Mod4+Down" = "focus down";
-        "Mod4+Up" = "focus up";
-        "Mod4+Right" = "focus right";
+        "Mod1+Left" = "focus left";
+        "Mod1+Down" = "focus down";
+        "Mod1+Up" = "focus up";
+        "Mod1+Right" = "focus right";
         
         # Moving windows
-        "Mod4+Shift+Left" = "move left";
-        "Mod4+Shift+Down" = "move down";
-        "Mod4+Shift+Up" = "move up";
-        "Mod4+Shift+Right" = "move right";
+        "Mod1+Shift+Left" = "move left";
+        "Mod1+Shift+Down" = "move down";
+        "Mod1+Shift+Up" = "move up";
+        "Mod1+Shift+Right" = "move right";
         
         # Restart/reload i3
-        "Mod4+Shift+c" = "reload";
-        "Mod4+Shift+r" = "restart";
+        "Mod1+Shift+c" = "reload";
+        "Mod1+Shift+r" = "restart";
       };
 
       # Workspace configuration
