@@ -1,34 +1,31 @@
-# Classic prompt style
-POWERLEVEL9K_MODE='compatible'
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="$ "
+# Basics
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_INSTANT_PROMPT=true
 
-# Left prompt segments
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+# Classic style
+typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
   dir                     # current directory
   vcs                     # git status
+  newline
+  prompt_char            # prompt symbol
 )
 
-# Right prompt segments
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-  status                  # exit code of the last command
-  time                    # current time
-)
+typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 
-# Prompt settings
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-POWERLEVEL9K_INSTANT_PROMPT=off
+# Disable icons and use ASCII
+typeset -g POWERLEVEL9K_MODE=ascii
 
-# Directory settings
-POWERLEVEL9K_DIR_PATH_SEPARATOR="/"
-POWERLEVEL9K_HOME_FOLDER_ABBREVIATION="~"
-POWERLEVEL9K_DIR_PATH_ABSOLUTE=false
+# Simple directory display
+typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=40
+typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
+typeset -g POWERLEVEL9K_DIR_SHOW_WRITABLE=false
 
-# Status colors
-POWERLEVEL9K_STATUS_OK=false
-POWERLEVEL9K_STATUS_ERROR_BACKGROUND='red'
-POWERLEVEL9K_STATUS_ERROR_FOREGROUND='white'
+# Simple VCS display
+typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=
+typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON='?'
 
-# Time format
-POWERLEVEL9K_TIME_FORMAT='%D{%H:%M:%S}'
+# Basic prompt character
+typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='$'
+
+# No background colors
+typeset -g POWERLEVEL9K_BACKGROUND=none

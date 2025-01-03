@@ -33,6 +33,9 @@ in {
 
     # Load custom configuration files
     interactiveShellInit = ''
+      # Create history directory if it doesn't exist
+      mkdir -p ~/.local/share/zsh
+      
       # Enable Powerlevel10k theme
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 
