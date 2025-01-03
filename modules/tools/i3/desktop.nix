@@ -4,36 +4,11 @@
   imports = [ ./base.nix ];
 
   xsession.windowManager.i3.config = {
-    # Desktop-specific keybindings
-    keybindings = lib.mkOptionDefault {
-      # Screenshot bindings
-      "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui";
-      "Shift+Print" = "exec ${pkgs.flameshot}/bin/flameshot full";
-
-      # Media controls
-      "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
-      "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
-      "XF86AudioMute" = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle";
-      
-      # Brightness controls
-      "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
-      "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 5";
-
-      # Terminal (override base config to ensure no tmux)
-      "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty";
-      
-      # Quick launch frequently used applications
-      "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
-      "${config.xsession.windowManager.i3.config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
-      "${config.xsession.windowManager.i3.config.modifier}+l" = "exec ${pkgs.i3lock}/bin/i3lock -c 000000";
-    };
-
     # Desktop-specific startup applications
     startup = [
       { command = "nm-applet"; notification = false; }
       { command = "volumeicon"; notification = false; }
       { command = "flameshot"; notification = false; }
-      { command = "cat ~/.config/i3/config > /tmp/i3-config-debug && alacritty -e less /tmp/i3-config-debug"; notification = false; }
     ];
 
     # Additional workspace assignments for desktop applications

@@ -15,15 +15,15 @@
       modifier = "Mod1";  # Use Alt key as modifier
 
       # Basic keybindings
-      keybindings = lib.mkOptionDefault {
+      keybindings = {
         # Terminal
-        "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty";
+        "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
         
         # Program launcher
         "Mod1+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
         
         # Window management
-        "Mod1+Shift+q" = "kill";
+        "Mod1+u" = "fullscreen toggle";
         "Mod1+f" = "fullscreen toggle";
         "Mod1+Shift+space" = "floating toggle";
         
@@ -47,8 +47,26 @@
         "Mod1+Shift+Right" = "move right";
         
         # Restart/reload i3
-        "Mod1+Shift+c" = "reload";
+        "Mod1+Shift+c" = "kill";
         "Mod1+Shift+r" = "restart";
+
+        # Screenshot bindings
+        "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+        "Shift+Print" = "exec ${pkgs.flameshot}/bin/flameshot full";
+
+        # Media controls
+        "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
+        "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
+        "XF86AudioMute" = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        
+        # Brightness controls
+        "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
+        "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 5";
+        
+        # Quick launch frequently used applications
+        "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
+        "${config.xsession.windowManager.i3.config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
+        "${config.xsession.windowManager.i3.config.modifier}+l" = "exec ${pkgs.i3lock}/bin/i3lock -c 000000";
       };
 
       # Workspace configuration
