@@ -17,7 +17,7 @@
           {
             nixpkgs.config.allowUnfree = true;
           }
-          ./modules/users/default.nix
+          ./hosts/desktop/users.nix
           ./hosts/desktop/test-vm.nix
           home-manager.nixosModules.home-manager
           {

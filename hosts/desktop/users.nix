@@ -2,18 +2,17 @@
 
 {
   users = {
-    mutableUsers = false;
+    mutableUsers = true;
+    defaultUserShell = pkgs.bash;
     users.user = {
       isNormalUser = true;
+      description = "Default User";
       extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
-      hashedPassword = "$6$YdPBODxwZJXE$0DN3gn9DEHOHhqFH9iGzZvzQDqQyIoNGdAGseXgf4lCGhXDGkE/Ss7tZRPBBhJl0QVX7mRxnVxrdo0qhYLVBo/";  # "nixos"
+      initialPassword = "nixos";
       createHome = true;
       home = "/home/user";
-      shell = pkgs.bash;
     };
   };
-
-  security.sudo.wheelNeedsPassword = true;
 
   # Enable display manager for easier login
   services.xserver = {
