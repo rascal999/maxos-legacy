@@ -23,7 +23,11 @@
       unbind [
 
       set -g prefix C-Space
-      set -g mode-keys vi'';
+      set -g mode-keys vi
+      
+      # Enable 256 color support
+      set -g default-terminal "tmux-256color"
+      set -ag terminal-overrides ",xterm-256color:RGB"'';
 
   };
 }

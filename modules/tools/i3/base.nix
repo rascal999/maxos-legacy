@@ -17,7 +17,7 @@
       # Basic keybindings
       keybindings = lib.mkOptionDefault {
         # Terminal
-        "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty";
+        "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
         
         # Program launcher
         "Mod1+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";

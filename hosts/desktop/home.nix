@@ -5,6 +5,7 @@
     ../../modules/tools/i3/desktop.nix
     ../../modules/tools/tmux.nix
     ../../modules/tools/alacritty.nix
+    ../../modules/tools/zsh.nix
   ];
 
   # Enable home-manager

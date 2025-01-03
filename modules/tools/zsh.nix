@@ -1,25 +1,66 @@
 { config, pkgs, lib, ... }:
 
-let
-  zshConfigDir = ./zsh;
-in {
-  # Zsh configuration
+{
+  home.packages = with pkgs; [
+    mcfly  # Shell history search
+    grc    # Generic colouriser
+    lazygit # Terminal UI for git
+    zsh-powerlevel10k  # For p10k command
+  ];
+
   programs.zsh = {
     enable = true;
-    autosuggestions.enable = false;
+    enableAutosuggestions = true;
     enableCompletion = true;
-    syntaxHighlighting.enable = true;
+    enableSyntaxHighlighting = true;
 
-    histSize = 100000;
+    history = {
+      size = 100000;
+      save = 100000;
+      path = "$HOME/.local/share/zsh/history";
+      expireDuplicatesFirst = true;
+      ignoreDups = true;
+      ignoreSpace = true;
+      share = true;
+    };
 
-    # Oh My Zsh configuration
-    ohMyZsh = {
+    initExtra = ''
+      # Create history directory
+      mkdir -p "$(dirname "$HISTFILE")"
+      
+      # History locking settings
+      typeset -g HISTFILE_LOCK="$HISTFILE.lock"
+      typeset -g HISTFILE_LOCK_TIMEOUT=5
+      
+      # Function to lock history file
+      _zsh_lock_histfile() {
+        local lockfile="$HISTFILE_LOCK"
+        if ! mkdir "$lockfile" 2>/dev/null; then
+          if [ $(($(date +%s) - $(stat -c %Y "$lockfile"))) -gt $HISTFILE_LOCK_TIMEOUT ]; then
+            rm -rf "$lockfile"
+            mkdir "$lockfile" 2>/dev/null || return 1
+          else
+            return 1
+          fi
+        fi
+        return 0
+      }
+      
+      # Function to unlock history file
+      _zsh_unlock_histfile() {
+        rm -rf "$HISTFILE_LOCK"
+      }
+      
+      # Add hooks for history file locking
+      autoload -Uz add-zsh-hook
+      add-zsh-hook zshexit _zsh_unlock_histfile
+    '';
+
+    oh-my-zsh = {
       enable = true;
       plugins = [ "colorize" ];
     };
 
-
-    # Shell aliases
     shellAliases = {
       ll = "ls -l";
       update = "sudo nixos-rebuild switch";
@@ -31,46 +72,22 @@ in {
       ls = "grc ls";
     };
 
-    # Load custom configuration files
-    interactiveShellInit = ''
-      # Create history directory if it doesn't exist
-      mkdir -p ~/.local/share/zsh
-      
-      # Enable Powerlevel10k theme
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-
-      # Source default p10k config if user hasn't customized it
-      [[ ! -f ~/.p10k.zsh ]] && cp ${zshConfigDir}/p10k.zsh ~/.p10k.zsh
-      source ~/.p10k.zsh
-
-      # Source zshrc
-      source ${zshConfigDir}/zshrc.zsh
-
-      # Load plugins
-      source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-      source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    '';
-  };
-
-  # Ensure required packages are installed
-  environment.systemPackages = with pkgs; [
-    mcfly  # Shell history search
-    grc    # Generic colouriser
-    lazygit # Terminal UI for git
-    zsh-powerlevel10k  # For p10k command
-    xorg.xmodmap  # For keyboard mappings
-  ];
-
-  # Set up zsh environment
-  system.activationScripts.zshSetup = ''
-    # Create zsh history directory
-    mkdir -p /home/user/.local/share/zsh
-    chown -R user:users /home/user/.local/share/zsh
-
-    # Set up p10k config
-    if [[ ! -f /home/user/.p10k.zsh ]]; then
-      cp ${zshConfigDir}/p10k.zsh /home/user/.p10k.zsh
-      chown user:users /home/user/.p10k.zsh
-    fi
-  '';
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "zsh-autosuggestions";
+        src = pkgs.zsh-autosuggestions;
+        file = "share/zsh-autosuggestions/zsh-autosuggestions.zsh";
+      }
+      {
+        name = "zsh-syntax-highlighting";
+        src = pkgs.zsh-syntax-highlighting;
+        file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
+      }
+    ];
+    };
 }
