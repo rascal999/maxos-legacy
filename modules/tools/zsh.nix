@@ -54,6 +54,9 @@
       # Add hooks for history file locking
       autoload -Uz add-zsh-hook
       add-zsh-hook zshexit _zsh_unlock_histfile
+
+      # Source p10k config if it exists
+      [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
     '';
 
     oh-my-zsh = {
@@ -72,12 +75,22 @@
       ls = "grc ls";
     };
 
+    initExtraFirst = ''
+      # Enable Powerlevel10k instant prompt
+      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+      fi
+
+      # Initialize Powerlevel10k
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+
+      # Create p10k config if it doesn't exist
+      if [[ ! -f ~/.p10k.zsh ]]; then
+        cp ${./zsh/p10k.zsh} ~/.p10k.zsh
+      fi
+    '';
+
     plugins = [
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
       {
         name = "zsh-autosuggestions";
         src = pkgs.zsh-autosuggestions;
@@ -89,5 +102,5 @@
         file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
       }
     ];
-    };
+  };
 }
