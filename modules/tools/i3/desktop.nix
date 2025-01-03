@@ -33,6 +33,7 @@
       { command = "nm-applet"; notification = false; }
       { command = "volumeicon"; notification = false; }
       { command = "flameshot"; notification = false; }
+      { command = "cat ~/.config/i3/config > /tmp/i3-config-debug && alacritty -e less /tmp/i3-config-debug"; notification = false; }
     ];
 
     # Additional workspace assignments for desktop applications
