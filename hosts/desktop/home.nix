@@ -6,6 +6,8 @@
     ../../modules/tools/tmux.nix
     ../../modules/tools/alacritty.nix
     ../../modules/tools/zsh.nix
+    ../../modules/tools/rofi/default.nix
+    ../../modules/tools/firefox/default.nix
   ];
 
   # Enable home-manager

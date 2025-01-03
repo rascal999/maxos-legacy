@@ -1,0 +1,3334 @@
+{
+  "policies": {
+    "NewTabPage": false,
+    "DisplayMenuBar": "default-off",
+    "DisableFirefoxAccounts": true,
+    "DisableProfileImport": true,
+    "NoDefaultBookmarks": true,
+    "Homepage": {
+      "StartPage": "previous-session"
+    },
+    "ExtensionSettings": {
+      "{60f82f00-9ad5-4de5-b31c-b16a47c51558}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/cookie-quick-manager/addon-3343599-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "{4F1FB113-D7D8-40AE-A5BA-9300EAEA0F51}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/toolkit-for-ynab/addon-679689-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "firefox@tampermonkey.net": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/tampermonkey/addon-683490-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "contact@example.com": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/smartreader/addon-3999045-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "{3c078156-979c-498b-8990-85f7987dd929}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/sidebery/addon-3994928-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "bypasspaywalls@bypasspaywalls": {
+        "install_url": "https://github.com/iamadamdev/bypass-paywalls-chrome/releases/latest/download/bypass-paywalls-firefox.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "firefox-extension@shodan.io": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/shodan-addon/addon-3788939-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "@retire.js": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/retire-js/addon-808743-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "{a6fd85ed-e919-4a43-a5af-8da18bda539f}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/selenium-ide/addon-13759230-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "jid1-xUfzOsOFlzSOXg@jetpack": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/reddit-enhancement-suite/addon-387429-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "{1018e4d6-728f-4b20-ad56-37578a4de76b}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/flagfox/addon-5791-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "sponsorBlocker@ajay.app": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/addon-2590937-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "ademking@betterviewer": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/betterviewer/addon-2740191-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "bibitnow018@aqpl.mc2.chalmers.se": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/bibitnow/addon-12869417-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "jid1-ZSMfwe4lCAw9oQ@jetpack": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/url-to-qrcode/addon-11218076-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "addon@darkreader.org": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/darkreader/addon-13299734-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "{d133e097-46d9-4ecc-9903-fa6a722a6e0e}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/bypass-paywalls-clean/addon-3946159-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "foxyproxy@eric.h.jung": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/foxyproxy-standard/addon-323-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "@testpilot-containers": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/addon-4757633-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "{531906d3-e22f-4a6c-a102-8057b88a1a63}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/single-file/addon-14142901-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "uBlock0@raymondhill.net": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-11423598-latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/user-agent-string-switcher/addon-13129494-latest.xpi",
+        "installation_mode": "normal_installed"
+      }
+    },
+    "ManagedBookmarks": [
+      {
+        "toplevel_name": "Init"
+      },
+      {
+        "name": "Blockchain",
+        "children": [
+          {
+            "name": "Bitcoin",
+            "children": [
+              {
+                "name": "Bitcoin",
+                "url": "https://bitcoin.org/en/"
+              }
+            ]
+          },
+          {
+            "name": "Ethereum",
+            "children": [
+              {
+                "name": "Ethereum",
+                "url": "https://ethereum.org/en/"
+              }
+            ]
+          },
+          {
+            "name": "Explorers",
+            "children": [
+              {
+                "name": "Blockchain.com",
+                "url": "https://www.blockchain.com/explorer?view=btc"
+              },
+              {
+                "name": "Etherscan",
+                "url": "https://etherscan.io/"
+              }
+            ]
+          },
+          {
+            "name": "Resources",
+            "children": [
+              {
+                "name": "awesome-openzeppelin",
+                "url": "file:///home/user/git/maxos/repos/education/awesome-openzeppelin/README.md"
+              },
+              {
+                "name": "DeFiHackLabs",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/DeFiHackLabs/README.md"
+              },
+              {
+                "name": "full-blockchain-solidity-course",
+                "url": "file:///home/user/git/maxos/repos/education/full-blockchain-solidity-course-py/README.md"
+              },
+              {
+                "name": "smart-contract-best-practices",
+                "url": "file:///home/user/git/maxos/repos/education/smart-contract-best-practices"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Blogs",
+        "children": [
+          {
+            "name": "Comodo",
+            "url": "https://blog.comodo.com/"
+          },
+          {
+            "name": "Errata Security",
+            "url": "https://blog.erratasec.com/"
+          },
+          {
+            "name": "Malwarebytes Labs",
+            "url": "https://www.malwarebytes.com/blog"
+          },
+          {
+            "name": "Talos",
+            "url": "https://blog.talosintelligence.com/"
+          },
+          {
+            "name": "Zero Day",
+            "url": "https://www.zdnet.com/blog/security/"
+          }
+        ]
+      },
+      {
+        "name": "Blue Team",
+        "children": [
+          {
+            "name": "awesome-cybersecurity-blueteam",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-cybersecurity-blueteam/README.md"
+          },
+          {
+            "name": "awesome-devsecops",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-devsecops/readme.md"
+          },
+          {
+            "name": "awesome-incident-response",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-incident-response/README.md"
+          },
+          {
+            "name": "awesome-security-hardening",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-security-hardening/README.md"
+          },
+          {
+            "name": "awesome-windows-domain-hardening",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-windows-domain-hardening/README.md"
+          },
+          {
+            "name": "Blue Team Cheat Sheets",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20230109_blueteam_cheatsheet.pdf"
+          },
+          {
+            "name": "how-to-secure-anything",
+            "url": "file:///home/user/git/maxos/repos/education/how-to-secure-anything"
+          },
+          {
+            "name": "Open-Source-Security-Guide",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Open-Source-Security-Guide/README.md"
+          }
+        ]
+      },
+      {
+        "name": "Cheatsheets",
+        "children": [
+          {
+            "name": "ChatGPT",
+            "children": [
+              {
+               "name": "Awesome 50 ChatGPT Prompts",
+               "url": "file:///home/user/git/maxos/resources/cheatsheets/20230109_awesome_chatgpt_50_prompts.pdf"
+              },
+              {
+                "name": "Awesome 87 ChatGPT Prompts",
+                "url": "file:///home/user/git/maxos/resources/cheatsheets/20230109_awesome_chatgpt_prompts.pdf"
+              },
+              {
+                "name": "Awesome ChatGPT Prompts",
+                "url": "file:///home/user/git/maxos/repos/misc/awesome-chatgpt-prompts/README.md"
+              },
+              {
+                "name": "ChatGPT for CyberSecurity",
+                "url": "file:///home/user/git/maxos/resources/cheatsheets/20230109_chatgpt_for_cybersecurity.pdf"
+              },
+              {
+                "name": "ChatGPT Tutorial",
+                "url": "file:///home/user/git/maxos/resources/cheatsheets/20230109_chatgpt_tutorial.pdf"
+              },
+              {
+                "name": "Malware Analysis 101 - ChatGPT",
+                "url": "file:///home/user/git/maxos/resources/cheatsheets/20230109_chatgpt_malware_analysis_101.pdf"
+              }
+            ]
+          },
+          {
+            "name": "Acronym List",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20221207_acronym_list.pdf"
+          },
+          {
+            "name": "Active-Directory-Exploitation-Cheat-Sheet",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Active-Directory-Exploitation-Cheat-Sheet/README.md"
+          },
+          {
+            "name": "Active-Directory-Exploitation-Cheat-Sheet (Integration IT)",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Active-Directory-Exploitation-Cheat-Sheet-IIT/README.md"
+          },
+          {
+            "name": "AD-Attack-Defense",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/AD-Attack-Defense/README.md"
+          },
+          {
+            "name": "awesome-cto",
+            "url": "file:///home/user/git/maxos/repos/education/awesome-cto/README.md"
+          },
+          {
+            "name": "awesome-pentest-cheat-sheets",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-pentest-cheat-sheets/README.md"
+          },
+          {
+            "name": "Awesome-RedTeam-Cheatsheet",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Awesome-RedTeam-Cheatsheet/README.md"
+          },
+          {
+            "name": "Awesome-WAF",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Awesome-WAF/README.md"
+          },
+          {
+            "name": "Bugbounty Cheatsheet - Mohammed Adam",
+            "url": "file:///home/user/git/maxos-next/resources/cheatsheets/20230127 Bugbounty Cheatsheet - Mohammed Adam"
+          },
+          {
+            "name": "bugbounty-cheatsheet",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/bugbounty-cheatsheet/README.md"
+          },
+          {
+            "name": "Cheatsheet-God",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Cheatsheet-God"
+          },
+          {
+            "name": "CheatSheets",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/HarmJ0y-CheatSheets"
+          },
+          {
+            "name": "CheatSheetSeries",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/CheatSheetSeries"
+          },
+          {
+            "name": "CISSP Cheat Sheet Series",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20221117_cissp_cheat_sheet_series.pdf"
+          },
+          {
+            "name": "CISSP Study Guide",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20221117_cissp_guide.pdf"
+          },
+          {
+            "name": "DefaultCreds-cheat-sheet",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/DefaultCreds-cheat-sheet/README.md"
+          },
+          {
+            "name": "DockerCheatSheet",
+            "url": "file:///home/user/git/maxos/repos/education/DockerCheatSheet/README.md"
+          },
+          {
+            "name": "Hacking Tools Cheatsheet",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20221207_hacking_tools_cheat_sheet.pdf"
+          },
+          {
+            "name": "Java-Deserialization-Cheat-Sheet",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Java-Deserialization-Cheat-Sheet/README.md"
+          },
+          {
+            "name": "JustTryHarder",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/JustTryHarder/README.md"
+          },
+          {
+            "name": "KQL Cheatsheet",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20230127_KQL_cheatsheet.pdf"
+          },
+          {
+            "name": "Linux Tools",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20221207_linux_tools.jpg"
+          },
+          {
+            "name": "Nmap + Nessus Cheat Sheet",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20221207_nmap_nessus_cheat_sheet.pdf"
+          },
+          {
+            "name": "Pentest Toolkit",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20221207_pentest_toolkit.jpg"
+          },
+          {
+            "name": "Pentest-Cheat-Sheets",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Pentest-Cheat-Sheets/README.md"
+          },
+          {
+            "name": "RedTeam Toolkit",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20221207_redteam_toolkit.jpg"
+          },
+          {
+            "name": "SANS DFIR",
+            "url": "file:///home/user/git/maxos/resources/pdfs/20221024_SANS_DFIR.pdf"
+          },
+          {
+            "name": "SANS Faculty Free Tools",
+            "url": "file:///home/user/git/maxos/resources/pdfs/20221207_pentest_tools.pdf"
+          },
+          {
+            "name": "Windows and AD exploitation cheat sheet",
+            "url": "file:///home/user/git/maxos/resources/Windows%20and%20AD%20Exploitation%20Cheat%20Sheet%2020220920.html"
+          },
+          {
+            "name": "Windows Event Log Analysis and IR Response Guide",
+            "url": "file:///home/user/git/maxos/resources/pdfs/20221024_Windows_Event_Log_Analysis_IR_Response.pdf"
+          },
+          {
+            "name": "XSS cheatsheet",
+            "url": "file:///home/user/git/maxos/resources/images/20230127_XSS_cheatsheet.png"
+          }
+        ]
+      },
+      {
+        "name": "Compliance",
+        "children": [
+          {
+            "name": "CIS benchmarks",
+            "url": "https://www.cisecurity.org/cis-benchmarks/"
+          }
+        ]
+      },
+      {
+        "name": "Containers",
+        "children": [
+          {
+            "name": "awesome-docker",
+            "url": "file:///home/user/git/maxos/repos/education/awesome-docker/README.md"
+          },
+          {
+            "name": "container-security-checklist",
+            "url": "file:///home/user/git/maxos/repos/education/container-security-checklist"
+          },
+          {
+            "name": "docker/labs",
+            "url": "file:///home/user/git/maxos/repos/education/docker-labs"
+          },
+          {
+            "name": "The Ultimate Cheat Sheet",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20221117_ultimate_docker_cheat_sheet.pdf"
+          }
+        ]
+      },
+      {
+        "name": "Cloud",
+        "children": [
+          {
+            "name": "AWS",
+            "children": [
+              {
+                "name": "awesome-aws-security",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-aws-security/README.md"
+              },
+              {
+                "name": "AWS Console",
+                "url": "https://console.aws.amazon.com/"
+              },
+              {
+                "name": "aws (PDFs)",
+                "url": "file:///home/user/pdfs/education/aws"
+              },
+              {
+                "name": "AWSome-Pentesting",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/AWSome-Pentesting/AWSome-Pentesting-Cheatsheet.md"
+              },
+              {
+                "name": "Educational PDFs",
+                "url": "file:///home/user/pdfs/education/aws"
+              },
+              {
+                "name": "Hands on AWS Penetration Testing",
+                "url": "file:///home/user/git/maxos/resources/cheatsheets/20221117_aws_pentesting.pdf"
+              },
+              {
+                "name": "my-arsenal-of-aws-security-tools",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/my-arsenal-of-aws-security-tools/README.md"
+              },
+              {
+                "name": "og-aws",
+                "url": "file:///home/user/git/maxos/repos/education/og-aws/README.md"
+              },
+              {
+                "name": "Tools",
+                "children": [
+                  {
+                    "name": "Tool",
+                    "url": "file:///home/user/git/maxos/repos/pentest-education/Active-Directory-Exploitation-Cheat-Sheet/README.md"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Azure",
+            "children": [
+              {
+                "name": "Portal",
+                "url": "https://portal.azure.com/"
+              }
+            ]
+          },
+          {
+            "name": "GCP",
+            "children": [
+              {
+                "name": "Console",
+                "url": "https://console.cloud.google.com/"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Curiosity",
+        "children": [
+          {
+            "name": "Online",
+            "children": [
+              {
+                "name": "Learn Anything",
+                "url": "https://learn-anything.xyz/"
+              }
+            ]
+          },
+          {
+            "name": "Apollo-11",
+            "url": "file:///home/user/git/maxos/repos/misc/Apollo-11"
+          },
+          {
+            "name": "awesome",
+            "url": "file:///home/user/git/maxos/repos/education/awesome/readme.md"
+          },
+          {
+            "name": "awesome-awesomeness",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-awesomeness/README.md"
+          },
+          {
+            "name": "awesome-compose",
+            "url": "file:///home/user/git/maxos/repos/misc/awesome-compose/README.md"
+          },
+          {
+            "name": "awesome-cryptography",
+            "url": "file:///home/user/git/maxos/repos/education/awesome-cryptography/README.md"
+          },
+          {
+            "name": "awesome-lockpicking",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-lockpicking/README.md"
+          },
+          {
+            "name": "awesome-piracy",
+            "url": "file:///home/user/git/maxos/repos/misc/awesome-piracy/readme.md"
+          },
+          {
+            "name": "awful-ai",
+            "url": "file:///home/user/git/maxos/repos/misc/awful-ai/README.md"
+          },
+          {
+            "name": "Clone-Wars",
+            "url": "file:///home/user/git/maxos/repos/education/Clone-Wars/README.md"
+          },
+          {
+            "name": "cs-video-courses",
+            "url": "file:///home/user/git/maxos/repos/education/cs-video-courses/README.md"
+          },
+          {
+            "name": "css-only-chat",
+            "url": "file:///home/user/git/maxos/repos/education/css-only-chat/README.md"
+          },
+          {
+            "name": "docker-elk",
+            "url": "file:///home/user/git/maxos/repos/misc/docker-elk/README.md"
+          },
+          {
+            "name": "every-programmer-should-know",
+            "url": "file:///home/user/git/maxos/repos/education/every-programmer-should-know/README.md"
+          },
+          {
+            "name": "howtheysre",
+            "url": "file:///home/user/git/maxos/repos/education/howtheysre/README.md"
+          },
+          {
+            "name": "iptv",
+            "url": "file:///home/user/git/maxos/repos/misc/iptv/README.md"
+          },
+          {
+            "name": "Kiwix (wikis)",
+            "url": "http://localhost:9060/?lang=eng"
+          },
+          {
+            "name": "Learn anything YouTube",
+            "url": "file:///home/user/git/maxos/repos/education/learn-anything-youtube/README.md"
+          },
+          {
+            "name": "macOS-Security-and-Privacy",
+            "url": "file:///home/user/git/maxos/repos/education/macOS-Security-and-Privacy-Guide/README.md"
+          },
+          {
+            "name": "Mind-Expanding-Books",
+            "url": "file:///home/user/git/maxos/repos/education/Mind-Expanding-Books/README.md"
+          },
+          {
+            "name": "ML-For-Beginners",
+            "url": "file:///home/user/git/maxos/repos/education/ML-For-Beginners/README.md"
+          },
+          {
+            "name": "os-tutorial",
+            "url": "file:///home/user/git/maxos/repos/education/os-tutorial/README.md"
+          },
+          {
+            "name": "paper_collection",
+            "url": "file:///home/user/git/maxos/repos/education/paper_collection/README.md"
+          },
+          {
+            "name": "papers-we-love",
+            "url": "file:///home/user/git/maxos/repos/education/papers-we-love"
+          },
+          {
+            "name": "Projectbook",
+            "url": "https://projectbook.code.brettchalupa.com/_introduction.html"
+          },
+          {
+            "name": "Reverse-Engineering",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Reverse-Engineering"
+          },
+          {
+            "name": "Security-Exercises",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Security-Exercises/README.md"
+          },
+          {
+            "name": "spyserver status map (radio)",
+            "url": "https://airspy.com/directory/#"
+          },
+          {
+            "name": "test-your-sysadmin-skills",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/test-your-sysadmin-skills/README.md"
+          },
+          {
+            "name": "vimagick_dockerfiles",
+            "url": "file:///home/user/git/maxos/repos/misc/vimagick_dockerfiles/README.md"
+          },
+          {
+            "name": "what-happens-when",
+            "url": "file:///home/user/git/maxos/repos/education/what-happens-when/"
+          },
+          {
+            "name": "YouTube Channels",
+            "url": "file:///home/user/git/maxos/repos/education/YouTube_Channels/README.md"
+          }
+        ]
+      },
+      {
+        "name": "Data",
+        "children": [
+          {
+            "name": "public-apis",
+            "url": "file:///home/user/git/maxos/repos/education/public-apis/README.md"
+          }
+        ]
+      },
+      {
+        "name": "DevOps",
+        "children": [
+          {
+            "name": "arkime",
+            "url": "https://github.com/arkime/arkime"
+          },
+          {
+            "name": "devops-exercises",
+            "url": "file:///home/user/git/maxos/repos/education/devops-exercises/README.md"
+          },
+          {
+            "name": "k8s guide",
+            "url": "file:///home/user/git/maxos/repos/devops/k8s-guide/README.md"
+          },
+          {
+            "name": "maltrail",
+            "url": "https://github.com/stamparm/maltrail"
+          },
+          {
+            "name": "Netmaker",
+            "url": "file:///home/user/git/maxos/repos/devops/netmaker/README.md"
+          },
+          {
+            "name": "Wazuh",
+            "url": "https://github.com/wazuh/wazuh"
+          }
+        ]
+      },
+      {
+        "name": "Exploits",
+        "children": [
+          {
+            "name": "awesome-cve-poc",
+            "url": "file:///home/user/git/maxos/repos/exploits/awesome-cve-poc/README.md"
+          },
+          {
+            "name": "cve",
+            "url": "file:///home/user/git/maxos/repos/misc/cve"
+          },
+          {
+            "name": "exploitdb",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/exploitdb"
+          },
+          {
+            "name": "Exploit Database",
+            "url": "https://www.exploit-db.com/"
+          },
+          {
+            "name": "inTheWild",
+            "url": "https://inthewild.io/feed"
+          },
+          {
+            "name": "js-vuln-db",
+            "url": "file:///home/user/git/maxos/repos/exploits/js-vuln-db/README.md"
+          },
+          {
+            "name": "malicious-pdf",
+            "url": "file:///home/user/git/maxos/repos/exploits/malicious-pdf/README.md"
+          },
+          {
+            "name": "PayloadsAllTheThings",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/PayloadsAllTheThings"
+          },
+          {
+            "name": "Penetration_Testing_POC",
+            "url": "file:///home/user/git/maxos/repos/exploits/Penetration_Testing_POC"
+          },
+          {
+            "name": "PoC_CVEs",
+            "url": "file:///home/user/git/maxos/repos/exploits/PoC_CVEs"
+          },
+          {
+            "name": "PoC-in-GitHub",
+            "url": "file:///home/user/git/maxos/repos/exploits/PoC-in-GitHub"
+          }
+        ]
+      },
+      {
+        "name": "Frameworks",
+        "children": [
+          {
+            "name": "API-Security-Checklist",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/API-Security-Checklist/README.md"
+          },
+          {
+            "name": "OSSTMM3",
+            "url": "file:///home/user/git/maxos/resources/pdfs/OSSTMM.3.pdf"
+          },
+          {
+            "name": "owasp-mstg",
+            "url": "file:///home/user/git/maxos/repos/pentest-frameworks/owasp-mstg"
+          },
+          {
+            "name": "personal-security-checklist",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/personal-security-checklist/README.md"
+          },
+          {
+            "name": "Top10",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Top10"
+          },
+          {
+            "name": "Web Application Pentesting Checklist",
+            "url": "file:///home/user/git/maxos/resources/cheatsheets/20230109_web_application_pentesting_checklist.pdf"
+          },
+          {
+            "name": "wstg",
+            "url": "file:///home/user/git/maxos/repos/pentest-frameworks/wstg"
+          }
+        ]
+      },
+      {
+        "name": "GitHub",
+        "children": [
+          {
+            "name": "Topics",
+            "children": [
+              {
+                "name": "trending",
+                "url": "https://github.com/trending?since=monthly"
+              },
+              {
+                "name": "awesome",
+                "url": "https://github.com/topics/awesome?o=desc&s=stars"
+              },
+              {
+                "name": "bugbounty",
+                "url": "https://github.com/topics/bugbounty?o=desc&s=stars"
+              },
+              {
+                "name": "containers",
+                "url": "https://github.com/topics/containers?o=desc&s=stars"
+              },
+              {
+                "name": "cve",
+                "url": "https://github.com/topics/cve?o=desc&s=stars"
+              },
+              {
+                "name": "docker",
+                "url": "https://github.com/topics/docker?o=desc&s=stars"
+              },
+              {
+                "name": "hacking",
+                "url": "https://github.com/topics/hacking?o=desc&s=stars"
+              },
+              {
+                "name": "internal-tools",
+                "url": "https://github.com/topics/internal-tools?o=desc&s=stars"
+              },
+              {
+                "name": "osint",
+                "url": "https://github.com/topics/osint?o=desc&s=stars"
+              },
+              {
+                "name": "pentest-scripts",
+                "url": "https://github.com/topics/pentest-scripts?o=desc&s=stars"
+              },
+              {
+                "name": "pentest-tools",
+                "url": "https://github.com/topics/pentest-tools?o=desc&s=stars"
+              },
+              {
+                "name": "scanner",
+                "url": "https://github.com/topics/scanner?o=desc&s=stars"
+              },
+              {
+                "name": "security",
+                "url": "https://github.com/topics/security?o=desc&s=stars"
+              },
+              {
+                "name": "self-hosted",
+                "url": "https://github.com/topics/self-hosted?o=desc&s=stars"
+              },
+              {
+                "name": "social-engineering",
+                "url": "https://github.com/topics/social-engineering?o=desc&s=stars"
+              },
+              {
+                "name": "terminal",
+                "url": "https://github.com/topics/terminal?o=desc&s=stars"
+              },
+              {
+                "name": "vulnerabilities",
+                "url": "https://github.com/topics/vulnerabilities?o=desc&s=stars"
+              }
+            ]
+          },
+          {
+            "name": "'This should never happen'",
+            "url": "https://github.com/search?q=This+should+never+happen&type=Code&utf8=%E2%9C%93"
+          },
+          {
+            "name": "stars:>1",
+            "url": "https://github.com/search?p=1&q=stars%3A%3E1&type=Repositories"
+          }
+        ]
+      },
+      {
+        "name": "Interviews",
+        "children": [
+          {
+            "name": "awesome-interview-questions",
+            "url": "file:///home/user/git/maxos/repos/education/awesome-interview-questions/README.md"
+          },
+          {
+            "name": "coding-interview-university",
+            "url": "file:///home/user/git/maxos/repos/education/coding-interview-university/README.md"
+          },
+          {
+            "name": "interviews",
+            "url": "file:///home/user/git/maxos/repos/misc/interviews/README.md"
+          },
+          {
+            "name": "Tech-Interview-Cheat-Sheet",
+            "url": "file:///home/user/git/maxos/repos/education/Tech-Interview-Cheat-Sheet/README.md"
+          },
+          {
+            "name": "Top 30 penetration tester (Pentester) interview questions and answers",
+            "url": "https://resources.infosecinstitute.com/topic/top-30-penetration-tester-pentester-interview-questions-and-answers-for-2019/"
+          }
+        ]
+      },
+      {
+        "name": "Lab",
+        "children": [
+          {
+            "name": "CTF",
+            "children": [
+              {
+                "name": "awesome-ctf",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-ctf/README.md"
+              },
+              {
+                "name": "google-ctf",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/google-ctf"
+              },
+              {
+                "name": "trailofbits-ctf",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/trailofbits-ctf/"
+              }
+            ]
+          },
+          {
+            "name": "Damn Vulnerable X",
+            "children": [
+              {
+                "name": "AWSGoat",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/AWSGoat/README.md"
+              },
+              {
+                "name": "AzureGoat",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/AzureGoat/README.md"
+              },
+              {
+                "name": "cicd-goat",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/cicd-goat/README.md"
+              },
+              {
+                "name": "Damn-Vulnerable-Bank",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Damn-Vulnerable-Bank/README.md"
+              },
+              {
+                "name": "Damn-Vulnerable-GraphQL-Application",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Damn-Vulnerable-GraphQL-Application"
+              },
+              {
+                "name": "dvca",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/dvca/README.md"
+              },
+              {
+                "name": "dvcsharp-api",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/dvcsharp-api/README.md"
+              },
+              {
+                "name": "DVFaaS",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/DVFaaS/README.md"
+              },
+              {
+                "name": "DVHMA",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/DVHMA/README.md"
+              },
+              {
+                "name": "DVIA-v2",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/DVIA-v2/README.md"
+              },
+              {
+                "name": "dvja",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/dvja/README.md"
+              },
+              {
+                "name": "dvpwa",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/dvpwa/README.md"
+              },
+              {
+                "name": "DVRF",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/DVRF/README.md"
+              },
+              {
+                "name": "DVSA",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/DVSA/README.md"
+              },
+              {
+                "name": "dvta",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/dvta/README.md"
+              },
+              {
+                "name": "dvws-node",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/dvws-node/README.md"
+              },
+              {
+                "name": "google-ctf",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/google-ctf"
+              },
+              {
+                "name": "Tiredful-API",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Tiredful-API/README.md"
+              },
+              {
+                "name": "trailofbits-ctf",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/trailofbits-ctf/"
+              },
+              {
+                "name": "VAmPI",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/VAmPI/README.md"
+              }
+            ]
+          },
+          {
+            "name": "Online",
+            "children": [
+              {
+                "name": "alert to win",
+                "url": "https://alf.nu/alert1"
+              },
+              {
+                "name": "Attack-Defense",
+                "url": "https://attackdefense.com/"
+              },
+              {
+                "name": "Beginner Web App Hacking - The Cyber Mentor",
+                "url": "https://www.youtube.com/watch?v=24fHLWXGS-M"
+              },
+              {
+                "name": "Certified Secure",
+                "url": "https://www.certifiedsecure.com/frontpage"
+              },
+              {
+                "name": "CMD Challenge",
+                "url": "https://cmdchallenge.com/"
+              },
+              {
+                "name": "CTF Komodo Security",
+                "url": "https://ctf.komodosec.com/"
+              },
+              {
+                "name": "Cyber Security News",
+                "url": "https://cybersecuritynews.com/"
+              },
+              {
+                "name": "CyberSecLabs",
+                "url": "https://www.cyberseclabs.co.uk/"
+              },
+              {
+                "name": "Cybrary",
+                "url": "https://www.cybrary.it/"
+              },
+              {
+                "name": "CyWare",
+                "url": "https://cyware.com/cyber-security-news-articles"
+              },
+              {
+                "name": "echoCTF.RED",
+                "url": "https://echoctf.red/"
+              },
+              {
+                "name": "Explotation Education",
+                "url": "https://exploit.education/"
+              },
+              {
+                "name": "Google CTF",
+                "url": "https://capturetheflag.withgoogle.com/"
+              },
+              {
+                "name": "Hack This Site",
+                "url": "https://www.hackthis.co.uk"
+              },
+              {
+                "name": "Hacker101",
+                "url": "https://ctf.hacker101.com"
+              },
+              {
+                "name": "Hacker Security",
+                "url": "https://hackersec.com/capture-the-flag-ctf/"
+              },
+              {
+                "name": "Hacking-Lab",
+                "url": "https://www.hacking-lab.com/events/"
+              },
+              {
+                "name": "Hacksplaining",
+                "url": "https://www.hacksplaining.com/lessons"
+              },
+              {
+                "name": "HackTheBox",
+                "url": "https://www.hackthebox.eu"
+              },
+              {
+                "name": "Hackthis",
+                "url": "https://www.hackthis.co.uk"
+              },
+              {
+                "name": "HackXpert",
+                "url": "https://hackxpert.com/index.php"
+              },
+              {
+                "name": "ImmersiveLabs",
+                "url": "https://immersivelabs.com/"
+              },
+              {
+                "name": "KONTRA AWS Top 10 (interactive)",
+                "url": "https://application.security/free/kontra-aws-clould-top-10"
+              },
+              {
+                "name": "KONTRA Front-end Top 10 (interactive)",
+                "url": "https://application.security/free/kontra-front-end-top-10"
+              },
+              {
+                "name": "KONTRA OWASP API Top 10 (interactive)",
+                "url": "https://application.security/free/owasp-top-10-API"
+              },
+              {
+                "name": "KONTRA OWASP Web Top 10 (interactive)",
+                "url": "https://application.security/free/owasp-top-10"
+              },
+              {
+                "name": "LetsDefend",
+                "url": "https://letsdefend.io/"
+              },
+              {
+                "name": "NewbieContest",
+                "url": "https://www.newbiecontest.org/"
+              },
+              {
+                "name": "OverTheWire",
+                "url": "http://overthewire.org"
+              },
+              {
+                "name": "Penetration Testing Practice Labs",
+                "url": "https://www.amanhardikar.com/mindmaps/Practice.html"
+              },
+              {
+                "name": "PentestIT LAB",
+                "url": "https://lab.pentestit.ru"
+              },
+              {
+                "name": "PentesterLab",
+                "url": "https://pentesterlab.com/"
+              },
+              {
+                "name": "PicoCTF",
+                "url": "https://picoctf.com"
+              },
+              {
+                "name": "Practical Pentest Labs",
+                "url": "https://practicalpentestlabs.com/"
+              },
+              {
+                "name": "PWNABLE",
+                "url": "https://pwnable.kr/play.php"
+              },
+              {
+                "name": "RangeForce",
+                "url": "https://www.rangeforce.com/"
+              },
+              {
+                "name": "Root-Me",
+                "url": "https://www.root-me.org/?lang=en"
+              },
+              {
+                "name": "SANS Challenger",
+                "url": "https://www.sans.org/mlp/holiday-hack-challenge/"
+              },
+              {
+                "name": "SmashTheStack",
+                "url": "http://www.smashthestack.org/wargames.html"
+              },
+              {
+                "name": "TCM Security",
+                "url": "https://academy.tcm-sec.com/"
+              },
+              {
+                "name": "The Cryptopals Crypto Challenges",
+                "url": "https://cryptopals.com/"
+              },
+              {
+                "name": "Try2Hack.Me",
+                "url": "https://try2hack.me/"
+              },
+              {
+                "name": "Try Hack Me",
+                "url": "https://tryhackme.com/"
+              },
+              {
+                "name": "Vulnhub",
+                "url": "https://www.vulnhub.com"
+              },
+              {
+                "name": "W3Challs https://w3challs.com/",
+                "url": "https://w3challs.com/"
+              },
+              {
+                "name": "WeChall",
+                "url": "http://www.wechall.net/"
+              },
+              {
+                "name": "Web Security Academy (PortSwigger)",
+                "url": "https://portswigger.net/web-security"
+              }
+            ]
+          },
+          {
+            "name": "Vulnerable Docker images",
+            "children": [
+              {
+                "name": "Altoro Mutual",
+                "url": "http://172.10.0.1:1080/"
+              },
+              {
+                "name": "BodgeIt",
+                "url": "http://127.10.0.14:1080/"
+              },
+              {
+                "name": "dvga",
+                "url": "http://127.10.0.14:1080/"
+              },
+              {
+                "name": "dvna",
+                "url": "http://127.10.0.13:1080/"
+              },
+              {
+                "name": "DVWA v1.9",
+                "url": "http://127.10.0.2:1080/setup.php"
+              },
+              {
+                "name": "Hackazon",
+                "url": "http://127.10.0.9:1080/"
+              },
+              {
+                "name": "Heartbleed",
+                "url": "https://127.10.0.5:8443/"
+              },
+              {
+                "name": "nowasp",
+                "url": "http://127.10.0.7:1080/database-offline.php"
+              },
+              {
+                "name": "OWASP Juice Shop",
+                "url": "http://127.10.0.8:1080/#/"
+              },
+              {
+                "name": "Pygoat",
+                "url": "http://127.10.0.16:1080/"
+              },
+              {
+                "name": "Security Ninja",
+                "url": "http://127.10.0.12:1080/"
+              },
+              {
+                "name": "Shellshock",
+                "url": "http://127.10.0.4:1080/"
+              },
+              {
+                "name": "Tireful API",
+                "url": "http://127.10.0.10:1080/"
+              },
+              {
+                "name": "WebGoat",
+                "url": "http://127.10.0.6:1080/WebGoat/login.mvc"
+              },
+              {
+                "name": "Wordpress",
+                "url": "http://127.10.0.3:1080/wp-admin/install.php"
+              },
+              {
+                "name": "XVWA",
+                "url": "http://127.10.0.11:1080/xvwa/"
+              }
+            ]
+          },
+          {
+            "name": "kubernetes-goat",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/kubernetes-goat"
+          },
+          {
+            "name": "Pentest Labs",
+            "url": "file:///home/user/Data/logseq/pages/Pentest%20labs.md"
+          },
+          {
+            "name": "railsgoat",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/railsgoat/README.md"
+          },
+          {
+            "name": "vulhub",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/vulhub/README.md"
+          }
+        ]
+      },
+      {
+        "name": "Linux",
+        "children": [
+          {
+            "name": "Online",
+            "children": [
+              {
+                "name": "Conquering the Command Line",
+                "url": "https://conqueringthecommandline.com/"
+              },
+              {
+                "name": "Cyberciti Bash Shell Scripting Tutorial",
+                "url": "https://bash.cyberciti.biz/guide/Main_Page"
+              },
+              {
+                "name": "Digital Ocean - Getting Started With Linux",
+                "url": "https://www.digitalocean.com/community/tutorial_series/getting-started-with-linux"
+              },
+              {
+                "name": "Eduonix - Learn Linux From Scratch",
+                "url": "https://www.eduonix.com/courses/system-programming/learn-linux-from-scratch"
+              },
+              {
+                "name": "FOSS Linux",
+                "url": "https://www.fosslinux.com/"
+              },
+              {
+                "name": "Guru99 - Linux Tutorial Summary",
+                "url": "https://www.guru99.com/unix-linux-tutorial.html"
+              },
+              {
+                "name": "Intellipaat - Linux Tutorial For Beginners",
+                "url": "https://www.youtube.com/watch?v=4ZHvZge1Lsw"
+              },
+              {
+                "name": "It's FOSS",
+                "url": "https://itsfoss.com/"
+              },
+              {
+                "name": "LabEx - Linux For Noobs",
+                "url": "https://labex.io/courses/linux-for-noobs"
+              },
+              {
+                "name": "Learn Enough Command Line to Be Dangerous",
+                "url": "https://www.learnenough.com/command-line-tutorial"
+              },
+              {
+                "name": "Linux Academy",
+                "url": "https://www.youtube.com/channel/UClGShptNEuvTWGAAfpa2Etw"
+              },
+              {
+                "name": "LinuxFoundationX",
+                "url": "https://www.edx.org/school/linuxfoundationx"
+              },
+              {
+                "name": "Linux Handbook",
+                "url": "https://linuxhandbook.com/"
+              },
+              {
+                "name": "Linux Hint",
+                "url": "https://linuxhint.com/"
+              },
+              {
+                "name": "Linuxize",
+                "url": "https://linuxize.com/"
+              },
+              {
+                "name": "Linux Journey",
+                "url": "https://linuxjourney.com/"
+              },
+              {
+                "name": "LinuxOPsys",
+                "url": "https://linuxopsys.com/"
+              },
+              {
+                "name": "Linux Survival",
+                "url": "https://linuxsurvival.com/"
+              },
+              {
+                "name": "nixCraft",
+                "url": "https://www.nixcraft.com/"
+              },
+              {
+                "name": "Ryan's Tutorials",
+                "url": "https://ryanstutorials.net/"
+              },
+              {
+                "name": "Tecmint",
+                "url": "https://www.tecmint.com/"
+              },
+              {
+                "name": "The Debian Administrator's Handbook",
+                "url": "https://debian-handbook.info/"
+              },
+              {
+                "name": "TLDP - Advanced Bash Scripting Guide",
+                "url": "https://tldp.org/LDP/abs/html/"
+              }
+            ]
+          },
+          {
+            "name": "awesome-tunneling",
+            "url": "file:///home/user/git/maxos/repos/education/awesome-tunneling/README.md"
+          },
+          {
+            "name": "Bash-Oneliner",
+            "url": "file:///home/user/git/maxos/repos/education/Bash-Oneliner/README.md"
+          },
+          {
+            "name": "GTFOBins",
+            "url": "http://127.0.0.1:10000/"
+          },
+          {
+            "name": "How-To-Secure-A-Linux-Server",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/How-To-Secure-A-Linux-Server/README.md"
+          },
+          {
+            "name": "linux-insides",
+            "url": "file:///home/user/git/maxos/repos/education/linux-insides"
+          },
+          {
+            "name": "modern-unix",
+            "url": "file:///home/user/git/maxos/repos/education/modern-unix/README.md"
+          },
+          {
+            "name": "the-practical-linux-hardening-guide",
+            "url": "file:///home/user/git/maxos/repos/education/the-practical-linux-hardening-guide/README.md"
+          }
+        ]
+      },
+      {
+        "name": "Misc",
+        "children": [
+          {
+            "name": "Bug bounties",
+            "children": [
+              {
+                "name": "Bugcrowd",
+                "url": "https://www.bugcrowd.com/"
+              },
+              {
+                "name": "HackerOne",
+                "url": "https://hackerone.com/"
+              },
+              {
+                "name": "bounty-target-data",
+                "url": "file:///home/user/git/maxos/repos/bug-bounty/bounty-targets-data/README.md"
+              },
+              {
+                "name": "Resources-for-Beginner-Bug-Bounty-Hunters",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Resources-for-Beginner-Bug-Bounty-Hunters/README.md"
+              },
+              {
+                "name": "study-bug-bounty",
+                "url": "file:///home/user/git/maxos/repos/bug-bounty/study-bug-bounty/README.md"
+              }
+            ]
+          },
+          {
+            "name": "CLI",
+            "children": [
+              {
+                "name": "the-art-of-command-line",
+                "url": "file:///home/user/git/maxos/repos/education/the-art-of-command-line/README.md"
+              }
+            ]
+          },
+          {
+            "name": "Telegram",
+            "children": [
+              {
+                "name": "Android Security & Malware",
+                "url": "https://t.me/androidMalware"
+              },
+              {
+                "name": "Blue Team | SOC | DFIR | Cloud Security",
+                "url": "https://t.me/socanalyst"
+              },
+              {
+                "name": "ch4mr0sh",
+                "url": "https://t.me/ch4mr0sh"
+              },
+              {
+                "name": "Cyber Security & Privacy News",
+                "url": "https://t.me/cibsecurity"
+              },
+              {
+                "name": "CyberSecurityTechnologies",
+                "url": "https://t.me/CyberSecurityTechnologies"
+              },
+              {
+                "name": "Cyber Threat Intelligence",
+                "url": "https://t.me/ctinow"
+              },
+              {
+                "name": "Fuzzing Labs",
+                "url": "https://t.me/fuzzinglabs"
+              },
+              {
+                "name": "HackerOne",
+                "url": "https://t.me/HackerOne"
+              },
+              {
+                "name": "Incident Response",
+                "url": "https://t.me/IncidentResponse"
+              },
+              {
+                "name": "Malpedia Update Feed",
+                "url": "https://t.me/malpedia"
+              },
+              {
+                "name": "Malware News",
+                "url": "https://t.me/malwr"
+              },
+              {
+                "name": "Malware Research",
+                "url": "https://t.me/MalwareResearch"
+              },
+              {
+                "name": "Reverse Engineering Chat",
+                "url": "https://t.me/"
+              },
+              {
+                "name": "RME-DisCo",
+                "url": "https://t.me/reverseame"
+              },
+              {
+                "name": "Cyber Soc Investigation",
+                "url": "https://t.me/soc_hacks"
+              },
+              {
+                "name": "Threat Intelligence Sharing",
+                "url": "https://t.me/ThreatIntelligenceSharing"
+              },
+              {
+                "name": "vx-underground",
+                "url": "https://t.me/vxunderground"
+              }
+            ]
+          },
+          {
+            "name": "alm.gg PDFs",
+            "url": "file:///home/user/pdfs/education/misc"
+          },
+          {
+            "name": "awesome-selfhosted",
+            "url": "file:///home/user/git/maxos/repos/education/awesome-selfhosted/README.md"
+          },
+          {
+            "name": "CrimeBoards",
+            "url": "file:///home/user/git/maxos/repos/misc/CrimeBoards/README.md"
+          },
+          {
+            "name": "flappy.html",
+            "url": "https://gist.github.com/gullyn/95b2ab9e465317f1d4e4607cf6e94205"
+          },
+          {
+            "name": "/home/user/git",
+            "url": "http://resources.home:10070"
+          },
+          {
+            "name": "itpol",
+            "url": "file:///home/user/git/maxos/repos/education/itpol/"
+          },
+          {
+            "name": "what_is_this_c2",
+            "url": "file:///home/user/git/maxos/repos/misc/what_is_this_c2"
+          },
+          {
+            "name": "90DaysOfDevops",
+            "url": "file:///home/user/git/maxos/repos/education/90DaysOfDevOps/README.md"
+          },
+          {
+            "name": "webtop",
+            "url": "http://127.0.0.1:10150"
+          }
+        ]
+      },
+      {
+        "name": "News",
+        "children": [
+          {
+            "name": "All InfoSec news",
+            "url": "https://allinfosecnews.com/"
+          },
+          {
+            "name": "BleepingComputer",
+            "url": "https://www.bleepingcomputer.com/"
+          },
+          {
+            "name": "CISO Series",
+            "url": "https://cisoseries.com/"
+          },
+          {
+            "name": "CVE Trends",
+            "url": "https://cvetrends.com/"
+          },
+          {
+            "name": "Cyber Defense Magazine",
+            "url": "https://www.cyberdefensemagazine.com/"
+          },
+          {
+            "name": "Cyber Guards",
+            "url": "https://cyberguards.com/"
+          },
+          {
+            "name": "Cyber Magazine",
+            "url": "https://cybermagazine.com/"
+          },
+          {
+            "name": "Cyber Security Review",
+            "url": "https://www.cybersecurity-review.com/"
+          },
+          {
+            "name": "CyberScoop",
+            "url": "https://www.cyberscoop.com/"
+          },
+          {
+            "name": "Cybersecurity Insiders",
+            "url": "https://www.cybersecurity-insiders.com/"
+          },
+          {
+            "name": "Daniel Miessler",
+            "url": "https://danielmiessler.com/"
+          },
+          {
+            "name": "Dark Reading",
+            "url": "https://www.darkreading.com/"
+          },
+          {
+            "name": "GBHackers on Security",
+            "url": "https://gbhackers.com/"
+          },
+          {
+            "name": "Hacker Combat",
+            "url": "https://hackercombat.com/"
+          },
+          {
+            "name": "HackRead",
+            "url": "https://www.hackread.com/"
+          },
+          {
+            "name": "Help Net Security",
+            "url": "https://www.helpnetsecurity.com/"
+          },
+          {
+            "name": "Information Security Buzz",
+            "url": "https://informationsecuritybuzz.com/"
+          },
+          {
+            "name": "Infosecurity Magazine",
+            "url": "https://www.infosecurity-magazine.com/"
+          },
+          {
+            "name": "Internet Storm Center",
+            "url": "https://isc.sans.edu/"
+          },
+          {
+            "name": "IT Security Guru",
+            "url": "https://www.itsecurityguru.org/"
+          },
+          {
+            "name": "Pentester Land",
+            "url": "https://pentester.land/"
+          },
+          {
+            "name": "SearchSecurity",
+            "url": "https://www.techtarget.com/searchsecurity/"
+          },
+          {
+            "name": "securibee",
+            "url": "https://securib.ee/"
+          },
+          {
+            "name": "Security Gladiators",
+            "url": "https://securitygladiators.com/"
+          },
+          {
+            "name": "Sophos News",
+            "url": "https://news.sophos.com/en-us/"
+          },
+          {
+            "name": "TaoSecurity",
+            "url": "https://www.taosecurity.com/"
+          },
+          {
+            "name": "TechWorm",
+            "url": "https://www.techworm.net/"
+          },
+          {
+            "name": "The Daily Swig",
+            "url": "https://portswigger.net/daily-swig"
+          },
+          {
+            "name": "The DFIR Report",
+            "url": "https://thedfirreport.com/"
+          },
+          {
+            "name": "The Last Watchdog",
+            "url": "https://www.lastwatchdog.com/"
+          },
+          {
+            "name": "The Record",
+            "url": "https://therecord.media/"
+          },
+          {
+            "name": "The Security Ledger",
+            "url": "https://securityledger.com/"
+          },
+          {
+            "name": "threatABLE",
+            "url": "https://www.threatable.io/"
+          },
+          {
+            "name": "Troy Hunt",
+            "url": "https://www.troyhunt.com/"
+          }
+        ]
+      },
+      {
+        "name": "Newsletters",
+        "children": [
+          {
+            "name": "Advisory Week",
+            "url": "https://advisoryweek.com/"
+          },
+          {
+            "name": "API Security Newsletter",
+            "url": "https://apisecurity.io/"
+          },
+          {
+            "name": "AWS Security Digest",
+            "url": "https://app.mailbrew.com/zoph/aws-security-digest-HrkhwqNrwBBk"
+          },
+          {
+            "name": "Blockchain Threat Intelligence",
+            "url": "https://newsletter.blockthreat.io/"
+          },
+          {
+            "name": "CSO Online",
+            "url": "https://www.csoonline.com/uk/news/"
+          },
+          {
+            "name": "CybersecNews Weekly",
+            "url": "https://buttondown.email/CybersecNewsWeekly"
+          },
+          {
+            "name": "Daniel Kelley",
+            "url": "https://www.danielmakelley.com/"
+          },
+          {
+            "name": "Gov Info Security",
+            "url": "https://www.govinfosecurity.com/welcome-to-govinfosecuritycom-a-1314"
+          },
+          {
+            "name": "Graham Cluley",
+            "url": "https://grahamcluley.com/"
+          },
+          {
+            "name": "Hive Five Newsletter",
+            "url": "https://securib.ee/newsletter/"
+          },
+          {
+            "name": "Krebs On Security",
+            "url": "https://krebsonsecurity.com/"
+          },
+          {
+            "name": "Naked Security",
+            "url": "https://nakedsecurity.sophos.com/"
+          },
+          {
+            "name": "Risky Biz",
+            "url": "https://risky.biz/subscribe/"
+          },
+          {
+            "name": "RTCSec",
+            "url": "https://www.rtcsec.com/subscribe/"
+          },
+          {
+            "name": "SANS NewsBites",
+            "url": "https://www.sans.org/newsletters/newsbites/"
+          },
+          {
+            "name": "Schneier on Security",
+            "url": "https://www.schneier.com/"
+          },
+          {
+            "name": "SecPro",
+            "url": "https://secpro.co/en/"
+          },
+          {
+            "name": "The Hacker News",
+            "url": "https://thehackernews.com/"
+          },
+          {
+            "name": "This Week in 4n6",
+            "url": "https://thisweekin4n6.com/"
+          },
+          {
+            "name": "Threatpost",
+            "url": "https://threatpost.com/"
+          },
+          {
+            "name": "tl;dr sec Newsletter",
+            "url": "https://tldrsec.com/newsletter/"
+          },
+          {
+            "name": "TripWire - State of Security",
+            "url": "https://www.tripwire.com/state-of-security/"
+          },
+          {
+            "name": "Unsupervised Learning Community",
+            "url": "https://danielmiessler.com/newsletter/"
+          },
+          {
+            "name": "We Live Security",
+            "url": "https://www.welivesecurity.com/"
+          }
+        ]
+      },
+      {
+        "name": "OSINT",
+        "children": [
+          {
+            "name": "CTI & OSINT Online Resources (offline)",
+            "children": [
+              {
+                "name": "Bookmarks",
+                "url": "file:///home/user/git/maxos/resources/CTI & OSINT Online Resources_20220902/Bookmarks.html"
+              },
+              {
+                "name": "Collated Search Resources",
+                "url": "file:///home/user/git/maxos/resources/CTI & OSINT Online Resources_20220902/Collated Search Resources.html"
+              },
+              {
+                "name": "Selector IoC Search",
+                "url": "file:///home/user/git/maxos/resources/CTI & OSINT Online Resources_20220902/Selector IoC Search.html"
+              },
+              {
+                "name": "Tools",
+                "url": "file:///home/user/git/maxos/resources/CTI & OSINT Online Resources_20220902/Tools.html"
+              },
+              {
+                "name": "Training Learning",
+                "url": "file:///home/user/git/maxos/resources/CTI & OSINT Online Resources_20220902/Training Learning.html"
+              }
+            ]
+          },
+          {
+            "name": "CyberSudo's OSINT Toolkit",
+            "url": "https://docs.google.com/spreadsheets/d/1EC0sKA_W9znzsxUt0wye9UYtyATXw5m8/edit#gid=1485711012"
+          },
+          {
+            "name": "'Must Have' Free Resources for OSINT",
+            "url": "https://www.sans.org/blog/-must-have-free-resources-for-open-source-intelligence-osint-/"
+          },
+          {
+            "name": "Bendobrown OSINT videos",
+            "url": "https://www.youtube.com/c/Bendobrown/videos"
+          },
+          {
+            "name": "CTI o OSINT Online Resources",
+            "url": "https://docs.google.com/spreadsheets/d/1klugQqw6POlBtuzon8S0b18-gpsDwX-5OYRrB7TyNEw/edit#gid=0"
+          },
+          {
+            "name": "Nixintel's OSINT Resource List",
+            "url": "https://start.me/p/rx6Qj8/nixintel-s-osint-resource-list"
+          },
+          {
+            "name": "osint.link",
+            "url": "https://osint.link/"
+          },
+          {
+            "name": "OSINT Hub",
+            "url": "https://start.me/p/BnrMKd/01-ncso"
+          },
+          {
+            "name": "The Ultimate OSINT collection",
+            "url": "https://start.me/p/DPYPMz/the-ultimate-osint-collection"
+          }
+        ]
+      },
+      {
+        "name": "Pentesting",
+        "children": [
+          {
+            "name": "API",
+            "children": [
+              {
+                "name": "API Pentesting Mindmap",
+                "url": "file:///home/user/git/maxos/resources/cheatsheets/20230109_api_pentesting_mindmap.pdf"
+              },
+              {
+                "name": "awesome-api-security",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-api-security/README.md"
+              }
+            ]
+          },
+          {
+            "name": "Courses",
+            "children": [
+              {
+                "name": "AWS Skill Builder - AWS",
+                "url": "https://explore.skillbuilder.aws/learn/signin"
+              },
+              {
+                "name": "Cyber Security - Class Central",
+                "url": "https://www.classcentral.com/course/swayam-cyber-security-13978"
+              },
+              {
+                "name": "Cybersecurity Essentials - Cisco",
+                "url": "https://www.netacad.com/courses/cybersecurity/cybersecurity-essentials"
+              },
+              {
+                "name": "Developing Secure Software - The Linux Foundation",
+                "url": "https://training.linuxfoundation.org/training/developing-secure-software-lfd121/"
+              },
+              {
+                "name": "Ethical Hacking Essentials (EHE) - codered",
+                "url": "https://codered.eccouncil.org/course/ethical-hacking-essentials"
+              },
+              {
+                "name": "Fortinet Cybersecurity Training - Fortinet",
+                "url": "https://www.fortinet.com/training/cybersecurity-professionals"
+              },
+              {
+                "name": "Google Cloud Training and Certification",
+                "url": "https://cloud.google.com/training"
+              },
+              {
+                "name": "Introduction to Cybersecurity - Cisco",
+                "url": "https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity"
+              },
+              {
+                "name": "Microsoft Learn for Azure",
+                "url": "https://learn.microsoft.com/en-us/training/azure/"
+              },
+              {
+                "name": "Networking Essentials - Cisco",
+                "url": "https://www.netacad.com/courses/networking/networking-essentials"
+              },
+              {
+                "name": "Qualys Certification and Training Center - Qualys",
+                "url": "https://www.qualys.com/training/"
+              },
+              {
+                "name": "Responsible Red Teaming - The Taggart Institute",
+                "url": "https://taggartinstitute.org/p/responsible-red-teaming"
+              },
+              {
+                "name": "Stanford Seminar - Engineering Cyber Resiliency - Class Central",
+                "url": "https://www.classcentral.com/course/youtube-stanford-seminar-engineering-cyber-resiliency-a-pragmatic-approach-110018"
+              },
+              {
+                "name": "Web Security Academy - PortSwigger",
+                "url": "https://portswigger.net/web-security"
+              }
+            ]
+          },
+          {
+            "name": "IoT",
+            "children": [
+              {
+                "name": "IoTSecurity101",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/IoTSecurity101"
+              }
+            ]
+          },
+          {
+            "name": "Mobile",
+            "children": [
+              {
+                "name": "android-security-awesome",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/android-security-awesome/README.md"
+              },
+              {
+                "name": "awesome-mobile-security",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-mobile-security/README.md"
+              },
+              {
+                "name": "PhoneSploit-Pro",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/PhoneSploit-Pro/README.md"
+              },
+              {
+                "name": "secure-mobile-development",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/secure-mobile-development/README.md"
+              }
+            ]
+          },
+          {
+            "name": "OSINT",
+            "children": [
+              {
+                "name": "awesome-osint",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-osint/README.md"
+              },
+              {
+                "name": "awesome-shodan-quries",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-shodan-queries/readme.md"
+              },
+              {
+                "name": "Dorks",
+                "children": [
+                  {
+                    "name": "Dorks-collections-list",
+                    "url": "file:///home/user/git/maxos/repos/pentest-education/Dorks-collections-list/README.md"
+                  },
+                  {
+                    "name": "github-dorks",
+                    "url": "file:///home/user/git/maxos/repos/pentest-education/github-dorks/README.md"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Resources",
+            "children": [
+              {
+                "name": "assessment-mindset",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/assessment-mindset"
+              },
+              {
+                "name": "awesome-appsec",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-appsec/README.md"
+              },
+              {
+                "name": "awesome-cyber-security-university",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-cyber-security-university/README.md"
+              },
+              {
+                "name": "Awesome-DevSecOps-Platforms",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Awesome-DevSecOps-Platforms/README.md"
+              },
+              {
+                "name": "awesome-embedded-and-iot-security",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-embedded-and-iot-security/readme.md"
+              },
+              {
+                "name": "Awesome-Ethical-Hacking-Resources",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Awesome-Ethical-Hacking-Resources/README.md"
+              },
+              {
+                "name": "awesome-executable-packing",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-executable-packing/README.md"
+              },
+              {
+                "name": "awesome-forensics",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-forensics/README.md"
+              },
+              {
+                "name": "awesome-fuzzing",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-fuzzing/README.md"
+              },
+              {
+                "name": "awesome-hacker-search-engines",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-hacker-search-engines/README.md"
+              },
+              {
+                "name": "awesome-hacking",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-hacking/README.md"
+              },
+              {
+                "name": "Awesome-Hacking",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Awesome-Hacking/README.md"
+              },
+              {
+                "name": "awesome-hacking-locations",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-hacking-locations/README.md"
+              },
+              {
+                "name": "awesome-honeypots",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-honeypots/README.md"
+              },
+              {
+                "name": "Awesome-Hacking-Resources",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Awesome-Hacking-Resources/README.md"
+              },
+              {
+                "name": "awesome-malware-analysis",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-malware-analysis/README.md"
+              },
+              {
+                "name": "awesome-pentest",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-pentest/README.md"
+              },
+              {
+                "name": "Awesome-Pentest",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Awesome-Pentest/README.md"
+              },
+              {
+                "name": "awesome-sec-talks",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-sec-talks/README.md"
+              },
+              {
+                "name": "awesome-security",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-security/README.md"
+              },
+              {
+                "name": "Free-Security-eBooks",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Free-Security-eBooks/README.md"
+              },
+              {
+                "name": "frida-snippets",
+                "url": "file:///home/user/git/maxos/repos/misc/frida-snippets/README.md"
+              },
+              {
+                "name": "h4cker",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/h4cker"
+              },
+              {
+                "name": "hacker101",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/hacker101/README.md"
+              },
+              {
+                "name": "hacker-roadmap",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/hacker-roadmap/README.md"
+              },
+              {
+                "name": "Hack The Box",
+                "url": "https://www.hackthebox.com/"
+              },
+              {
+                "name": "Infosec_Reference",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Infosec_Reference/README.md"
+              },
+              {
+                "name": "MindAPI",
+                "url": "file:///home/user/git/maxos/resources/20221117_mindapi.html"
+              },
+              {
+                "name": "Offensive Security Cheatsheet",
+                "url": "https://cheatsheet.haax.fr/"
+              },
+              {
+                "name": "Practical-Ethical-Hacking-Resources",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Practical-Ethical-Hacking-Resources"
+              },
+              {
+                "name": "PracticalCyberSecurityResources",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/PracticalCyberSecurityResources"
+              },
+              {
+                "name": "Pentest-Everything",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Pentest-Everything"
+              },
+              {
+                "name": "pentest-notes",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/pentest-notes/README.md"
+              },
+              {
+                "name": "pentest-wiki",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/pentest-wiki"
+              },
+              {
+                "name": "Pentest-Tools",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Pentest-Tools/README.md"
+              },
+              {
+                "name": "Pentest Book",
+                "url": "file:///home/user/git/maxos/resources/cheatsheets/20221117_pentest_book.pdf"
+              },
+              {
+                "name": "PENTESTING-BIBLE",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/PENTESTING-BIBLE"
+              },
+              {
+                "name": "PentestTools",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/PentestTools/README.md"
+              },
+              {
+                "name": "SecTools",
+                "url": "https://sectools.org/"
+              },
+              {
+                "name": "technical-whitepapers",
+                "url": "file:///home/user/pdfs/education/technical-whitepapers/README.md"
+              },
+              {
+                "name": "the-book-of-secret-knowledge",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/the-book-of-secret-knowledge/README.md"
+              },
+              {
+                "name": "trailofbits publications",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/trailofbits-publications/README.md"
+              },
+              {
+                "name": "yeahhub ebooks",
+                "url": "file:///home/user/pdfs/education/yeahhub"
+              }
+            ]
+          },
+          {
+            "name": "Web3",
+            "children": [
+              {
+                "name": "awesome-oneliner-bugbounty",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Awesome-web3-Security/README.md"
+              }
+            ]
+          },
+          {
+            "name": "Web",
+            "children": [
+              {
+                "name": "awesome-oneliner-bugbounty",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-oneliner-bugbounty/README.md"
+              },
+              {
+                "name": "awesome-web-security",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-web-security/README.md"
+              },
+              {
+                "name": "htshells",
+                "url": "file:///home/user/git/maxos/repos/pentest-tools/htshells/README.md"
+              },
+              {
+                "name": "OSCP tips and tricks",
+                "url": "file:///home/user/git/maxos/resources/OSCP tips and tricks 20220908.html"
+              },
+              {
+                "name": "top10webseclist",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/top10webseclist"
+              },
+              {
+                "name": "Web-Attack-Cheat-Sheet",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/Web-Attack-Cheat-Sheet/README.md"
+              }
+            ]
+          },
+          {
+            "name": "Windows",
+            "children": [
+              {
+                "name": "Building an Active Directory Lab",
+                "url": "https://blog.spookysec.net/ad-lab-1/"
+              },
+              {
+                "name": "MalAPI.io",
+                "url": "https://malapi.io/"
+              },
+              {
+                "name": "nishang",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/nishang/README.md"
+              },
+              {
+                "name": "vulnerable-AD",
+                "url": "file:///home/user/git/maxos/repos/pentest-education/vulnerable-AD/README.md"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Podcasts",
+        "children": [
+          {
+            "name": "2 Cyber Chicks",
+            "url": "https://2cyberchicks.simplecast.com/episodes"
+          },
+          {
+            "name": "401 Access Denied Podcast",
+            "url": "https://delinea.com/events/podcasts"
+          },
+          {
+            "name": "7 Minute Security",
+            "url": "https://www.stitcher.com/show/7-minute-security"
+          },
+          {
+            "name": "8th Layer Insights",
+            "url": "https://www.stitcher.com/show/8th-layer-insights"
+          },
+          {
+            "name": "Absolute AppSec",
+            "url": "https://absoluteappsec.com/"
+          },
+          {
+            "name": "Adopting Zero Trust",
+            "url": "https://www.youtube.com/channel/UCOTUC_MaIidzMJ7seMkj5Fg"
+          },
+          {
+            "name": "awesome-podcasts",
+            "url": "file:///home/user/git/maxos/repos/education/awesome-podcasts/README.md"
+          },
+          {
+            "name": "Adventures of Alice and Bob",
+            "url": "https://www.beyondtrust.com/podcast"
+          },
+          {
+            "name": "BarCode Cybersecurity Podcast",
+            "url": "https://thebarcodepodcast.com/"
+          },
+          {
+            "name": "Brakeing Down Security",
+            "url": "https://www.brakeingsecurity.com/"
+          },
+          {
+            "name": "Breach",
+            "url": "https://www.carbonite.com/podcasts/breach/"
+          },
+          {
+            "name": "Click Here",
+            "url": "https://www.stitcher.com/show/click-here"
+          },
+          {
+            "name": "Crypto-Gram Security Podcast",
+            "url": "https://crypto-gram.libsyn.com/"
+          },
+          {
+            "name": "Cyber Crime Junkies",
+            "url": "https://cybercrimejunkies.com/"
+          },
+          {
+            "name": "Cyber Security Headlines by the CISO Series",
+            "url": "https://www.stitcher.com/show/cyber-security-headlines"
+          },
+          {
+            "name": "Cyber Security Sauna",
+            "url": "https://www.withsecure.com/en/whats-new/podcasts"
+          },
+          {
+            "name": "Cybersecurity Today by ITWC",
+            "url": "https://www.itworldcanada.com/podcasts"
+          },
+          {
+            "name": "Cyberside Chats",
+            "url": "https://www.epiqglobal.com/en-us/resource-center/cyberside-chats"
+          },
+          {
+            "name": "CyberWire Daily",
+            "url": "https://www.stitcher.com/show/the-cyberwire-your-cyber-security-news-connection"
+          },
+          {
+            "name": "Cyber Work",
+            "url": "https://www.infosecinstitute.com/podcast/"
+          },
+          {
+            "name": "Darknet Diaries",
+            "url": "https://darknetdiaries.com/episode/"
+          },
+          {
+            "name": "Defensive Security Podcast",
+            "url": "https://app.stitcher.com/browse/feed/52097/episodes"
+          },
+          {
+            "name": "Defrag This",
+            "url": "https://podcasts.apple.com/us/podcast/defrag-this/id1234621622"
+          },
+          {
+            "name": "Dr Dark Web Podcast",
+            "url": "https://www.youtube.com/c/Cybersixgill/videos"
+          },
+          {
+            "name": "H4unt3d Hacker",
+            "url": "https://podcasts.apple.com/gb/podcast/h4unt3d-hacker/id1569755148"
+          },
+          {
+            "name": "Hacker Valley Studio Podcast",
+            "url": "https://hackervalley.com/show/hackervalley/"
+          },
+          {
+            "name": "Hacking Humans",
+            "url": "https://www.stitcher.com/show/hacking-humans"
+          },
+          {
+            "name": "Humans of InfoSec",
+            "url": "https://soundcloud.com/humans-of-infosec"
+          },
+          {
+            "name": "Identity at the Center",
+            "url": "https://www.identityatthecenter.com/listen"
+          },
+          {
+            "name": "Life of a CISO",
+            "url": "https://podcasts.apple.com/us/podcast/life-of-a-ciso-with-dr-eric-cole/id1458386656"
+          },
+          {
+            "name": "Malicious Life",
+            "url": "https://www.stitcher.com/show/malicious-life"
+          },
+          {
+            "name": "Naked Security Podcast",
+            "url": "https://nakedsecurity.sophos.com/category/audio-and-video/podcast/"
+          },
+          {
+            "name": "Open Source Security Podcast",
+            "url": "https://www.stitcher.com/show/the-open-source-security-podcast"
+          },
+          {
+            "name": "OWASP Podcast",
+            "url": "https://soundcloud.com/owasp-podcast"
+          },
+          {
+            "name": "Privacy Advisor Podcast",
+            "url": "https://iapp.org/news/privacy-advisor-podcast/"
+          },
+          {
+            "name": "Privacy, Security, & OSINT Show - IntelTechniques",
+            "url": "https://inteltechniques.com/podcast.html"
+          },
+          {
+            "name": "Purple Squad Security",
+            "url": "https://www.stitcher.com/show/purple-squad-security"
+          },
+          {
+            "name": "Risky Business",
+            "url": "https://risky.biz/"
+          },
+          {
+            "name": "SANS Internet Stormcenter Daily Cyber Podcast",
+            "url": "https://isc.sans.edu/podcast/#"
+          },
+          {
+            "name": "Security in Five",
+            "url": "https://www.stitcher.com/show/security-in-five"
+          },
+          {
+            "name": "Security Now",
+            "url": "https://podcasts.apple.com/us/podcast/security-now-audio/id79016499?uo=10"
+          },
+          {
+            "name": "Security Weekly",
+            "url": "https://securityweekly.com/listen/"
+          },
+          {
+            "name": "Simply Cyber",
+            "url": "https://podcasts.apple.com/us/podcast/simply-cyber/id1590662228"
+          },
+          {
+            "name": "Smashing Security",
+            "url": "https://www.smashingsecurity.com/episodes/"
+          },
+          {
+            "name": "Task Force 7 Cyber Security Radio",
+            "url": "https://podcasts.apple.com/us/podcast/task-force-7-cyber-security-radio/id1291030493"
+          },
+          {
+            "name": "The 443 Security Simplified",
+            "url": "https://podcasts.apple.com/us/podcast/the-443-security-simplified/id1399962220"
+          },
+          {
+            "name": "The Cyberlaw Podcast",
+            "url": "https://podcasts.apple.com/us/podcast/the-cyberlaw-podcast/id830593115"
+          },
+          {
+            "name": "The Cyber Tap (cyberTAP)",
+            "url": "https://podcasts.apple.com/gb/podcast/the-cyber-tap/id1500337895"
+          },
+          {
+            "name": "The Cyber Queens Podcast",
+            "url": "https://podcasts.apple.com/us/podcast/the-cyber-queens-podcast/id1643732283"
+          },
+          {
+            "name": "The Cyber Ranch Podcast",
+            "url": "https://podcasts.apple.com/us/podcast/the-cyber-ranch-podcast/id1549705840"
+          },
+          {
+            "name": "The Hacker Chronicles",
+            "url": "https://podcasts.apple.com/us/podcast/the-hacker-chronicles/id1599393610"
+          },
+          {
+            "name": "The Hacker Mind",
+            "url": "https://podcasts.apple.com/us/podcast/the-hacker-mind/id1523725831"
+          },
+          {
+            "name": "The Privacy, Security, & OSINT Show",
+            "url": "https://soundcloud.com/user-98066669"
+          },
+          {
+            "name": "The Secure Developer",
+            "url": "https://soundcloud.com/heavybit/sets/the-secure-developer"
+          },
+          {
+            "name": "The Shared Security Show",
+            "url": "https://sharedsecurity.net/"
+          },
+          {
+            "name": "The Shellsharks Podcast",
+            "url": "https://www.stitcher.com/show/the-shellsharks-podcast"
+          },
+          {
+            "name": "The Social-Engineer Podcast",
+            "url": "https://podcasts.apple.com/gb/podcast/the-social-engineer-podcast/id334648685"
+          },
+          {
+            "name": "The Virtual CISO Moment",
+            "url": "https://podcasts.apple.com/us/podcast/the-virtual-ciso-moment/id1608185823"
+          },
+          {
+            "name": "Troy Hunt's Weekly Update Podcast",
+            "url": "https://podcasts.apple.com/au/podcast/troy-hunts-weekly-update-podcast/id1176454699"
+          },
+          {
+            "name": "Ubuntu Security Podcast",
+            "url": "https://podcasts.apple.com/au/podcast/ubuntu-security-podcast/id1429360004"
+          },
+          {
+            "name": "Unsupervised Learning",
+            "url": "https://podcasts.apple.com/gb/podcast/unsupervised-learning/id1099711235"
+          },
+          {
+            "name": "We Talk Cyber (Monica Talks Cyber)",
+            "url": "https://podcasts.apple.com/lv/podcast/monica-talks-cyber/id1524150524"
+          },
+          {
+            "name": "What The Shell?",
+            "url": "https://podcasts.apple.com/us/podcast/what-the-shell/id1582675663"
+          }
+        ]
+      },
+      {
+        "name": "Programming",
+        "children": [
+          {
+            "name": "Best-websites-a-programmer-should-visit",
+            "url": "file:///home/user/git/maxos/repos/education/Best-websites-a-programmer-should-visit/README.md"
+          },
+          {
+            "name": "developer-roadmap",
+            "url": "file:///home/user/git/maxos/repos/education/developer-roadmap/readme.md"
+          },
+          {
+            "name": "free-programming-books",
+            "url": "file:///home/user/git/maxos/repos/education/free-programming-books"
+          },
+          {
+            "name": "just-enough-series",
+            "url": "file:///home/user/git/maxos/repos/education/just-enough-series/README.md"
+          },
+          {
+            "name": "karen-Projects",
+            "url": "file:///home/user/git/maxos/repos/education/karan-Projects/README.md"
+          },
+          {
+            "name": "project-based-learning",
+            "url": "file:///home/user/git/maxos/repos/education/project-based-learning/README.md"
+          },
+          {
+            "name": "python-patterns",
+            "url": "file:///home/user/git/maxos/repos/education/python-patterns/README.md"
+          },
+          {
+            "name": "TheAlgorithmsPython",
+            "url": "file:///home/user/git/maxos/repos/education/TheAlgorithmsPython/DIRECTORY.md"
+          },
+          {
+            "name": "zero-to-mastery-resources",
+            "url": "file:///home/user/git/maxos/repos/education/zero-to-mastery-resources/README.md"
+          }
+        ]
+      },
+      {
+        "name": "Recon",
+        "children": [
+          {
+            "name": "Paid",
+            "children": [
+              {
+                "name": "AlienVault",
+                "url": "https://otx.alienvault.com/"
+              },
+              {
+                "name": "Binary Edge",
+                "url": "https://www.binaryedge.io/"
+              },
+              {
+                "name": "Dehashed",
+                "url": "https://www.dehashed.com/"
+              },
+              {
+                "name": "FOFA",
+                "url": "https://fofa.info/"
+              },
+              {
+                "name": "FullHunt",
+                "url": "https://fullhunt.io/"
+              },
+              {
+                "name": "GreyNoise",
+                "url": "https://www.greynoise.io/"
+              },
+              {
+                "name": "PolySwarm",
+                "url": "https://polyswarm.io/"
+              },
+              {
+                "name": "PublicWWW",
+                "url": "https://publicwww.com/"
+              },
+              {
+                "name": "searchcode",
+                "url": "https://searchcode.com/"
+              },
+              {
+                "name": "Vulners",
+                "url": "https://vulners.com/"
+              },
+              {
+                "name": "SecurityTrails",
+                "url": "https://securitytrails.com/"
+              }
+            ]
+          },
+          {
+            "name": "AbuseIPDB",
+            "url": "https://www.abuseipdb.com/"
+          },
+          {
+            "name": "ARIN",
+            "url": "https://search.arin.net/"
+          },
+          {
+            "name": "Binary Edge",
+            "url": "https://www.binaryedge.io/"
+          },
+          {
+            "name": "Censys",
+            "url": "https://search.censys.io/"
+          },
+          {
+            "name": "crt.sh",
+            "url": "https://crt.sh/"
+          },
+          {
+            "name": "DNSdumpster",
+            "url": "https://dnsdumpster.com/"
+          },
+          {
+            "name": "DorkSearch",
+            "url": "https://dorksearch.com/"
+          },
+          {
+            "name": "FullHunt",
+            "url": "https://fullhunt.io/search"
+          },
+          {
+            "name": "GrayHatWarfare",
+            "url": "https://buckets.grayhatwarfare.com/"
+          },
+          {
+            "name": "grep.app",
+            "url": "https://grep.app/"
+          },
+          {
+            "name": "hunter",
+            "url": "https://hunter.io/"
+          },
+          {
+            "name": "Hybrid Analysis",
+            "url": "https://www.hybrid-analysis.com/"
+          },
+          {
+            "name": "IntelligenceX",
+            "url": "https://intelx.io/tools?tab=general"
+          },
+          {
+            "name": "IPAddress.com",
+            "url": "https://www.ipaddress.com/"
+          },
+          {
+            "name": "LeakIX",
+            "url": "https://leakix.net/"
+          },
+          {
+            "name": "Netlas",
+            "url": "https://app.netlas.io/responses/"
+          },
+          {
+            "name": "ONYPHE",
+            "url": "https://www.onyphe.io/"
+          },
+          {
+            "name": "Packet Storm Security",
+            "url": "https://packetstormsecurity.com/files/"
+          },
+          {
+            "name": "PimEyes",
+            "url": "https://pimeyes.com/en"
+          },
+          {
+            "name": "PublicWWW",
+            "url": "https://publicwww.com/"
+          },
+          {
+            "name": "Pulsedive",
+            "url": "https://pulsedive.com/"
+          },
+          {
+            "name": "Shodan",
+            "url": "https://www.shodan.io/"
+          },
+          {
+            "name": "URL Scan",
+            "url": "https://urlscan.io/"
+          },
+          {
+            "name": "VirusTotal",
+            "url": "https://www.virustotal.com/"
+          },
+          {
+            "name": "WayBackMachine",
+            "url": "https://archive.org/web/"
+          },
+          {
+            "name": "What is My IP Address",
+            "url": "https://whatismyip.live/"
+          },
+          {
+            "name": "Wigle",
+            "url": "https://www.wigle.net/"
+          },
+          {
+            "name": "ZoomEye",
+            "url": "https://www.zoomeye.org/"
+          }
+        ]
+      },
+      {
+        "name": "Red Team",
+        "children": [
+          {
+            "name": "100-redteam-projects",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/100-redteam-projects/README.md"
+          },
+          {
+            "name": "168 Red Team repos",
+            "url": "file:///home/user/git/maxos/resources/20221117_redteam.html"
+          },
+          {
+            "name": "Awesome-Red-Teaming",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Awesome-Red-Teaming/README.md"
+          },
+          {
+            "name": "Red-Blueteam-party",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/Red-Blueteam-party/README.md"
+          },
+          {
+            "name": "Red Team Guides",
+            "url": "https://redteam.guide/"
+          },
+          {
+            "name": "RedTeam-Resources",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/RedTeam-Resources"
+          },
+          {
+            "name": "RedTeam-Tactics-and-Techniques",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/RedTeam-Tactics-and-Techniques"
+          }
+        ]
+      },
+      {
+        "name": "Reporting",
+        "children": [
+          {
+            "name": "awesome-list-of-public-pentesting-reports",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-list-of-public-pentesting-reports"
+          },
+          {
+            "name": "cyberowl",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/cyberowl/README.md"
+          },
+          {
+            "name": "PublicReports",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/HalbornPublicReports"
+          },
+          {
+            "name": "public-pentesting-reports",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/public-pentesting-reports"
+          }
+        ]
+      },
+      {
+        "name": "Threat Intelligence",
+        "children": [
+          {
+            "name": "AlienVault",
+            "url": "https://otx.alienvault.com/"
+          },
+          {
+            "name": "awesome-threat-intelligence",
+            "url": "file:///home/user/git/maxos/repos/pentest-education/awesome-threat-intelligence"
+          },
+          {
+            "name": "PhishTank",
+            "url": "https://www.phishtank.org/"
+          }
+        ]
+      },
+      {
+        "name": "Tools",
+        "children": [
+          {
+            "name": "Images",
+            "children": [
+              {
+                "name": "Bing",
+                "url": "https://www.bing.com/"
+              },
+              {
+                "name": "Forensically",
+                "url": "https://29a.ch/photo-forensics/#forensic-magnifier"
+              },
+              {
+                "name": "FotoForensics",
+                "url": "https://fotoforensics.com/"
+              },
+              {
+                "name": "Google Images",
+                "url": "https://images.google.com/"
+              },
+              {
+                "name": "rembg",
+                "url": "http://127.0.0.1:10130/docs"
+              },
+              {
+                "name": "Yandex Images",
+                "url": "https://yandex.com/images/"
+              }
+            ]
+          },
+          {
+            "name": "Infrastructure",
+            "children": [
+              {
+                "name": "IVRE",
+                "url": "http://localhost:8010/"
+              },
+              {
+                "name": "Nessus",
+                "url": "https://127.0.0.1:10100/"
+              }
+            ]
+          },
+          {
+            "name": "Misc",
+            "children": [
+              {
+                "name": "draw.io",
+                "url": "http://localhost:10010/"
+              },
+              {
+                "name": "Grafana",
+                "url": "http://grafana.home:10060/"
+              },
+              {
+                "name": "LibreTranslate",
+                "url": "http://localhost:9070/"
+              },
+              {
+                "name": "Magnets (torrent tool)",
+                "url": "https://madeby.lynx.pink/magnets/"
+              },
+              {
+                "name": "Trilium",
+                "url": "http://localhost:9020/"
+              },
+              {
+                "name": "Syncthing",
+                "url": "http://localhost:8384/"
+              }
+            ]
+          },
+          {
+            "name": "Mobile",
+            "children": [
+              {
+                "name": "Mobile Security Framework",
+                "url": "http://localhost:8050/"
+              }
+            ]
+          },
+          {
+            "name": "Monitoring",
+            "children": [
+              {
+                "name": "netdata",
+                "url": "http://localhost:19999/"
+              }
+            ]
+          },
+          {
+            "name": "OSINT",
+            "children": [
+              {
+                "name": "Carrot2",
+                "url": "https://search.carrot2.org/#/search/web"
+              },
+              {
+                "name": "IntelTechniques",
+                "url": "file:///home/user/git/maxos/resources/www.inteltechniques.com_20220705/index.html"
+              },
+              {
+                "name": "OSINT Games",
+                "url": "https://www.osint.games/"
+              },
+              {
+                "name": "OSINT Techniques",
+                "url": "https://www.osinttechniques.com/"
+              },
+              {
+                "name": "SpiderFoot",
+                "url": "http://localhost:8060/"
+              }
+            ]
+          },
+          {
+            "name": "Passwords",
+            "children": [
+              {
+                "name": "CrackStation",
+                "url": "https://crackstation.net/"
+              }
+            ]
+          },
+          {
+            "name": "Reporting",
+            "children": [
+              {
+                "name": "Overleaf",
+                "url": "http://localhost:8090/"
+              }
+            ]
+          },
+          {
+            "name": "Reverse Engineering",
+            "children": [
+              {
+                "name": "Compiler Explorer",
+                "url": "http://localhost:10020/"
+              },
+              {
+                "name": "Decompiler Explorer",
+                "url": "https://dogbolt.org/"
+              }
+            ]
+          },
+          {
+            "name": "Threat Modelling",
+            "children": [
+              {
+                "name": "Excalidraw",
+                "url": "http://localhost:10200/"
+              }
+            ]
+          },
+          {
+            "name": "Web",
+            "children": [
+              {
+                "name": "Abuse.net",
+                "url": "https://www.abuse.net/lookup.phtml"
+              },
+              {
+                "name": "browserling",
+                "url": "https://www.browserling.com/"
+              },
+              {
+                "name": "phish.report",
+                "url": "https://phish.report/"
+              },
+              {
+                "name": "reNgine",
+                "url": "https://localhost:8020/"
+              }
+            ]
+          },
+          {
+            "name": "Windows",
+            "children": [
+              {
+                "name": "megathread/tools - Piracy",
+                "url": "https://www.reddit.com/r/Piracy/wiki/megathread/tools/"
+              },
+              {
+                "name": "Microsoft-Activation-Scripts",
+                "url": "https://github.com/massgravel/Microsoft-Activation-Scripts"
+              },
+              {
+                "name": "ninite",
+                "url": "https://www.browserling.com/"
+              }
+            ]
+          },
+          {
+            "name": "ATT&CK Navigator",
+            "url": "http://localhost:10120/"
+          },
+          {
+            "name": "CyberChef",
+            "url": "http://localhost:8040/"
+          },
+          {
+            "name": "Exploit Notes",
+            "url": "https://exploit-notes.hdks.org/"
+          },
+          {
+            "name": "gifcap",
+            "url": "http://localhost:10110/"
+          },
+          {
+            "name": "HOUDINI",
+            "url": "http://localhost:9050/"
+          },
+          {
+            "name": "jsoncrack",
+            "url": "http://localhost:10090/"
+          },
+          {
+            "name": "Jupyter",
+            "url": "http://localhost:8000/"
+          },
+          {
+            "name": "Mermaid",
+            "url": "http://localhost:10180/"
+          },
+          {
+            "name": "memos",
+            "url": "http://localhost:10170/"
+          },
+          {
+            "name": "Ollama",
+            "url": "http://127.0.0.1:10220/"
+          },
+          {
+            "name": "OpenCVE",
+            "url": "http://127.0.0.1:10030/cve"
+          },
+          {
+            "name": "Pi-hole",
+            "url": "http://127.0.0.1:10140/admin"
+          },
+          {
+            "name": "PrivateBin",
+            "url": "http://127.0.0.1:10040/"
+          }
+        ]
+      },
+      {
+        "name": "YouTube",
+        "children": [
+          {
+            "name": "13Cubed",
+            "url": "https://www.youtube.com/c/13cubed"
+          },
+          {
+            "name": "Black Hat",
+            "url": "https://www.youtube.com/c/BlackHatOfficialYT"
+          },
+          {
+            "name": "Black Hills Information Security",
+            "url": "https://www.youtube.com/c/BlackHillsInformationSecurity"
+          },
+          {
+            "name": "BlackPerl",
+            "url": "https://www.youtube.com/c/BlackPerl"
+          },
+          {
+            "name": "Bug Bounty Reports Explained",
+            "url": "https://www.youtube.com/c/bugbountyreportsexplained"
+          },
+          {
+            "name": "Bugcrowd",
+            "url": "https://www.youtube.com/c/Bugcrowd"
+          },
+          {
+            "name": "codingo",
+            "url": "https://www.youtube.com/@codingo"
+          },
+          {
+            "name": "Computerphile",
+            "url": "https://www.youtube.com/user/Computerphile"
+          },
+          {
+            "name": "cybercdh",
+            "url": "https://www.youtube.com/c/cybercdh"
+          },
+          {
+            "name": "Cybersecurity Meg",
+            "url": "https://www.youtube.com/@CybersecurityMeg/"
+          },
+          {
+            "name": "Cyberspatial",
+            "url": "https://www.youtube.com/c/Cyberspatial"
+          },
+          {
+            "name": "Cyrill Gössi",
+            "url": "https://www.youtube.com/channel/UCp1rLlh9AQN9Pejzbg9dcAg"
+          },
+          {
+            "name": "David Bombal",
+            "url": "https://www.youtube.com/c/DavidBombal"
+          },
+          {
+            "name": "Day Cyberwox",
+            "url": "https://www.youtube.com/c/DayCyberwox"
+          },
+          {
+            "name": "DC CyberSec",
+            "url": "https://www.youtube.com/c/DCcybersec"
+          },
+          {
+            "name": "DEFCONConference",
+            "url": "https://www.youtube.com/user/DEFCONConference"
+          },
+          {
+            "name": "Ethical Hacking in 12 Hours - They Cyber Mentor",
+            "url": "https://www.youtube.com/watch?v=fNzpcB7ODxQ"
+          },
+          {
+            "name": "Farah Hawa",
+            "url": "https://www.youtube.com/@FarahHawa/"
+          },
+          {
+            "name": "Hack eXPlorer",
+            "url": "https://www.youtube.com/c/HackeXPlorer"
+          },
+          {
+            "name": "HackerOne",
+            "url": "https://www.youtube.com/@HackerOneTV"
+          },
+          {
+            "name": "HackerSploit",
+            "url": "https://www.youtube.com/c/HackerSploit"
+          },
+          {
+            "name": "Hacking Simplified",
+            "url": "https://www.youtube.com/@HackingSimplifiedAS"
+          },
+          {
+            "name": "Hak5",
+            "url": "https://www.youtube.com/c/hak5"
+          },
+          {
+            "name": "Infosec Institute",
+            "url": "https://www.youtube.com/c/InfoSecInstitute"
+          },
+          {
+            "name": "infosec live",
+            "url": "https://www.youtube.com/c/infoseclive"
+          },
+          {
+            "name": "InsiderPhD",
+            "url": "https://www.youtube.com/c/InsiderPhD"
+          },
+          {
+            "name": "intigriti",
+            "url": "https://www.youtube.com/@intigriti"
+          },
+          {
+            "name": "IppSec",
+            "url": "https://www.youtube.com/c/ippsec"
+          },
+          {
+            "name": "ITProTV",
+            "url": "https://www.youtube.com/c/ItproTv"
+          },
+          {
+            "name": "Joe Collins",
+            "url": "https://www.youtube.com/user/BadEditPro"
+          },
+          {
+            "name": "John Hammond",
+            "url": "https://www.youtube.com/c/JohnHammond010"
+          },
+          {
+            "name": "Josh Madakor",
+            "url": "https://www.youtube.com/@JoshMadakor"
+          },
+          {
+            "name": "Linux for Ethical Hackers",
+            "url": "https://www.youtube.com/watch?v=U1w4T03B30I"
+          },
+          {
+            "name": "LiveOverflow",
+            "url": "https://www.youtube.com/c/LiveOverflow"
+          },
+          {
+            "name": "Nahamsec",
+            "url": "https://www.youtube.com/c/Nahamsec"
+          },
+          {
+            "name": "Nessus Professional (playlist)",
+            "url": "https://www.youtube.com/playlist?list=PLOMx6Layn69hduI4YjVkDw-tN6H_kBZ6l"
+          },
+          {
+            "name": "NetworkChuck",
+            "url": "https://www.youtube.com/c/NetworkChuck"
+          },
+          {
+            "name": "Network Pentesting - freeCodeCamp.org",
+            "url": "https://www.youtube.com/watch?v=3Kq1MIfTWCE"
+          },
+          {
+            "name": "Nmap (playlist)",
+            "url": "https://www.youtube.com/playlist?list=PLBf0hzazHTGM8V_3OEKhvCM9Xah3qDdIx"
+          },
+          {
+            "name": "Null Byte",
+            "url": "https://www.youtube.com/c/NullByteWHT"
+          },
+          {
+            "name": "MalwareTechBlog",
+            "url": "https://www.youtube.com/c/MalwareTechBlog"
+          },
+          {
+            "name": "Offensive Security",
+            "url": "https://www.youtube.com/c/OffensiveSecurityTraining"
+          },
+          {
+            "name": "Outpost Gray",
+            "url": "https://www.youtube.com/c/OutpostGray"
+          },
+          {
+            "name": "OWASP Foundation",
+            "url": "https://www.youtube.com/c/OWASPGLOBAL"
+          },
+          {
+            "name": "Pentester Academy TV",
+            "url": "https://www.youtube.com/c/PentesterAcademyTV"
+          },
+          {
+            "name": "Peter Yaworski (Web Development Tutorials)",
+            "url": "https://www.youtube.com/c/yaworsk1"
+          },
+          {
+            "name": "Professor Messer",
+            "url": "https://www.youtube.com/c/professormesser"
+          },
+          {
+            "name": "PwnFunction",
+            "url": "https://www.youtube.com/@PwnFunction"
+          },
+          {
+            "name": "Rana Khalil",
+            "url": "https://www.youtube.com/@RanaKhalil101"
+          },
+          {
+            "name": "RogueSMG",
+            "url": "https://www.youtube.com/@RogueSMG"
+          },
+          {
+            "name": "SANS Offensive Operations",
+            "url": "https://www.youtube.com/c/SANSOffensiveOperations"
+          },
+          {
+            "name": "SecBites",
+            "url": "https://www.youtube.com/@AidanMarlin"
+          },
+          {
+            "name": "Security Now",
+            "url": "https://www.youtube.com/c/securitynow"
+          },
+          {
+            "name": "Security Weekly",
+            "url": "https://www.youtube.com/c/SecurityWeekly"
+          },
+          {
+            "name": "Simply Cyber",
+            "url": "https://www.youtube.com/c/GeraldAuger"
+          },
+          {
+            "name": "STÖK",
+            "url": "https://www.youtube.com/c/STOKfredrik"
+          },
+          {
+            "name": "Sun Knudsen",
+            "url": "https://www.youtube.com/@SunKnudsen"
+          },
+          {
+            "name": "The Cyber Mentor",
+            "url": "https://www.youtube.com/c/TheCyberMentor"
+          },
+          {
+            "name": "The Hated One",
+            "url": "https://www.youtube.com/c/TheHatedOne"
+          },
+          {
+            "name": "The OSINT Curious Project",
+            "url": "https://www.youtube.com/c/TheOSINTCuriousProject"
+          },
+          {
+            "name": "The PC Security Channel",
+            "url": "https://www.youtube.com/c/thepcsecuritychannel"
+          },
+          {
+            "name": "The XSS Rat",
+            "url": "https://www.youtube.com/c/TheXSSrat"
+          },
+          {
+            "name": "Vickie Li Dev",
+            "url": "https://www.youtube.com/@VickieLiDev"
+          },
+          {
+            "name": "We Hack Purple Academy, Community and Podcast!",
+            "url": "https://www.youtube.com/@SheHacksPurple"
+          },
+          {
+            "name": "Z-winK University",
+            "url": "https://www.youtube.com/channel/UCDl4jpAVAezUdzsDBDDTGsQ/"
+          }
+        ]
+      }
+    ],
+
+    "Bookmarks": [
+      {
+        "Title": "fs sshots",
+        "URL": "file:///home/user/screenshots_today",
+        "Placement": "toolbar"
+      },
+      {
+        "Title": "fs tmp",
+        "URL": "file:///home/user/tmp_today",
+        "Placement": "toolbar"
+      },
+      {
+        "Title": "Buffer",
+        "URL": "data:text/html;base64,PGh0bWwgY29udGVudGVkaXRhYmxlPjxiciAvPjxiciAvPjxiciAvPjxiciAvPjxiciAvPjxiciAvPjxiciAvPjxiciAvPjxiciAvPjxiciAvPgo=",
+        "Placement": "toolbar"
+      },
+      {
+        "Title": "GitHub - rascal999/maxos",
+        "Favicon": "https://github.com/fluidicon.png",
+        "URL": "https://github.com/rascal999/maxos",
+        "Placement": "toolbar",
+        "Folder": "Nix"
+      },
+      {
+        "Title": "GitHub - NixOS/nixpkgs",
+        "URL": "https://github.com/NixOS/nixpkgs",
+        "Placement": "toolbar",
+        "Folder": "Nix"
+      },
+      {
+        "Title": "Home Manager Configuration Options",
+        "URL": "https://rycee.gitlab.io/home-manager/options.html",
+        "Placement": "toolbar",
+        "Folder": "Nix"
+      },
+      {
+        "Title": "NixOS Search - Packages",
+        "URL": "https://search.nixos.org/packages",
+        "Placement": "toolbar",
+        "Folder": "Nix"
+      },
+      {
+        "Title": "NixOS Search - Options",
+        "URL": "https://search.nixos.org/options?",
+        "Placement": "toolbar",
+        "Folder": "Nix"
+      },
+      {
+        "Title": "NixOS - Nix Pills",
+        "Favicon": "https://nixos.org/favicon.png",
+        "URL": "https://nixos.org/guides/nix-pills/",
+        "Placement": "toolbar",
+        "Folder": "Nix"
+      },
+      {
+        "Title": "OpenVAS",
+        "URL": "https://localhost:8030/",
+        "Placement": "toolbar",
+        "Folder": "Tools"
+      },
+      {
+        "Title": "AWS Security Viz",
+        "URL": "http://localhost:8070/navigator.html#aws-security-viz.png",
+        "Placement": "toolbar",
+        "Folder": "Tools"
+      },
+      {
+        "Title": "Google Maps",
+        "Favicon": "https://www.google.com/images/branding/product/ico/maps15_bnuw3a_32dp.ico",
+        "URL": "https://www.google.com/maps/",
+        "Placement": "toolbar",
+        "Folder": "Travel"
+      },
+      {
+        "Title": "Google Flights",
+        "Favicon": "https://ssl.gstatic.com/travel-trips-fe/travel_logo_192.png",
+        "URL": "https://www.google.com/travel/flights",
+        "Placement": "toolbar",
+        "Folder": "Travel"
+      },
+      {
+        "Title": "Trainline",
+        "Favicon": "https://static.trainlinecontent.com/content/WEB/images/favicon.ico",
+        "URL": "https://www.thetrainline.com/",
+        "Placement": "toolbar",
+        "Folder": "Travel"
+      },
+      {
+        "Title": "trivago.co.uk",
+        "URL": "https://www.trivago.co.uk/",
+        "Placement": "toolbar",
+        "Folder": "Travel"
+      }
+    ]
+  }
+}
