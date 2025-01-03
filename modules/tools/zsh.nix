@@ -25,6 +25,11 @@
     };
 
     initExtraFirst = ''
+      # Set terminal font
+      if [[ "$TERM" == "xterm-256color" || "$TERM" == "screen-256color" || "$TERM" == "alacritty" ]]; then
+        POWERLEVEL9K_MODE='nerdfont-complete'
+      fi
+
       # History setup and repair (before instant prompt)
       historySetup() {
         local histdir="$HOME/.local/share/zsh"
@@ -47,9 +52,16 @@
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
 
-      # Initialize Powerlevel10k
+      # Initialize Powerlevel10k with proper font
       if [[ -f ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme ]]; then
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+        # Configure basic p10k settings if no config exists
+        if [[ ! -f ~/.p10k.zsh ]]; then
+          POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+          POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
+          POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+          POWERLEVEL9K_MODE='nerdfont-complete'
+        fi
       fi
 
       # Create p10k config if it doesn't exist

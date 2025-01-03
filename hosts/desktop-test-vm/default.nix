@@ -52,8 +52,7 @@
       cores = 2;
       graphics = true;
       qemu.networkingOptions = [
-        "-device virtio-net-pci,netdev=net0"
-        "-netdev user,id=net0,hostfwd=tcp::2222-:22,net=192.168.76.0/24,dhcpstart=192.168.76.9"
+        "-nic user,model=virtio,hostfwd=tcp::2222-:22"
       ];
     };
   };

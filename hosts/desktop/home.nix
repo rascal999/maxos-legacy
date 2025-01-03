@@ -22,6 +22,9 @@
     # https://nix-community.github.io/home-manager/index.html#sec-install-standalone
 
     packages = with pkgs; [
+      # Fonts
+      (nerdfonts.override { fonts = [ "JetBrainsMono" "Meslo" ]; })
+      
       # Development tools
       git
       gh

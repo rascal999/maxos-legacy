@@ -26,15 +26,15 @@
 
       font = {
         normal = {
-          family = "JetBrainsMono Nerd Font Mono";
+          family = "MesloLGS Nerd Font Mono";
           style = "Regular";
         };
         bold = {
-          family = "JetBrainsMono Nerd Font Mono";
+          family = "MesloLGS Nerd Font Mono";
           style = "Bold";
         };
         italic = {
-          family = "JetBrainsMono Nerd Font Mono";
+          family = "MesloLGS Nerd Font Mono";
           style = "Italic";
         };
         size = 16.0;
@@ -118,8 +118,8 @@
     };
   };
 
-  # Ensure the JetBrains Mono Nerd Font is available
+  # Ensure required fonts are available
   home.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    (nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
 }
