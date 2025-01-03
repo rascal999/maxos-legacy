@@ -22,7 +22,7 @@
       set-environment -g COLORTERM "truecolor"
       
       # Ensure zsh picks up environment
-      set -g default-command "${pkgs.zsh}/bin/zsh"
+      set -g default-command "${pkgs.zsh}/bin/zsh -l"
       
       # Key bindings
       bind "e" send-keys "exit" \; send-keys "Enter"

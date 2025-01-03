@@ -6,7 +6,7 @@
     settings = {
       env = {
         TERM = "xterm-256color";
-        SHELL = "${pkgs.zsh}/bin/zsh";
+        SHELL = "${pkgs.zsh}/bin/zsh -l";
       };
 
       window = {

@@ -81,12 +81,23 @@
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
 
+      # Debug logging for p10k initialization
+      echo "Initializing p10k..." >&2
+      
       # Initialize Powerlevel10k
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      if [[ -f ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme ]]; then
+        echo "Found p10k theme file" >&2
+        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      else
+        echo "p10k theme file not found!" >&2
+      fi
 
       # Create p10k config if it doesn't exist
       if [[ ! -f ~/.p10k.zsh ]]; then
+        echo "Copying p10k config..." >&2
         cp ${./zsh/p10k.zsh} ~/.p10k.zsh
+      else
+        echo "p10k config exists" >&2
       fi
     '';
 

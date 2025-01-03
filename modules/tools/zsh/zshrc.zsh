@@ -1,3 +1,22 @@
+# Debug logging for shell initialization
+echo "Starting zsh initialization..." >&2
+
+# Source p10k config
+if [[ -f ~/.p10k.zsh ]]; then
+  echo "Sourcing p10k config..." >&2
+  source ~/.p10k.zsh
+else
+  echo "p10k config not found!" >&2
+fi
+
+# Ensure p10k theme is loaded
+if [[ -f /run/current-system/sw/share/zsh-powerlevel10k/powerlevel10k.zsh-theme ]]; then
+  echo "Re-sourcing p10k theme..." >&2
+  source /run/current-system/sw/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+else
+  echo "p10k theme not found in zshrc!" >&2
+fi
+
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
 export MCFLY_KEY_SCHEME=vim
