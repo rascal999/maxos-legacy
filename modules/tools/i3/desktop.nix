@@ -9,12 +9,13 @@
       { command = "nm-applet"; notification = false; }
       { command = "volumeicon"; notification = false; }
       { command = "flameshot"; notification = false; }
+      { command = "firefox"; notification = false; }
     ];
 
     # Additional workspace assignments for desktop applications
     assigns = {
-      "2: web" = [{ class = "^Firefox$"; }];
-      "3: code" = [{ class = "^Code$"; }];
+      "1" = [{ class = "^Firefox$"; }];
+      "2" = [{ class = "^Code$"; }];
       "5: media" = [{ class = "^Spotify$"; }];
     };
   };

@@ -49,7 +49,7 @@
   virtualisation.vmVariant = {
     virtualisation = {
       memorySize = 8192; # MB
-      cores = 2;
+      cores = 8;
       graphics = true;
       qemu.networkingOptions = [
         "-nic user,model=virtio,hostfwd=tcp::2222-:22"
