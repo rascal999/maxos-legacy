@@ -4,8 +4,10 @@
   imports = [
     ./users.nix
     ../../modules/security/default.nix
-    ../../modules/tools/zsh.nix
   ];
+
+  # Enable zsh
+  programs.zsh.enable = true;
 
   # Enable security module with default settings
   security.enable = true;
@@ -28,6 +30,7 @@
       ./home.nix
       ../../modules/tools/i3/desktop.nix
       ../../modules/tools/alacritty.nix
+      ../../modules/tools/zsh.nix
     ];
   };
 
