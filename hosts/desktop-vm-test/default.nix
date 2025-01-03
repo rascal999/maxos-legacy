@@ -9,10 +9,6 @@
       graphics = true;
       resolution = { x = 1920; y = 1080; };
     };
-    boot = {
-      consoleLogLevel = 7;
-      kernelParams = [ "console=ttyS0" "boot.shell_on_fail" "loglevel=7" ];
-    };
   };
 
   # VM-specific networking
