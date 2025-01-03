@@ -3,7 +3,11 @@
 {
   imports = [
     ./users.nix
+    ../../modules/security/default.nix
   ];
+
+  # Enable security module with default settings
+  security.enable = true;
 
   # Enable X11 windowing system
   services.xserver = {
@@ -16,7 +20,7 @@
   home-manager.users.user = { pkgs, ... }: {
     imports = [
       ./home.nix
-      ../../modules/tools/i3/base.nix
+      ../../modules/tools/i3/desktop.nix
     ];
   };
 }

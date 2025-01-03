@@ -10,6 +10,10 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+    nixosModules = {
+      security = import ./modules/security/default.nix;
+    };
+
     nixosConfigurations = {
       desktop-test-vm = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
