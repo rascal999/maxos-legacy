@@ -19,6 +19,9 @@
       "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
       "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 5";
 
+      # Terminal (override base config to ensure no tmux)
+      "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty";
+      
       # Quick launch frequently used applications
       "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
       "${config.xsession.windowManager.i3.config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
