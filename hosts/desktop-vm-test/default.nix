@@ -1,16 +1,15 @@
 { config, pkgs, lib, ... }:
 
 {
-  # VM-specific settings
+  imports = [
+    ../desktop
+  ];
+
   virtualisation.vmVariant = {
     virtualisation = {
       memorySize = 4096; # MB
-      cores = 4;
+      cores = 2;
       graphics = true;
-      resolution = { x = 1920; y = 1080; };
     };
   };
-
-  # VM-specific networking
-  networking.hostName = "desktop-test-vm";
 }

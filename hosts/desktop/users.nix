@@ -3,14 +3,14 @@
 {
   users = {
     mutableUsers = true;
-    defaultUserShell = pkgs.bash;
     users.user = {
       isNormalUser = true;
-      description = "Default User";
+      group = "users";
       extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
       initialPassword = "nixos";
       createHome = true;
       home = "/home/user";
+      shell = pkgs.bash;
     };
   };
 
