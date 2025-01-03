@@ -16,8 +16,8 @@
 
       # Basic keybindings
       keybindings = lib.mkOptionDefault {
-        # Terminal
-        "Mod1+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+        # Terminal (tmux)
+        "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
         
         # Program launcher
         "Mod1+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
@@ -69,10 +69,12 @@
         };
       }];
 
-      # Window borders and gaps
+      # Window appearance
+      window.border = 0;
       gaps = {
-        inner = 5;
+        inner = 0;
         outer = 0;
+        smartGaps = true;
       };
     };
   };
