@@ -14,10 +14,23 @@
       desktop-test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          {
+            nixpkgs.config.allowUnfree = true;
+          }
+          ./modules/users/default.nix
           ./hosts/desktop/test-vm.nix
           home-manager.nixosModules.home-manager
           {
-            home-manager.users.testuser = import ./hosts/desktop/home.nix;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.user = { pkgs, ... }: {
+                imports = [
+                  ./hosts/desktop/home.nix
+                ];
+                home.stateVersion = "23.11";
+              };
+            };
           }
         ];
       };

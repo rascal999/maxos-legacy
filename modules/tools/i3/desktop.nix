@@ -20,9 +20,9 @@
       "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 5";
 
       # Quick launch frequently used applications
-      "${config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
-      "${config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
-      "${config.modifier}+l" = "exec ${pkgs.i3lock}/bin/i3lock -c 000000";
+      "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
+      "${config.xsession.windowManager.i3.config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
+      "${config.xsession.windowManager.i3.config.modifier}+l" = "exec ${pkgs.i3lock}/bin/i3lock -c 000000";
     };
 
     # Desktop-specific startup applications

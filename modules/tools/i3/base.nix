@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  programs.home-manager.enable = true;
+  
   home.packages = with pkgs; [
     i3status
     i3lock
@@ -15,46 +17,46 @@
       # Basic keybindings
       keybindings = lib.mkOptionDefault {
         # Terminal
-        "${config.modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+        "Mod4+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
         
         # Program launcher
-        "${config.modifier}+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
+        "Mod4+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
         
         # Window management
-        "${config.modifier}+Shift+q" = "kill";
-        "${config.modifier}+f" = "fullscreen toggle";
-        "${config.modifier}+Shift+space" = "floating toggle";
+        "Mod4+Shift+q" = "kill";
+        "Mod4+f" = "fullscreen toggle";
+        "Mod4+Shift+space" = "floating toggle";
         
         # Layout management
-        "${config.modifier}+s" = "layout stacking";
-        "${config.modifier}+w" = "layout tabbed";
-        "${config.modifier}+e" = "layout toggle split";
+        "Mod4+s" = "layout stacking";
+        "Mod4+w" = "layout tabbed";
+        "Mod4+e" = "layout toggle split";
         
         # Focus
-        "${config.modifier}+Left" = "focus left";
-        "${config.modifier}+Down" = "focus down";
-        "${config.modifier}+Up" = "focus up";
-        "${config.modifier}+Right" = "focus right";
+        "Mod4+Left" = "focus left";
+        "Mod4+Down" = "focus down";
+        "Mod4+Up" = "focus up";
+        "Mod4+Right" = "focus right";
         
         # Moving windows
-        "${config.modifier}+Shift+Left" = "move left";
-        "${config.modifier}+Shift+Down" = "move down";
-        "${config.modifier}+Shift+Up" = "move up";
-        "${config.modifier}+Shift+Right" = "move right";
+        "Mod4+Shift+Left" = "move left";
+        "Mod4+Shift+Down" = "move down";
+        "Mod4+Shift+Up" = "move up";
+        "Mod4+Shift+Right" = "move right";
         
         # Restart/reload i3
-        "${config.modifier}+Shift+c" = "reload";
-        "${config.modifier}+Shift+r" = "restart";
+        "Mod4+Shift+c" = "reload";
+        "Mod4+Shift+r" = "restart";
       };
 
-      # Shared workspace configuration
-      workspaces = {
-        "1" = { name = "1: term"; };
-        "2" = { name = "2: web"; };
-        "3" = { name = "3: code"; };
-        "4" = { name = "4: files"; };
-        "5" = { name = "5: media"; };
-      };
+      # Workspace configuration
+      workspaceOutputAssign = [
+        { workspace = "1: term"; output = "primary"; }
+        { workspace = "2: web"; output = "primary"; }
+        { workspace = "3: code"; output = "primary"; }
+        { workspace = "4: files"; output = "primary"; }
+        { workspace = "5: media"; output = "primary"; }
+      ];
 
       # Basic appearance settings
       bars = [{
