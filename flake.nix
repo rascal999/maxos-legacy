@@ -11,13 +11,13 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
-      desktop-test = nixpkgs.lib.nixosSystem {
+      desktop-test-vm = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           {
             nixpkgs.config.allowUnfree = true;
           }
-          ./hosts/desktop-vm-test/default.nix
+          ./hosts/desktop-test-vm/default.nix
           home-manager.nixosModules.home-manager
           {
             home-manager = {
