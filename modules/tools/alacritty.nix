@@ -4,7 +4,10 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      env.TERM = "xterm-256color";
+      env = {
+        TERM = "xterm-256color";
+        SHELL = "${pkgs.zsh}/bin/zsh";
+      };
 
       window = {
         padding = {
@@ -23,15 +26,15 @@
 
       font = {
         normal = {
-          family = "JetBrainsMono Nerd Font";
+          family = "JetBrainsMono Nerd Font Mono";
           style = "Regular";
         };
         bold = {
-          family = "JetBrainsMono Nerd Font";
+          family = "JetBrainsMono Nerd Font Mono";
           style = "Bold";
         };
         italic = {
-          family = "JetBrainsMono Nerd Font";
+          family = "JetBrainsMono Nerd Font Mono";
           style = "Italic";
         };
         size = 16.0;

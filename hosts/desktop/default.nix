@@ -4,6 +4,7 @@
   imports = [
     ./users.nix
     ../../modules/security/default.nix
+    ../../modules/tools/zsh.nix
   ];
 
   # Enable security module with default settings
@@ -26,6 +27,10 @@
     imports = [
       ./home.nix
       ../../modules/tools/i3/desktop.nix
+      ../../modules/tools/alacritty.nix
     ];
   };
+
+  # Set system state version
+  system.stateVersion = "23.11";
 }

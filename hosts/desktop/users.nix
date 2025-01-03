@@ -10,7 +10,7 @@
       initialPassword = "nixos";
       createHome = true;
       home = "/home/user";
-      shell = pkgs.bash;
+      shell = pkgs.zsh;
     };
   };
 

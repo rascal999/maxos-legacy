@@ -4,11 +4,6 @@ export MCFLY_KEY_SCHEME=vim
 export MCFLY_RESULTS=40
 export MCFLY_RESULTS_SORT=LAST_RUN
 
-if [ -n "${DISPLAY+x}" ]; then
-  xmodmap -e "keycode 81=Prior KP_9"
-  xmodmap -e "keycode 89=Next KP_3"
-fi
-
 bindkey "^[[1;5D" backward-word
 bindkey "^[[1;5C" forward-word
 
