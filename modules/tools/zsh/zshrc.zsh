@@ -1,8 +1,3 @@
-# Enable Powerlevel10k instant prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
 export MCFLY_KEY_SCHEME=vim
@@ -50,6 +45,3 @@ setopt HIST_VERIFY           # Do not execute immediately upon history expansion
 if command -v mcfly &> /dev/null; then
   eval "$(mcfly init zsh)"
 fi
-
-# Load powerlevel10k theme
-[[ -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

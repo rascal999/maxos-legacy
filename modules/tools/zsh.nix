@@ -48,9 +48,13 @@ in {
         };
       }
       {
-        file = "powerlevel10k.zsh-theme";
         name = "powerlevel10k";
-        src = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k";
+        src = pkgs.fetchFromGitHub {
+          owner = "romkatv";
+          repo = "powerlevel10k";
+          rev = "v1.19.0";  # Use the latest stable version
+          sha256 = "sha256-U5wDGXYyUvFsE2w6QSdGvjufwjUzqjg6WGBwXPmCxUY=";
+        };
       }
     ];
 
@@ -68,11 +72,15 @@ in {
 
     # Load custom configuration files
     initExtra = ''
+      # Enable Powerlevel10k theme
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+
+      # Source default p10k config if user hasn't customized it
+      [[ ! -f ~/.p10k.zsh ]] && cp ${zshConfigDir}/p10k.zsh ~/.p10k.zsh
+      source ~/.p10k.zsh
+
       # Source zshrc
       source ${zshConfigDir}/zshrc.zsh
-      
-      # Source p10k config
-      source ${zshConfigDir}/p10k.zsh
     '';
   };
 
@@ -81,5 +89,14 @@ in {
     mcfly  # Shell history search
     grc    # Generic colouriser
     lazygit # Terminal UI for git
+    zsh-powerlevel10k  # For p10k command
   ];
+
+  # Set permissions for p10k config
+  system.activationScripts.p10kConfig = ''
+    if [[ ! -f /home/user/.p10k.zsh ]]; then
+      cp ${zshConfigDir}/p10k.zsh /home/user/.p10k.zsh
+      chown user:users /home/user/.p10k.zsh
+    fi
+  '';
 }
