@@ -14,6 +14,11 @@
     enable = true;
     displayManager.lightdm.enable = true;
     windowManager.i3.enable = true;
+    
+    # Keyboard layout
+    layout = "us";
+    xkbVariant = "dvorak";
+    xkbOptions = "terminate:ctrl_alt_bksp";
   };
 
   # Configure home-manager

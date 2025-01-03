@@ -31,6 +31,8 @@
         "Mod1+s" = "layout stacking";
         "Mod1+w" = "layout tabbed";
         "Mod1+e" = "layout toggle split";
+        "Mod1+h" = "split h";
+        "Mod1+v" = "split v";
         
         # Focus
         "Mod1+Left" = "focus left";
@@ -70,7 +72,6 @@
       }];
 
       # Window appearance
-      window.border = 0;
       gaps = {
         inner = 0;
         outer = 0;

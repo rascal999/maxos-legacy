@@ -12,7 +12,7 @@
           y = 5;
         };
         opacity = 0.95;
-        decorations = "full";
+        decorations = "none";
         dynamic_title = true;
       };
 
