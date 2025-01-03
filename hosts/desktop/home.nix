@@ -7,7 +7,6 @@
     ../../modules/tools/alacritty.nix
     ../../modules/tools/zsh.nix
     ../../modules/tools/rofi/default.nix
-    ../../modules/tools/firefox/default.nix
   ];
 
   # Enable home-manager
@@ -45,9 +44,6 @@
       wget
       curl
 
-      # Desktop applications
-      firefox
-      thunderbird
       libreoffice
       vlc
       gimp
@@ -121,6 +117,14 @@
     fzf = {
       enable = true;
       enableBashIntegration = true;
+    };
+
+    firefox = {
+      enable = true;
+      profiles.default = {
+        userChrome = builtins.readFile ../../modules/tools/firefox/css/userChrome.css;
+        userContent = builtins.readFile ../../modules/tools/firefox/css/userContent.css;
+      };
     };
   };
 

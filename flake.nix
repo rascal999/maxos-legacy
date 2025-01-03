@@ -7,9 +7,12 @@
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nur = {
+      url = "github:nix-community/NUR";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, nur, ... }@inputs: {
     nixosModules = {
       security = import ./modules/security/default.nix;
     };
@@ -20,6 +23,9 @@
         modules = [
           {
             nixpkgs.config.allowUnfree = true;
+            nixpkgs.overlays = [
+              nur.overlays.default
+            ];
           }
           ./hosts/desktop-test-vm/default.nix
           home-manager.nixosModules.home-manager

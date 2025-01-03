@@ -4,6 +4,7 @@
   imports = [
     ./users.nix
     ../../modules/security/default.nix
+    ../../modules/tools/firefox/default.nix
   ];
 
   # Enable zsh
