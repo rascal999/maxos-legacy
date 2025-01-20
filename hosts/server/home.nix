@@ -14,7 +14,7 @@
   home = {
     username = "user";
     homeDirectory = "/home/user";
-    stateVersion = "23.11";
+    stateVersion = "24.11";
 
     packages = with pkgs; [
       # System administration

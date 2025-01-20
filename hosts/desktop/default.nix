@@ -4,8 +4,10 @@
   imports = [
     ./users.nix
     ../../modules/security/default.nix
-    ../../modules/tools/firefox/default.nix
   ];
+
+  # Disable system-wide Firefox
+  programs.firefox.enable = false;
 
   # Enable zsh
   programs.zsh.enable = true;
@@ -36,5 +38,5 @@
   };
 
   # Set system state version
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.11";
 }

@@ -97,7 +97,7 @@ case "$SELECTED_COMMAND" in
     ;;
     nix-pkg)
         SEARCH_QUERY=$($ROFI_CMD -dmenu -p "NixOS pkg")
-        perform_search "https://search.nixos.org/packages?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=" "$SEARCH_QUERY"
+        perform_search "https://search.nixos.org/packages?channel=24.11&from=0&size=50&sort=relevance&type=packages&query=" "$SEARCH_QUERY"
     ;;
     youtube)
         SEARCH_QUERY=$($ROFI_CMD -dmenu -p "YouTube search")

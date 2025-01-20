@@ -16,7 +16,7 @@
   home = {
     username = "user";
     homeDirectory = lib.mkForce "/home/user";
-    stateVersion = "23.11";  # Please read the comment below
+    stateVersion = "24.11";  # Please read the comment below
 
     # The home.stateVersion option does not have a default and must be set
     # First time users of home-manager should read:
@@ -47,6 +47,7 @@
       libreoffice
       vlc
       gimp
+      firefox
       
       # Communication
       slack
@@ -67,7 +68,6 @@
     sessionVariables = {
       EDITOR = "nvim";
       TERMINAL = "alacritty";
-      BROWSER = "firefox";
     };
 
     # File associations
@@ -117,14 +117,6 @@
     fzf = {
       enable = true;
       enableBashIntegration = true;
-    };
-
-    firefox = {
-      enable = true;
-      profiles.default = {
-        userChrome = builtins.readFile ../../modules/tools/firefox/css/userChrome.css;
-        userContent = builtins.readFile ../../modules/tools/firefox/css/userContent.css;
-      };
     };
   };
 
