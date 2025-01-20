@@ -114,8 +114,21 @@
     '';
   };
 
-  # Basic OpenGL support
-  hardware.opengl.enable = true;
+  # Graphics configuration
+  hardware = {
+    opengl.enable = true;
+    # Basic NVIDIA configuration
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.finegrained = false;
+      open = false;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
+  };
+
+  # Use NVIDIA driver
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   # Configure home-manager
   home-manager.users.user = { pkgs, ... }: {
