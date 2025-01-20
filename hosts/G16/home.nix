@@ -100,6 +100,13 @@
 
   # Additional program configurations
   programs = {
+    vscode = {
+      enable = true;
+      userSettings = {
+        "terminal.integrated.defaultProfile.linux" = "bash";
+      };
+    };
+
     bash = {
       enable = true;
       shellAliases = {
