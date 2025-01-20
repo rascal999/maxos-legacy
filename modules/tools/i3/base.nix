@@ -26,7 +26,7 @@
       startup = [
         { command = "${pkgs.firefox}/bin/firefox"; notification = false; }
         { command = "${pkgs.vscode}/bin/code"; notification = false; }
-        { command = "${pkgs.alacritty}/bin/alacritty"; notification = false; }
+        { command = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux"; notification = false; }
         { command = "${pkgs.logseq}/bin/logseq"; notification = false; }
       ];
 
