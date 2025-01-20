@@ -117,13 +117,33 @@
   # ROG G16 specific configuration
   hardware.graphics.enable = true;
 
-  # Enable keyboard backlight control
+  # Enable ACPI backlight control
+  hardware.acpilight.enable = true;
+
+  # Configure brightness control
+  services.actkbd = {
+    enable = true;
+    bindings = [
+      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 5"; }  # F7
+      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 5"; }  # F8
+    ];
+  };
+
+  # Enable backlight control
+  programs.light.enable = true;
+
+  # Enable backlight control
   services.udev.extraRules = ''
+    # Keyboard backlight control
     ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/leds/%k/brightness"
     ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/leds/%k/brightness"
+    
+    # Screen backlight control
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="*", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="*", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
   '';
 
-  # Add user to video group for keyboard backlight control
+  # Add user to video group for backlight control
   users.users.user.extraGroups = [ "video" ];
 
   # ASUS ROG services
@@ -151,6 +171,7 @@
 
   # ROG-specific packages
   environment.systemPackages = with pkgs; [
+    light  # Backlight control utility
     asusctl  # ROG laptop control
     supergfxctl  # Graphics switching
     powertop  # Power management
