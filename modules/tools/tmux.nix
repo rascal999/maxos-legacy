@@ -37,7 +37,10 @@
       unbind [
 
       set -g prefix C-Space
-      set -g mode-keys vi'';
+      set -g mode-keys vi
+      
+      # Enable mouse support
+      set -g mouse on'';
 
   };
 }
