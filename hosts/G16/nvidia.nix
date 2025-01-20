@@ -6,7 +6,7 @@
 
   # Use modesetting and NVIDIA drivers
   services.xserver = {
-    videoDrivers = [ "nvidia" ];
+    videoDrivers = [ "modesetting" "nvidia" ];
     
     # Add device sections for hybrid graphics
     extraConfig = ''
@@ -20,6 +20,13 @@
         Identifier "NVIDIA Card"
         Driver "nvidia"
         BusID "PCI:1:0:0"
+        Option "AllowEmptyInitialConfiguration" "true"
+      EndSection
+
+      Section "Screen"
+        Identifier "Screen0"
+        Device "NVIDIA Card"
+        Option "AllowEmptyInitialConfiguration" "true"
       EndSection
     '';
   };
@@ -43,9 +50,9 @@
     
     # Configure PRIME for Intel Arc + NVIDIA
     prime = {
-      # Use offload mode for better stability
-      reverseSync.enable = false;
-      offload.enable = true;
+      # Use sync mode for better compatibility
+      sync.enable = true;
+      offload.enable = false;
       
       # Bus IDs for hybrid graphics
       intelBusId = "PCI:0:2:0";  # Meteor Lake-P Arc

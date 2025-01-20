@@ -56,8 +56,15 @@
     };
   };
 
-  # Display manager session configuration
-  services.displayManager.defaultSession = "none+i3";
+  # Display manager configuration
+  services.xserver.displayManager = {
+    defaultSession = "none+i3";
+    # Add display setup script
+    setupCommands = ''
+      ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource modesetting NVIDIA-0
+      ${pkgs.xorg.xrandr}/bin/xrandr --auto
+    '';
+  };
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
