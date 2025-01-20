@@ -1,21 +1,21 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Enable OpenGL
-  hardware.opengl = {
+  # Enable graphics
+  hardware.graphics = {
     enable = true;
     driSupport32Bit = true;
   };
 
-  # Use both Intel and NVIDIA drivers
+  # Use modesetting and NVIDIA drivers
   services.xserver = {
-    videoDrivers = [ "intel" "nvidia" ];
+    videoDrivers = [ "modesetting" "nvidia" ];
     
     # Add device sections for hybrid graphics
     extraConfig = ''
       Section "Device"
         Identifier "Intel Graphics"
-        Driver "intel"
+        Driver "modesetting"
         BusID "PCI:0:2:0"
       EndSection
       
