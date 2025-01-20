@@ -63,6 +63,7 @@
       networkmanagerapplet
       arandr
       redshift
+      brightnessctl
     ];
 
     # Environment variables
