@@ -93,13 +93,20 @@
     videoDrivers = [ "nvidia" ];
   };
 
-  # NVIDIA settings
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  # NVIDIA and graphics settings
+  hardware = {
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.enable = false;  # Disable for stability
+      open = false;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
   };
 
   # Configure home-manager
