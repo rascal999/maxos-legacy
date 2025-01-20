@@ -44,6 +44,7 @@
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     modesetting.enable = true;
+    open = true;  # Required for driver versions >= 560
   };
 
   environment.systemPackages = with pkgs; [
