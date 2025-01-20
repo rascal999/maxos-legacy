@@ -4,6 +4,7 @@
   # Configure Firefox through home-manager
   programs.firefox = {
     enable = true;
+    package = pkgs.firefox;
     profiles.default = {
       id = 0;
       name = "Default";
@@ -20,5 +21,10 @@
         ublock-origin
       ];
     };
+  };
+
+  # Environment variables for Firefox
+  home.sessionVariables = {
+    MOZ_USE_XINPUT2 = "1";  # Enable touchpad gestures
   };
 }
