@@ -120,14 +120,11 @@
   # Enable ACPI backlight control
   hardware.acpilight.enable = true;
 
-  # Configure brightness control
-  services.actkbd = {
-    enable = true;
-    bindings = [
-      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 5"; }  # F7
-      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 5"; }  # F8
-    ];
-  };
+  # Map F7/F8 to brightness controls
+  services.xserver.displayManager.sessionCommands = ''
+    ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 73 = XF86MonBrightnessDown"  # F7
+    ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 74 = XF86MonBrightnessUp"    # F8
+  '';
 
   # Enable backlight control
   programs.light.enable = true;
