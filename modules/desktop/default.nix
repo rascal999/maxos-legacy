@@ -9,16 +9,16 @@
     ];
   };
 
-  # Configure gammastep for constant warm color temperature
-  home-manager.users.user.services.gammastep = {
+  # Configure redshift for constant warm color temperature
+  home-manager.users.user.services.redshift = {
     enable = true;
     provider = "manual";
     temperature = {
       day = 1900;
       night = 1900;
     };
-    dawnTime = "00:00";
-    duskTime = "00:00";
+    latitude = "51.5";  # London coordinates
+    longitude = "-0.1";
   };
 
 
