@@ -24,10 +24,10 @@
 
       # Autostart applications
       startup = [
-        { command = "i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
-        { command = "i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
-        { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty'"; notification = false; }
-        { command = "i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
+        { command = "${pkgs.firefox}/bin/firefox"; notification = false; }
+        { command = "${pkgs.vscode}/bin/code"; notification = false; }
+        { command = "${pkgs.alacritty}/bin/alacritty"; notification = false; }
+        { command = "${pkgs.logseq}/bin/logseq"; notification = false; }
       ];
 
       # Basic keybindings
