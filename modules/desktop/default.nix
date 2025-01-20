@@ -31,6 +31,7 @@
   # X server configuration
   services.xserver = {
     enable = true;
+    videoDrivers = [ "nvidia" ];
     displayManager = {
       autoLogin = {
         enable = true;
@@ -39,8 +40,15 @@
     };
   };
 
+  # Enable NVIDIA driver and tools
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    modesetting.enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
     sct
     xorg.xrandr
+    nvidia-settings
   ];
 }
