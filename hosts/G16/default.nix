@@ -7,26 +7,38 @@
   ];
 
   # Boot loader configuration
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
+  # Hardware scanning
+  hardware.enableAllFirmware = true;
+
+  # Boot configuration
+  boot = {
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      kernelModules = [ "dm-snapshot" ];
+      luks.devices = {
+        cryptroot = {
+          device = "/dev/disk/by-uuid/0c01e360-b7aa-4d3a-9b86-495f9188f43f";
+          preLVM = true;
+          allowDiscards = true;
+          bypassWorkqueues = true;
+        };
+      };
     };
-    grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
-      enableCryptodisk = true;
+    kernelModules = [ "kvm-intel" ];
+    loader = {
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+      grub = {
+        enable = true;
+        device = "nodev";
+        efiSupport = true;
+        enableCryptodisk = true;
+      };
     };
   };
 
-  # File systems configuration
-  boot.initrd.luks.devices = {
-    cryptroot = {
-      device = "/dev/disk/by-uuid/0c01e360-b7aa-4d3a-9b86-495f9188f43f";
-      preLVM = true;
-    };
-  };
 
   fileSystems = {
     "/" = {
