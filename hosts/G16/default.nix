@@ -20,26 +20,9 @@
   # Enable security module with default settings
   security.enable = true;
 
-  # Enable X11 windowing system
+  # X11 configuration
   services.xserver = {
     enable = true;
-    
-    # Display manager configuration
-    displayManager = {
-      lightdm = {
-        enable = true;
-        background = "#000000";
-        greeters.gtk = {
-          enable = true;
-          theme.name = "Adwaita-dark";
-        };
-      };
-      defaultSession = "none+i3";
-      autoLogin = {
-        enable = true;
-        user = "user";
-      };
-    };
 
     # Window manager configuration
     windowManager.i3 = {
@@ -60,6 +43,19 @@
       Option "AutoAddDevices" "on"
       Option "AutoEnableDevices" "on"
     '';
+  };
+
+  # Display manager configuration
+  services.displayManager = {
+    defaultSession = "none+i3";
+    lightdm = {
+      enable = true;
+      background = "#000000";
+      greeters.gtk = {
+        enable = true;
+        theme.name = "Adwaita-dark";
+      };
+    };
   };
 
   # Configure redshift for blue light filtering
