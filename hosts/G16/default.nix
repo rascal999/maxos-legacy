@@ -64,9 +64,7 @@
     enable = true;
     temperature.day = 1900;
     temperature.night = 1900;
-    brightness.day = "1";
-    brightness.night = "1";
-    # Disable location-based adjustments
+    # Remove brightness control from Redshift
     provider = "manual";
     latitude = "0.0";
     longitude = "0.0";

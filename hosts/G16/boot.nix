@@ -7,9 +7,10 @@
 
   # Boot configuration
   boot = {
+    kernelParams = [ "acpi_osi=Linux" "acpi_osi='!Windows 2013'" "acpi_osi='!Windows 2012'" ];
     initrd = {
       availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
-      kernelModules = [ ];
+      kernelModules = [ "asus-nb-wmi" ];
       luks.devices = {
         cryptroot = {
           device = "/dev/disk/by-uuid/64f62ad3-8fcc-4475-afcb-a49952fe77d1";
