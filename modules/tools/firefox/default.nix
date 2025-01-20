@@ -37,11 +37,20 @@
         "ui.systemUsesDarkTheme" = 1;
         # Enable userChrome customizations
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        # Show bookmarks toolbar
+        "browser.toolbars.bookmarks.visibility" = "always";
       };
       userChrome = ''
         /* Pin DarkReader extension button */
-        #wrapper-addon\@darkreader\.org {
+        #wrapper-addon\@darkreader\.org,
+        #addon\@darkreader\.org-browser-action {
+          display: flex !important;
           -moz-box-ordinal-group: 0 !important;
+        }
+
+        /* Hide tab bar */
+        #TabsToolbar {
+          visibility: collapse !important;
         }
       '';
       };
