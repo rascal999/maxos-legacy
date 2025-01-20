@@ -49,6 +49,7 @@
         device = "nodev";
         efiSupport = true;
         enableCryptodisk = true;
+        useOSProber = true;
       };
     };
   };
@@ -143,6 +144,7 @@
     supergfxctl  # Graphics switching
     powertop  # Power management
     redshift  # Color temperature adjustment
+    os-prober  # OS detection for GRUB
   ];
 
   # Configure redshift for blue light filtering
