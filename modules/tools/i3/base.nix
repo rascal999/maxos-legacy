@@ -63,6 +63,20 @@
         "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
         "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 5";
         
+        # Workspace switching
+        "Mod1+1" = "workspace 1: term";
+        "Mod1+2" = "workspace 2: web";
+        "Mod1+3" = "workspace 3: code";
+        "Mod1+4" = "workspace 4: files";
+        "Mod1+5" = "workspace 5: media";
+        
+        # Move container to workspace
+        "Mod1+Shift+1" = "move container to workspace 1: term";
+        "Mod1+Shift+2" = "move container to workspace 2: web";
+        "Mod1+Shift+3" = "move container to workspace 3: code";
+        "Mod1+Shift+4" = "move container to workspace 4: files";
+        "Mod1+Shift+5" = "move container to workspace 5: media";
+
         # Quick launch frequently used applications
         "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
         "${config.xsession.windowManager.i3.config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
