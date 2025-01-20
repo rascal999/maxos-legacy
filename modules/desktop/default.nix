@@ -9,22 +9,21 @@
     ];
   };
 
-  # Configure redshift for constant warm color temperature
-  home-manager.users.user.services.redshift = {
-    enable = true;
-    provider = "manual";
-    temperature = {
-      day = 1900;
-      night = 1900;
-    };
-    latitude = "51.5";  # London coordinates
-    longitude = "-0.1";
-    settings = {
-      randr = {
-        method = "vidmode";
-      };
+  # Configure sct for constant warm color temperature
+  systemd.user.services.sct = {
+    description = "Set color temperature using sct";
+    wantedBy = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.sct}/bin/sct 1900";
+      ExecStop = "${pkgs.sct}/bin/sct";
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    sct
+  ];
 
 
   # X server configuration
