@@ -23,16 +23,15 @@
       ExecStart = "${pkgs.sct}/bin/sct 1900";
       ExecStop = "${pkgs.sct}/bin/sct";
       Environment = "DISPLAY=:0";
+      RuntimeDirectory = "sct";
+      RuntimeDirectoryMode = "0755";
     };
+    path = [ pkgs.xorg.xauth ];
   };
 
-  environment.systemPackages = with pkgs; [
-    sct
-  ];
-
-
   # X server configuration
-  services = {
+  services.xserver = {
+    enable = true;
     displayManager = {
       autoLogin = {
         enable = true;
@@ -40,4 +39,9 @@
       };
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    sct
+    xorg.xrandr
+  ];
 }
