@@ -13,20 +13,19 @@
   users.users.user.extraGroups = [ "video" ];
 
   # Configure sct for constant warm color temperature
-  systemd.user.services.sct = {
+  systemd.services.sct = {
     description = "Set color temperature using sct";
-    wantedBy = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
+    wantedBy = [ "multi-user.target" ];
+    after = [ "display-manager.service" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
+      User = "user";
+      Group = "video";
       ExecStart = "${pkgs.sct}/bin/sct 1900";
       ExecStop = "${pkgs.sct}/bin/sct";
-      Environment = "DISPLAY=:0";
-      RuntimeDirectory = "sct";
-      RuntimeDirectoryMode = "0755";
+      Environment = "DISPLAY=:0 XAUTHORITY=/home/user/.Xauthority";
     };
-    path = [ pkgs.xorg.xauth ];
   };
 
   # X server configuration
