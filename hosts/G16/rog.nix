@@ -7,17 +7,19 @@
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
   };
 
-  # Enable ACPI backlight control
-  hardware.acpilight.enable = true;
+  # Use native ASUS backlight control
+  hardware.acpilight.enable = false;
 
-  # Map F7/F8 to brightness controls
-  services.xserver.displayManager.sessionCommands = ''
-    ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 73 = XF86MonBrightnessDown"  # F7
-    ${pkgs.xorg.xmodmap}/bin/xmodmap -e "keycode 74 = XF86MonBrightnessUp"    # F8
-  '';
-
-  # Enable backlight control
-  programs.light.enable = true;
+  # ASUS-specific backlight control
+  services.asusd = {
+    enable = true;
+    enableUserService = true;
+    # Set a more granular brightness control
+    brightnessCtl = {
+      enable = true;
+      stepSize = 5;  # 5% steps for finer control
+    };
+  };
 
   # Enable backlight control
   services.udev.extraRules = ''
@@ -38,6 +40,21 @@
     asusd = {
       enable = true;
       enableUserService = true;
+      # Profile settings
+      profile = {
+        performance = {
+          enable = true;
+          governor = "performance";
+        };
+        balanced = {
+          enable = true;
+          governor = "schedutil";
+        };
+        quiet = {
+          enable = true;
+          governor = "powersave";
+        };
+      };
     };
     supergfxd.enable = true;
     power-profiles-daemon.enable = true;
