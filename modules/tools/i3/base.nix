@@ -18,7 +18,6 @@
       assigns = {
         "1: web" = [{ class = "^Firefox$"; }];
         "2: code" = [{ class = "^Code$"; }];
-        "3: term" = [{ class = "^Alacritty$"; }];
         "8: logseq" = [{ class = "^Logseq$"; }];
       };
 
@@ -26,7 +25,7 @@
       startup = [
         { command = "firefox"; notification = false; }
         { command = "${pkgs.vscode}/bin/code"; notification = false; }
-        { command = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux"; notification = false; }
+        { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
         { command = "${pkgs.logseq}/bin/logseq"; notification = false; }
       ];
 
