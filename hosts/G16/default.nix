@@ -59,16 +59,8 @@
   # Display manager session configuration
   services.displayManager.defaultSession = "none+i3";
 
-  # Configure Redshift with fixed temperature
-  services.redshift = {
-    enable = true;
-    temperature.day = 1900;
-    temperature.night = 1900;
-    # Remove brightness control from Redshift
-    provider = "manual";
-    latitude = "0.0";
-    longitude = "0.0";
-  };
+  # Disable Redshift service to avoid conflicts
+  services.redshift.enable = false;
 
   environment.systemPackages = with pkgs; [ ];
 

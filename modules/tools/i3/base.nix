@@ -8,6 +8,7 @@
     i3lock
     dmenu
     gnome-keyring
+    redshift
   ];
 
   xsession.windowManager.i3 = {
@@ -25,6 +26,7 @@
       # Autostart applications with delays to prevent race conditions
       startup = [
         { command = "/run/current-system/sw/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"; notification = false; }
+        { command = "${pkgs.redshift}/bin/redshift -P -O 1900"; notification = false; }
         { command = "sleep 1 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
         { command = "sleep 2 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
         { command = "sleep 1 && i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
