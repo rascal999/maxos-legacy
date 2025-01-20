@@ -42,5 +42,6 @@
   environment.systemPackages = with pkgs; [
     sct
     xorg.xrandr
+    pciutils  # Provides lspci command
   ];
 }
