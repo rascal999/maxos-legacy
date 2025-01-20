@@ -132,10 +132,10 @@
 
       # Remove window decorations
       window = {
-        border = 1;
+        border = 0;
         titlebar = false;
         commands = [
-          { command = "border pixel 1"; criteria = { class = "^.*"; }; }
+          { command = "border none"; criteria = { class = "^.*"; }; }
         ];
       };
     };
