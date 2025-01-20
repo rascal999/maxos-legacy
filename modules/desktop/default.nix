@@ -9,6 +9,19 @@
     ];
   };
 
+  # Configure gammastep for constant warm color temperature
+  home-manager.users.user.programs.gammastep = {
+    enable = true;
+    settings = {
+      general = {
+        temp-day = 1900;
+        temp-night = 1900;
+        dawn-time = "0:00";
+        dusk-time = "0:00";
+      };
+    };
+  };
+
 
   # X server configuration
   services.xserver = {

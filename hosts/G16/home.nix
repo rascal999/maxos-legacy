@@ -123,17 +123,6 @@
       enableBashIntegration = true;
     };
 
-    gammastep = {
-      enable = true;
-      settings = {
-        general = {
-          temp-day = 1900;
-          temp-night = 1900;
-          dawn-time = "0:00";
-          dusk-time = "0:00";
-        };
-      };
-    };
   };
 
   # Enable services
