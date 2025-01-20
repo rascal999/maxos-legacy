@@ -7,7 +7,7 @@
 
   # Boot configuration
   boot = {
-    kernelParams = [ "acpi_osi=Linux" "acpi_osi='!Windows 2013'" "acpi_osi='!Windows 2012'" ];
+    kernelParams = [ "acpi_osi=Linux" "acpi_osi=!Windows2013" "acpi_osi=!Windows2012" ];
     initrd = {
       availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
       kernelModules = [ "asus-nb-wmi" ];
