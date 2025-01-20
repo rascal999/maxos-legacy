@@ -122,6 +122,14 @@
     asusd = {
       enable = true;
       enableUserService = true;
+      # Enable keyboard backlight control
+      asusdConfig = {
+        keyboard-brightness = {
+          enable = true;
+          brightness = 1;  # Default brightness level (0-3)
+          use_kbd_backlight = true;
+        };
+      };
     };
     supergfxd.enable = true;
     power-profiles-daemon.enable = true;
