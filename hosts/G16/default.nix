@@ -58,30 +58,34 @@
     '';
 
     # Display manager configuration
-    displayManager.lightdm = {
-      enable = true;
-      background = "#000000";
-      greeters.gtk = {
+    displayManager = {
+      defaultSession = "none+i3";
+      # Add display setup script for NVIDIA
+      setupCommands = ''
+        ${pkgs.xorg.xrandr}/bin/xrandr --auto
+        ${pkgs.xorg.xset}/bin/xset s off -dpms
+      '';
+      lightdm = {
         enable = true;
-        theme.name = "Adwaita-dark";
+        background = "#000000";
+        greeters.gtk = {
+          enable = true;
+          theme.name = "Adwaita-dark";
+        };
       };
     };
   };
 
-  # Display manager configuration
-  services.xserver.displayManager = {
-    defaultSession = "none+i3";
-    # Add display setup script
-    setupCommands = ''
-      ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource modesetting NVIDIA-0
-      ${pkgs.xorg.xrandr}/bin/xrandr --auto
-    '';
-  };
+  # Add required packages
+  environment.systemPackages = with pkgs; [
+    # NVIDIA utilities
+    nvidia-vaapi-driver
+    glxinfo
+    vulkan-tools
+  ];
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
-
-  environment.systemPackages = with pkgs; [ ];
 
   # Configure home-manager
   home-manager = {
