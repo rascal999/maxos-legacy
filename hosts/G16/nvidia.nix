@@ -6,27 +6,19 @@
 
   # Use modesetting and NVIDIA drivers
   services.xserver = {
-    videoDrivers = [ "modesetting" "nvidia" ];
+    videoDrivers = [ "nvidia" ];
     
-    # Add device sections for hybrid graphics
+    # Configure NVIDIA as primary GPU
     extraConfig = ''
-      Section "Device"
-        Identifier "Intel Graphics"
-        Driver "modesetting"
-        BusID "PCI:0:2:0"
-      EndSection
-      
       Section "Device"
         Identifier "NVIDIA Card"
         Driver "nvidia"
         BusID "PCI:1:0:0"
-        Option "AllowEmptyInitialConfiguration" "true"
       EndSection
 
       Section "Screen"
         Identifier "Screen0"
         Device "NVIDIA Card"
-        Option "AllowEmptyInitialConfiguration" "true"
       EndSection
     '';
   };
@@ -48,16 +40,6 @@
     # Enable nvidia-settings
     nvidiaSettings = true;
     
-    # Configure PRIME for Intel Arc + NVIDIA
-    prime = {
-      # Use sync mode for better compatibility
-      sync.enable = true;
-      offload.enable = false;
-      
-      # Bus IDs for hybrid graphics
-      intelBusId = "PCI:0:2:0";  # Meteor Lake-P Arc
-      nvidiaBusId = "PCI:1:0:0";  # RTX 4070 Max-Q
-    };
 
     # Power management
     powerManagement = {
@@ -69,8 +51,7 @@
     forceFullCompositionPipeline = true;
   };
 
-  # Ensure modules are built and loaded in correct order
-  boot.initrd.kernelModules = [ "i915" ];  # Load Intel first
+  # Load NVIDIA modules
   boot.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   
