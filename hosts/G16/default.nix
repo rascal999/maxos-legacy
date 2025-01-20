@@ -115,19 +115,19 @@
   };
 
   # ROG G16 specific configuration
-  hardware = {
-    opengl.enable = true;
-    asus.rog = {
+  hardware.opengl.enable = true;
+
+  # ASUS ROG services
+  services = {
+    asusd = {
       enable = true;
-      asusd = {
-        enable = true;
-        enableUserService = true;
-      };
+      enableUserService = true;
     };
+    supergfxd.enable = true;
+    power-profiles-daemon.enable = true;
   };
 
   # Power management
-  services.power-profiles-daemon.enable = true;
   powerManagement = {
     enable = true;
     cpuFreqGovernor = "performance";
@@ -135,9 +135,9 @@
 
   # ROG-specific packages
   environment.systemPackages = with pkgs; [
-    asusctl
-    supergfxctl
-    powertop
+    asusctl  # ROG laptop control
+    supergfxctl  # Graphics switching
+    powertop  # Power management
   ];
 
   # Configure home-manager
