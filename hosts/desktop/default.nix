@@ -28,13 +28,16 @@
   };
 
   # Configure home-manager
-  home-manager.users.user = { pkgs, ... }: {
-    imports = [
-      ./home.nix
-      ../../modules/tools/i3/desktop.nix
-      ../../modules/tools/alacritty.nix
-      ../../modules/tools/zsh.nix
-    ];
+  home-manager = {
+    backupFileExtension = "backup";
+    users.user = { pkgs, ... }: {
+      imports = [
+        ./home.nix
+        ../../modules/tools/i3/desktop.nix
+        ../../modules/tools/alacritty.nix
+        ../../modules/tools/zsh.nix
+      ];
+    };
   };
 
   # Set system state version
