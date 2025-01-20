@@ -10,36 +10,16 @@
   # Use native ASUS backlight control
   hardware.acpilight.enable = false;
 
-  # ASUS-specific backlight control
-  services.asusd = {
-    enable = true;
-    enableUserService = true;
-    # Set a more granular brightness control
-    brightnessCtl = {
-      enable = true;
-      stepSize = 5;  # 5% steps for finer control
-    };
-  };
-
-  # Enable backlight control
-  services.udev.extraRules = ''
-    # Keyboard backlight control
-    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/leds/%k/brightness"
-    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/leds/%k/brightness"
-    
-    # Screen backlight control
-    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="*", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
-    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="*", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
-  '';
-
-  # Add user to video group for backlight control
-  users.users.user.extraGroups = [ "video" ];
-
   # ASUS ROG services
   services = {
     asusd = {
       enable = true;
       enableUserService = true;
+      # Set a more granular brightness control
+      brightnessCtl = {
+        enable = true;
+        stepSize = 5;  # 5% steps for finer control
+      };
       # Profile settings
       profile = {
         performance = {
@@ -59,6 +39,20 @@
     supergfxd.enable = true;
     power-profiles-daemon.enable = true;
   };
+
+  # Enable backlight control
+  services.udev.extraRules = ''
+    # Keyboard backlight control
+    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/leds/%k/brightness"
+    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/leds/%k/brightness"
+    
+    # Screen backlight control
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="*", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="*", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
+  '';
+
+  # Add user to video group for backlight control
+  users.users.user.extraGroups = [ "video" ];
 
   # Power management
   powerManagement = {
