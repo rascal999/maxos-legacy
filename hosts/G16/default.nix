@@ -79,8 +79,25 @@
   # Enable X11 windowing system
   services.xserver = {
     enable = true;
-    displayManager.lightdm.enable = true;
-    windowManager.i3.enable = true;
+    
+    # Display manager configuration
+    displayManager = {
+      lightdm = {
+        enable = true;
+        background = "#000000";
+        greeters.gtk = {
+          enable = true;
+          theme.name = "Adwaita-dark";
+        };
+      };
+      defaultSession = "none+i3";
+    };
+
+    # Window manager configuration
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3;
+    };
     
     # Keyboard layout
     xkb = {
@@ -91,6 +108,13 @@
 
     # NVIDIA configuration
     videoDrivers = [ "nvidia" ];
+
+    # Server flags
+    serverFlagsSection = ''
+      Option "AllowEmptyInput" "on"
+      Option "AutoAddDevices" "on"
+      Option "AutoEnableDevices" "on"
+    '';
   };
 
   # NVIDIA and graphics settings
