@@ -50,6 +50,6 @@
   environment.systemPackages = with pkgs; [
     sct
     xorg.xrandr
-    nvidia-settings
+    config.boot.kernelPackages.nvidia_x11
   ];
 }
