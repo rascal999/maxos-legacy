@@ -62,6 +62,7 @@
       pavucontrol
       networkmanagerapplet
       arandr
+      redshift
     ];
 
     # Environment variables
@@ -134,6 +135,16 @@
 
   # Enable services
   services = {
+    redshift = {
+      enable = true;
+      temperature = {
+        day = 5700;
+        night = 3500;
+      };
+      latitude = "40.0";  # Default latitude
+      longitude = "-74.0";  # Default longitude
+    };
+
     picom = {
       enable = true;
       vSync = true;
