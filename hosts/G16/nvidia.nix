@@ -4,21 +4,30 @@
   # Enable graphics
   hardware.graphics.enable = true;
 
-  # Use modesetting and NVIDIA drivers
+  # Use NVIDIA driver only
   services.xserver = {
     videoDrivers = [ "nvidia" ];
     
     # Configure NVIDIA as primary GPU
     extraConfig = ''
+      Section "ServerLayout"
+        Identifier "layout"
+        Screen 0 "nvidia"
+      EndSection
+
       Section "Device"
-        Identifier "NVIDIA Card"
+        Identifier "nvidia"
         Driver "nvidia"
         BusID "PCI:1:0:0"
+        Option "AllowEmptyInitialConfiguration" "true"
+        Option "UseDisplayDevice" "none"
+        Option "PrimaryGPU" "yes"
       EndSection
 
       Section "Screen"
-        Identifier "Screen0"
-        Device "NVIDIA Card"
+        Identifier "nvidia"
+        Device "nvidia"
+        Option "AllowEmptyInitialConfiguration" "true"
       EndSection
     '';
   };
@@ -39,7 +48,6 @@
     
     # Enable nvidia-settings
     nvidiaSettings = true;
-    
 
     # Power management
     powerManagement = {
@@ -51,7 +59,8 @@
     forceFullCompositionPipeline = true;
   };
 
-  # Load NVIDIA modules
+  # Load NVIDIA modules in correct order
+  boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   
@@ -66,10 +75,12 @@
   boot.kernelParams = [
     "nvidia-drm.modeset=1"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "nvidia.NVreg_UsePageAttributeTable=1"
   ];
 
   # Enable EDID for proper display detection
   services.xserver.screenSection = ''
     Option "UseEdid" "True"
+    Option "ModeValidation" "NoMaxPClkCheck"
   '';
 }
