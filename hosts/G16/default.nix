@@ -17,7 +17,7 @@
       kernelModules = [ "dm-snapshot" ];
       luks.devices = {
         cryptroot = {
-          device = "/dev/disk/by-uuid/0c01e360-b7aa-4d3a-9b86-495f9188f43f";
+          device = "/dev/nvme1n1p2";
           preLVM = true;
           allowDiscards = true;
           bypassWorkqueues = true;
