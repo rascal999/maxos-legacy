@@ -14,7 +14,7 @@
   boot = {
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-      kernelModules = [ "dm-snapshot" ];
+      kernelModules = [ "dm-snapshot" "dm-crypt" "dm-mod" "cbc" "sha256" "sha512" "aes" ];
       luks.devices = {
         cryptroot = {
           device = "/dev/nvme1n1p2";
@@ -44,6 +44,7 @@
     "/" = {
       device = "/dev/mapper/cryptroot";
       fsType = "ext4";
+      options = [ "defaults" ];
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/07F8-7AAD";
