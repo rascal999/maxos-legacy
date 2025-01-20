@@ -23,10 +23,10 @@
 
       # Autostart applications
       startup = [
-        { command = "firefox"; notification = false; }
-        { command = "${pkgs.vscode}/bin/code"; notification = false; }
+        { command = "i3-msg 'workspace 1: web; exec firefox'"; notification = false; }
+        { command = "i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
         { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
-        { command = "${pkgs.logseq}/bin/logseq"; notification = false; }
+        { command = "i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
       ];
 
       # Basic keybindings
