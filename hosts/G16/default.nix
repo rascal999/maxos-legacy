@@ -37,8 +37,8 @@
         };
       };
     };
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
+    kernelModules = [ "kvm-intel" "acpi_call" "asus-wmi" "asus-nb-wmi" ];
+    extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
     loader = {
       efi = {
         canTouchEfiVariables = true;
@@ -114,21 +114,31 @@
     '';
   };
 
-  # Graphics configuration
+  # ROG G16 specific configuration
   hardware = {
     opengl.enable = true;
-    # Basic NVIDIA configuration
-    nvidia = {
-      modesetting.enable = true;
-      powerManagement.finegrained = false;
-      open = false;
-      nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    asus.rog = {
+      enable = true;
+      asusd = {
+        enable = true;
+        enableUserService = true;
+      };
     };
   };
 
-  # Use NVIDIA driver
-  services.xserver.videoDrivers = [ "nvidia" ];
+  # Power management
+  services.power-profiles-daemon.enable = true;
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "performance";
+  };
+
+  # ROG-specific packages
+  environment.systemPackages = with pkgs; [
+    asusctl
+    supergfxctl
+    powertop
+  ];
 
   # Configure home-manager
   home-manager.users.user = { pkgs, ... }: {
