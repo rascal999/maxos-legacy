@@ -24,7 +24,7 @@
 
       # Autostart applications
       startup = [
-        { command = "${pkgs.firefox}/bin/firefox"; notification = false; }
+        { command = "firefox"; notification = false; }
         { command = "${pkgs.vscode}/bin/code"; notification = false; }
         { command = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux"; notification = false; }
         { command = "${pkgs.logseq}/bin/logseq"; notification = false; }
@@ -96,7 +96,7 @@
         "Mod1+Shift+8" = "move container to workspace 8: logseq";
 
         # Quick launch frequently used applications
-        "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
+        "${config.xsession.windowManager.i3.config.modifier}+b" = "exec firefox";
         "${config.xsession.windowManager.i3.config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
         "${config.xsession.windowManager.i3.config.modifier}+l" = "exec ${pkgs.i3lock}/bin/i3lock -c 000000";
         "${config.xsession.windowManager.i3.config.modifier}+Return" = "exec $HOME/.local/bin/rofi-launcher";

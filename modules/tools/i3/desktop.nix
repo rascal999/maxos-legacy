@@ -9,7 +9,6 @@
       { command = "nm-applet"; notification = false; }
       { command = "volumeicon"; notification = false; }
       { command = "flameshot"; notification = false; }
-      { command = "firefox"; notification = false; }
     ];
 
   };
@@ -21,6 +20,5 @@
     volumeicon
     light
     pcmanfm
-    firefox
   ];
 }
