@@ -7,13 +7,30 @@
     driSupport32Bit = true;
   };
 
-  # Use NVIDIA drivers
-  services.xserver.videoDrivers = [ "nvidia" ];
+  # Use both Intel and NVIDIA drivers
+  services.xserver = {
+    videoDrivers = [ "intel" "nvidia" ];
+    
+    # Add device sections for hybrid graphics
+    extraConfig = ''
+      Section "Device"
+        Identifier "Intel Graphics"
+        Driver "intel"
+        BusID "PCI:0:2:0"
+      EndSection
+      
+      Section "Device"
+        Identifier "NVIDIA Card"
+        Driver "nvidia"
+        BusID "PCI:1:0:0"
+      EndSection
+    '';
+  };
 
   # NVIDIA configuration
   hardware.nvidia = {
-    # Use stable drivers
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # Use beta drivers for better Arc compatibility
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
     
     # Enable open-source drivers
     open = true;
@@ -27,24 +44,31 @@
     # Enable nvidia-settings
     nvidiaSettings = true;
     
-    # Optimus PRIME configuration
+    # Configure PRIME for Intel Arc + NVIDIA
     prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
+      # Use reverse sync instead of offload
+      reverseSync.enable = true;
+      offload.enable = false;
+      
       # Bus IDs for hybrid graphics
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
+      intelBusId = "PCI:0:2:0";  # Meteor Lake-P Arc
+      nvidiaBusId = "PCI:1:0:0";  # RTX 4070 Max-Q
+    };
+
+    # Power management
+    powerManagement = {
+      enable = true;
+      finegrained = false;  # Disable fine-grained for stability
     };
 
     # Force full composition pipeline for better performance
     forceFullCompositionPipeline = true;
   };
 
-  # Ensure NVIDIA modules are built and loaded
-  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+  # Ensure modules are built and loaded in correct order
+  boot.initrd.kernelModules = [ "i915" ];  # Load Intel first
   boot.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   
   # Configure module loading
   boot.extraModprobeConfig = ''
@@ -53,11 +77,11 @@
     options nvidia NVreg_RegistryDwords="EnableBrightnessControl=1"
   '';
 
-  # Add kernel parameters for display handling
+  # Add kernel parameters for Arc + NVIDIA
   boot.kernelParams = [
-    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "i915.force_probe=7d55"  # Force enable Arc
     "nvidia-drm.modeset=1"
-    "video=DP-2:D"  # Disable problematic DP-2 output
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   ];
 
   # Configure Xorg for EDID issues
