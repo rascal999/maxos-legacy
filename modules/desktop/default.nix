@@ -19,6 +19,11 @@
     };
     latitude = "51.5";  # London coordinates
     longitude = "-0.1";
+    settings = {
+      randr = {
+        method = "vidmode";
+      };
+    };
   };
 
 

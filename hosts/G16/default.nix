@@ -88,6 +88,18 @@
       variant = "dvorak";
       options = "terminate:ctrl_alt_bksp";
     };
+
+    # NVIDIA configuration
+    videoDrivers = [ "nvidia" ];
+  };
+
+  # NVIDIA settings
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   # Configure home-manager
