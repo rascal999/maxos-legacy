@@ -91,6 +91,10 @@
         };
       };
       defaultSession = "none+i3";
+      autoLogin = {
+        enable = true;
+        user = "user";
+      };
     };
 
     # Window manager configuration
