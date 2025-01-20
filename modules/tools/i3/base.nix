@@ -14,6 +14,22 @@
     config = {
       modifier = "Mod1";  # Use Alt key as modifier
 
+      # Assign applications to workspaces
+      assigns = {
+        "1: web" = [{ class = "^Firefox$"; }];
+        "2: code" = [{ class = "^Code$"; }];
+        "3: term" = [{ class = "^Alacritty$"; }];
+        "8: logseq" = [{ class = "^Logseq$"; }];
+      };
+
+      # Autostart applications
+      startup = [
+        { command = "i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
+        { command = "i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
+        { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty'"; notification = false; }
+        { command = "i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
+      ];
+
       # Basic keybindings
       keybindings = {
         # Terminal
