@@ -95,7 +95,7 @@
         live_config_reload = true;
       };
 
-      key_bindings = [
+      keyboard.bindings = [
         { key = "V"; mods = "Control|Shift"; action = "Paste"; }
         { key = "C"; mods = "Control|Shift"; action = "Copy"; }
         { key = "Insert"; mods = "Shift"; action = "PasteSelection"; }
