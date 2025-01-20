@@ -3,13 +3,6 @@
 {
   programs.firefox = {
     enable = true;
-    # Pin DarkReader to toolbar
-    userChrome = ''
-      /* Pin DarkReader extension button */
-      #wrapper-addon\@darkreader\.org {
-        -moz-box-ordinal-group: 0 !important;
-      }
-    '';
     policies = {
       DisableFirefoxAccounts = true;
       DisableProfileImport = true;
@@ -45,6 +38,12 @@
         # Enable userChrome customizations
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
+      userChrome = ''
+        /* Pin DarkReader extension button */
+        #wrapper-addon\@darkreader\.org {
+          -moz-box-ordinal-group: 0 !important;
+        }
+      '';
+      };
     };
-  };
 }
