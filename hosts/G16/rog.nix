@@ -15,11 +15,6 @@
     asusd = {
       enable = true;
       enableUserService = true;
-      # Set a more granular brightness control
-      brightnessCtl = {
-        enable = true;
-        stepSize = 5;  # 5% steps for finer control
-      };
       # Profile settings
       profile = {
         performance = {
