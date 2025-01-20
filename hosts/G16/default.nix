@@ -117,14 +117,18 @@
   # ROG G16 specific configuration
   hardware.graphics.enable = true;
 
+  # Enable keyboard backlight control
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/leds/%k/brightness"
+    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/leds/%k/brightness"
+  '';
+
   # ASUS ROG services
   services = {
     asusd = {
       enable = true;
       enableUserService = true;
     };
-    # Enable ASUS keyboard backlight control
-    asus-kbd-backlight.enable = true;
     supergfxd.enable = true;
     power-profiles-daemon.enable = true;
     displayManager = {
