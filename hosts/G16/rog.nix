@@ -15,21 +15,6 @@
     asusd = {
       enable = true;
       enableUserService = true;
-      # Profile settings
-      profile = {
-        performance = {
-          enable = true;
-          governor = "performance";
-        };
-        balanced = {
-          enable = true;
-          governor = "schedutil";
-        };
-        quiet = {
-          enable = true;
-          governor = "powersave";
-        };
-      };
     };
     supergfxd.enable = true;
     power-profiles-daemon.enable = true;
