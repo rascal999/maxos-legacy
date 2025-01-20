@@ -13,11 +13,11 @@
   # Boot configuration
   boot = {
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-      kernelModules = [ "dm-snapshot" "dm-crypt" "dm-mod" "cbc" "sha256" "sha512" "aes" ];
+      availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
+      kernelModules = [ ];
       luks.devices = {
         cryptroot = {
-          device = "/dev/nvme1n1p2";
+          device = "/dev/disk/by-uuid/64f62ad3-8fcc-4475-afcb-a49952fe77d1";
           preLVM = true;
           allowDiscards = true;
           bypassWorkqueues = true;
@@ -25,6 +25,7 @@
       };
     };
     kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
     loader = {
       efi = {
         canTouchEfiVariables = true;
@@ -42,13 +43,14 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/mapper/cryptroot";
+      device = "/dev/disk/by-uuid/a6d30279-d2aa-47c0-9b8d-19adfd9c735c";
       fsType = "ext4";
-      options = [ "defaults" ];
+      neededForBoot = true;
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/07F8-7AAD";
+      device = "/dev/disk/by-uuid/1677-DACD";
       fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
     };
   };
 
