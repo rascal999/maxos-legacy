@@ -58,22 +58,11 @@
   # Display manager session configuration
   services.displayManager.defaultSession = "none+i3";
 
-  # Configure redshift for blue light filtering
-  services.redshift = {
-    enable = true;
-    temperature = {
-      day = 5500;
-      night = 3700;
-    };
-  };
+  # Redshift disabled to prevent conflicts with NVIDIA
+  services.redshift.enable = false;
+  services.geoclue2.enable = false;
 
-  # Enable location services for redshift
-  location.provider = "geoclue2";
-  services.geoclue2.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    redshift  # Color temperature adjustment
-  ];
+  environment.systemPackages = with pkgs; [ ];
 
   # Configure home-manager
   home-manager = {
