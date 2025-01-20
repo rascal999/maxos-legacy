@@ -39,6 +39,11 @@
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         # Show bookmarks toolbar
         "browser.toolbars.bookmarks.visibility" = "always";
+        # Always restore previous session
+        "browser.startup.page" = 3;
+        "browser.sessionstore.resume_from_crash" = true;
+        "browser.sessionstore.max_tabs_undo" = 50;
+        "browser.sessionstore.max_windows_undo" = 10;
       };
       userChrome = ''
         /* Pin DarkReader extension button */
