@@ -129,6 +129,15 @@
         outer = 0;
         smartGaps = true;
       };
+
+      # Remove window decorations
+      window = {
+        border = 1;
+        titlebar = false;
+        commands = [
+          { command = "border pixel 1"; criteria = { class = "^.*"; }; }
+        ];
+      };
     };
   };
 }
