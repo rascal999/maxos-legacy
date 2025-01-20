@@ -10,6 +10,11 @@
   # Hardware scanning
   hardware.enableAllFirmware = true;
 
+  # Allow insecure packages
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-27.3.11"
+  ];
+
   # Networking
   networking = {
     networkmanager = {
