@@ -22,9 +22,5 @@
   };
 
   # Remove Firefox from system packages since it's managed by home-manager
-  home.packages = lib.mkAfter (with pkgs; [
-    # Remove Firefox if it exists in the list
-    # This is done using a filter function
-    (lib.lists.filter (p: p.name != "firefox") config.home.packages)
-  ]);
+  home.packages = lib.mkAfter (pkgs.lib.lists.remove pkgs.firefox config.home.packages);
 }
