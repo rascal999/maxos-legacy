@@ -23,7 +23,7 @@
   # File systems configuration
   boot.initrd.luks.devices = {
     cryptroot = {
-      device = "/dev/disk/by-uuid/a6d30279-d2aa-47c0-9b8d-19adfd9c735c"
+      device = "/dev/disk/by-uuid/a6d30279-d2aa-47c0-9b8d-19adfd9c735c";
       preLVM = true;
     };
   };
