@@ -7,6 +7,7 @@
     ../../modules/tools/alacritty.nix
     ../../modules/tools/zsh.nix
     ../../modules/tools/rofi/default.nix
+    ../../modules/tools/firefox/default.nix
   ];
 
   # Enable home-manager
@@ -47,7 +48,6 @@
       libreoffice
       vlc
       gimp
-      firefox
       
       # Communication
       slack
