@@ -6,7 +6,7 @@
 
   # Use modesetting and NVIDIA drivers
   services.xserver = {
-    videoDrivers = [ "modesetting" "nvidia" ];
+    videoDrivers = [ "nvidia" ];
     
     # Add device sections for hybrid graphics
     extraConfig = ''
@@ -26,11 +26,11 @@
 
   # NVIDIA configuration
   hardware.nvidia = {
-    # Use beta drivers for better Arc compatibility
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    # Use stable drivers
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
     
-    # Enable open-source drivers
-    open = true;
+    # Disable open-source drivers for stability
+    open = false;
     
     # Enable nvidia-persistenced service
     nvidiaPersistenced = true;
@@ -43,9 +43,9 @@
     
     # Configure PRIME for Intel Arc + NVIDIA
     prime = {
-      # Use reverse sync instead of offload
-      reverseSync.enable = true;
-      offload.enable = false;
+      # Use offload mode for better stability
+      reverseSync.enable = false;
+      offload.enable = true;
       
       # Bus IDs for hybrid graphics
       intelBusId = "PCI:0:2:0";  # Meteor Lake-P Arc
@@ -74,17 +74,14 @@
     options nvidia NVreg_RegistryDwords="EnableBrightnessControl=1"
   '';
 
-  # Add kernel parameters for Arc + NVIDIA
+  # Add kernel parameters for NVIDIA
   boot.kernelParams = [
-    "i915.force_probe=7d55"  # Force enable Arc
     "nvidia-drm.modeset=1"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   ];
 
-  # Configure Xorg for EDID issues
+  # Enable EDID for proper display detection
   services.xserver.screenSection = ''
-    Option "UseEdid" "False"
-    Option "IgnoreEDID" "True"
-    Option "CustomEDID" "DP-2:/dev/null"
+    Option "UseEdid" "True"
   '';
 }

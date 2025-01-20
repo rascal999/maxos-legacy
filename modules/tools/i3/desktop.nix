@@ -6,18 +6,19 @@
   xsession.windowManager.i3.config = {
     # Desktop-specific startup applications
     startup = [
-      { command = "nm-applet"; notification = false; }
-      { command = "volumeicon"; notification = false; }
-      { command = "flameshot"; notification = false; }
+      # Add small delays to prevent race conditions
+      { command = "sleep 1 && ${pkgs.networkmanagerapplet}/bin/nm-applet"; notification = false; }
+      # Use pactl for volume control since we're using PipeWire
+      { command = "sleep 2 && ${pkgs.pavucontrol}/bin/pavucontrol --start-hidden"; notification = false; }
+      { command = "sleep 1 && ${pkgs.flameshot}/bin/flameshot"; notification = false; }
     ];
-
   };
 
   # Additional packages for desktop environment
   home.packages = with pkgs; [
     flameshot
     networkmanagerapplet
-    volumeicon
+    pavucontrol
     light
     pcmanfm
   ];

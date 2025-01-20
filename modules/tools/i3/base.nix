@@ -22,13 +22,13 @@
         "8: logseq" = [{ class = "^Logseq$"; }];
       };
 
-      # Autostart applications
+      # Autostart applications with delays to prevent race conditions
       startup = [
         { command = "/run/current-system/sw/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"; notification = false; }
-        { command = "i3-msg 'workspace 1: web; exec firefox'"; notification = false; }
-        { command = "i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
-        { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
-        { command = "i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
+        { command = "sleep 1 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
+        { command = "sleep 2 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
+        { command = "sleep 1 && i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
+        { command = "sleep 3 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
       ];
 
       # Basic keybindings
@@ -71,10 +71,10 @@
         "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui";
         "Shift+Print" = "exec ${pkgs.flameshot}/bin/flameshot full";
 
-        # Media controls
-        "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
-        "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
-        "XF86AudioMute" = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        # Media controls using pactl for PipeWire
+        "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+        "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+        "XF86AudioMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
         
         # Brightness controls
         "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
@@ -97,7 +97,7 @@
         "Mod1+Shift+8" = "move container to workspace 8: logseq";
 
         # Quick launch frequently used applications
-        "${config.xsession.windowManager.i3.config.modifier}+b" = "exec firefox";
+        "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
         "${config.xsession.windowManager.i3.config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
         "${config.xsession.windowManager.i3.config.modifier}+l" = "exec ${pkgs.i3lock}/bin/i3lock -c 000000";
         "${config.xsession.windowManager.i3.config.modifier}+Return" = "exec $HOME/.local/bin/rofi-launcher";
@@ -131,12 +131,12 @@
         smartGaps = true;
       };
 
-      # Remove window decorations
+      # Window decorations
       window = {
-        border = 0;
+        border = 1;
         titlebar = false;
         commands = [
-          { command = "border none"; criteria = { class = "^.*"; }; }
+          { command = "border pixel 1"; criteria = { class = "^.*"; }; }
         ];
       };
     };
