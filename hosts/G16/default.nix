@@ -91,11 +91,6 @@
           theme.name = "Adwaita-dark";
         };
       };
-      defaultSession = "none+i3";
-      autoLogin = {
-        enable = true;
-        user = "user";
-      };
     };
 
     # Window manager configuration
@@ -120,7 +115,7 @@
   };
 
   # ROG G16 specific configuration
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   # ASUS ROG services
   services = {
@@ -130,6 +125,13 @@
     };
     supergfxd.enable = true;
     power-profiles-daemon.enable = true;
+    displayManager = {
+      defaultSession = "none+i3";
+      autoLogin = {
+        enable = true;
+        user = "user";
+      };
+    };
   };
 
   # Power management
@@ -150,7 +152,6 @@
   # Configure redshift for blue light filtering
   services.redshift = {
     enable = true;
-    provider = "geoclue2";
     temperature = {
       day = 5500;
       night = 3700;

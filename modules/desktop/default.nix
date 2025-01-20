@@ -28,7 +28,7 @@
 
 
   # X server configuration
-  services.xserver = {
+  services = {
     displayManager = {
       autoLogin = {
         enable = true;
