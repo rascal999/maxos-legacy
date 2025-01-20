@@ -10,8 +10,6 @@
     ../../modules/tools/firefox/default.nix
   ];
 
-  programs.firefox.enable = true;
-
   # Enable home-manager
   programs.home-manager.enable = true;
 

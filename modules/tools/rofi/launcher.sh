@@ -12,8 +12,7 @@ QUERY="SELECT entry_name command FROM rofi;"
 ENTRIES=$(sqlite3 "$DB_FILE" "$QUERY")
 
 # Firefox bookmarks
-ENTRIES_BOOKMARKS=$(cat "$HOME/.mozilla/firefox/policies/policies.json" | jq -r '.policies.ManagedBookmarks.[] | .name + if .children then (.children[] | .policies.ManagedBookmarks.name + " # " + .name + " " + (.url // "NA")) end' | grep http | sed 's/^/📚 Bookmarks # Bks # /g' | sed 's/ http/ | xdg-open http/g')
-
+# Bookmarks are now managed through home-manager Firefox module
 # Want history last
 ENTRIES_SORTED=$(echo "$ENTRIES" | sort)
 ENTRIES_BOOKMARKS_SORTED=$(echo "$ENTRIES_BOOKMARKS" | sort)
