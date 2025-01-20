@@ -50,19 +50,11 @@
       };
     };
 
-    # Server flags
-    serverFlagsSection = ''
-      Option "AllowEmptyInput" "on"
-      Option "AutoAddDevices" "on"
-      Option "AutoEnableDevices" "on"
-    '';
-
     # Display manager configuration
     displayManager = {
       defaultSession = "none+i3";
-      # Add display setup script for NVIDIA
+      # Basic display setup
       setupCommands = ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --auto
         ${pkgs.xorg.xset}/bin/xset s off -dpms
       '';
       lightdm = {
