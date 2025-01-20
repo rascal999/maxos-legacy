@@ -135,10 +135,10 @@
 
       # Window decorations
       window = {
-        border = 1;
+        border = 0;
         titlebar = false;
         commands = [
-          { command = "border pixel 1"; criteria = { class = "^.*"; }; }
+          { command = "border pixel 0"; criteria = { class = "^.*"; }; }
         ];
       };
     };
