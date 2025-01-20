@@ -23,7 +23,7 @@
   # File systems configuration
   boot.initrd.luks.devices = {
     cryptroot = {
-      device = "/dev/disk/by-uuid/a6d30279-d2aa-47c0-9b8d-19adfd9c735c";
+      device = "/dev/disk/by-uuid/0c01e360-b7aa-4d3a-9b86-495f9188f43f";
       preLVM = true;
     };
   };
@@ -34,7 +34,7 @@
       fsType = "ext4";
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/1677-DACD"; # Replace with actual UUID
+      device = "/dev/disk/by-uuid/07F8-7AAD";
       fsType = "vfat";
     };
   };
@@ -55,9 +55,11 @@
     windowManager.i3.enable = true;
     
     # Keyboard layout
-    layout = "us";
-    xkbVariant = "dvorak";
-    xkbOptions = "terminate:ctrl_alt_bksp";
+    xkb = {
+      layout = "us";
+      variant = "dvorak";
+      options = "terminate:ctrl_alt_bksp";
+    };
   };
 
   # Configure home-manager
