@@ -1,7 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.firefox = {
+  # Ensure system-wide Firefox is disabled to avoid conflicts
+  programs.firefox.enable = lib.mkForce false;
+
+  # Configure Firefox through home-manager
+  home-manager.programs.firefox = {
     enable = true;
     profiles.default = {
       id = 0;
