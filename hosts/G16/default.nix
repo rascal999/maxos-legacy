@@ -195,6 +195,7 @@
     powertop  # Power management
     redshift  # Color temperature adjustment
     os-prober  # OS detection for GRUB
+    nvidia-offload  # Provides prime-run command
   ];
 
   # Configure redshift for blue light filtering
