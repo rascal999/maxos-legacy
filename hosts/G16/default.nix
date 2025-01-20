@@ -4,16 +4,12 @@
   imports = [
     ./users.nix
     ../../modules/security/default.nix
+    ../../modules/desktop/default.nix
   ];
 
   # Boot loader configuration
   # Hardware scanning
   hardware.enableAllFirmware = true;
-
-  # Allow insecure packages
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-27.3.11"
-  ];
 
   # Networking
   networking = {
