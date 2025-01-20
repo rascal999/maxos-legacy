@@ -123,6 +123,9 @@
     ACTION=="add", SUBSYSTEM=="leds", KERNEL=="asus::kbd_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/leds/%k/brightness"
   '';
 
+  # Add user to video group for keyboard backlight control
+  users.users.user.extraGroups = [ "video" ];
+
   # ASUS ROG services
   services = {
     asusd = {
