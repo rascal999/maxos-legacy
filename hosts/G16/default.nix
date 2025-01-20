@@ -6,6 +6,39 @@
     ../../modules/security/default.nix
   ];
 
+  # Boot loader configuration
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
+    grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+      enableCryptodisk = true;
+    };
+  };
+
+  # File systems configuration
+  boot.initrd.luks.devices = {
+    cryptroot = {
+      device = "/dev/disk/by-uuid/64f62ad3-8fcc-4475-afcb-a49952fe77d1"; # Replace with actual UUID
+      preLVM = true;
+    };
+  };
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/mapper/cryptroot";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/1677-DACD"; # Replace with actual UUID
+      fsType = "vfat";
+    };
+  };
+
   # Disable system-wide Firefox
   programs.firefox.enable = false;
 
