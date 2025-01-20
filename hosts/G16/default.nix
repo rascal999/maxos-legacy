@@ -59,9 +59,16 @@
   # Display manager session configuration
   services.displayManager.defaultSession = "none+i3";
 
-  # Redshift disabled to prevent conflicts with NVIDIA
-  services.redshift.enable = false;
-  services.geoclue2.enable = false;
+  # Configure Redshift for blue light reduction
+  services.redshift = {
+    enable = true;
+    temperature = {
+      day = 5500;
+      night = 3000;
+    };
+    latitude = "51.5";  # London
+    longitude = "-0.13"; # London
+  };
 
   environment.systemPackages = with pkgs; [ ];
 
