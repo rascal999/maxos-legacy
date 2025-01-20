@@ -11,7 +11,7 @@
       "acpi_osi=Linux" 
       "acpi_osi=!Windows2013" 
       "acpi_osi=!Windows2012"
-      "acpi_backlight=native"
+      "acpi_backlight=vendor"
       "asus.use_native_led=1"
     ];
     initrd = {
