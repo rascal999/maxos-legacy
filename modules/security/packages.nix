@@ -10,6 +10,7 @@ in {
       aide    # File integrity checker
       lynis   # Security auditing
       fail2ban # Intrusion prevention
+      vim     # Text editor
     ];
   };
 }
