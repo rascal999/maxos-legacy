@@ -91,7 +91,9 @@
         thickness = 0.15;
       };
 
-      live_config_reload = true;
+      general = {
+        live_config_reload = true;
+      };
 
       key_bindings = [
         { key = "V"; mods = "Control|Shift"; action = "Paste"; }
