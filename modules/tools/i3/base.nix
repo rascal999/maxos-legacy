@@ -64,18 +64,20 @@
         "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 5";
         
         # Workspace switching
-        "Mod1+1" = "workspace 1: term";
-        "Mod1+2" = "workspace 2: web";
-        "Mod1+3" = "workspace 3: code";
-        "Mod1+4" = "workspace 4: files";
-        "Mod1+5" = "workspace 5: media";
+        "Mod1+1" = "workspace 1: web";
+        "Mod1+2" = "workspace 2: code";
+        "Mod1+3" = "workspace 3: term";
+        "Mod1+4" = "workspace 4: burp";
+        "Mod1+5" = "workspace 5: term";
+        "Mod1+8" = "workspace 8: logseq";
         
         # Move container to workspace
-        "Mod1+Shift+1" = "move container to workspace 1: term";
-        "Mod1+Shift+2" = "move container to workspace 2: web";
-        "Mod1+Shift+3" = "move container to workspace 3: code";
-        "Mod1+Shift+4" = "move container to workspace 4: files";
-        "Mod1+Shift+5" = "move container to workspace 5: media";
+        "Mod1+Shift+1" = "move container to workspace 1: web";
+        "Mod1+Shift+2" = "move container to workspace 2: code";
+        "Mod1+Shift+3" = "move container to workspace 3: term";
+        "Mod1+Shift+4" = "move container to workspace 4: burp";
+        "Mod1+Shift+5" = "move container to workspace 5: term";
+        "Mod1+Shift+8" = "move container to workspace 8: logseq";
 
         # Quick launch frequently used applications
         "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
@@ -86,11 +88,12 @@
 
       # Workspace configuration
       workspaceOutputAssign = [
-        { workspace = "1: term"; output = "primary"; }
-        { workspace = "2: web"; output = "primary"; }
-        { workspace = "3: code"; output = "primary"; }
-        { workspace = "4: files"; output = "primary"; }
-        { workspace = "5: media"; output = "primary"; }
+        { workspace = "1: web"; output = "primary"; }
+        { workspace = "2: code"; output = "primary"; }
+        { workspace = "3: term"; output = "primary"; }
+        { workspace = "4: burp"; output = "primary"; }
+        { workspace = "5: term"; output = "primary"; }
+        { workspace = "8: logseq"; output = "primary"; }
       ];
 
       # Basic appearance settings
