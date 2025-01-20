@@ -21,6 +21,31 @@
     };
 
     nixosConfigurations = {
+      G16 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          {
+            nixpkgs.config.allowUnfree = true;
+            nixpkgs.overlays = [
+              nur.overlays.default
+            ];
+          }
+          ./hosts/G16/default.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.user = { pkgs, ... }: {
+                imports = [
+                  ./hosts/G16/home.nix
+                ];
+                home.stateVersion = "24.11";
+              };
+            };
+          }
+        ];
+      };
       desktop-test-vm = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
