@@ -7,6 +7,7 @@
     i3status
     i3lock
     dmenu
+    gnome-keyring
   ];
 
   xsession.windowManager.i3 = {
@@ -23,6 +24,7 @@
 
       # Autostart applications
       startup = [
+        { command = "/run/current-system/sw/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"; notification = false; }
         { command = "i3-msg 'workspace 1: web; exec firefox'"; notification = false; }
         { command = "i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
         { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
