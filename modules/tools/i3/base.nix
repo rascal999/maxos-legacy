@@ -82,13 +82,13 @@
         "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
         "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 5";
         
-        # Workspace switching
-        "Mod1+1" = "workspace 1: web";
-        "Mod1+2" = "workspace 2: code";
-        "Mod1+3" = "workspace 3: term";
-        "Mod1+4" = "workspace 4: burp";
-        "Mod1+5" = "workspace 5: term";
-        "Mod1+8" = "workspace 8: logseq";
+        # Workspace switching (double-tap to return to previous)
+        "Mod1+1" = "workspace 1: web; workspace back_and_forth";
+        "Mod1+2" = "workspace 2: code; workspace back_and_forth";
+        "Mod1+3" = "workspace 3: term; workspace back_and_forth";
+        "Mod1+4" = "workspace 4: burp; workspace back_and_forth";
+        "Mod1+5" = "workspace 5: term; workspace back_and_forth";
+        "Mod1+8" = "workspace 8: logseq; workspace back_and_forth";
         
         # Move container to workspace
         "Mod1+Shift+1" = "move container to workspace 1: web";
