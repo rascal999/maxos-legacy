@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Enable sound with pipewire
-  sound.enable = true;
+  # Disable PulseAudio and enable PipeWire
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -11,19 +10,21 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+  };
 
-    # Custom configuration to help with speaker amp
-    config.pipewire = {
-      "context.properties" = {
-        "default.clock.rate" = 48000;
-        "default.clock.quantum" = 1024;
-        "default.clock.min-quantum" = 32;
-        "default.clock.max-quantum" = 8192;
-      };
+  # PipeWire configuration for ROG laptop speakers
+  services.pipewire.extraConfig.pipewire = {
+    "context.properties" = {
+      "default.clock.rate" = "48000";
+      "default.clock.quantum" = "1024";
+      "default.clock.min-quantum" = "32";
+      "default.clock.max-quantum" = "8192";
     };
+  };
 
-    # Audio settings specific to ROG laptops
-    config.pipewire."context.modules" = [
+  # Speaker amp enhancement module
+  services.pipewire.extraConfig.pipewire-pulse = {
+    "context.modules" = [
       {
         name = "libpipewire-module-filter-chain";
         args = {
@@ -35,7 +36,7 @@
                 type = "builtin";
                 name = "mixer";
                 control = {
-                  "gain" = 1.0;
+                  "gain" = "1.0";
                 };
               }
             ];
