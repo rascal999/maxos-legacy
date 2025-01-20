@@ -106,9 +106,6 @@
       options = "terminate:ctrl_alt_bksp";
     };
 
-    # NVIDIA configuration
-    videoDrivers = [ "nvidia" ];
-
     # Server flags
     serverFlagsSection = ''
       Option "AllowEmptyInput" "on"
@@ -117,27 +114,8 @@
     '';
   };
 
-  # NVIDIA and graphics settings
-  hardware = {
-    nvidia = {
-      modesetting.enable = true;
-      powerManagement.enable = false;  # Disable for stability
-      open = false;
-      nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [
-        vaapiVdpau
-        libvdpau-va-gl
-      ];
-      extraPackages32 = with pkgs.pkgsi686Linux; [
-        vaapiVdpau
-        libvdpau-va-gl
-      ];
-    };
-  };
+  # Basic OpenGL support
+  hardware.opengl.enable = true;
 
   # Configure home-manager
   home-manager.users.user = { pkgs, ... }: {
