@@ -9,15 +9,20 @@
     ];
   };
 
+  # Add user to video group for screen color temperature control
+  users.users.user.extraGroups = [ "video" ];
+
   # Configure sct for constant warm color temperature
   systemd.user.services.sct = {
     description = "Set color temperature using sct";
     wantedBy = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = "${pkgs.sct}/bin/sct 1900";
       ExecStop = "${pkgs.sct}/bin/sct";
+      Environment = "DISPLAY=:0";
     };
   };
 
