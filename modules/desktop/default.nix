@@ -30,6 +30,10 @@
   # X server configuration
   services.xserver = {
     displayManager = {
+      autoLogin = {
+        enable = true;
+        user = "user";
+      };
       sessionCommands = ''
         # Enable Firefox touchpad gestures
         export MOZ_USE_XINPUT2=1
