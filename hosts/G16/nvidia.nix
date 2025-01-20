@@ -1,9 +1,22 @@
 { config, lib, pkgs, ... }:
 
 {
+  # Enable OpenGL
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  # Use NVIDIA drivers
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   # NVIDIA configuration
   hardware.nvidia = {
+    # Optimus PRIME configuration
     prime = {
+      # Use offload mode
+      sync.enable = false;  # Ensure we're not using sync mode
       offload = {
         enable = true;
         enableOffloadCmd = true;
