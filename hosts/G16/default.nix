@@ -20,10 +20,7 @@
   };
 
   # Enable firmware for common WiFi chips
-  hardware.firmware = with pkgs; [
-    linux-firmware
-    intel-firmware
-  ];
+  hardware.enableRedistributableFirmware = true;
 
   # Boot configuration
   boot = {
