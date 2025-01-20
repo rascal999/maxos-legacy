@@ -7,6 +7,7 @@
     i3status
     i3lock
     dmenu
+    redshift
   ];
 
   xsession.windowManager.i3 = {
@@ -28,6 +29,7 @@
         { command = "${pkgs.vscode}/bin/code"; notification = false; }
         { command = "${pkgs.alacritty}/bin/alacritty"; notification = false; }
         { command = "${pkgs.logseq}/bin/logseq"; notification = false; }
+        { command = "${pkgs.redshift}/bin/redshift -O 1900"; notification = false; }
       ];
 
       # Basic keybindings

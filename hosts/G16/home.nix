@@ -81,7 +81,7 @@
       '';
       
       ".Xresources".text = ''
-        Xft.dpi: 144
+        Xft.dpi: 168
       '';
     };
   };
