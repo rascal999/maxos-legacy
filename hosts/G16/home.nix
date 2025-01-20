@@ -79,6 +79,10 @@
         x-scheme-handler/https=firefox.desktop
         application/pdf=org.pwmt.zathura.desktop
       '';
+      
+      ".Xresources".text = ''
+        Xft.dpi: 144
+      '';
     };
   };
 
