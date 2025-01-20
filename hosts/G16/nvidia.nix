@@ -15,6 +15,9 @@
     # Use stable drivers
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     
+    # Enable open-source drivers
+    open = true;
+    
     # Enable nvidia-persistenced service
     nvidiaPersistenced = true;
     
