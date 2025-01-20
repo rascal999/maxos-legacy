@@ -59,15 +59,17 @@
   # Display manager session configuration
   services.displayManager.defaultSession = "none+i3";
 
-  # Configure Redshift for blue light reduction
+  # Configure Redshift with fixed temperature
   services.redshift = {
     enable = true;
-    temperature = {
-      day = 5500;
-      night = 3000;
-    };
-    latitude = "51.5";  # London
-    longitude = "-0.13"; # London
+    temperature.day = 1900;
+    temperature.night = 1900;
+    brightness.day = "1";
+    brightness.night = "1";
+    # Disable location-based adjustments
+    provider = "manual";
+    latitude = "0";
+    longitude = "0";
   };
 
   environment.systemPackages = with pkgs; [ ];
