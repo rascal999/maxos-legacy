@@ -43,12 +43,9 @@
       Option "AutoAddDevices" "on"
       Option "AutoEnableDevices" "on"
     '';
-  };
 
-  # Display manager configuration
-  services.displayManager = {
-    defaultSession = "none+i3";
-    lightdm = {
+    # Display manager configuration
+    displayManager.lightdm = {
       enable = true;
       background = "#000000";
       greeters.gtk = {
@@ -57,6 +54,9 @@
       };
     };
   };
+
+  # Display manager session configuration
+  services.displayManager.defaultSession = "none+i3";
 
   # Configure redshift for blue light filtering
   services.redshift = {
