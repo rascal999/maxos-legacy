@@ -2,10 +2,7 @@
 
 {
   # Enable graphics
-  hardware.graphics = {
-    enable = true;
-    driSupport32Bit = true;
-  };
+  hardware.graphics.enable = true;
 
   # Use modesetting and NVIDIA drivers
   services.xserver = {
