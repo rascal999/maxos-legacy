@@ -138,7 +138,22 @@
     asusctl  # ROG laptop control
     supergfxctl  # Graphics switching
     powertop  # Power management
+    redshift  # Color temperature adjustment
   ];
+
+  # Configure redshift for blue light filtering
+  services.redshift = {
+    enable = true;
+    provider = "geoclue2";
+    temperature = {
+      day = 5500;
+      night = 3700;
+    };
+  };
+
+  # Enable location services for redshift
+  location.provider = "geoclue2";
+  services.geoclue2.enable = true;
 
   # Configure home-manager
   home-manager = {
