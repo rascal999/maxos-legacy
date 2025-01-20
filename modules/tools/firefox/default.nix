@@ -20,7 +20,4 @@
       ];
     };
   };
-
-  # Remove Firefox from system packages since it's managed by home-manager
-  home.packages = lib.mkAfter (pkgs.lib.lists.remove pkgs.firefox config.home.packages);
 }
