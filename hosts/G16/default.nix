@@ -42,7 +42,7 @@
     libinput = {
       enable = true;
       touchpad = {
-        naturalScrolling = true;
+        naturalScrolling = false;
         disableWhileTyping = true;
         scrollMethod = "twofinger";
         tapping = true;
