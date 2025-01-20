@@ -68,8 +68,8 @@
     brightness.night = "1";
     # Disable location-based adjustments
     provider = "manual";
-    latitude = "0";
-    longitude = "0";
+    latitude = 0.0;
+    longitude = 0.0;
   };
 
   environment.systemPackages = with pkgs; [ ];
