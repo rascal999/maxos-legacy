@@ -25,7 +25,7 @@
           {
             block = "cpu";
             interval = 1;
-            format = " $icon $frequency $utilization ";
+            format = " $icon $frequency.eng(w:4) $utilization.eng(w:3) ";
           }
           {
             block = "load";
