@@ -17,29 +17,14 @@
     '';
   };
 
-  # Lock screen before suspend
-  systemd.services.lock-before-suspend = {
-    description = "Lock screen before suspend";
-    before = [ "sleep.target" ];
-    wantedBy = [ "sleep.target" ];
-    path = with pkgs; [ 
-      i3lock
-      xorg.xhost
-      procps
-      shadow
-    ];
-    environment = {
-      DISPLAY = ":0";
-      XAUTHORITY = "/home/user/.Xauthority";
-    };
-    script = ''
-      # Run i3lock directly as the user
-      ${pkgs.shadow}/bin/runuser -l user -c "${pkgs.i3lock}/bin/i3lock -n -c 000000"
-    '';
-    serviceConfig = {
-      Type = "forking";
-      User = "root";
-    };
+  # Use xss-lock to handle screen locking
+  services.xserver.xautolock = {
+    enable = true;
+    enableNotifier = true;
+    locker = "${pkgs.i3lock}/bin/i3lock -n -c 000000";
+    killtime = 10;
+    killer = "/run/current-system/systemd/bin/systemctl suspend";
+    notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
   };
 
   # TLP power management
@@ -127,6 +112,8 @@
     xorg.xhost
     procps
     shadow
+    xss-lock
+    libnotify
   ];
 
   # Additional kernel parameters for power management
