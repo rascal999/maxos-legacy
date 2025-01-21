@@ -7,6 +7,8 @@
     ./nvidia.nix
     ./rog.nix
     ./audio.nix
+    ./power.nix
+    ./audio-power.nix
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
     ../../modules/hardware/network.nix
@@ -96,7 +98,10 @@
   '';
 
   # Additional kernel parameters for USB
-  boot.kernelParams = [ "usbcore.autosuspend=-1" "usbhid.mousepoll=1" ];
+  boot.kernelParams = [ 
+    "usbcore.autosuspend=-1"
+    "usbhid.mousepoll=1"
+  ];
 
   # Add user to video group for backlight control
   users.users.user.extraGroups = [ "video" ];
