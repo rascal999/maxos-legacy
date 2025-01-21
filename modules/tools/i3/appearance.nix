@@ -11,24 +11,24 @@
         statusline = "#eceff4";
         separator = "#000000";
         focusedWorkspace = {
-          background = "#5e81ac";
-          border = "#5e81ac";
-          text = "#eceff4";
+          background = "#000000";
+          border = "#000000";
+          text = "#ffffff";
         };
         activeWorkspace = {
-          background = "#4c566a";
-          border = "#4c566a";
-          text = "#eceff4";
+          background = "#000000";
+          border = "#000000";
+          text = "#ffffff";
         };
         inactiveWorkspace = {
-          background = "#3b4252";
-          border = "#3b4252";
-          text = "#eceff4";
+          background = "#000000";
+          border = "#000000";
+          text = "#666666";
         };
         urgentWorkspace = {
-          background = "#bf616a";
-          border = "#bf616a";
-          text = "#eceff4";
+          background = "#000000";
+          border = "#000000";
+          text = "#DC322F";
         };
       };
       fonts = {
