@@ -14,6 +14,10 @@
         icons = "awesome6";
         blocks = [
           {
+            block = "sound";
+            format = " $icon {$volume|} ";
+          }
+          {
             block = "cpu";
             interval = 1;
             format = " $icon $utilization ";
@@ -39,10 +43,6 @@
             format_alt = " $icon {$signal_strength $ssid $frequency|Wired} $ip ";
           }
           {
-            block = "sound";
-            format = " $icon {$volume|} ";
-          }
-          {
             block = "battery";
             format = " $icon $percentage {$time |}";
             device = "BAT0";
@@ -51,7 +51,7 @@
           {
             block = "time";
             interval = 5;
-            format = " $icon $timestamp.datetime(f:'W%V %b %d %R') ";
+            format = " $icon $timestamp.datetime(f:'%V %b %d %R') ";
           }
         ];
       };
