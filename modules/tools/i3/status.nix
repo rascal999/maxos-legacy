@@ -70,7 +70,7 @@
           {
             block = "time";
             interval = 5;
-            format = " $icon $timestamp.datetime(f:'%m/%d %R') ";
+            format = " $icon $timestamp.datetime(f:'%V %m/%d %R') ";
           }
         ];
       };
