@@ -23,9 +23,9 @@
             format_alt = " $icon {$signal_strength $ssid $frequency|Wired} $ip ";
           }
           {
-            block = "cpu";
+            block = "load";
             interval = 1;
-            format = " $icon $utilization ";
+            format = " $icon $1m $5m $15m ";
           }
           {
             block = "memory";
