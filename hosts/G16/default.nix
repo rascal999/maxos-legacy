@@ -74,6 +74,13 @@
     # Backlight utilities
     light
     acpilight
+    # Qt theming
+    qt5ct
+    qt6ct
+    libsForQt5.qtstyleplugin-kvantum
+    qt6Packages.qtstyleplugin-kvantum
+    adwaita-qt
+    adwaita-qt6
   ];
 
   # Configure backlight permissions and USB power management
@@ -144,17 +151,46 @@
       # Qt configuration
       qt = {
         enable = true;
-        platformTheme = "gtk";
+        platformTheme = "qt5ct";
         style = {
-          name = "adwaita-dark";
-          package = pkgs.adwaita-qt;
+          name = "kvantum";
         };
       };
 
       # Environment variables
       home.sessionVariables = {
         GTK_THEME = "Adwaita:dark";
-        QT_STYLE_OVERRIDE = "adwaita-dark";
+        QT_QPA_PLATFORMTHEME = "qt5ct";
+        QT_STYLE_OVERRIDE = "kvantum";
+      };
+
+      # Configure Kvantum theme
+      xdg.configFile = {
+        "Kvantum/kvantum.kvconfig".text = ''
+          [General]
+          theme=KvAdaptaDark
+        '';
+        "qt5ct/qt5ct.conf".text = ''
+          [Appearance]
+          style=kvantum
+          custom_palette=false
+          standard_dialogs=default
+          color_scheme_path=${pkgs.adwaita-qt}/share/qt5ct/colors/airy.conf
+
+          [Interface]
+          stylesheets=@Invalid()
+          dialogbuttons_have_icons=true
+          keyboard_scheme=2
+          menus_have_icons=true
+          show_shortcuts_in_context_menus=true
+          toolbutton_style=4
+          underline_shortcut=1
+          wheel_scroll_lines=3
+
+          [Fonts]
+          fixed="@Variant(\0\0\0@\0\0\0\x12\0M\0o\0n\0o\0s\0p\0\x61\0\x63\0\x65@$\0\0\0\0\0\0\xff\xff\xff\xff\x5\x1\0\x32\x10)"
+          general="@Variant(\0\0\0@\0\0\0\x12\0M\0o\0n\0o\0s\0p\0\x61\0\x63\0\x65@$\0\0\0\0\0\0\xff\xff\xff\xff\x5\x1\0\x32\x10)"
+        '';
       };
     };
   };
