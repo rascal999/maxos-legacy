@@ -4,11 +4,7 @@
   # Power management configuration
   powerManagement = {
     enable = true;
-    powertop = {
-      enable = true;
-      # Powertop auto-tune on startup
-      powertop.enable = true;
-    };
+    powertop.enable = true;
   };
 
   # TLP power management
