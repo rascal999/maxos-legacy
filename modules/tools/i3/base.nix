@@ -13,7 +13,6 @@
     dmenu
     gnome-keyring
     redshift
-    keepassxc
   ];
 
   xsession.windowManager.i3 = {

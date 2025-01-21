@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [
+    ../tools/keepassxc.nix
+  ];
+
   # Common desktop configuration
   nixpkgs.config = {
     allowUnfree = true;
