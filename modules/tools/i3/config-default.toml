@@ -27,8 +27,7 @@ max_vol = 100
 device_kind = "source"
 headphones_indicator = true
 show_volume_when_muted = true
-driver = "pulseaudio"
-device = "@DEFAULT_SOURCE@"
+driver = "pipewire"
 
 [[block]]
 block = "sound"
@@ -38,8 +37,7 @@ max_vol = 100
 device_kind = "sink"
 headphones_indicator = true
 show_volume_when_muted = true
-driver = "pulseaudio"
-device = "@DEFAULT_SINK@"
+driver = "pipewire"
 
 [[block]]
 block = "net"
