@@ -29,11 +29,11 @@
         blocks = [
           {
             block = "custom";
-            command = "${pkgs.writeShellScriptBin "redshift-brightness" (builtins.readFile ../../desktop/redshift-brightness.sh)}/bin/redshift-brightness get";
+            command = "/home/user/git/github/monorepo/maxos/modules/desktop/redshift-brightness.sh get";
             on_click = "";
             on_click_right = "";
-            on_scroll_up = "${pkgs.writeShellScriptBin "redshift-brightness" (builtins.readFile ../../desktop/redshift-brightness.sh)}/bin/redshift-brightness up";
-            on_scroll_down = "${pkgs.writeShellScriptBin "redshift-brightness" (builtins.readFile ../../desktop/redshift-brightness.sh)}/bin/redshift-brightness down";
+            on_scroll_up = "/home/user/git/github/monorepo/maxos/modules/desktop/redshift-brightness.sh up";
+            on_scroll_down = "/home/user/git/github/monorepo/maxos/modules/desktop/redshift-brightness.sh down";
             interval = 1;
             format = " 󰃟 $text ";
           }
