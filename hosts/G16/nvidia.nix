@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Enable graphics
-  hardware.graphics.enable = true;
-
   # Use modesetting driver
   services.xserver = {
     videoDrivers = [ "modesetting" ];
