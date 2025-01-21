@@ -20,11 +20,6 @@ critical_fg = "#DC322F"
 icons = "material-nf"
 
 [[block]]
-block = "backlight"
-device = "intel_backlight"
-format = " $icon {$percentage|} "
-
-[[block]]
 block = "sound"
 format = " $icon {$volume|} "
 
