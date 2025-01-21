@@ -10,7 +10,6 @@
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
     ../../modules/hardware/network.nix
-    <home-manager/nixos>  # Add home-manager module
   ];
 
   # Disable system-wide Firefox
