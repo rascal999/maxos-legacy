@@ -22,15 +22,19 @@
     description = "Lock screen before suspend";
     before = [ "sleep.target" ];
     wantedBy = [ "sleep.target" ];
-    path = [ pkgs.i3lock pkgs.xorg.xhost ];
+    path = with pkgs; [ 
+      i3lock
+      xorg.xhost
+      procps
+      shadow
+    ];
     environment = {
       DISPLAY = ":0";
       XAUTHORITY = "/home/user/.Xauthority";
     };
     script = ''
-      export $(cat /proc/$(pgrep -u user gnome-session | head -n1)/environ | grep -z DISPLAY)
-      export $(cat /proc/$(pgrep -u user gnome-session | head -n1)/environ | grep -z XAUTHORITY)
-      runuser -u user -- i3lock -n -c 000000
+      # Run i3lock directly as the user
+      ${pkgs.shadow}/bin/runuser -l user -c "${pkgs.i3lock}/bin/i3lock -n -c 000000"
     '';
     serviceConfig = {
       Type = "forking";
@@ -121,6 +125,8 @@
     tlp
     i3lock
     xorg.xhost
+    procps
+    shadow
   ];
 
   # Additional kernel parameters for power management
