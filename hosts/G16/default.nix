@@ -66,8 +66,21 @@
 
   # Add required packages
   environment.systemPackages = with pkgs; [
+    # Graphics utilities
     glxinfo
+    # Backlight utilities
+    light
+    acpilight
   ];
+
+  # Configure backlight permissions
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
+    ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
+  '';
+
+  # Add user to video group for backlight control
+  users.users.user.extraGroups = [ "video" ];
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;

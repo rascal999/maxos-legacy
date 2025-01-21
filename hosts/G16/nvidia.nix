@@ -14,6 +14,7 @@
         Identifier "Intel Graphics"
         Driver "modesetting"
         BusID "PCI:0:2:0"
+        Option "Backlight" "intel_backlight"
       EndSection
     '';
   };
@@ -24,12 +25,13 @@
   
   # Configure module loading
   boot.extraModprobeConfig = ''
-    options i915 force_probe=7d55
+    options i915 force_probe=7d55 enable_backlight=1
   '';
 
   # Add kernel parameters
   boot.kernelParams = [
     "i915.force_probe=7d55"
+    "acpi_backlight=vendor"
   ];
 
   # Basic OpenGL configuration
@@ -39,4 +41,7 @@
       intel-media-driver
     ];
   };
+
+  # Enable ACPI backlight control
+  hardware.acpilight.enable = true;
 }
