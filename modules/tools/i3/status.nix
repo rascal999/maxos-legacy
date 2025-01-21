@@ -54,7 +54,7 @@
           {
             block = "load";
             interval = 1;
-            format = " $icon $1m.eng(w:4) $5m.eng(w:4) $15m.eng(w:4) ";
+            format = " $icon $1m.eng(w:4) $15m.eng(w:4) ";
           }
           {
             block = "cpu";
