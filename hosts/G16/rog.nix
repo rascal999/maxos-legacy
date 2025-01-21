@@ -3,8 +3,21 @@
 {
   # ROG laptop specific configuration
   boot = {
-    kernelModules = [ "acpi_call" "asus-wmi" "asus-nb-wmi" ];
-    extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+    kernelModules = [ 
+      "acpi_call"
+      "asus-wmi"
+      "asus-nb-wmi"
+      "asus_wmi_ec"
+      "asus-wmi-sensors"
+    ];
+    extraModulePackages = with config.boot.kernelPackages; [ 
+      acpi_call
+      asus-wmi-sensors
+    ];
+    kernelParams = [
+      "asus.use_lid_flip_devid=0"
+      "asus-nb-wmi.use_lid_flip_devid=0"
+    ];
   };
 
   # Use native ASUS backlight control
