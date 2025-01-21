@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     i3status
     i3lock
+    i3lock-fancy
     dmenu
     gnome-keyring
     redshift
@@ -101,6 +102,9 @@
         "Mod1+Shift+4" = "move container to workspace 4: burp";
         "Mod1+Shift+5" = "move container to workspace 5: term";
         "Mod1+Shift+8" = "move container to workspace 8: logseq";
+
+        # Screen locking
+        "Mod1+x" = "exec ${pkgs.i3lock-fancy}/bin/i3lock-fancy -p -t 'System locked'";
 
         # Quick launch frequently used applications
         "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
