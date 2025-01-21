@@ -4,7 +4,36 @@ let
   redshiftBrightness = pkgs.writeShellScriptBin "redshift-brightness" (builtins.readFile ./redshift-brightness.sh);
 in
 {
-  home.packages = with pkgs; [
-    redshiftBrightness
+  imports = [
+    ../tools/keepassxc.nix
   ];
+
+  # Common desktop configuration
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "electron-27.3.11"
+    ];
+  };
+
+  # X server configuration
+  services.xserver.enable = true;
+
+  # Display manager configuration
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "user";
+  };
+
+  environment.systemPackages = with pkgs; [
+    xorg.xrandr
+    pciutils  # Provides lspci command
+    bc  # For floating point calculations in brightness control
+    adwaita-icon-theme
+    redshift  # For color temperature and brightness adjustment
+    redshiftBrightness  # Our packaged brightness control script
+  ];
+
+  # Enable dconf for GTK settings
+  programs.dconf.enable = true;
 }
