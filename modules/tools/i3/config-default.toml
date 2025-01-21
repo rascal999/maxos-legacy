@@ -22,6 +22,15 @@ icons = "material-nf"
 [[block]]
 block = "sound"
 format = " $icon {$volume|} "
+step_width = 1
+max_vol = 100
+device_kind = "source"
+[[block]]
+block = "sound"
+format = " $icon {$volume|} "
+step_width = 1
+max_vol = 100
+device_kind = "sink"
 
 [[block]]
 block = "net"
