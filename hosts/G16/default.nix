@@ -75,7 +75,7 @@
     light
     acpilight
     # Qt theming
-    qt5ct
+    libsForQt5.qt5ct
     adwaita-qt
   ];
 
