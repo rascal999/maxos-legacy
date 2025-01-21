@@ -9,4 +9,32 @@
     };
     wireless.enable = false; # Disable wpa_supplicant in favor of NetworkManager
   };
+
+  # IWD configuration
+  environment.etc."iwd/main.conf".text = ''
+    [General]
+    EnableNetworkConfiguration=false
+    AddressRandomization=network
+    AddressRandomizationRange=full
+
+    [Network]
+    EnableIPv6=true
+    RoutePriorityOffset=300
+
+    [Settings]
+    AutoConnect=true
+  '';
+
+  # Disable power management for wireless interfaces
+  powerManagement.powertop.enable = false;
+  services.udev.extraRules = ''
+    # Disable power management for wireless interfaces
+    ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", RUN+="${pkgs.iw}/bin/iw dev $name set power_save off"
+  '';
+
+  # Load iwlwifi with power saving disabled
+  boot.extraModprobeConfig = ''
+    options iwlwifi power_save=0 d0i3_disable=1 uapsd_disable=1
+    options iwlmvm power_scheme=1
+  '';
 }
