@@ -3,30 +3,16 @@
 {
   # Networking configuration
   networking = {
+    # NetworkManager configuration
     networkmanager = {
       enable = true;
-      wifi.backend = "iwd"; # Modern WiFi backend
-    };
-    wireless.enable = false; # Disable wpa_supplicant in favor of NetworkManager
-  };
-
-  # IWD configuration
-  services.iwd = {
-    enable = true;
-    settings = {
-      General = {
-        EnableNetworkConfiguration = false;
-        AddressRandomization = "network";
-        AddressRandomizationRange = "full";
-      };
-      Network = {
-        EnableIPv6 = true;
-        RoutePriorityOffset = 300;
-      };
-      Settings = {
-        AutoConnect = true;
+      wifi = {
+        backend = "iwd"; # Modern WiFi backend
+        powersave = false; # Disable WiFi power management
       };
     };
+    # Disable wpa_supplicant in favor of NetworkManager
+    wireless.enable = false;
   };
 
   # Disable power management for wireless interfaces
