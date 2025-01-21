@@ -82,6 +82,8 @@
         # Brightness controls using brightness script with redshift
         "XF86MonBrightnessUp" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh up";
         "XF86MonBrightnessDown" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh down";
+        "F8" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh up";
+        "F7" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh down";
         "Mod1+Shift+b" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh reset";
         
         # Workspace switching

@@ -14,14 +14,21 @@ current=$(cat "$BRIGHTNESS_FILE")
 case "$1" in
   "up")
     new=$(echo "$current + 0.1" | bc)
-    [ $(echo "$new <= 1.0" | bc) -eq 1 ] && redshift -O $TEMP -b $new && echo "$new" > "$BRIGHTNESS_FILE"
+    if [ $(echo "$new <= 1.0" | bc) -eq 1 ]; then
+      redshift -P -O $TEMP -b $new
+      echo "$new" > "$BRIGHTNESS_FILE"
+    fi
     ;;
   "down")
     new=$(echo "$current - 0.1" | bc)
-    [ $(echo "$new >= 0.1" | bc) -eq 1 ] && redshift -O $TEMP -b $new && echo "$new" > "$BRIGHTNESS_FILE"
+    if [ $(echo "$new >= 0.1" | bc) -eq 1 ]; then
+      redshift -P -O $TEMP -b $new
+      echo "$new" > "$BRIGHTNESS_FILE"
+    fi
     ;;
   "reset")
-    redshift -O $TEMP -b 0.6 && echo "0.6" > "$BRIGHTNESS_FILE"
+    redshift -P -O $TEMP -b 0.6
+    echo "0.6" > "$BRIGHTNESS_FILE"
     ;;
   *)
     echo "Usage: $0 [up|down|reset]"
