@@ -27,7 +27,7 @@
         };
         "keepassxc-browser@keepassxc.org" = {
           installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4201213/keepassxc_browser-1.8.9.xpi";
         };
       };
     };
