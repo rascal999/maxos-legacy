@@ -53,18 +53,6 @@
     # Display manager configuration
     displayManager = {
       defaultSession = "none+i3";
-      # Display setup for hybrid graphics
-      setupCommands = ''
-        # Wait for X11 to be ready
-        sleep 1
-        
-        # Set up NVIDIA as provider
-        ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource NVIDIA-G0 modesetting
-        ${pkgs.xorg.xrandr}/bin/xrandr --auto
-        
-        # Disable screen blanking
-        ${pkgs.xorg.xset}/bin/xset s off -dpms
-      '';
       lightdm = {
         enable = true;
         background = "#000000";
@@ -78,13 +66,7 @@
 
   # Add required packages
   environment.systemPackages = with pkgs; [
-    # NVIDIA utilities
-    nvidia-vaapi-driver
     glxinfo
-    vulkan-tools
-    # Intel graphics utilities
-    intel-gpu-tools
-    libva-utils
   ];
 
   # Disable Redshift service to avoid conflicts
