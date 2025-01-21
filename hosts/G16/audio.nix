@@ -22,11 +22,19 @@
     };
   };
 
-  # Simple audio configuration
+  # Audio configuration with volume control modules
   services.pipewire.extraConfig.pipewire-pulse = {
     "context.modules" = [
       {
         name = "libpipewire-module-protocol-pulse";
+        args = {};
+      }
+      {
+        name = "libpipewire-module-mixer";
+        args = {};
+      }
+      {
+        name = "libpipewire-module-protocol-native";
         args = {};
       }
     ];
@@ -35,7 +43,20 @@
     };
     "pulse.properties" = {
       "server.address" = [ "unix:native" ];
+      "pulse.volume.scale" = "linear";
+      "pulse.volume.step" = "0.05";  # 5% volume steps
     };
+    "pulse.rules" = [
+      {
+        matches = [ { "node.name" = "~alsa_output.*"; } ];
+        actions = {
+          update-props = {
+            "audio.volume.step" = "0.05";
+            "session.suspend-timeout-seconds" = "0";
+          };
+        };
+      }
+    ];
   };
 
   # Audio control and debugging packages
