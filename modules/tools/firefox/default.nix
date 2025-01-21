@@ -8,29 +8,14 @@
       DisableProfileImport = true;
       NoDefaultBookmarks = true;
       DisplayMenuBar = "default-off";
-      ExtensionSettings = {
-        "uBlock0@raymondhill.net" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-        };
-        "addon@darkreader.org" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
-        };
-        "{3c078156-979c-498b-8990-85f7987dd929}" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/sidebery/latest.xpi";
-        };
-        "foxyproxy@eric.h.jung" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/foxyproxy-standard/latest.xpi";
-        };
-        "keepassxc-browser@keepassxc.org" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4201213/keepassxc_browser-1.8.9.xpi";
-        };
-      };
     };
+    extensions = with pkgs.firefox-addons; [
+      ublock-origin
+      darkreader
+      sidebery
+      foxyproxy-standard
+      keepassxc-browser
+    ];
     profiles.default = {
       settings = {
         # Enable dark theme
@@ -62,6 +47,6 @@
           visibility: collapse !important;
         }
       '';
-      };
     };
+  };
 }
