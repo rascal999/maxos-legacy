@@ -54,7 +54,7 @@
   };
 
   # Display manager configuration
-  services.displayManager = {
+  services.xserver.displayManager = {
     defaultSession = "none+i3";
     lightdm = {
       enable = true;
