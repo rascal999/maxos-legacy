@@ -20,9 +20,9 @@
               separator_bg = "#000000";
               idle_bg = "#000000";
               good_bg = "#000000";
-              warning_bg = "auto";
-              critical_bg = "auto";
-              info_bg = "auto";
+              warning_bg = "#000000";
+              critical_bg = "#000000";
+              info_bg = "#000000";
             };
           };
         };
