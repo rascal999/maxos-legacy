@@ -43,7 +43,7 @@
     pavucontrol      # Volume control GUI
     easyeffects      # Audio effects for PipeWire
     helvum           # PipeWire patchbay
-    pipewire.tools   # PipeWire tools including pw-top
+    pipewire         # PipeWire tools including pw-top
     qjackctl        # JACK control GUI
     wireplumber      # Session manager for PipeWire
   ];
