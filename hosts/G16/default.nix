@@ -80,16 +80,11 @@
     intel-gpu-tools
     libva-utils
     # Power management
-    powertop
     auto-cpufreq
   ];
 
-  # Enable power management services
+  # Enable power management service
   services.auto-cpufreq.enable = true;
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "powersave";
-  };
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
