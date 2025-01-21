@@ -7,9 +7,9 @@
       position = "bottom";
       statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-default.toml";
       colors = {
-        background = "#2e3440";
+        background = "#000000";
         statusline = "#eceff4";
-        separator = "#4c566a";
+        separator = "#000000";
         focusedWorkspace = {
           background = "#5e81ac";
           border = "#5e81ac";
