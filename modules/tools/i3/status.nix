@@ -8,15 +8,15 @@
   # Configure i3status-rust
   programs.i3status-rust = {
     enable = true;
+    theme = "nord-dark";
+    icons = "material-nf";
+    theme_overrides = {
+      separator = "";
+      separator_fg = "auto";
+      separator_bg = "auto";
+    };
     bars = {
       default = {
-        theme = "nord-dark";
-        icons = "material-nf";
-        theme_overrides_nord_dark = {
-          separator = "";
-          separator_fg = "auto";
-          separator_bg = "auto";
-        };
         blocks = [
           {
             block = "sound";
