@@ -110,8 +110,8 @@
   services.redshift.enable = false;
 
   # Enable home-manager with backup support
-  home-manager.backupFileExtension = "hm-backup";
   home-manager = {
+    backupFileExtension = "backup";
     useGlobalPkgs = true;
     useUserPackages = true;
     users.user = { pkgs, ... }: {
