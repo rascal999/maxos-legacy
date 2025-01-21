@@ -27,6 +27,8 @@ max_vol = 100
 device_kind = "source"
 headphones_indicator = true
 show_volume_when_muted = true
+driver = "pulseaudio"
+device = "@DEFAULT_SOURCE@"
 
 [[block]]
 block = "sound"
@@ -36,6 +38,8 @@ max_vol = 100
 device_kind = "sink"
 headphones_indicator = true
 show_volume_when_muted = true
+driver = "pulseaudio"
+device = "@DEFAULT_SINK@"
 
 [[block]]
 block = "net"
