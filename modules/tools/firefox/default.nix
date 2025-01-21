@@ -4,23 +4,12 @@ let
   extensionsDir = "${config.home.homeDirectory}/.mozilla/extensions";
 in
 {
-  # Add systemd target to ensure Firefox is stopped
-  systemd.user.services.firefox-stop = {
-    Unit = {
-      Description = "Stop Firefox before home-manager activation";
-      Before = [ "home-manager-user.service" ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.util-linux}/bin/killall firefox || true";
-      RemainAfterExit = true;
-    };
-    Install = {
-      WantedBy = [ "home-manager-user.service" ];
-    };
-  };
-
   home.activation.firefoxExtensions = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    # Check if Firefox is running
+    if pgrep -x "firefox" > /dev/null; then
+      echo -e "\033[1;33mWarning: Firefox is currently running. Please close Firefox and run 'systemctl --user restart sysinit-reactivation.target' to apply changes.\033[0m"
+    fi
+
     mkdir -p ${extensionsDir}
 
     # Function to check network connectivity
