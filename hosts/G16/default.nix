@@ -8,7 +8,6 @@
     ./rog.nix
     ./audio.nix
     ./power.nix
-    ./audio-power.nix
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
     ../../modules/hardware/network.nix
