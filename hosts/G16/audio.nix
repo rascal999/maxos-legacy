@@ -16,9 +16,9 @@
   services.pipewire.extraConfig.pipewire = {
     "context.properties" = {
       "default.clock.rate" = "48000";
-      "default.clock.quantum" = "256";
+      "default.clock.quantum" = "512";
       "default.clock.min-quantum" = "32";
-      "default.clock.max-quantum" = "512";
+      "default.clock.max-quantum" = "8192";
       "default.clock.allowed-rates" = [ "44100" "48000" "88200" "96000" ];
       "core.daemon" = true;
       "core.version" = "3";
@@ -27,6 +27,18 @@
 
   # Audio processing configuration
   services.pipewire.extraConfig.pipewire-pulse = {
+    "stream.properties" = {
+      "resample.quality" = 5;
+      "channelmix.normalize" = false;
+      "channelmix.mix-lfe" = false;
+      "dither.noise" = 0;
+    };
+    "pulse.properties" = {
+      "server.address" = [ "unix:native" ];
+      "vm.overrides" = {
+        "pulse.volume.cubic" = true;  # Use cubic volume curve
+      };
+    };
     "context.modules" = [
       {
         name = "libpipewire-module-filter-chain";
@@ -39,8 +51,8 @@
                 type = "builtin";
                 name = "mixer";
                 control = {
-                  "gain" = "1.0";
-                  "ramp-samples" = "32";
+                  "gain" = "0.8";  # Slightly reduced gain to prevent distortion
+                  "ramp-samples" = "128";  # Smoother volume transitions
                 };
               }
             ];
@@ -50,12 +62,14 @@
             "audio.rate" = "48000";
             "audio.channels" = "2";
             "audio.position" = [ "FL" "FR" ];
+            "session.suspend-timeout-seconds" = 0;
           };
           "playback.props" = {
             "node.name" = "effect_output.audio_processor";
             "audio.rate" = "48000";
             "audio.channels" = "2";
             "audio.position" = [ "FL" "FR" ];
+            "session.suspend-timeout-seconds" = 0;
           };
         };
       }

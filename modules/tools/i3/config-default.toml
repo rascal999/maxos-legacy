@@ -22,15 +22,18 @@ icons = "material-nf"
 [[block]]
 block = "sound"
 format = " $icon {$volume|} "
-step_width = 1
+step_width = 5
 max_vol = 100
 device_kind = "source"
+headphones_indicator = true
+
 [[block]]
 block = "sound"
 format = " $icon {$volume|} "
-step_width = 1
+step_width = 5
 max_vol = 100
 device_kind = "sink"
+headphones_indicator = true
 
 [[block]]
 block = "net"
