@@ -1,35 +1,10 @@
 { config, lib, pkgs, ... }:
 
+let
+  redshiftBrightness = pkgs.writeShellScriptBin "redshift-brightness" (builtins.readFile ./redshift-brightness.sh);
+in
 {
-  imports = [
-    ../tools/keepassxc.nix
+  home.packages = with pkgs; [
+    redshiftBrightness
   ];
-
-  # Common desktop configuration
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [
-      "electron-27.3.11"
-    ];
-  };
-
-  # X server configuration
-  services.xserver.enable = true;
-  
-  # Display manager configuration
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "user";
-  };
-
-  environment.systemPackages = with pkgs; [
-    xorg.xrandr
-    pciutils  # Provides lspci command
-    bc  # For floating point calculations in brightness control
-    adwaita-icon-theme
-    redshift  # For color temperature and brightness adjustment
-  ];
-
-  # Enable dconf for GTK settings
-  programs.dconf.enable = true;
 }

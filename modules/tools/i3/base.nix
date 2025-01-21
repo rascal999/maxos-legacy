@@ -85,12 +85,12 @@
         "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
         "XF86AudioMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
         
-        # Brightness controls using brightness script with redshift
-        "XF86MonBrightnessUp" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh up";
-        "XF86MonBrightnessDown" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh down";
-        "F8" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh up";
-        "F7" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh down";
-        "Mod1+Shift+b" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh reset";
+        # Brightness controls using redshift-brightness script
+        "XF86MonBrightnessUp" = "exec redshift-brightness up";
+        "XF86MonBrightnessDown" = "exec redshift-brightness down";
+        "F8" = "exec redshift-brightness up";
+        "F7" = "exec redshift-brightness down";
+        "Mod1+Shift+b" = "exec redshift -x";  # Reset redshift
         
         # Workspace switching
         "Mod1+1" = "workspace number 1: web";
