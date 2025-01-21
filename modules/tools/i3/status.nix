@@ -38,12 +38,6 @@
             format_alt = " $icon_swap $swap_used_percents ";
           }
           {
-            block = "battery";
-            format = " $icon $percentage {$time |}";
-            device = "BAT1";
-            missing_format = "";
-          }
-          {
             block = "disk_space";
             path = "/";
             info_type = "available";
@@ -57,6 +51,12 @@
             block = "time";
             interval = 5;
             format = " $icon $timestamp.datetime(f:'%V %b %d %R %Z') ";
+          }
+          {
+            block = "battery";
+            format = " $icon $percentage {$time |}";
+            device = "BAT1";
+            missing_format = "";
           }
         ];
       };
