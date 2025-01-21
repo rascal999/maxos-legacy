@@ -26,7 +26,7 @@
     xorg.xrandr
     pciutils  # Provides lspci command
     bc  # For floating point calculations in brightness control
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
   ];
 
   # Enable dconf for GTK settings
