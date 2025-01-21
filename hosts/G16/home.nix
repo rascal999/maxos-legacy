@@ -106,6 +106,7 @@
       enable = true;
       userSettings = {
         "terminal.integrated.defaultProfile.linux" = "bash";
+        "keyboard.dispatch" = "keyCode";
       };
     };
 
