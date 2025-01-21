@@ -11,28 +11,28 @@
       ExtensionSettings = {
         "uBlock0@raymondhill.net" = {
           installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4121906/ublock_origin-1.54.0.xpi";
-          install_hash = "sha256:e1f36e2ad0e2c5d5c0c1a9c2c4e9bb7f0500a6ee51e8c3c1e93f3f4a3b6c310";
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4143363/ublock_origin-1.55.0.xpi";
+          install_hash = "sha256:45896a5f025ba29be041471a24675f9ca5817eecc37127d3c01190ca3a9f71e6";
         };
         "addon@darkreader.org" = {
           installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4121414/darkreader-4.9.70.xpi";
-          install_hash = "sha256:d436c8663c5f9d2a71c7fd0fea8a7a3505c4f9ec1a5ce5aad9c45685e847c35d";
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4143302/darkreader-4.9.73.xpi";
+          install_hash = "sha256:a01acf6d7914819651b6fbc40bb7226d1bf072b2f110e0f126ead61cf6d02873";
         };
         "{3c078156-979c-498b-8990-85f7987dd929}" = {
           installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4123416/sidebery-5.0.0b31.xpi";
-          install_hash = "sha256:0c1d50c50b0e0f4538d5e6056c0ce4d8e4e6f5f47f53be489d21e6e6d8f663d4";
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4142349/sidebery-5.0.0b32.xpi";
+          install_hash = "sha256:9e080479ffbe93fdb56b25dca88ac1df31b1636e81f87f9eab12960842ca54c2";
         };
         "foxyproxy@eric.h.jung" = {
           installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4051384/foxyproxy_standard-7.5.1.xpi";
-          install_hash = "sha256:8f1d3f3c6f3af2aff7fdd67b5e9af2d699b23b7c73dc3e5e831dbed2b0a88b1e";
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4124723/foxyproxy_standard-7.5.2.xpi";
+          install_hash = "sha256:931d1e331fe047de3e8845495bf3fa59ed7f0d9ec1d3f09eace12a5d64349f53";
         };
         "keepassxc-browser@keepassxc.org" = {
           installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4117666/keepassxc_browser-1.8.9.xpi";
-          install_hash = "sha256:6b7d45e60d2a8a4f42d2a8cc8b581c8d8e6e7e874dc99e7e4e2c5ac3c81c6d2e";
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4143359/keepassxc_browser-1.8.10.xpi";
+          install_hash = "sha256:302edb6cd3a80faaf9266dee962f98625a3a46a7755fa85372aabcb1889732ac";
         };
       };
     };
