@@ -10,37 +10,20 @@
     
     # Configure hybrid graphics
     extraConfig = ''
-      Section "ServerLayout"
-        Identifier "layout"
-        Screen 0 "nvidia"
-        Inactive "intel"
-        Option "AllowNVIDIAGPUScreens"
-      EndSection
-
-      Section "Device"
+      Section "OutputClass"
         Identifier "intel"
+        MatchDriver "i915"
         Driver "modesetting"
-        BusID "PCI:0:2:0"
       EndSection
 
-      Section "Screen"
-        Identifier "intel"
-        Device "intel"
-      EndSection
-
-      Section "Device"
+      Section "OutputClass"
         Identifier "nvidia"
+        MatchDriver "nvidia-drm"
         Driver "nvidia"
-        BusID "PCI:1:0:0"
         Option "AllowEmptyInitialConfiguration"
-        Option "AllowExternalGpus"
-        Option "RegistryDwords" "EnableBrightnessControl=1"
-      EndSection
-
-      Section "Screen"
-        Identifier "nvidia"
-        Device "nvidia"
-        Option "AllowEmptyInitialConfiguration"
+        Option "PrimaryGPU" "yes"
+        ModulePath "/run/current-system/sw/lib/xorg/modules"
+        ModulePath "/run/current-system/sw/lib/xorg/modules/drivers"
       EndSection
     '';
   };
@@ -98,8 +81,16 @@
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   ];
 
-  # Enable EDID for proper display detection
-  services.xserver.screenSection = ''
-    Option "UseEdid" "True"
-  '';
+  # Enable hardware acceleration
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
 }

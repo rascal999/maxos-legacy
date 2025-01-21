@@ -55,8 +55,14 @@
       defaultSession = "none+i3";
       # Display setup for hybrid graphics
       setupCommands = ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource modesetting NVIDIA-0
+        # Wait for X11 to be ready
+        sleep 1
+        
+        # Set up NVIDIA as provider
+        ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource NVIDIA-G0 modesetting
         ${pkgs.xorg.xrandr}/bin/xrandr --auto
+        
+        # Disable screen blanking
         ${pkgs.xorg.xset}/bin/xset s off -dpms
       '';
       lightdm = {
