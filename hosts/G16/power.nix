@@ -16,6 +16,12 @@
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
       CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      CPU_MIN_PERF_ON_AC = 0;
+      CPU_MAX_PERF_ON_AC = 100;
+      CPU_MIN_PERF_ON_BAT = 0;
+      CPU_MAX_PERF_ON_BAT = 60;
+      CPU_BOOST_ON_AC = 1;
+      CPU_BOOST_ON_BAT = 0;
       
       # SATA power management
       SATA_LINKPWR_ON_AC = "med_power_with_dipm";
@@ -27,15 +33,21 @@
       
       # Runtime Power Management for PCI(e) devices
       RUNTIME_PM_ON_AC = lib.mkForce "on";
-      RUNTIME_PM_ON_BAT = lib.mkForce "auto";
+      RUNTIME_PM_ON_BAT = lib.mkForce "on";
+      RUNTIME_PM_DRIVER_DENYLIST = "mei_me nouveau nvidia pcieport uhci_hcd xhci_hcd";
       
-      # USB autosuspend
-      USB_AUTOSUSPEND = 1;
-      USB_DENYLIST = "046d:c548"; # Exclude Logitech receiver
+      # USB power management
+      USB_AUTOSUSPEND = 0;  # Disabled to prevent mouse lag
+      USB_DENYLIST = "046d:c53f 046d:c548";  # Common Logitech mouse IDs
+      
+      # Audio power management
+      SOUND_POWER_SAVE_ON_AC = 0;
+      SOUND_POWER_SAVE_ON_BAT = 1;
+      SOUND_POWER_SAVE_CONTROLLER = "Y";
       
       # Wireless power management
       WIFI_PWR_ON_AC = "off";
-      WIFI_PWR_ON_BAT = "on";
+      WIFI_PWR_ON_BAT = "off";
       WOL_DISABLE = "Y";
       
       # Platform specific settings
@@ -43,6 +55,35 @@
       PLATFORM_PROFILE_ON_BAT = "low-power";
     };
   };
+
+  # Disable power-profiles-daemon as it conflicts with TLP
+  services.power-profiles-daemon.enable = false;
+
+  # Set CPU governor and disable turbo boost on battery
+  systemd.services.power-management = {
+    description = "Power management settings";
+    after = [ "systemd-modules-load.service" ];
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.linuxPackages.cpupower ];
+    script = ''
+      # Set CPU governor
+      cpupower frequency-set -g powersave
+      
+      # Disable turbo boost on battery
+      echo 1 > /sys/devices/system/cpu/intel_pstate/no_turbo
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+  };
+
+  # Power management related packages
+  environment.systemPackages = with pkgs; [
+    powertop
+    linuxPackages.cpupower
+    tlp
+  ];
 
   # Additional kernel parameters for power management
   boot.kernelParams = [ 
