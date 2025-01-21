@@ -136,22 +136,6 @@
 
   # Enable services
   services = {
-    redshift = {
-      enable = true;
-      temperature = {
-        day = 2000;
-        night = 2000;
-      };
-      dawnTime = "00:00";
-      duskTime = "00:00";
-      settings = {
-        redshift = {
-          adjustment-method = "randr";
-          fade = 1;
-        };
-      };
-    };
-
     picom = {
       enable = true;
       vSync = true;

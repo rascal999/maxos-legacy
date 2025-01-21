@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Default color temperature
+# Default color temperature (matching i3 config)
 TEMP=3500
 
 # Get current brightness from redshift
@@ -8,7 +8,7 @@ current=$(redshift -p 2>/dev/null | grep -i brightness | cut -d ' ' -f3)
 
 # If no current brightness found, use default
 if [ -z "$current" ]; then
-    current=0.6
+    current=0.6  # Default brightness matching i3 config
 fi
 
 case "$1" in
