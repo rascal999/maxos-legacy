@@ -10,8 +10,16 @@
     ../../modules/tools/firefox/default.nix
   ];
 
-  # Enable home-manager
+  # Enable home-manager and NUR
   programs.home-manager.enable = true;
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball {
+      url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
+      sha256 = "18k6g7cnnzma61lnz1589fcgiagkwab16k6jck7z6p82yg7dvp7s";
+    }) {
+      inherit pkgs;
+    };
+  };
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home = {
