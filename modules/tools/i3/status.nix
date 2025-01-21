@@ -11,8 +11,8 @@ in
 
   # Configure i3status-rust
   xdg.configFile."i3status-rust/config-default.toml".text = ''
-    [theme]
-    name = "nord-dark"
+    theme = "nord-dark"
+
     [theme.overrides]
     separator = ""
     separator_fg = "auto"
