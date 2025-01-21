@@ -66,12 +66,7 @@
 
   # Add required packages
   environment.systemPackages = with pkgs; [
-    # Graphics utilities
     glxinfo
-    vulkan-tools
-    # NVIDIA utilities
-    nvidia-vaapi-driver
-    nvtop
   ];
 
   # Disable Redshift service to avoid conflicts
