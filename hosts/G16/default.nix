@@ -39,7 +39,20 @@
       variant = "dvorak";
       options = "terminate:ctrl_alt_bksp";
     };
+
+    # Display manager configuration
+    displayManager.lightdm = {
+      enable = true;
+      background = "#000000";
+      greeters.gtk = {
+        enable = true;
+        theme.name = "Adwaita-dark";
+      };
+    };
   };
+
+  # Display manager session configuration
+  services.displayManager.defaultSession = "none+i3";
 
   # Touchpad configuration
   services.libinput = {
@@ -50,19 +63,6 @@
       scrollMethod = "twofinger";
       tapping = true;
       tappingDragLock = false;
-    };
-  };
-
-  # Display manager configuration
-  services = {
-    displayManager.defaultSession = "none+i3";
-    xserver.displayManager.lightdm = {
-      enable = true;
-      background = "#000000";
-      greeters.gtk = {
-        enable = true;
-        theme.name = "Adwaita-dark";
-      };
     };
   };
 
