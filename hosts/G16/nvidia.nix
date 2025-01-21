@@ -81,16 +81,27 @@
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   ];
 
-  # Enable hardware acceleration
+  # Hardware acceleration configuration
   hardware.opengl = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
     extraPackages = with pkgs; [
-      intel-media-driver
-      vaapiIntel
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      intel-compute-runtime # OpenCL for Arc
+      intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
       vaapiVdpau
       libvdpau-va-gl
     ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [
+      intel-media-driver
+      intel-vaapi-driver
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
+
+  # Environment variables for hardware acceleration
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD"; # Use intel-media-driver
+    VDPAU_DRIVER = "va_gl"; # Use VDPAU over VAAPI
   };
 }
