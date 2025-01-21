@@ -19,6 +19,16 @@
 [Browser]
 Enabled=true
 AlwaysAllowAccess=true
+CustomProxyLocation=
+Chromium\Enabled=true
+Chromium\CustomProxyLocation=
+Firefox\Enabled=true
+Firefox\CustomProxyLocation=
+
+[GUI]
+ApplicationTheme=dark
+ShowTrayIcon=true
+TrayIconAppearance=monochrome-light
 
 [General]
 ConfigVersion=2
