@@ -6,12 +6,20 @@
     enable = true;
     support32Bit = true;
     daemon.config = {
-      default-sample-rate = 48000;
-      default-fragments = 5;
-      default-fragment-size-msec = 2;
+      default-sample-rate = "48000";
+      default-fragments = "5";
+      default-fragment-size-msec = "2";
       resample-method = "speex-float-5";
       flat-volumes = "no";
       realtime-scheduling = "yes";
+      avoid-resampling = "yes";
+      alternate-sample-rate = "44100";
+      exit-idle-time = "5";
+      high-priority = "yes";
+      nice-level = "-11";
+      realtime-priority = "9";
+      rlimit-rtprio = "9";
+      daemonize = "yes";
     };
     # Configure for ROG laptop
     extraConfig = ''
