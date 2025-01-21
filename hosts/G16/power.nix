@@ -4,7 +4,11 @@
   # Power management configuration
   powerManagement = {
     enable = true;
-    powertop.enable = true;
+    powertop = {
+      enable = true;
+      # Powertop auto-tune on startup
+      powertop.enable = true;
+    };
   };
 
   # TLP power management
@@ -29,11 +33,19 @@
       RUNTIME_PM_ON_AC = lib.mkForce "on";
       RUNTIME_PM_ON_BAT = lib.mkForce "auto";
       
-      # USB autosuspend - inheriting USB settings from rog.nix
+      # USB autosuspend
+      USB_AUTOSUSPEND = 1;
+      USB_DENYLIST = "046d:c548"; # Exclude Logitech receiver
       
-      # Audio power management - inheriting from rog.nix
+      # Audio power management
+      SOUND_POWER_SAVE = 1;
+      SOUND_POWER_SAVE_ON_AC = 10;
+      SOUND_POWER_SAVE_ON_BAT = 5;
       
-      # Wireless power management - inheriting from rog.nix
+      # Wireless power management
+      WIFI_PWR_ON_AC = "off";
+      WIFI_PWR_ON_BAT = "on";
+      WOL_DISABLE = "Y";
       
       # Platform specific settings
       PLATFORM_PROFILE_ON_AC = "performance";
@@ -55,14 +67,29 @@
 
   # PCI power management
   services.udev.extraRules = ''
-    # Enable PCI power management
-    ACTION=="add", SUBSYSTEM=="pci", ATTR{power/control}="auto"
+    # Enable PCI power management for all devices
+    ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"
+    
+    # Specific power management for Intel graphics
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
+    
+    # Power management for NVMe devices
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x010802", TEST=="power/control", ATTR{power/control}="auto"
     
     # Enable SATA link power management
     ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
     
     # Enable I2C adapter power management
     ACTION=="add", SUBSYSTEM=="i2c", TEST=="power/control", ATTR{power/control}="auto"
+    
+    # Enable runtime PM for Thunderbolt controllers
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x0c8000", TEST=="power/control", ATTR{power/control}="auto"
+    
+    # Enable runtime PM for USB controllers
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x0c0330", TEST=="power/control", ATTR{power/control}="auto"
+    
+    # Enable runtime PM for Audio devices
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x040300", TEST=="power/control", ATTR{power/control}="auto"
     
     # Disable wake-on-lan
     ACTION=="add", SUBSYSTEM=="net", NAME=="wlan*", RUN+="${pkgs.ethtool}/bin/ethtool -s $name wol d"
@@ -84,4 +111,10 @@
     enable = true;
     finegrained = true;
   };
+
+  # Additional power saving services
+  services.thermald.enable = true;
+  
+  # Enable power-profiles-daemon for dynamic power management
+  services.power-profiles-daemon.enable = true;
 }
