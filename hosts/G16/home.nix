@@ -70,6 +70,7 @@
     sessionVariables = {
       EDITOR = "nvim";
       TERMINAL = "alacritty";
+      GTK_THEME = "Adwaita:dark";
     };
 
     # File associations
@@ -157,12 +158,6 @@
     };
   };
 
-  # GTK theme environment variable
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    TERMINAL = "alacritty";
-    GTK_THEME = "Adwaita:dark";
-  };
 
   # Enable services
   services = {
