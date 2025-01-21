@@ -11,32 +11,13 @@
     };
     profiles.default = {
       search.default = "DuckDuckGo";
-      extensions = [
-        (pkgs.fetchFirefoxAddon {
-          name = "ublock-origin";
-          url = "https://addons.mozilla.org/firefox/downloads/file/4198829/ublock_origin-1.54.0.xpi";
-          hash = "sha256-vHvHJR3yR1K2zYc5LnQGc4wXZwELHX9kGIELHEWQtYY=";
-        })
-        (pkgs.fetchFirefoxAddon {
-          name = "darkreader";
-          url = "https://addons.mozilla.org/firefox/downloads/file/4171050/darkreader-4.9.73.xpi";
-          hash = "sha256-/TMvzFz7ucdqHKNl2P5VEVqXOHG3zvBhzXVOyU4t4Lg=";
-        })
-        (pkgs.fetchFirefoxAddon {
-          name = "sidebery";
-          url = "https://addons.mozilla.org/firefox/downloads/file/4183821/sidebery-5.0.0b37.xpi";
-          hash = "sha256-Ql0fHBGkNZXNRKQrVFB6Cg9+9Yx/Qz4vLCPGCZHvKE=";
-        })
-        (pkgs.fetchFirefoxAddon {
-          name = "foxyproxy-standard";
-          url = "https://addons.mozilla.org/firefox/downloads/file/4186006/foxyproxy_standard-7.5.1.xpi";
-          hash = "sha256-Qc9B6vN5v4A8c0MXnJ+LhKi3gMOwqUGMvL+QjPg0JXA=";
-        })
-        (pkgs.fetchFirefoxAddon {
-          name = "keepassxc-browser";
-          url = "https://addons.mozilla.org/firefox/downloads/file/4201213/keepassxc_browser-1.8.9.xpi";
-          hash = "sha256-/KX8qOOZqxZQh/9R3IQ/vd1ntyqHHy0Y3Nq1eRdJHZE=";
-        })
+      isDefault = true;
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        ublock-origin
+        darkreader
+        sidebery
+        foxyproxy-standard
+        keepassxc-browser
       ];
       settings = {
         # Enable dark theme
