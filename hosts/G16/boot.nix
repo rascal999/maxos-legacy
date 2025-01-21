@@ -7,7 +7,8 @@
 
   # Boot configuration
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_9;
+    kernelPackages = pkgs.linuxPackages_latest; # This will use the latest kernel from unstable channel
+    kernelModules = [ "kvm-intel" ]; # Enable KVM support
     kernelParams = [ 
       "acpi_osi=Linux" 
       "acpi_osi=!Windows2013" 
