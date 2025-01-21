@@ -1,13 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  nur = import (builtins.fetchTarball {
-    url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-    sha256 = "0lid7w6qxvx0s6jbvpxhc5jm5b3qi7vgkbqwm1rqp0zk7a4cmr3s";
-  }) {
-    inherit pkgs;
-  };
-in
 {
   programs.firefox = {
     enable = true;
@@ -18,12 +10,12 @@ in
       DisplayMenuBar = "default-off";
     };
     profiles.default = {
-      extensions = with nur.repos.rycee.firefox-addons; [
-        ublock-origin
-        darkreader
-        sidebery
-        foxyproxy-standard
-        keepassxc-browser
+      extensions = [
+        pkgs.nur.repos.rycee.firefox-addons.ublock-origin
+        pkgs.nur.repos.rycee.firefox-addons.darkreader
+        pkgs.nur.repos.rycee.firefox-addons.sidebery
+        pkgs.nur.repos.rycee.firefox-addons.foxyproxy-standard
+        pkgs.nur.repos.rycee.firefox-addons.keepassxc-browser
       ];
       settings = {
         # Enable dark theme
