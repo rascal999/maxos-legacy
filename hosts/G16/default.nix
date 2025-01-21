@@ -79,12 +79,7 @@
     # Intel graphics utilities
     intel-gpu-tools
     libva-utils
-    # Power management
-    auto-cpufreq
   ];
-
-  # Enable power management service
-  services.auto-cpufreq.enable = true;
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
