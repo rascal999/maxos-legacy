@@ -9,14 +9,14 @@
       NoDefaultBookmarks = true;
       DisplayMenuBar = "default-off";
     };
-    extensions = with pkgs.firefox-addons; [
-      ublock-origin
-      darkreader
-      sidebery
-      foxyproxy-standard
-      keepassxc-browser
-    ];
     profiles.default = {
+      extensions = with pkgs.firefox-addons; [
+        ublock-origin
+        darkreader
+        sidebery
+        foxyproxy-standard
+        keepassxc-browser
+      ];
       settings = {
         # Enable dark theme
         "browser.theme.content-theme" = 0;
