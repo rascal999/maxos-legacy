@@ -139,11 +139,17 @@
     redshift = {
       enable = true;
       temperature = {
-        day = 5700;
-        night = 3500;
+        day = 2000;
+        night = 2000;
       };
-      latitude = "40.0";  # Default latitude
-      longitude = "-74.0";  # Default longitude
+      dawnTime = "00:00";
+      duskTime = "00:00";
+      settings = {
+        redshift = {
+          adjustment-method = "randr";
+          fade = 1;
+        };
+      };
     };
 
     picom = {
