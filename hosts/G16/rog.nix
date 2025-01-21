@@ -17,6 +17,7 @@
     kernelParams = [
       "asus.use_lid_flip_devid=0"
       "asus-nb-wmi.use_lid_flip_devid=0"
+      "intel_pstate=active"
     ];
   };
 
@@ -30,7 +31,7 @@
       enableUserService = true;
     };
     supergfxd.enable = true;
-    power-profiles-daemon.enable = true;
+    power-profiles-daemon.enable = false;
   };
 
   # Enable backlight control
@@ -48,9 +49,20 @@
   users.users.user.extraGroups = [ "video" ];
 
   # Power management
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "performance";
+  powerManagement.enable = true;
+
+  # CPU frequency scaling
+  services.thermald.enable = true;
+
+  # Set default CPU governor
+  systemd.services.cpu-governor = {
+    description = "Set CPU governor to powersave";
+    after = [ "systemd-modules-load.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.cpupower}/bin/cpupower frequency-set -g powersave";
+    };
   };
 
   # ROG-specific packages
@@ -59,5 +71,6 @@
     asusctl  # ROG laptop control
     supergfxctl  # Graphics switching
     powertop  # Power management
+    cpupower  # CPU frequency control
   ];
 }
