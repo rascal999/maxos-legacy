@@ -1,3 +1,19 @@
+[theme]
+theme = "nord-dark"
+
+[theme.overrides]
+separator = ""
+separator_fg = "auto"
+separator_bg = "auto"
+idle_bg = "#000000"
+info_bg = "#2e3f54"
+good_bg = "#000000"
+warning_bg = "#755f2d"
+critical_bg = "#542a2e"
+
+[icons]
+icons = "material-nf"
+
 [[block]]
 block = "backlight"
 device = "intel_backlight"
