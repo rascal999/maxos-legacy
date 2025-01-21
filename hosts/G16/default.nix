@@ -73,10 +73,19 @@
     acpilight
   ];
 
-  # Configure backlight permissions
+  # Configure backlight permissions and USB power management
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
     ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
+
+    # Disable USB autosuspend for mice
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{product}=="*[Mm]ouse*", ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{product}=="*[Ww]ireless*", ATTR{power/autosuspend}="-1"
+  '';
+
+  # Disable USB autosuspend globally
+  boot.extraModprobeConfig = ''
+    options usbcore autosuspend=-1
   '';
 
   # Add user to video group for backlight control
