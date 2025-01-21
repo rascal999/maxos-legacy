@@ -1,23 +1,27 @@
 { config, lib, pkgs, ... }:
 
-{
-  # Install KeePassXC
-  environment.systemPackages = with pkgs; [
-    keepassxc
-  ];
-
-  # Configure KeePassXC using home-manager
-  home-manager.users.user = {
-    xdg.configFile."keepassxc/keepassxc.ini" = {
-      text = ''
+let
+  setupScript = pkgs.writeScriptBin "setup-keepassxc" ''
+    #!${pkgs.bash}/bin/bash
+    CONFIG_DIR="$HOME/.config/keepassxc"
+    CONFIG_FILE="$CONFIG_DIR/keepassxc.ini"
+    NATIVE_MSG_DIR="$HOME/.mozilla/native-messaging-hosts"
+    
+    # Create config directory if it doesn't exist
+    mkdir -p "$CONFIG_DIR"
+    mkdir -p "$NATIVE_MSG_DIR"
+    
+    # Create config file if it doesn't exist
+    if [ ! -f "$CONFIG_FILE" ] || [ ! -w "$CONFIG_FILE" ]; then
+      cat > "$CONFIG_FILE" << EOL
 [Browser]
 Enabled=true
 AlwaysAllowAccess=true
 CustomProxyLocation=
-Chromium\Enabled=true
-Chromium\CustomProxyLocation=
-Firefox\Enabled=true
-Firefox\CustomProxyLocation=
+Chromium\\Enabled=true
+Chromium\\CustomProxyLocation=
+Firefox\\Enabled=true
+Firefox\\CustomProxyLocation=
 
 [GUI]
 ApplicationTheme=dark
@@ -40,13 +44,15 @@ Own=""
 [PasswordGenerator]
 AdditionalChars=
 ExcludedChars=
-      '';
-      force = true;
-    };
-
-    # Enable native messaging for browser integration
-    xdg.configFile."mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json" = {
-      text = ''
+EOL
+    fi
+    
+    # Set proper permissions
+    chmod 600 "$CONFIG_FILE"
+    chown $USER:users "$CONFIG_FILE"
+    
+    # Setup native messaging for Firefox
+    cat > "$NATIVE_MSG_DIR/org.keepassxc.keepassxc_browser.json" << EOL
 {
     "allowed_extensions": [
         "keepassxc-browser@keepassxc.org"
@@ -56,13 +62,27 @@ ExcludedChars=
     "path": "${pkgs.keepassxc}/bin/keepassxc-proxy",
     "type": "stdio"
 }
-      '';
-      force = true;
+EOL
+    
+    chmod 755 "$NATIVE_MSG_DIR"
+    chmod 644 "$NATIVE_MSG_DIR/org.keepassxc.keepassxc_browser.json"
+  '';
+in
+{
+  # Install KeePassXC and setup script
+  environment.systemPackages = with pkgs; [
+    keepassxc
+    setupScript
+  ];
+
+  # Create systemd user service to run setup on login
+  systemd.user.services.keepassxc-setup = {
+    description = "Setup KeePassXC configuration";
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${setupScript}/bin/setup-keepassxc";
+      RemainAfterExit = true;
     };
   };
-
-  # Ensure native messaging directory exists with correct permissions
-  systemd.user.tmpfiles.rules = [
-    "d %h/.mozilla/native-messaging-hosts 0755 user users - -"
-  ];
 }
