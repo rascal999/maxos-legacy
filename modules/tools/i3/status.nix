@@ -11,8 +11,20 @@ in
 
   # Configure i3status-rust
   xdg.configFile."i3status-rust/config-default.toml".text = ''
-    theme = "nord-dark"
-    icons = "material-nf"
+    [theme]
+    name = "nord-dark"
+    [theme.overrides]
+    separator = ""
+    separator_fg = "auto"
+    separator_bg = "auto"
+    idle_bg = "#000000"
+    info_bg = "#2e3f54"
+    good_bg = "#000000"
+    warning_bg = "#755f2d"
+    critical_bg = "#542a2e"
+
+    [icons]
+    name = "material-nf"
 
     [[block]]
     block = "custom"
@@ -69,15 +81,5 @@ in
     block = "time"
     interval = 5
     format = " $icon $timestamp.datetime(f:'%V %m/%d %R') "
-
-    [theme.overrides]
-    separator = ""
-    separator_fg = "auto"
-    separator_bg = "auto"
-    idle_bg = "#000000"
-    info_bg = "#2e3f54"
-    good_bg = "#000000"
-    warning_bg = "#755f2d"
-    critical_bg = "#542a2e"
   '';
 }
