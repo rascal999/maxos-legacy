@@ -22,34 +22,34 @@
       CPU_MAX_PERF_ON_BAT = 60;
       CPU_BOOST_ON_AC = 1;
       CPU_BOOST_ON_BAT = 0;
-      
+
       # SATA power management
       SATA_LINKPWR_ON_AC = "med_power_with_dipm";
       SATA_LINKPWR_ON_BAT = "med_power_with_dipm";
-      
+
       # PCIe power management
       PCIE_ASPM_ON_AC = "default";
       PCIE_ASPM_ON_BAT = "powersupersave";
-      
+
       # Runtime Power Management for PCI(e) devices
       RUNTIME_PM_ON_AC = lib.mkForce "on";
       RUNTIME_PM_ON_BAT = lib.mkForce "on";
       RUNTIME_PM_DRIVER_DENYLIST = "mei_me nouveau nvidia pcieport uhci_hcd xhci_hcd";
-      
+
       # USB power management
       USB_AUTOSUSPEND = 0;  # Disabled to prevent mouse lag
       USB_DENYLIST = "046d:c53f 046d:c548";  # Common Logitech mouse IDs
-      
+
       # Audio power management
       SOUND_POWER_SAVE_ON_AC = 0;
       SOUND_POWER_SAVE_ON_BAT = 1;
       SOUND_POWER_SAVE_CONTROLLER = "Y";
-      
+
       # Wireless power management
       WIFI_PWR_ON_AC = "off";
       WIFI_PWR_ON_BAT = "off";
       WOL_DISABLE = "Y";
-      
+
       # Platform specific settings
       PLATFORM_PROFILE_ON_AC = "performance";
       PLATFORM_PROFILE_ON_BAT = "low-power";
@@ -68,7 +68,7 @@
     script = ''
       # Set CPU governor
       cpupower frequency-set -g powersave
-      
+
       # Disable turbo boost on battery
       echo 1 > /sys/devices/system/cpu/intel_pstate/no_turbo
     '';
@@ -86,7 +86,7 @@
   ];
 
   # Additional kernel parameters for power management
-  boot.kernelParams = [ 
+  boot.kernelParams = [
     "intel_pstate=active"
     "pcie_aspm=force"
     "i915.enable_psr=1"
@@ -95,45 +95,62 @@
     "vm.dirty_writeback_centisecs=6000"
     "i915.enable_guc=3"
     "i915.enable_dc=2"
+    "usbcore.autosuspend=-1"
+    "usbhid.mousepoll=1"
   ];
 
-  # PCI power management
+  # Disable USB autosuspend globally
+  boot.extraModprobeConfig = ''
+    options usbcore autosuspend=-1
+    options usbhid mousepoll=1
+    options usb-storage quirks=0419:aaf5:u0419:aaf6:u
+  '';
+
+  # PCI and USB power management rules
   services.udev.extraRules = ''
     # Enable PCI power management for all devices
     ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"
-    
+
     # Specific power management for Intel graphics
     ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
-    
+
     # Power management for NVMe devices
     ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x010802", TEST=="power/control", ATTR{power/control}="auto"
-    
+
     # Enable SATA link power management
     ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
-    
+
     # Enable I2C adapter power management
     ACTION=="add", SUBSYSTEM=="i2c", TEST=="power/control", ATTR{power/control}="auto"
-    
+
     # Enable runtime PM for Thunderbolt controllers
     ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x0c8000", TEST=="power/control", ATTR{power/control}="auto"
-    
+
     # Enable runtime PM for USB controllers
     ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x0c0330", TEST=="power/control", ATTR{power/control}="auto"
-    
+
     # Enable runtime PM for Audio devices
     ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x040300", TEST=="power/control", ATTR{power/control}="auto"
-    
+
     # Disable wake-on-lan
     ACTION=="add", SUBSYSTEM=="net", NAME=="wlan*", RUN+="${pkgs.ethtool}/bin/ethtool -s $name wol d"
-    
+
     # USB power management (exclude Logitech receiver)
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}!="046d", TEST=="power/control", ATTR{power/control}="auto"
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", TEST=="power/control", ATTR{power/control}="on"
-    
+
+    # Comprehensive USB power management rules
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{power/control}="on"
+    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/autosuspend", ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{product}=="*[Mm]ouse*", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{product}=="*[Ww]ireless*", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{manufacturer}=="*[Ll]ogitech*", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{manufacturer}=="*[Rr]azer*", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
+
     # Runtime PM for PCI devices
     ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", TEST=="power/control", ATTR{power/control}="auto"
     ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", TEST=="power/control", ATTR{power/control}="auto"
-    
+
     # Audio codec power management
     ACTION=="add", SUBSYSTEM=="sound", ATTR{power/control}="auto"
   '';
