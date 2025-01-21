@@ -1,30 +1,7 @@
-[theme]
-theme = "nord-dark"
-
-[theme.overrides]
-separator = ""
-separator_fg = "auto"
-separator_bg = "auto"
-idle_bg = "#000000"
-info_bg = "#2e3f54"
-good_bg = "#000000"
-warning_bg = "#755f2d"
-critical_bg = "#542a2e"
-
-[icons]
-name = "material-nf"
-overrides = {}
-
 [[block]]
-block = "custom"
-command = "redshift-brightness get"
-json = true
-format = " 󰃟 $text "
-on_click = ""
-on_click_right = ""
-on_scroll_up = "redshift-brightness up"
-on_scroll_down = "redshift-brightness down"
-interval = 1
+block = "backlight"
+device = "intel_backlight"
+format = " $icon {$percentage|} "
 
 [[block]]
 block = "sound"
