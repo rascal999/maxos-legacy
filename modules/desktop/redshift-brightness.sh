@@ -41,7 +41,7 @@ case "$1" in
     else
       state="Warning"
     fi
-    echo "{\"state\":\"$state\", \"text\":\"${percentage%.*}%\"}"
+    echo "{\"state\":\"$state\",\"text\":\"${percentage%.*}%\"}"
     ;;
   "set")
     if [ -n "$2" ] && [ $(echo "$2 >= 0.1" | bc) -eq 1 ] && [ $(echo "$2 <= 1.0" | bc) -eq 1 ]; then
