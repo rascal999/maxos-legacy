@@ -18,6 +18,11 @@
               separator = "";
               separator_fg = "auto";
               separator_bg = "auto";
+              idle_bg = "#2e3440";
+              info_bg = "#2e3440";
+              good_bg = "#2e3440";
+              warning_bg = "#2e3440";
+              critical_bg = "#2e3440";
             };
           };
         };
