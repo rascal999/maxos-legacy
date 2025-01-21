@@ -23,6 +23,11 @@
             format_alt = " $icon {$signal_strength $ssid $frequency|Wired} $ip ";
           }
           {
+            block = "cpu";
+            interval = 1;
+            format = " $icon $frequency $utilization ";
+          }
+          {
             block = "load";
             interval = 1;
             format = " $icon $1m.eng(w:4) $5m.eng(w:4) $15m.eng(w:4) ";
@@ -35,7 +40,7 @@
           {
             block = "battery";
             format = " $icon $percentage {$time |}";
-            device = "BAT0";
+            device = "BAT1";
             missing_format = "";
           }
           {
