@@ -41,7 +41,4 @@
       intel-media-driver
     ];
   };
-
-  # Enable ACPI backlight control
-  hardware.acpilight.enable = true;
 }
