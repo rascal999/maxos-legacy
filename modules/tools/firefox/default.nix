@@ -8,17 +8,19 @@
       DisableProfileImport = true;
       NoDefaultBookmarks = true;
       DisplayMenuBar = "default-off";
+      Extensions = {
+        Install = [
+          "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+          "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi"
+          "https://addons.mozilla.org/firefox/downloads/latest/sidebery/latest.xpi"
+          "https://addons.mozilla.org/firefox/downloads/latest/foxyproxy-standard/latest.xpi"
+          "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi"
+        ];
+      };
     };
     profiles.default = {
       search.default = "DuckDuckGo";
       isDefault = true;
-      extensions = with pkgs.firefox.packages.${pkgs.system}.addons; [
-        ublock-origin
-        darkreader
-        sidebery
-        foxyproxy-standard
-        keepassxc-browser
-      ];
       settings = {
         # Enable dark theme
         "browser.theme.content-theme" = 0;
