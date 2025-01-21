@@ -25,7 +25,7 @@
           {
             block = "load";
             interval = 1;
-            format = " $icon $1m $5m $15m ";
+            format = " $icon {$1m:4} {$5m:4} {$15m:4} ";
           }
           {
             block = "memory";
