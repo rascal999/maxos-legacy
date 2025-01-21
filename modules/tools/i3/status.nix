@@ -12,6 +12,11 @@
       default = {
         theme = "nord-dark";
         icons = "material-nf";
+        theme_overrides = {
+          separator = "";
+          separator_fg = "auto";
+          separator_bg = "auto";
+        };
         blocks = [
           {
             block = "sound";
