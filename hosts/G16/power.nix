@@ -17,14 +17,10 @@
     '';
   };
 
-  # Use xss-lock to handle screen locking
-  services.xserver.xautolock = {
+  # Configure xss-lock with i3lock
+  programs.xss-lock = {
     enable = true;
-    enableNotifier = true;
-    locker = "${pkgs.i3lock}/bin/i3lock -n -c 000000";
-    killtime = 10;
-    killer = "/run/current-system/systemd/bin/systemctl suspend";
-    notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
+    lockerCommand = "${pkgs.i3lock}/bin/i3lock -n -c 000000";
   };
 
   # TLP power management
