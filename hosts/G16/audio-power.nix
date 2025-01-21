@@ -9,7 +9,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     jack.enable = true;
-    config.pipewire = {
+    extraConfig.pipewire = {
       "context.properties" = {
         "default.clock.power-save" = true;
       };

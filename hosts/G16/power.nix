@@ -5,7 +5,16 @@
   powerManagement = {
     enable = true;
     powertop.enable = true;
-    scsiLinkPolicy = "med_power_with_dipm";
+  };
+
+  # TLP power management
+  services.tlp = {
+    enable = true;
+    settings = {
+      # SATA power management
+      SATA_LINKPWR_ON_AC = "med_power_with_dipm";
+      SATA_LINKPWR_ON_BAT = "med_power_with_dipm";
+    };
   };
 
   # Additional kernel parameters for power management
