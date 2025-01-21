@@ -11,19 +11,23 @@
   };
 
   # IWD configuration
-  environment.etc."iwd/main.conf".text = ''
-    [General]
-    EnableNetworkConfiguration=false
-    AddressRandomization=network
-    AddressRandomizationRange=full
-
-    [Network]
-    EnableIPv6=true
-    RoutePriorityOffset=300
-
-    [Settings]
-    AutoConnect=true
-  '';
+  services.iwd = {
+    enable = true;
+    settings = {
+      General = {
+        EnableNetworkConfiguration = false;
+        AddressRandomization = "network";
+        AddressRandomizationRange = "full";
+      };
+      Network = {
+        EnableIPv6 = true;
+        RoutePriorityOffset = 300;
+      };
+      Settings = {
+        AutoConnect = true;
+      };
+    };
+  };
 
   # Disable power management for wireless interfaces
   services.udev.extraRules = lib.mkForce ''
