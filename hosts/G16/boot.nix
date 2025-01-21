@@ -7,6 +7,7 @@
 
   # Boot configuration
   boot = {
+    kernelPackages = pkgs.linuxPackages_6_9;
     kernelParams = [ 
       "acpi_osi=Linux" 
       "acpi_osi=!Windows2013" 
