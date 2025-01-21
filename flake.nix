@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -12,9 +13,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nur, ... }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nur, ... }@inputs: 
   let
     lib = nixpkgs.lib;
+    system = "x86_64-linux";
+    pkgs-unstable = import nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
   in {
     nixosModules = {
       security = import ./modules/security/default.nix;
@@ -28,6 +34,9 @@
             nixpkgs.config.allowUnfree = true;
             nixpkgs.overlays = [
               nur.overlays.default
+              (final: prev: {
+                linuxPackages_latest = pkgs-unstable.linuxPackages_latest;
+              })
             ];
           }
           ./hosts/G16/default.nix
