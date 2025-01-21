@@ -70,8 +70,12 @@
       CPU_BOOST_ON_BAT = 0;
       PCIE_ASPM_ON_AC = "default";
       PCIE_ASPM_ON_BAT = "powersupersave";
+      # Disable Runtime PM for USB to prevent mouse lag
       RUNTIME_PM_ON_AC = "on";
-      RUNTIME_PM_ON_BAT = "auto";
+      RUNTIME_PM_ON_BAT = "on";
+      USB_AUTOSUSPEND = 0;
+      USB_DENYLIST = "046d:c53f 046d:c548";  # Common Logitech mouse IDs (add your specific mouse ID if different)
+      RUNTIME_PM_DRIVER_DENYLIST = "mei_me nouveau nvidia pcieport uhci_hcd xhci_hcd";
       SOUND_POWER_SAVE_ON_AC = 0;
       SOUND_POWER_SAVE_ON_BAT = 1;
       SOUND_POWER_SAVE_CONTROLLER = "Y";
@@ -86,16 +90,7 @@
   # CPU frequency scaling
   services.thermald.enable = true;
 
-  # Powertop auto-tune service
-  systemd.services.powertop-auto-tune = {
-    description = "Powertop auto-tune";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.powertop}/bin/powertop --auto-tune";
-    };
-  };
+  # Disable Powertop auto-tune service as it can interfere with USB devices
 
   # Set CPU governor and disable turbo boost on battery
   systemd.services.power-management = {
