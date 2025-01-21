@@ -54,9 +54,9 @@
   };
 
   # Display manager configuration
-  services.xserver.displayManager = {
-    defaultSession = "none+i3";
-    lightdm = {
+  services = {
+    displayManager.defaultSession = "none+i3";
+    xserver.displayManager.lightdm = {
       enable = true;
       background = "#000000";
       greeters.gtk = {
