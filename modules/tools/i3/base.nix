@@ -102,8 +102,8 @@
         "Mod1+Shift+5" = "move container to workspace 5: term";
         "Mod1+Shift+8" = "move container to workspace 8: logseq";
 
-        # Screen locking with clock
-        "Mod1+x" = "exec ${config.home.homeDirectory}/maxos/modules/tools/i3/lock.sh";
+        # Screen locking
+        "Mod1+x" = "exec --no-startup-id ${pkgs.i3lock}/bin/i3lock -c 000000";
 
         # Quick launch frequently used applications
         "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
