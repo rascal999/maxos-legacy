@@ -119,8 +119,8 @@
           --not-when-fullscreen \
           --not-when-audio \
           --timer 10 \
-            '${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --rate 60' \
-            '${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --rate 240'
+            "${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --rate 60" \
+            "${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --rate 240"
       ''}";
       Restart = "always";
     };
