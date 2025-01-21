@@ -113,8 +113,8 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    backupFileExtension = "backup";
     users.user = { pkgs, ... }: {
+      home.backupFileExtension = "backup";
       imports = [
         ./home.nix
         ../../modules/tools/i3/desktop.nix
