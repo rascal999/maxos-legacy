@@ -109,11 +109,11 @@
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
 
-  # Configure home-manager
+  # Enable home-manager with backup support
+  home-manager.backupFileExtension = "backup";
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    backupFileExtension = "backup";
     users.user = { pkgs, ... }: {
       imports = [
         ./home.nix
