@@ -61,4 +61,15 @@
   environment.systemPackages = with pkgs; [
     os-prober  # OS detection for GRUB
   ];
+
+  # Disable asusctl slash display on boot
+  systemd.services.asus-slash-display = {
+    description = "Disable ASUS slash display";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.asusctl}/bin/asusctl slash -d";
+      RemainAfterExit = true;
+    };
+  };
 }
