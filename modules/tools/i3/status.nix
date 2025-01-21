@@ -37,11 +37,6 @@
             format_alt = " $icon {$signal_strength $ssid $frequency|Wired} $ip ";
           }
           {
-            block = "memory";
-            format = " $icon $mem_used_percents ";
-            format_alt = " $icon_swap $swap_used_percents ";
-          }
-          {
             block = "disk_space";
             path = "/";
             info_type = "available";
@@ -50,6 +45,11 @@
             warning = 20.0;
             alert = 10.0;
             format = " $icon $available ";
+          }
+          {
+            block = "memory";
+            format = " $icon $mem_used_percents ";
+            format_alt = " $icon_swap $swap_used_percents ";
           }
           {
             block = "load";
