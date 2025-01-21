@@ -1,5 +1,10 @@
 { config, lib, pkgs, ... }:
 
+let
+  nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+    inherit pkgs;
+  };
+in
 {
   programs.firefox = {
     enable = true;
@@ -10,7 +15,7 @@
       DisplayMenuBar = "default-off";
     };
     profiles.default = {
-      extensions = with pkgs.firefox-addons; [
+      extensions = with nur.repos.rycee.firefox-addons; [
         ublock-origin
         darkreader
         sidebery
