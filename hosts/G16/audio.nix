@@ -21,7 +21,7 @@
       "default.clock.max-quantum" = "2048";
       "core.daemon" = true;
       "core.version" = "3";
-      "default.clock.power-save" = false;
+      "default.clock.power-save" = lib.mkForce false;
     };
   };
 
