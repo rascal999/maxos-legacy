@@ -34,7 +34,7 @@ LockDatabaseIdle=true
 LockDatabaseIdleSeconds=600
 
 [KeeShare]
-Own="${config.home-manager.users.user.home.file.".config/keepassxc/keepassxc.ini".text}"
+Own=""
 
 [PasswordGenerator]
 AdditionalChars=
