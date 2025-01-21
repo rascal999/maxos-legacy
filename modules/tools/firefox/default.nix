@@ -1,11 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
-  extensionsDir = "/etc/nixos/firefox/extensions";
+  extensionsDir = "${config.home.homeDirectory}/.mozilla/extensions";
 in
 {
-  # Create directory for Firefox extensions
-  system.activationScripts.firefoxExtensions = ''
+  home.activation.firefoxExtensions = lib.hm.dag.entryAfter ["writeBoundary"] ''
     mkdir -p ${extensionsDir}
 
     # Function to check network connectivity
