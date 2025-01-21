@@ -31,15 +31,4 @@
 
   # Enable dconf for GTK settings
   programs.dconf.enable = true;
-
-  # Configure GTK theme
-  home-manager.users.user = {
-    gtk = {
-      enable = true;
-      theme = {
-        name = "Adwaita-dark";
-        package = pkgs.gnome.adwaita-icon-theme;
-      };
-    };
-  };
 }
