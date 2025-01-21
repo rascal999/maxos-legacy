@@ -34,7 +34,6 @@
           install_url = "https://addons.mozilla.org/firefox/downloads/file/4410175/keepassxc_browser-1.9.6.xpi";
           install_hash = "sha256:41cab3f7a1bdcc394d538ffd4106b85fe5916cc44735a61f1791bb6fe8ce790e";
         };
-        };
       };
     };
     profiles.default = {
