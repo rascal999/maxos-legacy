@@ -13,6 +13,7 @@
     dmenu
     gnome-keyring
     redshift
+    keepassxc
   ];
 
   xsession.windowManager.i3 = {
@@ -25,6 +26,7 @@
         "1: web" = [{ class = "^Firefox$"; }];
         "2: code" = [{ class = "^Code$"; }];
         "8: logseq" = [{ class = "^Logseq$"; }];
+        "9: pw" = [{ class = "^KeePassXC$"; }];
       };
 
       # Autostart applications with delays to prevent race conditions
@@ -98,6 +100,7 @@
         "Mod1+4" = "workspace number 4: burp";
         "Mod1+5" = "workspace number 5: term";
         "Mod1+8" = "workspace number 8: logseq";
+        "Mod1+9" = "workspace number 9: pw";
         
         # Move container to workspace
         "Mod1+Shift+1" = "move container to workspace 1: web";
@@ -106,6 +109,7 @@
         "Mod1+Shift+4" = "move container to workspace 4: burp";
         "Mod1+Shift+5" = "move container to workspace 5: term";
         "Mod1+Shift+8" = "move container to workspace 8: logseq";
+        "Mod1+Shift+9" = "move container to workspace 9: pw";
 
         # Screen locking
         "Mod1+x" = "exec --no-startup-id ${pkgs.i3lock}/bin/i3lock -c 000000";
@@ -114,6 +118,7 @@
         "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
         "${config.xsession.windowManager.i3.config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
         "${config.xsession.windowManager.i3.config.modifier}+l" = "exec ${pkgs.i3lock}/bin/i3lock -c 000000";
+        "${config.xsession.windowManager.i3.config.modifier}+k" = "workspace 9: pw; exec ${pkgs.keepassxc}/bin/keepassxc";
         "${config.xsession.windowManager.i3.config.modifier}+Return" = "exec $HOME/.local/bin/rofi-launcher";
         "${config.xsession.windowManager.i3.config.modifier}+Shift+l" = "exec systemctl poweroff";
       };
@@ -126,6 +131,7 @@
         { workspace = "4: burp"; output = "primary"; }
         { workspace = "5: term"; output = "primary"; }
         { workspace = "8: logseq"; output = "primary"; }
+        { workspace = "9: pw"; output = "primary"; }
       ];
     };
   };
