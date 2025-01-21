@@ -110,7 +110,4 @@
 
   # Additional power saving services
   services.thermald.enable = true;
-  
-  # Enable power-profiles-daemon for dynamic power management
-  services.power-profiles-daemon.enable = true;
 }
