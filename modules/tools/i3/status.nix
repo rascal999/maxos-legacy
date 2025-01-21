@@ -33,8 +33,8 @@
           }
           {
             block = "net";
-            format = " $icon {$signal_strength $ssid $graph_down|Wired} ";
-            format_alt = " $icon {$signal_strength $ssid $graph_down|Wired} $ip ";
+            format = " $icon {$signal_strength $ssid|Wired} ";
+            format_alt = " $icon {$signal_strength $ssid|Wired} $ip ";
           }
           {
             block = "disk_space";
