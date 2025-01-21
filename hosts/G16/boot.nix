@@ -13,6 +13,9 @@
       "acpi_osi=!Windows2012"
       "acpi_backlight=vendor"
       "asus.use_native_led=1"
+      "pcie_aspm.policy=powersave"
+      "intel_pstate=powersave"
+      "nvidia.NVreg_DynamicPowerManagement=0x02"
     ];
     initrd = {
       availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
