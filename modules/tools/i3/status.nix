@@ -18,6 +18,11 @@
             format = " $icon {$volume|} ";
           }
           {
+            block = "net";
+            format = " $icon {$signal_strength $ssid $frequency|Wired} ";
+            format_alt = " $icon {$signal_strength $ssid $frequency|Wired} $ip ";
+          }
+          {
             block = "cpu";
             interval = 1;
             format = " $icon $utilization ";
@@ -26,11 +31,6 @@
             block = "memory";
             format = " $icon $mem_used_percents ";
             format_alt = " $icon_swap $swap_used_percents ";
-          }
-          {
-            block = "net";
-            format = " $icon {$signal_strength $ssid $frequency|Wired} ";
-            format_alt = " $icon {$signal_strength $ssid $frequency|Wired} $ip ";
           }
           {
             block = "battery";
