@@ -36,10 +36,14 @@
       RUNTIME_PM_ON_BAT = lib.mkForce "auto";
       RUNTIME_PM_DRIVER_DENYLIST = "mei_me nouveau nvidia";
 
-      # USB power management - Disable autosuspend for input devices
-      USB_AUTOSUSPEND = 0;  # Globally disable USB autosuspend
+      # USB power management - Selective autosuspend
+      USB_AUTOSUSPEND = 1;  # Enable autosuspend for non-input devices
       USB_DENYLIST = "046d:c53f 046d:c548 046d:c084 046d:c332";  # Logitech devices
-      USB_EXCLUDE_AUDIO = 1;  # Exclude audio devices from autosuspend
+      USB_EXCLUDE_AUDIO = 1;  # Exclude audio devices
+      USB_EXCLUDE_BTUSB = 1;  # Exclude Bluetooth
+      USB_EXCLUDE_PHONE = 1;  # Exclude phones
+      USB_EXCLUDE_PRINTER = 1;  # Exclude printers
+      USB_EXCLUDE_WWAN = 1;  # Exclude WWAN devices
 
       # Audio power management
       SOUND_POWER_SAVE_ON_AC = 1;
@@ -47,7 +51,7 @@
       SOUND_POWER_SAVE_CONTROLLER = "Y";
 
       # Wireless power management
-      WIFI_PWR_ON_AC = "off";  # Disable WiFi power management on AC to prevent latency
+      WIFI_PWR_ON_AC = "off";  # Disable WiFi power management on AC
       WIFI_PWR_ON_BAT = "on";
       WOL_DISABLE = "Y";
 
@@ -97,13 +101,11 @@
     "i915.enable_guc=3"
     "i915.enable_dc=2"
     "i915.enable_rc6=1"
-    "usbcore.autosuspend=-1"  # Disable USB autosuspend globally
     "usbhid.mousepoll=1"  # Keep mouse responsive
   ];
 
   # USB autosuspend configuration - Keep input devices responsive
   boot.extraModprobeConfig = ''
-    options usbcore autosuspend=-1
     options usbhid mousepoll=1
     options usb-storage quirks=0419:aaf5:u0419:aaf6:u
   '';
