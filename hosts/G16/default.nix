@@ -39,29 +39,29 @@
       variant = "dvorak";
       options = "terminate:ctrl_alt_bksp";
     };
+  };
 
-    # Touchpad configuration
-    libinput = {
-      enable = true;
-      touchpad = {
-        naturalScrolling = false;
-        disableWhileTyping = true;
-        scrollMethod = "twofinger";
-        tapping = true;
-        tappingDragLock = false;
-      };
+  # Touchpad configuration
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      naturalScrolling = false;
+      disableWhileTyping = true;
+      scrollMethod = "twofinger";
+      tapping = true;
+      tappingDragLock = false;
     };
+  };
 
-    # Display manager configuration
-    displayManager = {
-      defaultSession = "none+i3";
-      lightdm = {
+  # Display manager configuration
+  services.displayManager = {
+    defaultSession = "none+i3";
+    lightdm = {
+      enable = true;
+      background = "#000000";
+      greeters.gtk = {
         enable = true;
-        background = "#000000";
-        greeters.gtk = {
-          enable = true;
-          theme.name = "Adwaita-dark";
-        };
+        theme.name = "Adwaita-dark";
       };
     };
   };
@@ -103,11 +103,11 @@
         enable = true;
         theme = {
           name = "Adwaita-dark";
-          package = pkgs.gnome.adwaita-icon-theme;
+          package = pkgs.adwaita-icon-theme;
         };
         iconTheme = {
           name = "Adwaita";
-          package = pkgs.gnome.adwaita-icon-theme;
+          package = pkgs.adwaita-icon-theme;
         };
         gtk3.extraConfig = {
           gtk-application-prefer-dark-theme = true;
@@ -120,7 +120,7 @@
       # Qt configuration
       qt = {
         enable = true;
-        platformTheme = "qtct";
+        platformTheme.name = "qtct";
         style = {
           name = "adwaita-dark";
           package = pkgs.adwaita-qt;

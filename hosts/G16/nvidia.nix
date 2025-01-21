@@ -40,8 +40,8 @@
     "nvidia-drm.modeset=1"
   ];
 
-  # Basic OpenGL configuration
-  hardware.opengl = {
+  # Basic graphics configuration
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver

@@ -14,12 +14,12 @@
   };
 
   # X server configuration
-  services.xserver = {
+  services.xserver.enable = true;
+  
+  # Display manager configuration
+  services.displayManager.autoLogin = {
     enable = true;
-    displayManager.autoLogin = {
-      enable = true;
-      user = "user";
-    };
+    user = "user";
   };
 
   environment.systemPackages = with pkgs; [
