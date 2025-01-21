@@ -17,12 +17,7 @@
             overrides = {
               separator = "";
               separator_fg = "auto";
-              separator_bg = "#000000";
-              idle_bg = "#000000";
-              good_bg = "#000000";
-              warning_bg = "#000000";
-              critical_bg = "#000000";
-              info_bg = "#000000";
+              separator_bg = "auto";
             };
           };
         };
