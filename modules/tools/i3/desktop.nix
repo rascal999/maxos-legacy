@@ -4,6 +4,9 @@
   imports = [ ./base.nix ];
 
   xsession.windowManager.i3.config = {
+    # Enable workspace back and forth
+    workspaceAutoBackAndForth = true;
+
     # Desktop-specific startup applications
     startup = [
       # Add small delays to prevent race conditions
