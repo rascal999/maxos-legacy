@@ -11,27 +11,21 @@
   services.logind = {
     lidSwitch = "suspend";
     extraConfig = ''
-      HandleLidSwitch=suspend-then-hibernate
-      HandleLidSwitchExternalPower=lock
+      HandleLidSwitch=suspend
+      HandleLidSwitchExternalPower=suspend
       LidSwitchIgnoreInhibited=yes
     '';
   };
 
-  # Lid switch handler service
-  systemd.services.lid-switch-handler = {
-    description = "Handle lid switch events with i3lock";
-    after = [ "suspend.target" ];
-    before = [ "systemd-suspend.service" ];
-    wantedBy = [ "suspend.target" ];
+  # Lock screen before suspend
+  systemd.services.lock-before-suspend = {
+    description = "Lock screen before suspend";
+    before = [ "sleep.target" ];
+    wantedBy = [ "sleep.target" ];
     path = [ pkgs.i3lock ];
-    script = ''
-      # Only lock if on battery power
-      if [ "$(cat /sys/class/power_supply/AC/online)" = "0" ]; then
-        i3lock -n -c 000000
-      fi
-    '';
+    script = "i3lock -n -c 000000";
     serviceConfig = {
-      Type = "simple";
+      Type = "forking";
       User = "root";
     };
   };
