@@ -1,62 +1,36 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Disable PulseAudio and enable PipeWire
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
+  # Enable PulseAudio
+  hardware.pulseaudio = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
+    support32Bit = true;
+    daemon.config = {
+      default-sample-rate = 48000;
+      default-fragments = 5;
+      default-fragment-size-msec = 2;
+      resample-method = "speex-float-5";
+      flat-volumes = "no";
+      realtime-scheduling = "yes";
+    };
+    # Configure for ROG laptop
+    extraConfig = ''
+      load-module module-udev-detect
+      load-module module-native-protocol-unix
+      load-module module-alsa-card device_id="0" name="pci-0000_00_1f.3" card_name="alsa_card.pci-0000_00_1f.3" tsched=yes fixed_latency_range=yes
+      set-default-sink alsa_output.pci-0000_00_1f.3.analog-stereo
+      set-sink-volume alsa_output.pci-0000_00_1f.3.analog-stereo 40000
+    '';
   };
 
-  # Basic PipeWire configuration optimized for ROG laptop
-  services.pipewire.extraConfig.pipewire = {
-    "context.properties" = {
-      "default.clock.rate" = "48000";
-      "default.clock.quantum" = "1024";
-      "default.clock.min-quantum" = "1024";
-      "default.clock.max-quantum" = "2048";
-      "core.daemon" = true;
-      "core.version" = "3";
-      "default.clock.power-save" = lib.mkForce false;
-    };
-  };
+  # Disable PipeWire
+  services.pipewire.enable = false;
 
-  # Audio processing configuration with proper volume control
-  services.pipewire.extraConfig.pipewire-pulse = {
-    "stream.properties" = {
-      "resample.quality" = 4;
-    };
-    "pulse.properties" = {
-      "server.address" = [ "unix:native" ];
-      "pulse.min.quantum" = "1024/48000";
-      "pulse.default.format" = "F32";
-      "pulse.default.rate" = "48000";
-      "pulse.default.channels" = "2";
-    };
-    "pulse.rules" = [
-      {
-        matches = [ { "device.name" = "~alsa_output.*" ; } ];
-        actions = {
-          "update-props" = {
-            "device.soft-volume" = true;
-            "device.volume-step" = "0.05";        # 5% volume steps
-            "device.volume-base" = "1.0";         # Normal base volume
-            "device.hw-volume" = false;           # Disable hardware volume
-          };
-        };
-      }
-    ];
-  };
-
-  # Additional audio packages
+  # Audio control packages
   environment.systemPackages = with pkgs; [
     pavucontrol  # PulseAudio Volume Control
-    easyeffects  # Audio effects for PipeWire
-    helvum       # PipeWire patchbay
+    pamixer      # Command line mixer for PulseAudio
+    pulsemixer   # CLI and curses mixer for PulseAudio
   ];
 
   # Load ALSA UCM config for ROG laptops

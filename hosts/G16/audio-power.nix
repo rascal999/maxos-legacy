@@ -1,26 +1,19 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Audio power management configuration
-  services.pipewire = {
-    enable = true;
-    audio.enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    jack.enable = true;
-    extraConfig.pipewire = {
-      "context.properties" = {
-        "default.clock.power-save" = true;
-      };
-      "context.modules" = [
-        {
-          name = "libpipewire-module-protocol-native";
-          args = {
-            "audio.suspend-timeout" = 5;
-          };
-        }
-      ];
+  # Audio power management configuration for PulseAudio
+  hardware.pulseaudio = {
+    daemon.config = {
+      avoid-resampling = "yes";
+      default-sample-rate = "48000";
+      alternate-sample-rate = "44100";
+      exit-idle-time = 5;
+      high-priority = "yes";
+      nice-level = -11;
+      realtime-scheduling = "yes";
+      realtime-priority = 9;
+      rlimit-rtprio = 9;
+      daemonize = "yes";
     };
   };
 }
