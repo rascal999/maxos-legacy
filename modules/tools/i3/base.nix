@@ -6,7 +6,6 @@
   home.packages = with pkgs; [
     i3status
     i3lock
-    i3lock-fancy
     dmenu
     gnome-keyring
     redshift
@@ -103,8 +102,8 @@
         "Mod1+Shift+5" = "move container to workspace 5: term";
         "Mod1+Shift+8" = "move container to workspace 8: logseq";
 
-        # Screen locking
-        "Mod1+x" = "exec ${pkgs.i3lock-fancy}/bin/i3lock-fancy -p -t 'System locked'";
+        # Screen locking with clock
+        "Mod1+x" = "exec ${pkgs.bash}/bin/bash -c '${pkgs.i3lock}/bin/i3lock -c 000000 -n & ${pkgs.xorg.xset}/bin/xset dpms force off & DISPLAY_DATE=$(${pkgs.coreutils}/bin/date \"+%H:%M\"); ${pkgs.imagemagick}/bin/convert -size 200x100 xc:transparent -font DejaVu-Sans-Bold -pointsize 72 -fill white -gravity center -draw \"text 0,0 \'$DISPLAY_DATE\'\" /tmp/lockscreen.png && ${pkgs.i3lock}/bin/i3lock -i /tmp/lockscreen.png'";
 
         # Quick launch frequently used applications
         "${config.xsession.windowManager.i3.config.modifier}+b" = "exec ${pkgs.firefox}/bin/firefox";
