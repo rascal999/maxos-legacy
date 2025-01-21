@@ -18,8 +18,8 @@
               separator = "";
               separator_fg = "auto";
               separator_bg = "auto";
-            }
-          }
+            };
+          };
         };
         blocks = [
           {
