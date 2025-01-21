@@ -30,12 +30,12 @@
           {
             block = "custom";
             command = "/home/user/git/github/monorepo/maxos/modules/desktop/redshift-brightness.sh get";
+            json = true;
             on_click = "";
             on_click_right = "";
             on_scroll_up = "/home/user/git/github/monorepo/maxos/modules/desktop/redshift-brightness.sh up";
             on_scroll_down = "/home/user/git/github/monorepo/maxos/modules/desktop/redshift-brightness.sh down";
             interval = 1;
-            format = " 󰃟 $text ";
           }
           {
             block = "sound";
