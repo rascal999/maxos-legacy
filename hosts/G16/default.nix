@@ -32,7 +32,7 @@
       enable = true;
       package = pkgs.i3;
     };
-    
+
     # Keyboard layout
     xkb = {
       layout = "us";
@@ -94,11 +94,11 @@
   boot.extraModprobeConfig = ''
     options usbcore autosuspend=-1
     options usbhid mousepoll=1
-    options usb-storage quirks=0419:aaf5:u,0419:aaf6:u
+    options usb-storage quirks=0419:aaf5:u0419:aaf6:u
   '';
 
   # Additional kernel parameters for USB
-  boot.kernelParams = [ 
+  boot.kernelParams = [
     "usbcore.autosuspend=-1"
     "usbhid.mousepoll=1"
   ];
@@ -114,7 +114,7 @@
     backupFileExtension = "hm-bak-2024";
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.user = { pkgs, ... }: {
+    users.user = { pkgs ... }: {
       imports = [
         ./home.nix
         ../../modules/tools/i3/desktop.nix
@@ -145,11 +145,17 @@
       qt = {
         enable = true;
         platformTheme = "gtk";
-        style.name = "adwaita-dark";
+        style = {
+          name = "adwaita-dark";
+          package = pkgs.adwaita-qt;
+        };
       };
 
       # Environment variables
-      home.sessionVariables.GTK_THEME = "Adwaita:dark";
+      home.sessionVariables = {
+        GTK_THEME = "Adwaita:dark";
+        QT_STYLE_OVERRIDE = "adwaita-dark";
+      };
     };
   };
 
