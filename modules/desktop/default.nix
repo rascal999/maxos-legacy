@@ -48,7 +48,7 @@
   ];
 
   # Force GTK applications to use dark theme
-  gtk = {
+  programs.gtk = {
     enable = true;
     theme = {
       name = "Adwaita-dark";
