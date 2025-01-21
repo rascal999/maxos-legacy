@@ -61,7 +61,7 @@
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.cpupower}/bin/cpupower frequency-set -g powersave";
+      ExecStart = "${pkgs.linuxPackages.cpupower}/bin/cpupower frequency-set -g powersave";
     };
   };
 
@@ -71,6 +71,6 @@
     asusctl  # ROG laptop control
     supergfxctl  # Graphics switching
     powertop  # Power management
-    cpupower  # CPU frequency control
+    linuxPackages.cpupower  # CPU frequency control
   ];
 }
