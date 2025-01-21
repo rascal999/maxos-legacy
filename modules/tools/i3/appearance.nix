@@ -11,13 +11,13 @@
         statusline = "#eceff4";
         separator = "#000000";
         focusedWorkspace = {
-          background = "#000000";
-          border = "#000000";
+          background = "#002b36";
+          border = "#002b36";
           text = "#ffffff";
         };
         activeWorkspace = {
-          background = "#000000";
-          border = "#000000";
+          background = "#002b36";
+          border = "#002b36";
           text = "#ffffff";
         };
         inactiveWorkspace = {
@@ -26,8 +26,8 @@
           text = "#666666";
         };
         urgentWorkspace = {
-          background = "#000000";
-          border = "#000000";
+          background = "#2b0000";
+          border = "#2b0000";
           text = "#DC322F";
         };
       };
