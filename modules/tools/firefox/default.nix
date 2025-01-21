@@ -12,7 +12,7 @@
     profiles.default = {
       search.default = "DuckDuckGo";
       isDefault = true;
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      extensions = with pkgs.firefox-addons; [
         ublock-origin
         darkreader
         sidebery
