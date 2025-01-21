@@ -32,22 +32,23 @@
       PCIE_ASPM_ON_BAT = "powersupersave";
 
       # Runtime Power Management for PCI(e) devices
-      RUNTIME_PM_ON_AC = lib.mkForce "on";
-      RUNTIME_PM_ON_BAT = lib.mkForce "on";
-      RUNTIME_PM_DRIVER_DENYLIST = "mei_me nouveau nvidia pcieport uhci_hcd xhci_hcd";
+      RUNTIME_PM_ON_AC = lib.mkForce "auto";
+      RUNTIME_PM_ON_BAT = lib.mkForce "auto";
+      RUNTIME_PM_DRIVER_DENYLIST = "mei_me nouveau nvidia";  # Removed pcieport and USB controllers for better power savings
 
-      # USB power management
-      USB_AUTOSUSPEND = 0;  # Disabled to prevent mouse lag
-      USB_DENYLIST = "046d:c53f 046d:c548";  # Common Logitech mouse IDs
+      # USB power management - Enable selective autosuspend while preserving mouse responsiveness
+      USB_AUTOSUSPEND = 1;  # Enable general USB autosuspend
+      USB_DENYLIST = "046d:c53f 046d:c548 046d:c084 046d:c332";  # Extended Logitech mouse/keyboard IDs
+      USB_ALLOWLIST = "1532:0000";  # Add other gaming peripherals if needed
 
-      # Audio power management
-      SOUND_POWER_SAVE_ON_AC = 0;
+      # Audio power management - More aggressive power saving
+      SOUND_POWER_SAVE_ON_AC = 1;
       SOUND_POWER_SAVE_ON_BAT = 1;
       SOUND_POWER_SAVE_CONTROLLER = "Y";
 
-      # Wireless power management
-      WIFI_PWR_ON_AC = "off";
-      WIFI_PWR_ON_BAT = "off";
+      # Wireless power management - Enable power saving when possible
+      WIFI_PWR_ON_AC = "on";
+      WIFI_PWR_ON_BAT = "on";
       WOL_DISABLE = "Y";
 
       # Platform specific settings
@@ -89,27 +90,32 @@
   boot.kernelParams = [
     "intel_pstate=active"
     "pcie_aspm=force"
-    "i915.enable_psr=1"
-    "i915.enable_fbc=1"
+    "i915.enable_psr=2"  # Panel Self Refresh
+    "i915.enable_fbc=1"  # Frame Buffer Compression
     "nmi_watchdog=0"
     "vm.dirty_writeback_centisecs=6000"
     "i915.enable_guc=3"
     "i915.enable_dc=2"
-    "usbcore.autosuspend=-1"
-    "usbhid.mousepoll=1"
+    "i915.enable_rc6=1"  # Enable deeper GPU sleep states
+    "usbcore.autosuspend=1"  # Enable USB autosuspend globally
+    "usbhid.mousepoll=1"  # Keep mouse responsive
   ];
 
-  # Disable USB autosuspend globally
+  # USB autosuspend configuration - Keep mouse responsive while allowing other devices to suspend
   boot.extraModprobeConfig = ''
-    options usbcore autosuspend=-1
     options usbhid mousepoll=1
     options usb-storage quirks=0419:aaf5:u0419:aaf6:u
   '';
 
   # PCI and USB power management rules
   services.udev.extraRules = ''
-    # Enable PCI power management for all devices
+    # Enable PCI power management for all devices with more specific rules
     ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"
+    
+    # I2C Adapter power management (addressing powertop findings)
+    ACTION=="add", SUBSYSTEM=="i2c", ATTR{name}=="i915 gmbus*", TEST=="power/control", ATTR{power/control}="auto"
+    ACTION=="add", SUBSYSTEM=="i2c", ATTR{name}=="AUX *", TEST=="power/control", ATTR{power/control}="auto"
+    ACTION=="add", SUBSYSTEM=="i2c", ATTR{name}=="SMBus*", TEST=="power/control", ATTR{power/control}="auto"
 
     # Specific power management for Intel graphics
     ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
@@ -120,13 +126,10 @@
     # Enable SATA link power management
     ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
 
-    # Enable I2C adapter power management
-    ACTION=="add", SUBSYSTEM=="i2c", TEST=="power/control", ATTR{power/control}="auto"
-
     # Enable runtime PM for Thunderbolt controllers
     ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x0c8000", TEST=="power/control", ATTR{power/control}="auto"
 
-    # Enable runtime PM for USB controllers
+    # Enable runtime PM for USB controllers while preserving mouse functionality
     ACTION=="add", SUBSYSTEM=="pci", ATTR{class}=="0x0c0330", TEST=="power/control", ATTR{power/control}="auto"
 
     # Enable runtime PM for Audio devices
@@ -135,17 +138,11 @@
     # Disable wake-on-lan
     ACTION=="add", SUBSYSTEM=="net", NAME=="wlan*", RUN+="${pkgs.ethtool}/bin/ethtool -s $name wol d"
 
-    # USB power management (exclude Logitech receiver)
+    # Refined USB power management (preserve mouse responsiveness)
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{product}=="*[Mm]ouse*", ATTR{power/control}="on"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{manufacturer}=="*[Ll]ogitech*", ATTR{product}=="*[Mm]ouse*", ATTR{power/control}="on"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{manufacturer}=="*[Ll]ogitech*", ATTR{product}=="*[Rr]eceiver*", ATTR{power/control}="on"
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}!="046d", TEST=="power/control", ATTR{power/control}="auto"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", TEST=="power/control", ATTR{power/control}="on"
-
-    # Comprehensive USB power management rules
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{power/control}="on"
-    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/autosuspend", ATTR{power/autosuspend}="-1"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{product}=="*[Mm]ouse*", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{product}=="*[Ww]ireless*", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{manufacturer}=="*[Ll]ogitech*", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{manufacturer}=="*[Rr]azer*", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
 
     # Runtime PM for PCI devices
     ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", TEST=="power/control", ATTR{power/control}="auto"
