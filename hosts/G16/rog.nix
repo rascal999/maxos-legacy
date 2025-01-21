@@ -20,8 +20,8 @@
     ];
   };
 
-  # Use native ASUS backlight control
-  hardware.acpilight.enable = false;
+  # Enable acpilight for backlight control
+  hardware.acpilight.enable = true;
 
   # ASUS ROG services
   services = {

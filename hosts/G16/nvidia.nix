@@ -32,15 +32,12 @@
   # Add kernel parameters from G16 2024 guide
   boot.kernelParams = [
     "i915.force_probe=7d55"
-    "i915.enable_dpcd_backlight=1"
     "rd.driver.blacklist=nouveau"
     "modprobe.blacklist=nouveau"
-    "acpi_backlight=native"
+    "acpi_backlight=vendor"
     "quiet"
     "splash"
     "nvidia-drm.modeset=1"
-    "nvidia.NVreg_EnableBacklightHandler=0"
-    "nvidia.NVreg_RegistryDwords=EnableBrightnessControl=0"
   ];
 
   # Basic OpenGL configuration
