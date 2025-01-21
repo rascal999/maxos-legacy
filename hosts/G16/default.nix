@@ -10,6 +10,7 @@
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
     ../../modules/hardware/network.nix
+    <home-manager/nixos>  # Add home-manager module
   ];
 
   # Disable system-wide Firefox
@@ -87,6 +88,8 @@
 
   # Configure home-manager
   home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
     backupFileExtension = "backup";
     users.user = { pkgs, ... }: {
       imports = [
@@ -95,6 +98,35 @@
         ../../modules/tools/alacritty.nix
         ../../modules/tools/zsh.nix
       ];
+
+      # GTK configuration
+      gtk = {
+        enable = true;
+        theme = {
+          name = "Adwaita-dark";
+          package = pkgs.gnome.adwaita-icon-theme;
+        };
+        iconTheme = {
+          name = "Adwaita";
+          package = pkgs.gnome.adwaita-icon-theme;
+        };
+        gtk3.extraConfig = {
+          gtk-application-prefer-dark-theme = true;
+        };
+        gtk4.extraConfig = {
+          gtk-application-prefer-dark-theme = true;
+        };
+      };
+
+      # Qt configuration
+      qt = {
+        enable = true;
+        platformTheme = "gtk";
+        style.name = "adwaita-dark";
+      };
+
+      # Environment variables
+      home.sessionVariables.GTK_THEME = "Adwaita:dark";
     };
   };
 

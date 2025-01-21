@@ -70,7 +70,6 @@
     sessionVariables = {
       EDITOR = "nvim";
       TERMINAL = "alacritty";
-      GTK_THEME = "Adwaita:dark";
     };
 
     # File associations
@@ -132,32 +131,7 @@
       enable = true;
       enableBashIntegration = true;
     };
-
-    gtk = {
-      enable = true;
-      theme = {
-        name = "Adwaita-dark";
-        package = pkgs.gnome.adwaita-icon-theme;
-      };
-      iconTheme = {
-        name = "Adwaita";
-        package = pkgs.gnome.adwaita-icon-theme;
-      };
-      gtk3.extraConfig = {
-        gtk-application-prefer-dark-theme = true;
-      };
-      gtk4.extraConfig = {
-        gtk-application-prefer-dark-theme = true;
-      };
-    };
-
-    qt = {
-      enable = true;
-      platformTheme = "gtk";
-      style.name = "adwaita-dark";
-    };
   };
-
 
   # Enable services
   services = {
