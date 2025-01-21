@@ -68,9 +68,12 @@
   environment.systemPackages = with pkgs; [
     # Graphics utilities
     glxinfo
+    xorg.xrandr
     # Backlight utilities
     light
     acpilight
+    # Idle detection
+    xidlehook
   ];
 
   # Configure backlight permissions and USB power management
@@ -102,6 +105,26 @@
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
+
+  # Auto refresh rate management service
+  systemd.user.services.refresh-rate-manager = {
+    description = "Manage display refresh rate based on idle state";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.writeShellScript "refresh-rate-manager" ''
+        ${pkgs.xidlehook}/bin/xidlehook \
+          --not-when-fullscreen \
+          --not-when-audio \
+          --timer 10 \
+            '${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --rate 60' \
+            '${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --rate 240'
+      ''}";
+      Restart = "always";
+    };
+  };
 
   # Configure home-manager
   home-manager = {
