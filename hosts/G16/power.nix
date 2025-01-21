@@ -11,10 +11,29 @@
   services.logind = {
     lidSwitch = "suspend";
     extraConfig = ''
-      HandleLidSwitch=suspend
+      HandleLidSwitch=suspend-then-hibernate
       HandleLidSwitchExternalPower=lock
       LidSwitchIgnoreInhibited=yes
     '';
+  };
+
+  # Lid switch handler service
+  systemd.services.lid-switch-handler = {
+    description = "Handle lid switch events with i3lock";
+    after = [ "suspend.target" ];
+    before = [ "systemd-suspend.service" ];
+    wantedBy = [ "suspend.target" ];
+    path = [ pkgs.i3lock ];
+    script = ''
+      # Only lock if on battery power
+      if [ "$(cat /sys/class/power_supply/AC/online)" = "0" ]; then
+        i3lock -n -c 000000
+      fi
+    '';
+    serviceConfig = {
+      Type = "simple";
+      User = "root";
+    };
   };
 
   # TLP power management
@@ -98,6 +117,7 @@
     powertop
     linuxPackages.cpupower
     tlp
+    i3lock
   ];
 
   # Additional kernel parameters for power management
