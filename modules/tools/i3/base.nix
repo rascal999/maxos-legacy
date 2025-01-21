@@ -26,8 +26,8 @@
       # Autostart applications with delays to prevent race conditions
       startup = [
         { command = "/run/current-system/sw/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"; notification = false; }
-        # Set initial brightness using xrandr
-        { command = "xrandr --output eDP-1 --brightness 0.3"; notification = false; }
+        # Set initial brightness and color temperature using redshift
+        { command = "redshift -O 3500 -b 0.6"; notification = false; }
         { command = "sleep 1 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
         { command = "sleep 2 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
         { command = "sleep 1 && i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
@@ -79,9 +79,10 @@
         "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
         "XF86AudioMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
         
-        # Brightness controls using brightness script
+        # Brightness controls using brightness script with redshift
         "XF86MonBrightnessUp" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh up";
         "XF86MonBrightnessDown" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh down";
+        "Mod1+Shift+b" = "exec ${config.home.homeDirectory}/maxos/modules/desktop/brightness.sh reset";
         
         # Workspace switching
         "Mod1+1" = "workspace number 1: web";
