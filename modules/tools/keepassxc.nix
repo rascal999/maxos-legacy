@@ -8,7 +8,8 @@
 
   # Configure KeePassXC using home-manager
   home-manager.users.user = {
-    home.file.".config/keepassxc/keepassxc.ini".text = ''
+    xdg.configFile."keepassxc/keepassxc.ini" = {
+      text = ''
 [Browser]
 Enabled=true
 AlwaysAllowAccess=true
@@ -39,6 +40,8 @@ Own=""
 [PasswordGenerator]
 AdditionalChars=
 ExcludedChars=
-    '';
+      '';
+      force = true;
+    };
   };
 }
