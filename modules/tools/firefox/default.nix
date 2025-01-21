@@ -4,6 +4,22 @@ let
   extensionsDir = "${config.home.homeDirectory}/.mozilla/extensions";
 in
 {
+  # Add systemd target to ensure Firefox is stopped
+  systemd.user.services.firefox-stop = {
+    Unit = {
+      Description = "Stop Firefox before home-manager activation";
+      Before = [ "home-manager-user.service" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.util-linux}/bin/killall firefox || true";
+      RemainAfterExit = true;
+    };
+    Install = {
+      WantedBy = [ "home-manager-user.service" ];
+    };
+  };
+
   home.activation.firefoxExtensions = lib.hm.dag.entryAfter ["writeBoundary"] ''
     mkdir -p ${extensionsDir}
 
