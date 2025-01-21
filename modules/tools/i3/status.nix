@@ -37,16 +37,6 @@
             format_alt = " $icon {$signal_strength $ssid $frequency|Wired} $ip ";
           }
           {
-            block = "cpu";
-            interval = 1;
-            format = " $icon $frequency.eng(w:4) $utilization.eng(w:3) ";
-          }
-          {
-            block = "load";
-            interval = 1;
-            format = " $icon $1m.eng(w:4) $5m.eng(w:4) $15m.eng(w:4) ";
-          }
-          {
             block = "memory";
             format = " $icon $mem_used_percents ";
             format_alt = " $icon_swap $swap_used_percents ";
@@ -62,15 +52,25 @@
             format = " $icon $available ";
           }
           {
-            block = "time";
-            interval = 5;
-            format = " $icon $timestamp.datetime(f:'%V %b %d %R %Z') ";
+            block = "load";
+            interval = 1;
+            format = " $icon $1m.eng(w:4) $5m.eng(w:4) $15m.eng(w:4) ";
+          }
+          {
+            block = "cpu";
+            interval = 1;
+            format = " $icon $frequency.eng(w:4) $utilization.eng(w:3) ";
           }
           {
             block = "battery";
             format = " $icon $percentage {$time |}";
             device = "BAT1";
             missing_format = "";
+          }
+          {
+            block = "time";
+            interval = 5;
+            format = " $icon $timestamp.datetime(f:'%V %b %d %R %Z') ";
           }
         ];
       };
