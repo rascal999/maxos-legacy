@@ -5,7 +5,20 @@ with lib;
 let
   cfg = config.security;
 in {
-  config = mkIf (cfg.enable && cfg.strongPasswords) {
+  config = mkIf cfg.enable {
+    # Configure sudo to not require password
+    security.sudo.extraRules = [
+      {
+        users = [ "user" ];
+        commands = [
+          {
+            command = "ALL";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
+
     security.pam.loginLimits = [
       {
         domain = "*";
