@@ -6,16 +6,9 @@
     keepassxc
   ];
 
-  # Create KeePassXC config directory and default config
-  system.activationScripts.keepassxcConfig = {
-    text = ''
-      CONFIG_DIR="$HOME/.config/keepassxc"
-      CONFIG_FILE="$CONFIG_DIR/keepassxc.ini"
-      
-      mkdir -p "$CONFIG_DIR"
-      
-      if [ ! -f "$CONFIG_FILE" ]; then
-        cat > "$CONFIG_FILE" << EOL
+  # Configure KeePassXC using home-manager
+  home-manager.users.user = {
+    home.file.".config/keepassxc/keepassxc.ini".text = ''
 [Browser]
 Enabled=true
 AlwaysAllowAccess=true
@@ -39,9 +32,13 @@ MinimizeAfterUnlock=false
 ClearClipboardTimeout=30
 LockDatabaseIdle=true
 LockDatabaseIdleSeconds=600
-EOL
-      fi
+
+[KeeShare]
+Own="${config.home-manager.users.user.home.file.".config/keepassxc/keepassxc.ini".text}"
+
+[PasswordGenerator]
+AdditionalChars=
+ExcludedChars=
     '';
-    deps = [];
   };
 }
