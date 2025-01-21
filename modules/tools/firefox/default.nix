@@ -10,12 +10,12 @@
       DisplayMenuBar = "default-off";
     };
     profiles.default = {
-      extensions = [
-        pkgs.nur.repos.rycee.firefox-addons.ublock-origin
-        pkgs.nur.repos.rycee.firefox-addons.darkreader
-        pkgs.nur.repos.rycee.firefox-addons.sidebery
-        pkgs.nur.repos.rycee.firefox-addons.foxyproxy-standard
-        pkgs.nur.repos.rycee.firefox-addons.keepassxc-browser
+      extensions = with pkgs.firefox-addons; [
+        ublock-origin
+        darkreader
+        sidebery
+        foxyproxy-standard
+        keepassxc-browser
       ];
       settings = {
         # Enable dark theme
