@@ -4,40 +4,54 @@
   # Enable graphics
   hardware.graphics.enable = true;
 
-  # Blacklist Intel graphics
-  boot.blacklistedKernelModules = [ "i915" ];
-
-  # Use NVIDIA driver only
+  # Use both modesetting and NVIDIA drivers
   services.xserver = {
-    videoDrivers = [ "nvidia" ];
+    videoDrivers = [ "modesetting" "nvidia" ];
     
-    # Basic X11 configuration
+    # Configure hybrid graphics
     extraConfig = ''
+      Section "ServerLayout"
+        Identifier "layout"
+        Screen 0 "nvidia"
+        Inactive "intel"
+        Option "AllowNVIDIAGPUScreens"
+      EndSection
+
+      Section "Device"
+        Identifier "intel"
+        Driver "modesetting"
+        BusID "PCI:0:2:0"
+      EndSection
+
+      Section "Screen"
+        Identifier "intel"
+        Device "intel"
+      EndSection
+
       Section "Device"
         Identifier "nvidia"
         Driver "nvidia"
         BusID "PCI:1:0:0"
+        Option "AllowEmptyInitialConfiguration"
+        Option "AllowExternalGpus"
+        Option "RegistryDwords" "EnableBrightnessControl=1"
       EndSection
 
       Section "Screen"
-        Identifier "screen"
+        Identifier "nvidia"
         Device "nvidia"
-        Option "AllowEmptyInitialConfiguration" "true"
-      EndSection
-
-      Section "Module"
-        Load "modesetting"
+        Option "AllowEmptyInitialConfiguration"
       EndSection
     '';
   };
 
   # NVIDIA configuration
   hardware.nvidia = {
-    # Use stable drivers
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # Use beta drivers for Arc compatibility
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
     
-    # Disable open-source drivers
-    open = false;
+    # Enable open kernel modules
+    open = true;
     
     # Enable modesetting
     modesetting.enable = true;
@@ -45,26 +59,47 @@
     # Enable nvidia-settings
     nvidiaSettings = true;
 
+    # Configure PRIME for Intel Arc + NVIDIA
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      
+      # Bus IDs for hybrid graphics
+      intelBusId = "PCI:0:2:0";  # Meteor Lake-P Arc
+      nvidiaBusId = "PCI:1:0:0";  # RTX 4070 Max-Q
+    };
+
     # Power management
     powerManagement = {
       enable = true;
-      finegrained = false;
+      finegrained = true;
     };
   };
 
-  # Load NVIDIA modules
-  boot.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+  # Load Intel first, then NVIDIA
+  boot.initrd.kernelModules = [ "i915" ];
+  boot.kernelModules = [ "i915" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   
   # Configure module loading
   boot.extraModprobeConfig = ''
+    options i915 force_probe=7d55
     options nvidia-drm modeset=1
     options nvidia NVreg_PreserveVideoMemoryAllocations=1
+    options nvidia NVreg_RegistryDwords="EnableBrightnessControl=1"
   '';
 
-  # Add kernel parameters for NVIDIA
+  # Add kernel parameters
   boot.kernelParams = [
+    "i915.force_probe=7d55"
     "nvidia-drm.modeset=1"
-    "nomodeset"
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   ];
+
+  # Enable EDID for proper display detection
+  services.xserver.screenSection = ''
+    Option "UseEdid" "True"
+  '';
 }

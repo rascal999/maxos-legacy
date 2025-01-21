@@ -53,8 +53,10 @@
     # Display manager configuration
     displayManager = {
       defaultSession = "none+i3";
-      # Basic display setup
+      # Display setup for hybrid graphics
       setupCommands = ''
+        ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource modesetting NVIDIA-0
+        ${pkgs.xorg.xrandr}/bin/xrandr --auto
         ${pkgs.xorg.xset}/bin/xset s off -dpms
       '';
       lightdm = {
@@ -74,7 +76,20 @@
     nvidia-vaapi-driver
     glxinfo
     vulkan-tools
+    # Intel graphics utilities
+    intel-gpu-tools
+    libva-utils
+    # Power management
+    powertop
+    auto-cpufreq
   ];
+
+  # Enable power management services
+  services.auto-cpufreq.enable = true;
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "powersave";
+  };
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
