@@ -11,10 +11,7 @@
   ];
 
   # Enable home-manager
-  programs.home-manager = {
-    enable = true;
-    backupFileExtension = "backup";
-  };
+  programs.home-manager.enable = true;
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home = {
