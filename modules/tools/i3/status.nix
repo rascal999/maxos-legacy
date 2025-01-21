@@ -28,16 +28,6 @@
             format_alt = " $icon_swap $swap_used_percents ";
           }
           {
-            block = "disk_space";
-            path = "/";
-            info_type = "available";
-            alert_unit = "GB";
-            interval = 20;
-            warning = 20.0;
-            alert = 10.0;
-            format = " $icon $available ";
-          }
-          {
             block = "net";
             format = " $icon {$signal_strength $ssid $frequency|Wired} ";
             format_alt = " $icon {$signal_strength $ssid $frequency|Wired} $ip ";
@@ -49,9 +39,19 @@
             missing_format = "";
           }
           {
+            block = "disk_space";
+            path = "/";
+            info_type = "available";
+            alert_unit = "GB";
+            interval = 20;
+            warning = 20.0;
+            alert = 10.0;
+            format = " $icon $available ";
+          }
+          {
             block = "time";
             interval = 5;
-            format = " $icon $timestamp.datetime(f:'%V %b %d %R') ";
+            format = " $icon $timestamp.datetime(f:'%V %b %d %R %Z') ";
           }
         ];
       };
