@@ -6,6 +6,7 @@
     grc    # Generic colouriser
     lazygit # Terminal UI for git
     zsh-powerlevel10k  # For p10k command
+    beep   # For terminal notifications
   ];
 
   programs.zsh = {
@@ -73,6 +74,26 @@
     initExtra = ''
       # Source p10k config if it exists
       [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+      # Command execution time tracking and notification
+      __cmd_timestamp=0
+      
+      function preexec() {
+        __cmd_timestamp=$SECONDS
+      }
+      
+      function precmd() {
+        local exit_code=$?
+        local duration=$((SECONDS - __cmd_timestamp))
+        
+        if [[ $duration -gt 10 ]]; then
+          if [[ $exit_code -eq 0 ]]; then
+            beep -f 1000 -l 100  # High-pitched success beep
+          else
+            beep -f 200 -l 100   # Low-pitched failure beep
+          fi
+        fi
+      }
     '';
 
     oh-my-zsh = {
