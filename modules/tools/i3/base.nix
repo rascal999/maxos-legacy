@@ -36,6 +36,7 @@
         { command = "sleep 2 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
         { command = "sleep 1 && i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
         { command = "sleep 3 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
+        { command = "sleep 4 && i3-msg 'workspace 1: web'"; notification = false; }
       ];
 
       # Basic keybindings
