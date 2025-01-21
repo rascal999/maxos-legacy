@@ -11,7 +11,7 @@
     bars = {
       default = {
         theme = "nord-dark";
-        icons = "awesome6";
+        icons = "material-nf";
         blocks = [
           {
             block = "sound";
