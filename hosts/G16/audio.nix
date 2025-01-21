@@ -25,7 +25,7 @@
     };
   };
 
-  # Simple audio processing configuration
+  # Audio processing configuration with proper volume control
   services.pipewire.extraConfig.pipewire-pulse = {
     "stream.properties" = {
       "resample.quality" = 4;
@@ -37,6 +37,19 @@
       "pulse.default.rate" = "48000";
       "pulse.default.channels" = "2";
     };
+    "pulse.rules" = [
+      {
+        matches = [ { "device.name" = "~alsa_output.*" ; } ];
+        actions = {
+          "update-props" = {
+            "device.soft-volume" = true;
+            "device.volume-step" = "0.05";        # 5% volume steps
+            "device.volume-base" = "1.0";         # Normal base volume
+            "device.hw-volume" = false;           # Disable hardware volume
+          };
+        };
+      }
+    ];
   };
 
   # Additional audio packages
