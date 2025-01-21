@@ -7,6 +7,16 @@
     powertop.enable = true;
   };
 
+  # Ensure screen locks before suspend
+  services.logind = {
+    lidSwitch = "suspend";
+    extraConfig = ''
+      HandleLidSwitch=suspend
+      HandleLidSwitchExternalPower=lock
+      LidSwitchIgnoreInhibited=yes
+    '';
+  };
+
   # TLP power management
   services.tlp = {
     enable = true;
