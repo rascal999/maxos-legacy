@@ -75,6 +75,11 @@
       SOUND_POWER_SAVE_ON_AC = 0;
       SOUND_POWER_SAVE_ON_BAT = 1;
       SOUND_POWER_SAVE_CONTROLLER = "Y";
+      
+      # Disable wireless power management
+      WIFI_PWR_ON_AC = "off";
+      WIFI_PWR_ON_BAT = "off";
+      WOL_DISABLE = "Y";
     };
   };
 
