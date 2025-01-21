@@ -26,7 +26,10 @@
       # Autostart applications with delays to prevent race conditions
       startup = [
         { command = "/run/current-system/sw/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"; notification = false; }
-        { command = "${pkgs.redshift}/bin/redshift -P -O 1900"; notification = false; }
+        # Set initial brightness using xrandr
+        { command = "xrandr --output eDP-1 --brightness 0.3"; notification = false; }
+        # Use redshift without force provider and with smooth transition
+        { command = "${pkgs.redshift}/bin/redshift -O 2000 -t 6500:2000"; notification = false; }
         { command = "sleep 1 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
         { command = "sleep 2 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
         { command = "sleep 1 && i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
@@ -78,9 +81,9 @@
         "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
         "XF86AudioMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
         
-        # Brightness controls
-        "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
-        "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 5";
+        # Brightness controls using xrandr
+        "XF86MonBrightnessUp" = "exec sh -c 'curr=$(xrandr --verbose | grep -i brightness | cut -f2 -d\" \"); new=$(echo \"$curr + 0.1\" | bc); if [ \"$(echo \"$new <= 1.0\" | bc)\" -eq 1 ]; then xrandr --output eDP-1 --brightness $new; fi'";
+        "XF86MonBrightnessDown" = "exec sh -c 'curr=$(xrandr --verbose | grep -i brightness | cut -f2 -d\" \"); new=$(echo \"$curr - 0.1\" | bc); if [ \"$(echo \"$new >= 0.1\" | bc)\" -eq 1 ]; then xrandr --output eDP-1 --brightness $new; fi'";
         
         # Workspace switching
         "Mod1+1" = "workspace number 1: web";
