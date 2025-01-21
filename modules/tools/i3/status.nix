@@ -31,6 +31,7 @@
             block = "custom";
             command = "/home/user/git/github/monorepo/maxos/modules/desktop/redshift-brightness.sh get";
             json = true;
+            format = " $text ";
             on_click = "";
             on_click_right = "";
             on_scroll_up = "/home/user/git/github/monorepo/maxos/modules/desktop/redshift-brightness.sh up";
