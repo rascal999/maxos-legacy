@@ -11,6 +11,8 @@
       # Use pactl for volume control since we're using PipeWire
       { command = "sleep 2 && ${pkgs.pavucontrol}/bin/pavucontrol --start-hidden"; notification = false; }
       { command = "sleep 1 && ${pkgs.flameshot}/bin/flameshot"; notification = false; }
+      # Battery monitoring
+      { command = "sleep 1 && ${pkgs.cbatticon}/bin/cbatticon -u 5"; notification = false; }
     ];
   };
 
@@ -21,5 +23,6 @@
     pavucontrol
     light
     pcmanfm
+    cbatticon
   ];
 }
