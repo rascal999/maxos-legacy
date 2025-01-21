@@ -1,15 +1,22 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Configure KeePassXC through home-manager
+  # Install KeePassXC
+  environment.systemPackages = with pkgs; [
+    keepassxc
+  ];
+
+  # Configure dark theme
   home-manager.users.user = {
-    programs.keepassxc = {
-      enable = true;
-      settings = {
-        GUI = {
-          ApplicationTheme = "dark";
-        };
-      };
+    xdg.configFile."keepassxc/keepassxc.ini" = {
+      text = ''
+[General]
+ConfigVersion=2
+
+[GUI]
+ApplicationTheme=dark
+      '';
+      force = true;
     };
   };
 }
