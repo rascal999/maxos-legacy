@@ -33,11 +33,6 @@
       USB_AUTOSUSPEND = 1;
       USB_DENYLIST = "046d:c548"; # Exclude Logitech receiver
       
-      # Audio power management
-      SOUND_POWER_SAVE = 1;
-      SOUND_POWER_SAVE_ON_AC = 10;
-      SOUND_POWER_SAVE_ON_BAT = 5;
-      
       # Wireless power management
       WIFI_PWR_ON_AC = "off";
       WIFI_PWR_ON_BAT = "on";
