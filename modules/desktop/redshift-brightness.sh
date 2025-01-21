@@ -33,7 +33,8 @@ case "$1" in
     fi
     ;;
   "get")
-    echo "$current"
+    percentage=$(echo "$current * 100" | bc)
+    echo "${percentage%.*}%"
     ;;
   "set")
     if [ -n "$2" ] && [ $(echo "$2 >= 0.1" | bc) -eq 1 ] && [ $(echo "$2 <= 1.0" | bc) -eq 1 ]; then
