@@ -22,20 +22,26 @@ icons = "material-nf"
 [[block]]
 block = "sound"
 format = " $icon {$volume|} "
-step_width = 10
+step_width = 5
 max_vol = 100
 device_kind = "source"
 headphones_indicator = true
 show_volume_when_muted = true
+driver = "pulseaudio"
+natural_mapping = true
+device_profile = "analog-stereo"
 
 [[block]]
 block = "sound"
 format = " $icon {$volume|} "
-step_width = 10
+step_width = 5
 max_vol = 100
 device_kind = "sink"
 headphones_indicator = true
 show_volume_when_muted = true
+driver = "pulseaudio"
+natural_mapping = true
+device_profile = "analog-stereo"
 
 [[block]]
 block = "net"
