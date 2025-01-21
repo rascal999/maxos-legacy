@@ -4,12 +4,65 @@
   programs.home-manager.enable = true;
   
   home.packages = with pkgs; [
-    i3status
+    i3status-rust
     i3lock
     dmenu
     gnome-keyring
     redshift
   ];
+
+  # Configure i3status-rust
+  programs.i3status-rust = {
+    enable = true;
+    bars = {
+      default = {
+        theme = "nord-dark";
+        icons = "awesome6";
+        blocks = [
+          {
+            block = "cpu";
+            interval = 1;
+            format = " $icon $utilization ";
+          }
+          {
+            block = "memory";
+            format = " $icon $mem_used_percents ";
+            format_alt = " $icon_swap $swap_used_percents ";
+          }
+          {
+            block = "disk_space";
+            path = "/";
+            info_type = "available";
+            alert_unit = "GB";
+            interval = 20;
+            warning = 20.0;
+            alert = 10.0;
+            format = " $icon $available ";
+          }
+          {
+            block = "net";
+            format = " $icon {$signal_strength $ssid $frequency|Wired} ";
+            format_alt = " $icon {$signal_strength $ssid $frequency|Wired} $ip ";
+          }
+          {
+            block = "sound";
+            format = " $icon {$volume|} ";
+          }
+          {
+            block = "battery";
+            format = " $icon $percentage {$time |}";
+            device = "BAT0";
+            missing_format = "";
+          }
+          {
+            block = "time";
+            interval = 5;
+            format = " $icon $timestamp.datetime(f:'%a %d/%m %R') ";
+          }
+        ];
+      };
+    };
+  };
 
   xsession.windowManager.i3 = {
     enable = true;
@@ -126,11 +179,35 @@
       # Basic appearance settings
       bars = [{
         position = "bottom";
-        statusCommand = "${pkgs.i3status}/bin/i3status";
+        statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-default.toml";
         colors = {
           background = "#2e3440";
           statusline = "#eceff4";
           separator = "#4c566a";
+          focusedWorkspace = {
+            background = "#5e81ac";
+            border = "#5e81ac";
+            text = "#eceff4";
+          };
+          activeWorkspace = {
+            background = "#4c566a";
+            border = "#4c566a";
+            text = "#eceff4";
+          };
+          inactiveWorkspace = {
+            background = "#3b4252";
+            border = "#3b4252";
+            text = "#eceff4";
+          };
+          urgentWorkspace = {
+            background = "#bf616a";
+            border = "#bf616a";
+            text = "#eceff4";
+          };
+        };
+        fonts = {
+          names = ["JetBrainsMono Nerd Font"];
+          size = 11.0;
         };
       }];
 
