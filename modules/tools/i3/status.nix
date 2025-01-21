@@ -12,7 +12,7 @@
       default = {
         theme = "nord-dark";
         icons = "material-nf";
-        theme_overrides = {
+        theme_overrides_nord_dark = {
           separator = "";
           separator_fg = "auto";
           separator_bg = "auto";
