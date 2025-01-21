@@ -26,26 +26,14 @@
       PCIE_ASPM_ON_BAT = "powersupersave";
       
       # Runtime Power Management for PCI(e) devices
-      RUNTIME_PM_ON_AC = "on";
-      RUNTIME_PM_ON_BAT = "auto";
+      RUNTIME_PM_ON_AC = lib.mkForce "on";
+      RUNTIME_PM_ON_BAT = lib.mkForce "auto";
       
-      # USB autosuspend
-      USB_AUTOSUSPEND = 1;
-      USB_DENYLIST = "3-3"; # Exclude Logitech USB receiver
-      USB_EXCLUDE_AUDIO = 1;
-      USB_EXCLUDE_BTUSB = 1;
-      USB_EXCLUDE_PHONE = 1;
-      USB_EXCLUDE_PRINTER = 1;
+      # USB autosuspend - inheriting USB settings from rog.nix
       
-      # Audio power management
-      SOUND_POWER_SAVE_ON_AC = 0;
-      SOUND_POWER_SAVE_ON_BAT = 1;
-      SOUND_POWER_SAVE_CONTROLLER = "Y";
+      # Audio power management - inheriting from rog.nix
       
-      # Wireless power management
-      WIFI_PWR_ON_AC = "off";
-      WIFI_PWR_ON_BAT = "on";
-      WOL_DISABLE = "Y";
+      # Wireless power management - inheriting from rog.nix
       
       # Platform specific settings
       PLATFORM_PROFILE_ON_AC = "performance";
