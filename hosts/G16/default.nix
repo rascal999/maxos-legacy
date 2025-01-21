@@ -114,7 +114,7 @@
     backupFileExtension = "hm-bak-2024";
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.user = { pkgs ... }: {
+    users.user = { pkgs, ... }: {
       imports = [
         ./home.nix
         ../../modules/tools/i3/desktop.nix
