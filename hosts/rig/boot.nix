@@ -15,14 +15,25 @@
     ];
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+      
+      # LUKS support
       luks.devices = {
         cryptroot = {
-          device = "/dev/disk/by-uuid/64f62ad3-8fcc-4475-afcb-a49952fe77d1";
+          device = "/dev/disk/by-uuid/1dbe6ded-7ad7-454c-8e4b-cbf97ebde301";
           preLVM = true;
           allowDiscards = true;
           bypassWorkqueues = true;
         };
       };
+
+      # Ensure LUKS modules are included
+      kernelModules = [
+        "aes"
+        "aesni_intel"
+        "cryptd"
+        "dm_crypt"
+        "dm_mod"
+      ];
     };
     loader = {
       efi = {
@@ -42,12 +53,12 @@
   # Filesystem configuration
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/a6d30279-d2aa-47c0-9b8d-19adfd9c735c";
+      device = "/dev/disk/by-uuid/72998983-4655-405d-80a8-4ff6a0729a19";
       fsType = "ext4";
       neededForBoot = true;
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/1677-DACD";
+      device = "/dev/disk/by-uuid/A302-1B51";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
@@ -57,5 +68,6 @@
   environment.systemPackages = with pkgs; [
     os-prober  # OS detection for GRUB
     ntfs3g     # NTFS support for Windows partitions
+    cryptsetup # LUKS tools
   ];
 }
