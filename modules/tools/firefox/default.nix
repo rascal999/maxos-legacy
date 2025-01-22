@@ -39,6 +39,10 @@
     profiles.default = {
       search.default = "Google";
       isDefault = true;
+      extraConfig = ''
+        # Exclude search.json.mozlz4 files from Home Manager management
+        lockPref("services.sync.prefs.sync.browser.search.widget.inNavBar", false);
+      '';
       settings = {
         # Enable dark theme
         "browser.theme.content-theme" = 0;
