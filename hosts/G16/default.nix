@@ -40,7 +40,7 @@
     # Keyboard layout
     xkb = {
       layout = "gb";
-      variant = "dvorak";
+      variant = "dvorakukp";
       options = "terminate:ctrl_alt_bksp";
     };
 
