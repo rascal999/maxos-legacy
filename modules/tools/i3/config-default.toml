@@ -20,6 +20,13 @@ critical_fg = "#DC322F"
 icons = "material-nf"
 
 [[block]]
+block = "sound"
+format = " $icon {$volume|} "
+[[block.click]]
+button = "left"
+cmd = "pavucontrol"
+
+[[block]]
 block = "music"
 format = " $icon {$combo.str(max_w:20) |}"
 [[block.click]]
