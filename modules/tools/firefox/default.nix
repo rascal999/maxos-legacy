@@ -39,8 +39,6 @@
     profiles.default = {
       search.default = "Google";
       isDefault = true;
-      path = "default";
-      excludeFiles = ["search.json.mozlz4.backup"];
       settings = {
         # Enable dark theme
         "browser.theme.content-theme" = 0;
