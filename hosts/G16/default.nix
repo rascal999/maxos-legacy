@@ -22,7 +22,12 @@
   programs.zsh.enable = true;
 
   # Enable security module with default settings
-  security.enable = true;
+  security = {
+    enable = true;
+    authorizedKeys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICjMXN/z0u4Sf/+ODpG49ZFBNHqcZFxNgFhTts1GAJrr user@nixos"  # rig's key
+    ];
+  };
 
   # Set hostname
   networking.hostName = "G16";
