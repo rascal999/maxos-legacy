@@ -6,7 +6,6 @@
     grc    # Generic colouriser
     lazygit # Terminal UI for git
     zsh-powerlevel10k  # For p10k command
-    beep   # For terminal notifications
   ];
 
   programs.zsh = {
@@ -85,14 +84,6 @@
       function precmd() {
         local exit_code=$?
         local duration=$((SECONDS - __cmd_timestamp))
-        
-        if [[ $duration -gt 10 ]]; then
-          if [[ $exit_code -eq 0 ]]; then
-            beep -f 1000 -l 100  # High-pitched success beep
-          else
-            beep -f 200 -l 100   # Low-pitched failure beep
-          fi
-        fi
       }
     '';
 
