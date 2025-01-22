@@ -159,4 +159,18 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # i3 configuration for G16
+  xsession.windowManager.i3.config = {
+    workspaceOutputAssign = [
+      { workspace = "0: slack"; output = "eDP-1"; }
+      { workspace = "1: web"; output = "eDP-1"; }
+      { workspace = "2: code"; output = "eDP-1"; }
+      { workspace = "3: term"; output = "eDP-1"; }
+      { workspace = "4: burp"; output = "eDP-1"; }
+      { workspace = "5: term"; output = "eDP-1"; }
+      { workspace = "8: logseq"; output = "eDP-1"; }
+      { workspace = "9: pw"; output = "eDP-1"; }
+    ];
+  };
 }
