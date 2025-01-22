@@ -26,7 +26,10 @@
     packages = with pkgs; [
       # Fonts
       (nerdfonts.override { fonts = [ "JetBrainsMono" "Meslo" ]; })
-      
+
+      # Media controls
+      playerctl
+
       # Development tools
       git
       gh
