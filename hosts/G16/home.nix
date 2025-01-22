@@ -66,6 +66,7 @@
       arandr
       redshift
       brightnessctl
+      pasystray
     ];
 
     # Environment variables
