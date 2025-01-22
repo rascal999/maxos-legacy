@@ -28,33 +28,12 @@
     config = {
       modifier = "Mod1";  # Use Alt key as modifier
 
-      # Window rules for workspace assignment and urgent hint handling
+      # Window rules for workspace assignment
       window.commands = [
         # Force Firefox to always move to web workspace and focus it
         {
           command = "move to workspace \"1: web\", focus";
           criteria = { class = "^Firefox$"; };
-        }
-        # Disable urgent hints for startup applications
-        {
-          command = "urgent disable";
-          criteria = { class = "^Firefox$"; };
-        }
-        {
-          command = "urgent disable";
-          criteria = { class = "^Code$"; };
-        }
-        {
-          command = "urgent disable";
-          criteria = { class = "^Slack$"; };
-        }
-        {
-          command = "urgent disable";
-          criteria = { class = "^Logseq$"; };
-        }
-        {
-          command = "urgent disable";
-          criteria = { class = "^Alacritty$"; };
         }
       ];
 
@@ -69,6 +48,8 @@
 
       # Autostart applications with delays to prevent race conditions
       startup = [
+        # Disable urgent hints before startup
+        { command = "i3-msg 'for_window [class=.*] no_urgent enable'"; notification = false; }
         { command = "/run/current-system/sw/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"; notification = false; }
         # Set initial brightness and color temperature using redshift
         { command = "redshift -O 3500 -b 0.6"; notification = false; }
@@ -83,6 +64,8 @@
         { command = "sleep 5 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
         { command = "sleep 6 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
         { command = "sleep 7 && i3-msg 'workspace 1: web'"; notification = false; }
+        # Re-enable urgent hints after all applications have started
+        { command = "sleep 8 && i3-msg 'for_window [class=.*] no_urgent disable'"; notification = false; }
       ];
 
       # Basic keybindings
