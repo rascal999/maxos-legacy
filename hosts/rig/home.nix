@@ -165,13 +165,13 @@
   # i3 configuration for rig
   xsession.windowManager.i3.config = {
     # Set tray output to ultrawide monitor
-    bars = [
-      {
-        output = "DP-2";
-        trayOutput = "DP-2";
-        position = "top";
-      }
-    ];
+    bars = [{
+      position = "top";
+      extraConfig = ''
+        output DP-2
+        tray_output DP-2
+      '';
+    }];
 
     # Monitor setup in startup
     startup = [
