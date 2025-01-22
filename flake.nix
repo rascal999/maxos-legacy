@@ -72,7 +72,7 @@
               useUserPackages = true;
               users.user = { pkgs, ... }: {
                 imports = [
-                  ./hosts/desktop/home.nix
+                  ./hosts/desktop-test-vm/home.nix
                 ];
                 home.stateVersion = "24.11";
               };
