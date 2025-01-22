@@ -6,7 +6,16 @@
     userSettings = {
       "terminal.integrated.defaultProfile.linux" = "bash";
       "keyboard.dispatch" = "keyCode";
+      "vim.useSystemClipboard" = true;
+      "editor.lineNumbers" = "relative";
+      "vim.hlsearch" = true;
+      "vim.insertModeKeyBindings" = [];
+      "vim.normalModeKeyBindings" = [];
+      "vim.visualModeKeyBindings" = [];
     };
+    extensions = with pkgs.vscode-extensions; [
+      vscodevim.vim
+    ];
     keybindings = [
       {
         key = "ctrl+t";
