@@ -38,7 +38,7 @@
 
     # Keyboard layout
     xkb = {
-      layout = "us";
+      layout = "gb";
       variant = "dvorak";
       options = "terminate:ctrl_alt_bksp";
     };

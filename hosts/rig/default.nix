@@ -38,8 +38,8 @@
 
     # Keyboard layout
     xkb = {
-      layout = "us";
-      variant = "dvorak-uk";
+      layout = "gb";
+      variant = "dvorak";
       options = "terminate:ctrl_alt_bksp";
     };
 
