@@ -10,6 +10,7 @@
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
     ../../modules/hardware/network.nix
+    ../../modules/hardware/bluetooth.nix
     ../../modules/tools/syncthing.nix
   ];
 

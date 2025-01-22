@@ -14,6 +14,8 @@
       # Use pactl for volume control since we're using PipeWire
       { command = "sleep 2 && ${pkgs.pavucontrol}/bin/pavucontrol --start-hidden"; notification = false; }
       { command = "sleep 1 && ${pkgs.flameshot}/bin/flameshot"; notification = false; }
+      # Bluetooth applet
+      { command = "sleep 1 && ${pkgs.blueman}/bin/blueman-applet"; notification = false; }
     ];
   };
 
@@ -24,5 +26,6 @@
     pavucontrol
     light
     pcmanfm
+    blueman
   ];
 }
