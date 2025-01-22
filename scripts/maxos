@@ -35,10 +35,18 @@ update_system() {
     cd "$REPO_DIR" || exit 1
 
     echo "Found monorepo at: $REPO_DIR"
+    
+    # Check for uncommitted changes
+    if [ -n "$(git status --porcelain)" ]; then
+        echo "Error: Repository has uncommitted changes. Please commit or stash them first." >&2
+        exit 1
+    fi
+
     echo "Pulling latest changes..."
     git pull
 
     echo "Rebuilding system for host: $HOSTNAME"
+    cd "$REPO_DIR/maxos" || exit 1
     sudo nixos-rebuild switch --flake ".#$HOSTNAME"
 }
 
