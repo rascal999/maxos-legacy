@@ -18,7 +18,7 @@ rm -f "$MAXOS_DIR/result"
 
 echo -e "${GREEN}Building VM...${NC}"
 cd "$MAXOS_DIR"
-nix build .#nixosConfigurations.desktop-test-vm.config.system.build.vm
+nix --extra-experimental-features "nix-command flakes" build .#nixosConfigurations.desktop-test-vm.config.system.build.vm
 
 echo -e "${GREEN}Running VM...${NC}"
 ./result/bin/run-nixos-vm
