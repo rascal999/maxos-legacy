@@ -27,13 +27,23 @@ button = "left"
 cmd = "qpwgraph"
 [[block.click]]
 button = "right"
-cmd = "wpctl set-mute easyeffects_sink toggle"
+cmd = "wpctl set-mute @DEFAULT_SINK@ toggle"
 [[block.click]]
 button = "up"
-cmd = "wpctl set-volume easyeffects_sink 5%+"
+cmd = "wpctl set-volume @DEFAULT_SINK@ 5%+"
 [[block.click]]
 button = "down"
-cmd = "wpctl set-volume easyeffects_sink 5%-"
+cmd = "wpctl set-volume @DEFAULT_SINK@ 5%-"
+
+[[block]]
+block = "music"
+format = " $icon {$combo.str(max_w:20) |}"
+[[block.click]]
+button = "left"
+cmd = "playerctl play-pause"
+[[block.click]]
+button = "right"
+cmd = "playerctl next"
 
 [[block]]
 block = "net"
