@@ -14,7 +14,7 @@
       }
       {
         key = "ctrl+t";
-        command = "claude-dev.newChat";
+        command = "claude.newChat";
       }
     ];
   };
