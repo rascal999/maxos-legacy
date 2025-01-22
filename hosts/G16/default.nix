@@ -134,6 +134,7 @@
       home.sessionVariables = {
         GTK_THEME = "Adwaita:dark";
         QT_QPA_PLATFORMTHEME = "qt5ct";
+        HOST = config.networking.hostName;
       };
     };
   };
