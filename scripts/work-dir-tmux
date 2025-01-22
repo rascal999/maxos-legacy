@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-cd /home/user/work_today
+TARGET=$(readlink -f /home/user/work_today)
+cd "$TARGET"
 eza --long --all --header --icons --git
 exec $SHELL
