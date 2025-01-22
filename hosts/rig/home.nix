@@ -164,13 +164,6 @@
 
   # i3 configuration for rig
   xsession.windowManager.i3.config = {
-    # Configure tray output for rig
-    bars = lib.mkDefault [{
-      extraConfig = ''
-        tray_output DP-2
-      '';
-    }];
-
     # Monitor setup in startup
     startup = [
       { command = "$HOME/.screenlayout/dual-monitor.sh"; notification = false; }
