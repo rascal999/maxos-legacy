@@ -55,6 +55,8 @@
         "browser.sessionstore.resume_from_crash" = true;
         "browser.sessionstore.max_tabs_undo" = 50;
         "browser.sessionstore.max_windows_undo" = 10;
+        # Disable password saving prompts
+        "signon.rememberSignons" = false;
       };
       userChrome = ''
         /* Pin DarkReader extension button */
