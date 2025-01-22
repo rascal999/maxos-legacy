@@ -69,6 +69,12 @@
     wireplumber      # Session manager for PipeWire
   ];
 
+  # Enable EasyEffects service
+  services.easyeffects = {
+    enable = true;
+    preset = "default";  # Default preset to load
+  };
+
   # Load ALSA UCM config for ROG laptops
   boot.extraModprobeConfig = ''
     options snd_hda_intel model=asus-zenbook
