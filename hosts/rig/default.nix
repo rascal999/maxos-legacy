@@ -23,6 +23,9 @@
   # Enable security module with default settings
   security.enable = true;
 
+  # Set hostname
+  networking.hostName = "rig";
+
   # X11 configuration
   services.xserver = {
     enable = true;
