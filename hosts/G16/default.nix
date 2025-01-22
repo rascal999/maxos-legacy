@@ -12,6 +12,7 @@
     ../../modules/desktop/default.nix
     ../../modules/hardware/network.nix
     ../../modules/tools/syncthing.nix
+    ../../modules/scripts/default.nix
   ];
 
   # Disable system-wide Firefox
