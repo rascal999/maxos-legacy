@@ -27,13 +27,13 @@ button = "left"
 cmd = "qpwgraph"
 [[block.click]]
 button = "right"
-cmd = "wpctl set-mute @DEFAULT_SINK@ toggle"
+cmd = "wpctl set-mute easyeffects_sink toggle"
 [[block.click]]
 button = "up"
-cmd = "wpctl set-volume @DEFAULT_SINK@ 5%+"
+cmd = "wpctl set-volume easyeffects_sink 5%+"
 [[block.click]]
 button = "down"
-cmd = "wpctl set-volume @DEFAULT_SINK@ 5%-"
+cmd = "wpctl set-volume easyeffects_sink 5%-"
 
 [[block]]
 block = "net"
