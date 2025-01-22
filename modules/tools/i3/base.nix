@@ -69,7 +69,7 @@
         "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
         
         # Work directory
-        "Mod1+h" = "exec ${pkgs.bash}/bin/bash ${../../../scripts/work-dir} && ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session -c /home/user/work_today ${../../../scripts/work-dir-tmux}";
+        "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session ${../../../scripts/work-dir-tmux}";
         
         # Program launcher
         "Mod1+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
