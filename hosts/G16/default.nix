@@ -36,6 +36,12 @@
   services.xserver = {
     enable = true;
 
+    # Window manager configuration
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3;
+    };
+
     # Keyboard layout
     xkb = {
       layout = "gb";
