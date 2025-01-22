@@ -8,6 +8,7 @@
     ../../modules/tools/zsh.nix
     ../../modules/tools/rofi/default.nix
     ../../modules/tools/firefox/default.nix
+    ../../modules/tools/vscode.nix
   ];
 
   # Enable home-manager
@@ -105,13 +106,6 @@
 
   # Additional program configurations
   programs = {
-    vscode = {
-      enable = true;
-      userSettings = {
-        "terminal.integrated.defaultProfile.linux" = "bash";
-        "keyboard.dispatch" = "keyCode";
-      };
-    };
 
     bash = {
       enable = true;

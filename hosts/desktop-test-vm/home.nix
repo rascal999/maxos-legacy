@@ -8,6 +8,7 @@
     ../../modules/tools/zsh.nix
     ../../modules/tools/rofi/default.nix
     ../../modules/tools/firefox/default.nix
+    ../../modules/tools/vscode.nix
   ];
 
   # Enable home-manager
