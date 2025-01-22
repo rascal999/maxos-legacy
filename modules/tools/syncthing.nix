@@ -39,11 +39,14 @@
         "G16" = {
           id = "UVHYVJX-YL2SG2C-NY5PZOH-BRXFS6B-34V5WNF-PIO7MS4-BQY36IR-RQGIRQW";
         };
+        "rig" = {
+          id = "CCHEGMG-5SBOBN3-SLJJZMY-7T7HNG4-BQDWU6T-C4FUI66-5EJ5CN5-I6N5MQR";
+        };
       };
       folders = {
         "share" = {
           path = "/home/user/share";
-          devices = [ "G16" ];
+          devices = [ "G16" "rig" ];
         };
       };
       gui = {
