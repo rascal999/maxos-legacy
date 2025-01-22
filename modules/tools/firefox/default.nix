@@ -1,6 +1,15 @@
 { config, lib, pkgs, ... }:
 
 {
+  home.file = {
+    ".mozilla/firefox/default/search.json.mozlz4" = {
+      enable = lib.mkForce false;
+    };
+    ".mozilla/firefox/default/search.json.mozlz4.backup" = {
+      enable = lib.mkForce false;
+    };
+  };
+
   programs.firefox = {
     enable = true;
     policies = {
