@@ -164,9 +164,10 @@
 
   # i3 configuration for rig
   xsession.windowManager.i3.config = {
-    # Set tray output to ultrawide monitor
+    # Configure i3 bar with status and tray
     bars = [{
       position = "top";
+      statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-default.toml";
       extraConfig = ''
         output DP-2
         tray_output DP-2
