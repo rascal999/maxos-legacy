@@ -164,8 +164,12 @@
 
   # i3 configuration for rig
   xsession.windowManager.i3.config = {
-    # Disable default bar and configure single bar for rig
-    bars = [];
+    # Configure tray output for rig
+    bars = lib.mkDefault [{
+      extraConfig = ''
+        tray_output DP-2
+      '';
+    }];
 
     # Monitor setup in startup
     startup = [
