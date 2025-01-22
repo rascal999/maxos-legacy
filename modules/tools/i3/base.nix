@@ -21,6 +21,7 @@
     dmenu
     gnome-keyring
     redshift
+    wmctrl
   ];
 
   xsession.windowManager.i3 = {
@@ -83,6 +84,8 @@
         { command = "sleep 5 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
         { command = "sleep 6 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
         { command = "sleep 7 && i3-msg 'workspace 1: web'"; notification = false; }
+        # Clear urgent flags after all apps have launched
+        { command = "sleep 8 && clear-urgent"; notification = false; }
       ];
 
       # Basic keybindings
