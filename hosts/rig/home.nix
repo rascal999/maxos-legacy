@@ -164,6 +164,15 @@
 
   # i3 configuration for rig
   xsession.windowManager.i3.config = {
+    # Set tray output to ultrawide monitor
+    bars = [
+      {
+        output = "DP-2";
+        trayOutput = "DP-2";
+        position = "top";
+      }
+    ];
+
     # Monitor setup in startup
     startup = [
       { command = "$HOME/.screenlayout/dual-monitor.sh"; notification = false; }
