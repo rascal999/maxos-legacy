@@ -33,7 +33,7 @@
       };
       fonts = {
         names = ["JetBrainsMono Nerd Font"];
-        size = 24.0;  # Temporarily increased for debugging
+        size = 11.0;
       };
     }];
 
