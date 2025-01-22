@@ -51,8 +51,9 @@
 
   # Configure networking and SSH for VM
   networking = {
-    useDHCP = true;
+    useDHCP = lib.mkForce true;  # Force DHCP for VM
     firewall.enable = lib.mkForce false;
+    networkmanager.enable = false;  # Disable NetworkManager in VM
   };
 
   # Enable SSH with password auth
