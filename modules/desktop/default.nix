@@ -1,8 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  redshiftBrightness = pkgs.writeShellScriptBin "redshift-brightness" (builtins.readFile ./redshift-brightness.sh);
-in
 {
   imports = [
     ../tools/keepassxc.nix
@@ -31,7 +28,6 @@ in
     bc  # For floating point calculations in brightness control
     adwaita-icon-theme
     redshift  # For color temperature and brightness adjustment
-    redshiftBrightness  # Our packaged brightness control script
   ];
 
   # Enable dconf for GTK settings

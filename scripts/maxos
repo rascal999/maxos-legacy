@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# Function to find monorepo directory
+find_monorepo() {
+    # First check if MONOREPO_DIR environment variable is set
+    if [ -n "$MONOREPO_DIR" ] && [ -d "$MONOREPO_DIR/maxos" ]; then
+        echo "$MONOREPO_DIR"
+        return 0
+    fi
+
+    # Try common locations
+    common_paths=(
+        "$HOME/git/github/monorepo"
+        "$HOME/github/monorepo"
+        "$HOME/monorepo"
+    )
+
+    for path in "${common_paths[@]}"; do
+        if [ -d "$path/maxos" ]; then
+            echo "$path"
+            return 0
+        fi
+    done
+
+    echo "Error: Could not find monorepo directory. Please set MONOREPO_DIR environment variable." >&2
+    exit 1
+}
+
+# Get the current hostname
+HOSTNAME=$(hostname)
+
+# Function to update system
+update_system() {
+    REPO_DIR=$(find_monorepo)
+    cd "$REPO_DIR" || exit 1
+
+    echo "Found monorepo at: $REPO_DIR"
+    echo "Pulling latest changes..."
+    git pull
+
+    echo "Rebuilding system for host: $HOSTNAME"
+    sudo nixos-rebuild switch --flake ".#$HOSTNAME"
+}
+
+case "$1" in
+    "update")
+        update_system
+        ;;
+    *)
+        echo "Usage: maxos update"
+        echo "  update    - Pull changes and rebuild system"
+        exit 1
+        ;;
+esac

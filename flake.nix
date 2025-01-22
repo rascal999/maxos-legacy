@@ -24,6 +24,7 @@
   in {
     nixosModules = {
       security = import ./modules/security/default.nix;
+      scripts = import ./modules/scripts/default.nix;
     };
 
     nixosConfigurations = {
@@ -39,6 +40,7 @@
               })
             ];
           }
+          self.nixosModules.scripts
           ./hosts/G16/default.nix
           home-manager.nixosModules.home-manager
           {
@@ -64,6 +66,7 @@
               nur.overlays.default
             ];
           }
+          self.nixosModules.scripts
           ./hosts/desktop-test-vm/default.nix
           home-manager.nixosModules.home-manager
           {
@@ -92,6 +95,7 @@
               })
             ];
           }
+          self.nixosModules.scripts
           ./hosts/rig/default.nix
           home-manager.nixosModules.home-manager
           {
