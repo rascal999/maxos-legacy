@@ -1,20 +1,12 @@
 #!/usr/bin/env bash
 
-# Get the physical path of work_today
-TARGET=$(readlink -f /home/user/work_today)
+# Create today's work directory
+WORK_DIR="/home/user/work/$(date +%Y/%m/%d)"
+mkdir -p "$WORK_DIR"
 
-# Get current physical path
-CURRENT=$(pwd -P)
+# Change to the directory and show contents
+cd "$WORK_DIR"
+eza --long --all --header --icons --git
 
-# Only cd if we're not already in the target directory
-if [ "$CURRENT" != "$TARGET" ]; then
-    cd "$TARGET" || exit 1
-fi
-
-# Use pwd -P to show physical path in listing
-PWD=$(pwd -P) eza --long --all --header --icons --git
-
-# Start new shell but prevent recursive navigation
-PROMPT_COMMAND='if [[ "$(pwd -P)" != "'$TARGET'" ]]; then cd "'$TARGET'"; fi'
-export PROMPT_COMMAND
+# Start new shell
 exec $SHELL

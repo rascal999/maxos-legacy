@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-# Create today's work directory
-WORK_DIR="/home/user/work/$(date +%Y/%m/%d)"
-mkdir -p "$WORK_DIR"
-
-# Update work_today symlink
-ln -sf "$WORK_DIR" /home/user/work_today
