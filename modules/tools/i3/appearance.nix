@@ -6,6 +6,7 @@
     bars = [{
       position = "bottom";
       statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-default.toml";
+      height = 100;
       colors = {
         background = "#000000";
         statusline = "#eceff4";
