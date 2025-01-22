@@ -24,20 +24,13 @@ block = "sound"
 format = " $icon {$volume|} "
 step_width = 5
 max_vol = 100
-device_kind = "source"
-headphones_indicator = true
-show_volume_when_muted = true
-driver = "pipewire"
-
-[[block]]
-block = "sound"
-format = " $icon {$volume|} "
-step_width = 5
-max_vol = 100
 device_kind = "sink"
 headphones_indicator = true
 show_volume_when_muted = true
 driver = "pipewire"
+mappings = [
+    {name = "default", icon = ""}
+]
 
 [[block]]
 block = "net"
