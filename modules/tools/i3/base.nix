@@ -37,23 +37,23 @@
         }
         # Disable urgent hints for startup applications
         {
-          command = "no_urgent enable";
+          command = "urgent ignore";
           criteria = { class = "^Firefox$"; };
         }
         {
-          command = "no_urgent enable";
+          command = "urgent ignore";
           criteria = { class = "^Code$"; };
         }
         {
-          command = "no_urgent enable";
+          command = "urgent ignore";
           criteria = { class = "^Slack$"; };
         }
         {
-          command = "no_urgent enable";
+          command = "urgent ignore";
           criteria = { class = "^Logseq$"; };
         }
         {
-          command = "no_urgent enable";
+          command = "urgent ignore";
           criteria = { class = "^Alacritty$"; };
         }
       ];
