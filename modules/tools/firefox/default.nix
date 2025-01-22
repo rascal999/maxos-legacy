@@ -1,7 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.file.".mozilla/firefox/default/search.json.mozlz4.backup".force = false;
+  home.file.".mozilla/firefox/default/search.json.mozlz4.backup" = {
+    force = false;
+    source = config.lib.file.mkOutOfStoreSymlink 
+      "${config.home.homeDirectory}/.mozilla/firefox/default/search.json.mozlz4.backup";
+  };
   
   programs.firefox = {
     enable = true;
