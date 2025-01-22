@@ -8,10 +8,15 @@
     # Basic X11 configuration
     screenSection = ''
       Option "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-      Option "TripleBuffer" "on"
+      Option "TripleBuffer" "off"
       Option "AllowIndirectGLXProtocol" "off"
       Option "VariableRefresh" "off"
       Option "MaxFramesAllowed" "1"
+      Option "SyncToVBlank" "1"
+      Option "RRRotate" "normal"
+      Option "UseNvKmsCompositionPipeline" "1"
+      Option "UseTimerFD" "1"
+      Option "SwapbuffersWait" "1"
     '';
   };
 

@@ -68,7 +68,7 @@
 
   # Enable home-manager with backup support
   home-manager = {
-    backupFileExtension = "hm-bak-2024";
+    backupFileExtension = "backup";
     useGlobalPkgs = true;
     useUserPackages = true;
     users.user = { pkgs, ... }: {
