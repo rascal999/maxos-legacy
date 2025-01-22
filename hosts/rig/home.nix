@@ -80,6 +80,9 @@
 
     # File associations and scripts
     file = {
+      ".mozilla/firefox/default/search.json.mozlz4" = {
+        enable = false;
+      };
       ".mozilla/firefox/default/search.json.mozlz4.backup" = {
         enable = false;
       };

@@ -80,6 +80,12 @@
 
     # File associations
     file = {
+      ".mozilla/firefox/default/search.json.mozlz4" = {
+        enable = false;
+      };
+      ".mozilla/firefox/default/search.json.mozlz4.backup" = {
+        enable = false;
+      };
       ".config/mimeapps.list".text = ''
         [Default Applications]
         text/html=firefox.desktop
