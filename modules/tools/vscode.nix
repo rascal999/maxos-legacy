@@ -14,7 +14,7 @@
       }
       {
         key = "ctrl+t";
-        command = "claude.newChat";
+        command = "cline.openInNewTab";
       }
     ];
   };
