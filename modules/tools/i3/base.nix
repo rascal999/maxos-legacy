@@ -12,7 +12,7 @@
   programs.bash = {
     enable = true;
     shellAliases = {
-      gcp = "git status && git commit && git push";
+      gcp = "git status && git add -A && git commit && git push";
     };
   };
   
