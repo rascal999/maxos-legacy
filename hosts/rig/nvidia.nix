@@ -42,9 +42,9 @@
   ];
 
   # Basic graphics configuration
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport32Bit = true;  # Enable 32-bit support for Steam games
+    enable32Bit = true;  # Enable 32-bit support for Steam games
   };
 
   # Add NVIDIA-specific packages
