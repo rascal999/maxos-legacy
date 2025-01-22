@@ -114,9 +114,6 @@
         ".." = "cd ..";
         "..." = "cd ../..";
         update = "sudo nixos-rebuild switch";
-        gs = "git status";
-        gc = "git commit";
-        gp = "git push";
       };
     };
 
@@ -157,4 +154,26 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # i3 configuration for rig
+  xsession.windowManager.i3.config = {
+    # Monitor setup in startup
+    startup = [
+      { command = "$HOME/.screenlayout/dual-monitor.sh"; notification = false; }
+    ];
+
+    # Workspace monitor assignments
+    workspaceOutputAssign = [
+      # Left monitor - Communication
+      { workspace = "0: slack"; output = "DP-4"; }
+      # All other workspaces on ultrawide
+      { workspace = "1: web"; output = "DP-2"; }
+      { workspace = "2: code"; output = "DP-2"; }
+      { workspace = "3: term"; output = "DP-2"; }
+      { workspace = "4: burp"; output = "DP-2"; }
+      { workspace = "5: term"; output = "DP-2"; }
+      { workspace = "8: logseq"; output = "DP-2"; }
+      { workspace = "9: pw"; output = "DP-2"; }
+    ];
+  };
 }

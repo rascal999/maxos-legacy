@@ -6,6 +6,7 @@
     ./boot.nix
     ./nvidia.nix
     ./audio.nix
+    ./monitors.nix
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
     ../../modules/hardware/network.nix

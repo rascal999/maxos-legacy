@@ -7,6 +7,14 @@
   ];
 
   programs.home-manager.enable = true;
+
+  # Shell aliases
+  programs.bash = {
+    enable = true;
+    shellAliases = {
+      gcp = "git status && git commit && git push";
+    };
+  };
   
   home.packages = with pkgs; [
     i3lock
@@ -22,6 +30,7 @@
 
       # Assign applications to workspaces
       assigns = {
+        "0: slack" = [{ class = "^Slack$"; }];
         "1: web" = [{ class = "^Firefox$"; }];
         "2: code" = [{ class = "^Code$"; }];
         "8: logseq" = [{ class = "^Logseq$"; }];
@@ -39,6 +48,7 @@
         { command = "sleep 2 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
         { command = "sleep 1 && i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
         { command = "sleep 3 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
+        { command = "sleep 3 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
         { command = "sleep 4 && i3-msg 'workspace 1: web'"; notification = false; }
       ];
 
@@ -95,6 +105,7 @@
         "Mod1+Shift+b" = "exec redshift -x";  # Reset redshift
         
         # Workspace switching
+        "Mod1+0" = "workspace number 0: slack";
         "Mod1+1" = "workspace number 1: web";
         "Mod1+2" = "workspace number 2: code";
         "Mod1+3" = "workspace number 3: term";
@@ -104,6 +115,7 @@
         "Mod1+9" = "workspace number 9: pw";
         
         # Move container to workspace
+        "Mod1+Shift+0" = "move container to workspace 0: slack";
         "Mod1+Shift+1" = "move container to workspace 1: web";
         "Mod1+Shift+2" = "move container to workspace 2: code";
         "Mod1+Shift+3" = "move container to workspace 3: term";
@@ -124,16 +136,8 @@
         "${config.xsession.windowManager.i3.config.modifier}+Shift+l" = "exec systemctl poweroff";
       };
 
-      # Workspace configuration
-      workspaceOutputAssign = [
-        { workspace = "1: web"; output = "primary"; }
-        { workspace = "2: code"; output = "primary"; }
-        { workspace = "3: term"; output = "primary"; }
-        { workspace = "4: burp"; output = "primary"; }
-        { workspace = "5: term"; output = "primary"; }
-        { workspace = "8: logseq"; output = "primary"; }
-        { workspace = "9: pw"; output = "primary"; }
-      ];
+      # Monitor assignments defined in host-specific config
+      workspaceOutputAssign = [ ];
     };
   };
 }
