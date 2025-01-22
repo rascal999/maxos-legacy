@@ -3,9 +3,6 @@
 {
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      saoudrizwan.claude-dev
-    ];
     userSettings = {
       "terminal.integrated.defaultProfile.linux" = "bash";
       "keyboard.dispatch" = "keyCode";
