@@ -7,9 +7,9 @@
     script = ''
       mkdir -p /home/user/backup
       cd /home/user
-      tar -czf "backup/share-$(date +%Y%m%d-%H%M).tar.gz" share/
+      tar -czf "backup/data-$(date +%Y%m%d-%H%M).tar.gz" share/Data/
       # Keep only the 20 most recent backups
-      ls -t /home/user/backup/share-*.tar.gz | tail -n +21 | xargs -r rm --
+      ls -t /home/user/backup/data-*.tar.gz | tail -n +21 | xargs -r rm --
     '';
     serviceConfig = {
       Type = "oneshot";

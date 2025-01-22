@@ -28,6 +28,14 @@
     config = {
       modifier = "Mod1";  # Use Alt key as modifier
 
+      # Force Firefox to always move to web workspace
+      window.commands = [
+        {
+          command = "move to workspace \"1: web\"";
+          criteria = { class = "^Firefox$"; };
+        }
+      ];
+
       # Assign applications to workspaces
       assigns = {
         "0: slack" = [{ class = "^Slack$"; }];

@@ -4,6 +4,7 @@
   programs.vscode = {
     enable = true;
     userSettings = {
+      "workbench.startupEditor" = "none";
       "terminal.integrated.defaultProfile.linux" = "bash";
       "keyboard.dispatch" = "keyCode";
       "vim.useSystemClipboard" = true;

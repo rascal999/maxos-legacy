@@ -39,7 +39,7 @@
     # Keyboard layout
     xkb = {
       layout = "us";
-      variant = "dvorak";
+      variant = "dvorak-uk";
       options = "terminate:ctrl_alt_bksp";
     };
 
