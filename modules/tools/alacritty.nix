@@ -110,9 +110,6 @@
         hide_when_typing = false;
         bindings = [
           { mouse = "Middle"; action = "PasteSelection"; }
-          { mouse = "Left"; count = 2; action = "SelectWord"; }
-          { mouse = "Left"; count = 3; action = "SelectLine"; }
-          { mouse = "Left"; count = 4; action = "SelectAll"; }
         ];
       };
 
