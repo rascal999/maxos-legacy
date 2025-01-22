@@ -59,7 +59,6 @@
       feh
       
       # System monitoring and management
-      pavucontrol
       networkmanagerapplet
       arandr
       redshift
@@ -150,6 +149,11 @@
           frame_color = "#4c566a";
         };
       };
+    };
+
+    easyeffects = {
+      enable = true;
+      preset = "default";
     };
   };
 
