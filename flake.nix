@@ -47,6 +47,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "backup";
               users.user = { pkgs, ... }: {
                 imports = [
                   ./hosts/G16/home.nix
@@ -73,6 +74,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "backup";
               users.user = { pkgs, ... }: {
                 imports = [
                   ./hosts/desktop-test-vm/home.nix
@@ -102,6 +104,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "backup";
               users.user = { pkgs, ... }: {
                 imports = [
                   ./hosts/rig/home.nix
