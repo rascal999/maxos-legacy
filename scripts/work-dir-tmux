@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+cd /home/user/work_today
+eza --long --all --header --icons --git
+exec $SHELL

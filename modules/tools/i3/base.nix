@@ -28,10 +28,10 @@
     config = {
       modifier = "Mod1";  # Use Alt key as modifier
 
-      # Force Firefox to always move to web workspace
+      # Force Firefox to always move to web workspace and focus it
       window.commands = [
         {
-          command = "move to workspace \"1: web\"";
+          command = "move to workspace \"1: web\", focus";
           criteria = { class = "^Firefox$"; };
         }
       ];
@@ -52,18 +52,24 @@
         { command = "redshift -O 3500 -b 0.6"; notification = false; }
         # Start pasystray for volume control
         { command = "sleep 2 && pasystray"; notification = false; }
-        { command = "sleep 1 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
-        { command = "sleep 2 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
-        { command = "sleep 1 && i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
-        { command = "sleep 3 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
-        { command = "sleep 3 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
-        { command = "sleep 4 && i3-msg 'workspace 1: web'"; notification = false; }
+        # Launch Firefox first and ensure it's on workspace 1
+        { command = "i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
+        { command = "sleep 2 && i3-msg 'workspace 1: web'"; notification = false; }
+        # Launch other applications after Firefox is settled
+        { command = "sleep 3 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
+        { command = "sleep 4 && i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
+        { command = "sleep 5 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
+        { command = "sleep 6 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
+        { command = "sleep 7 && i3-msg 'workspace 1: web'"; notification = false; }
       ];
 
       # Basic keybindings
       keybindings = {
         # Terminal
         "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
+        
+        # Work directory
+        "Mod1+h" = "exec ${pkgs.bash}/bin/bash ${../../../scripts/work-dir} && ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session -c /home/user/work_today ${../../../scripts/work-dir-tmux}";
         
         # Program launcher
         "Mod1+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
@@ -77,7 +83,7 @@
         "Mod1+s" = "layout stacking";
         "Mod1+w" = "layout tabbed";
         "Mod1+e" = "layout toggle split";
-        "Mod1+h" = "split h";
+        "Mod1+Shift+h" = "split h";
         "Mod1+v" = "split v";
         
         # Focus
