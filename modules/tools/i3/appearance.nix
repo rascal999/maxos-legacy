@@ -3,7 +3,7 @@
 {
   xsession.windowManager.i3.config = {
     # Basic appearance settings
-    bars = [{
+    bars = lib.mkDefault [{
       position = "bottom";
       statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-default.toml";
       colors = {
