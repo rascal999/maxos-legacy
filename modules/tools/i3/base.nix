@@ -28,11 +28,33 @@
     config = {
       modifier = "Mod1";  # Use Alt key as modifier
 
-      # Force Firefox to always move to web workspace and focus it
+      # Window rules for workspace assignment and urgent hint handling
       window.commands = [
+        # Force Firefox to always move to web workspace and focus it
         {
           command = "move to workspace \"1: web\", focus";
           criteria = { class = "^Firefox$"; };
+        }
+        # Disable urgent hints for startup applications
+        {
+          command = "urgent disable";
+          criteria = { class = "^Firefox$"; };
+        }
+        {
+          command = "urgent disable";
+          criteria = { class = "^Code$"; };
+        }
+        {
+          command = "urgent disable";
+          criteria = { class = "^Slack$"; };
+        }
+        {
+          command = "urgent disable";
+          criteria = { class = "^Logseq$"; };
+        }
+        {
+          command = "urgent disable";
+          criteria = { class = "^Alacritty$"; };
         }
       ];
 
