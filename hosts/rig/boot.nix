@@ -35,18 +35,6 @@
         efiSupport = true;
         enableCryptodisk = true;
         useOSProber = true;
-        configurationLimit = 10;
-        # Ensure Windows boot entry is detected
-        extraEntries = ''
-          menuentry "Windows" {
-            insmod part_gpt
-            insmod fat
-            insmod search_fs_uuid
-            insmod chain
-            search --fs-uuid --set=root $bootid
-            chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-          }
-        '';
       };
     };
   };
@@ -69,6 +57,5 @@
   environment.systemPackages = with pkgs; [
     os-prober  # OS detection for GRUB
     ntfs3g     # NTFS support for Windows partitions
-    parted     # Partition management
   ];
 }
