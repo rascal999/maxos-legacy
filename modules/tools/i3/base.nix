@@ -33,6 +33,8 @@
         { command = "/run/current-system/sw/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"; notification = false; }
         # Set initial brightness and color temperature using redshift
         { command = "redshift -O 3500 -b 0.6"; notification = false; }
+        # Start pasystray for volume control
+        { command = "sleep 2 && pasystray"; notification = false; }
         { command = "sleep 1 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
         { command = "sleep 2 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
         { command = "sleep 1 && i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
