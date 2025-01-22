@@ -37,7 +37,7 @@
       };
     };
     profiles.default = {
-      search.default = "DuckDuckGo";
+      search.default = "Google";
       isDefault = true;
       settings = {
         # Enable dark theme
