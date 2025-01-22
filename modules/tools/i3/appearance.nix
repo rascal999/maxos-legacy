@@ -6,8 +6,10 @@
     bars = lib.mkDefault [{
       position = "bottom";
       statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-default.toml";
-      extraConfig = ''
-        ${if config.networking.hostName == "rig" then "tray_output DP-2" else "tray_output primary"}
+      extraConfig = let
+        hostname = builtins.readFile "/etc/hostname";
+      in ''
+        ${if (builtins.substring 0 3 hostname) == "rig" then "tray_output DP-2" else "tray_output primary"}
       '';
       colors = {
         background = "#000000";
