@@ -1,12 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.file.".mozilla/firefox/default/search.json.mozlz4.backup" = {
-    force = false;
-    source = config.lib.file.mkOutOfStoreSymlink 
-      "${config.home.homeDirectory}/.mozilla/firefox/default/search.json.mozlz4.backup";
-  };
-  
   programs.firefox = {
     enable = true;
     policies = {
@@ -45,6 +39,8 @@
     profiles.default = {
       search.default = "Google";
       isDefault = true;
+      path = "default";
+      excludeFiles = ["search.json.mozlz4.backup"];
       settings = {
         # Enable dark theme
         "browser.theme.content-theme" = 0;
