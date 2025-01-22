@@ -12,7 +12,10 @@
     ../../modules/hardware/network.nix
     ../../modules/hardware/bluetooth.nix
     ../../modules/tools/syncthing.nix
+    ../../modules/tools/llm.nix
   ];
+
+  services.ollama.enable = true;
 
   # Disable system-wide Firefox
   programs.firefox.enable = false;
