@@ -35,10 +35,15 @@
     overrideFolders = true;     # Overwrite any folders added or deleted through the WebUI
     settings = {
       options.urAccepted = -1;  # Opt out of anonymous usage reporting
+      devices = {
+        "G16" = {
+          id = "UVHYVJX-YL2SG2C-NY5PZOH-BRXFS6B-34V5WNF-PIO7MS4-BQY36IR-RQGIRQW";
+        };
+      };
       folders = {
         "share" = {
           path = "/home/user/share";
-          devices = [ ];  # Add device IDs here when pairing
+          devices = [ "G16" ];
         };
       };
       gui = {
