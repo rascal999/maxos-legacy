@@ -80,6 +80,34 @@
           }
         ];
       };
+      rig = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          {
+            nixpkgs.config.allowUnfree = true;
+            nixpkgs.overlays = [
+              nur.overlays.default
+              (final: prev: {
+                linuxPackages_latest = pkgs-unstable.linuxPackages_latest;
+              })
+            ];
+          }
+          ./hosts/rig/default.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.user = { pkgs, ... }: {
+                imports = [
+                  ./hosts/rig/home.nix
+                ];
+                home.stateVersion = "24.11";
+              };
+            };
+          }
+        ];
+      };
     };
   };
 }
