@@ -5,7 +5,6 @@
     ./users.nix
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
-    ../../modules/hardware/network.nix
     ../../modules/tools/syncthing.nix
   ];
 
@@ -51,8 +50,9 @@
 
   # Configure networking and SSH for VM
   networking = {
-    useDHCP = lib.mkForce true;  # Force DHCP for VM
+    useDHCP = true;  # Use DHCP for VM
     firewall.enable = lib.mkForce false;
+    wireless.enable = false;  # Disable wireless
     networkmanager.enable = false;  # Disable NetworkManager in VM
   };
 
