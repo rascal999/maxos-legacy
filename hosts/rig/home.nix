@@ -76,8 +76,15 @@
       TERMINAL = "alacritty";
     };
 
-    # File associations
+    # File associations and scripts
     file = {
+      ".screenlayout/dual-monitor.sh" = {
+        executable = true;
+        text = ''
+          #!/bin/sh
+          xrandr --output DP-2 --primary --mode 3440x1440 --rate 144 --output DP-4 --mode 2560x1440 --rate 144 --left-of DP-2
+        '';
+      };
       ".config/mimeapps.list".text = ''
         [Default Applications]
         text/html=firefox.desktop
