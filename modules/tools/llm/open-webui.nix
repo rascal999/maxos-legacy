@@ -18,7 +18,7 @@
         ${pkgs.docker}/bin/docker run \
           --name open-webui \
           -v open-webui:/app/backend/data \
-          -e OLLAMA_API_BASE_URL=http://ollama:11434/api \
+          -e OLLAMA_API_BASE_URL=http://host.docker.internal:11434/api \
           -p 127.0.0.1:3000:8080 \
           --add-host host.docker.internal:host-gateway \
           --network ollama_network \
