@@ -8,6 +8,8 @@
     requires = [ "docker.service" ];
     after = [ "docker.service" ];
 
+    path = [ pkgs.bash pkgs.docker ];
+
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
