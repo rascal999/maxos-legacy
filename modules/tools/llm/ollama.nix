@@ -49,8 +49,12 @@
           --name ollama \
           --runtime=nvidia \
           --gpus all \
+          -e NVIDIA_VISIBLE_DEVICES=all \
+          -e NVIDIA_DRIVER_CAPABILITIES=compute,utility \
+          -e OLLAMA_DEBUG=1 \
           -v ollama:/root/.ollama \
           -p 11434:11434 \
+          -e OLLAMA_KEEP_ALIVE=-1 \
           --rm \
           ollama/ollama
       '';
@@ -72,6 +76,24 @@
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = "${pkgs.docker}/bin/docker volume create ollama";
+    };
+  };
+
+  # Service to load deepseek model on boot
+  systemd.services.ollama-load-deepseek = {
+    description = "Load deepseek-r1:14b model in Ollama";
+    wantedBy = [ "multi-user.target" ];
+    requires = [ "ollama.service" ];
+    after = [ "ollama.service" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = ''
+        ${pkgs.curl}/bin/curl -X POST http://localhost:11434/api/pull -d '{"name": "deepseek-r1:14b","options": {"num_gpu": 2}}'
+      '';
+      Restart = "on-failure";
+      RestartSec = "30s";
     };
   };
 
