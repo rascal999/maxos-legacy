@@ -65,6 +65,12 @@
 
   # Add required packages
   environment.systemPackages = with pkgs; [
+    # NVIDIA tools
+    nvidia-docker
+    nvidia-container-toolkit
+    cudaPackages.cuda_nvcc
+    cudaPackages.cuda_cudart
+
     # Graphics utilities
     glxinfo
     xorg.xrandr

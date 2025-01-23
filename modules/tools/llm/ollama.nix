@@ -75,14 +75,6 @@
     };
   };
 
-  # Add required NVIDIA packages
-  environment.systemPackages = with pkgs; [
-    nvidia-docker
-    nvidia-container-toolkit
-    cudaPackages.cuda_nvcc
-    cudaPackages.cuda_cudart
-  ];
-
   # Open firewall port for Ollama
   networking.firewall.allowedTCPPorts = [ 11434 ];
 }

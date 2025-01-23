@@ -4,6 +4,5 @@
   imports = [
     ./ollama.nix
     ./open-webui.nix
-    ./chatbox.nix
   ];
 }
