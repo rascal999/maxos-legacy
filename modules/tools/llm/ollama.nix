@@ -53,9 +53,10 @@
           -e NVIDIA_DRIVER_CAPABILITIES=compute,utility \
           -e OLLAMA_DEBUG=1 \
           -v ollama:/root/.ollama \
-          -p 11434:11434 \
+          -p 127.0.0.1:11434:11434 \
           -e OLLAMA_KEEP_ALIVE=-1 \
           --rm \
+          --network ollama_network \
           ollama/ollama
       '';
       ExecStop = "${pkgs.docker}/bin/docker stop ollama";
@@ -97,6 +98,16 @@
     };
   };
 
-  # Open firewall port for Ollama
-  networking.firewall.allowedTCPPorts = [ 11434 ];
+  # Service to create Docker network if it doesn't exist
+  systemd.services.create-docker-network = {
+    description = "Create Docker network if it doesn't exist";
+    wantedBy = [ "multi-user.target" ];
+    requires = [ "docker.service" ];
+    after = [ "docker.service" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${../../scripts/create-docker-network.sh}";
+    };
+  };
 }

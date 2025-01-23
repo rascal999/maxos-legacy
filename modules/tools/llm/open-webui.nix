@@ -18,9 +18,10 @@
         ${pkgs.docker}/bin/docker run \
           --name open-webui \
           -v open-webui:/app/backend/data \
-          -e OLLAMA_API_BASE_URL=http://host.docker.internal:11434/api \
-          -p 3000:8080 \
+          -e OLLAMA_API_BASE_URL=http://ollama:11434/api \
+          -p 127.0.0.1:3000:8080 \
           --add-host host.docker.internal:host-gateway \
+          --network ollama_network \
           --rm \
           ghcr.io/open-webui/open-webui:main
       '';
@@ -45,6 +46,16 @@
     };
   };
 
-  # Open firewall port for Open WebUI
-  networking.firewall.allowedTCPPorts = [ 3000 ];
+  # Service to create Docker network if it doesn't exist
+  systemd.services.create-docker-network = {
+    description = "Create Docker network if it doesn't exist";
+    wantedBy = [ "multi-user.target" ];
+    requires = [ "docker.service" ];
+    after = [ "docker.service" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${../../scripts/create-docker-network.sh}";
+    };
+  };
 }

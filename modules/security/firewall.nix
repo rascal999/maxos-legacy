@@ -8,9 +8,11 @@ in {
   config = mkIf (cfg.enable && cfg.firewallEnable) {
     networking.firewall = {
       enable = true;
-      allowedTCPPorts = [ 
+      allowedTCPPorts = [
         22    # SSH
         22000 # Syncthing Transfer Protocol
+        11434 # Ollama
+        3000  # Open WebUI
       ];
       allowedUDPPorts = [
         22000 # Syncthing Transfer Protocol

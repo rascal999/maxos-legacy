@@ -51,7 +51,6 @@
   # Configure networking and SSH for VM
   networking = {
     useDHCP = true;  # Use DHCP for VM
-    firewall.enable = lib.mkForce false;
     wireless.enable = false;  # Disable wireless
     networkmanager.enable = false;  # Disable NetworkManager in VM
   };
