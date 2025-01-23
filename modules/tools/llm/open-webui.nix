@@ -5,8 +5,8 @@
   systemd.services.open-webui = {
     description = "Open WebUI for Ollama";
     wantedBy = [ "multi-user.target" ];
-    requires = [ "docker.service" "ollama.service" ];
-    after = [ "docker.service" "ollama.service" ];
+    requires = [ "docker.service" "ollama.service" "create-docker-network.service" ];
+    after = [ "docker.service" "ollama.service" "create-docker-network.service" ];
 
     serviceConfig = {
       Type = "exec";
@@ -46,16 +46,5 @@
     };
   };
 
-  # Service to create Docker network if it doesn't exist
-  systemd.services.create-docker-network = {
-    description = "Create Docker network if it doesn't exist";
-    wantedBy = [ "multi-user.target" ];
-    requires = [ "docker.service" ];
-    after = [ "docker.service" ];
-
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${../../scripts/create-docker-network.sh}";
-    };
-  };
+  # Network creation service moved to a separate module
 }

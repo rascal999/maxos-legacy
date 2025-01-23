@@ -35,8 +35,8 @@
   systemd.services.ollama = lib.mkForce {
     description = "Ollama LLM Service (Docker)";
     wantedBy = [ "multi-user.target" ];
-    requires = [ "docker.service" ];
-    after = [ "docker.service" ];
+    requires = [ "docker.service" "create-docker-network.service" ];
+    after = [ "docker.service" "create-docker-network.service" ];
 
     serviceConfig = {
       Type = "exec";
@@ -98,16 +98,5 @@
     };
   };
 
-  # Service to create Docker network if it doesn't exist
-  systemd.services.create-docker-network = {
-    description = "Create Docker network if it doesn't exist";
-    wantedBy = [ "multi-user.target" ];
-    requires = [ "docker.service" ];
-    after = [ "docker.service" ];
-
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${../../scripts/create-docker-network.sh}";
-    };
-  };
+  # Network creation service moved to a separate module
 }
