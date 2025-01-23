@@ -27,6 +27,8 @@ curl -X POST http://localhost:11434/api/pull \
     "options": {
       "num_gpu": 1,
       "gpu_memory_utilization": 0.9,
-      "f16": true
+      "f16": true,
+      "disable_cpu": true,
+      "gpu_layers": -1
     }
   }'

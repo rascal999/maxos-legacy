@@ -52,6 +52,7 @@
           -e NVIDIA_VISIBLE_DEVICES=all \
           -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics \
           -e OLLAMA_DEBUG=1 \
+          -e OLLAMA_DISABLE_CPU=true \
           -v ollama:/root/.ollama \
           -p 11434:11434 \
           -e OLLAMA_KEEP_ALIVE=-1 \
