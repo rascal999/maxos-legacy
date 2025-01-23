@@ -38,6 +38,29 @@ stop_profile() {
   sudo wg-quick down $config_file
 }
 
+# Function to check the status of the VPN
+check_status() {
+  local active_interface=$(ip link show | grep -oP '^[0-9]+: \K(gb-[^:@]+)(?=:)')
+
+  if [ -z "$active_interface" ]; then
+    echo "VPN Off"
+  else
+    local ip_address=$(ip addr show $active_interface | grep 'inet ' | awk '{print $2}' | cut -d/ -f1)
+    echo "VPN: $ip_address"
+  fi
+}
+
+# Function to toggle the VPN status
+toggle_vpn() {
+  local active_interface=$(ip link show | grep -oP '^[0-9]+: \K(gb-[^:@]+)(?=:)')
+
+  if [ -z "$active_interface" ]; then
+    start_profile "gb"
+  else
+    stop_profile
+  fi
+}
+
 # Main script logic
 case $1 in
   up)
@@ -50,8 +73,14 @@ case $1 in
   down)
     stop_profile
     ;;
+  status)
+    check_status
+    ;;
+  toggle)
+    toggle_vpn
+    ;;
   *)
-    echo "Usage: mvpn {up [country code] | down}"
+    echo "Usage: mvpn {up [country code] | down | status | toggle}"
     exit 1
     ;;
 esac

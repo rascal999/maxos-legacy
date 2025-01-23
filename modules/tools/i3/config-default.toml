@@ -76,3 +76,12 @@ missing_format = ""
 block = "time"
 interval = 5
 format = " $icon $timestamp.datetime(f:'%V %m/%d %R') "
+
+[[block]]
+block = "custom"
+command = "/run/current-system/sw/bin/mvpn status"
+interval = 10
+format = "  $output "
+[[block.click]]
+button = "left"
+cmd = "/run/current-system/sw/bin/mvpn toggle"
