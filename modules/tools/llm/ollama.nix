@@ -48,9 +48,9 @@
         ${pkgs.docker}/bin/docker run \
           --name ollama \
           --runtime=nvidia \
-          --gpus all \
+          --gpus 'all,"capabilities=compute,utility"' \
           -e NVIDIA_VISIBLE_DEVICES=all \
-          -e NVIDIA_DRIVER_CAPABILITIES=compute,utility \
+          -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics \
           -e OLLAMA_DEBUG=1 \
           -v ollama:/root/.ollama \
           -p 11434:11434 \
@@ -87,6 +87,8 @@
     requires = [ "ollama.service" ];
     after = [ "ollama.service" ];
 
+    path = [ pkgs.bash pkgs.curl ];
+    
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
