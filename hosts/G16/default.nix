@@ -15,6 +15,7 @@
     ../../modules/tools/llm/default.nix
     ../../modules/scripts/default.nix
     ../../modules/tools/docker.nix  # Import Docker module
+    ../../modules/tools/wireguard.nix  # Import WireGuard module
   ];
 
   # Disable system-wide Firefox

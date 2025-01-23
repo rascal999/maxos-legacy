@@ -14,6 +14,7 @@
     ../../modules/tools/syncthing.nix
     ../../modules/tools/llm/default.nix
     ../../modules/tools/docker.nix  # Import Docker module
+    ../../modules/tools/wireguard.nix  # Import WireGuard module
   ];
 
   # Disable system-wide Firefox

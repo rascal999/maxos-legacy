@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# Directory containing WireGuard profiles
+PROFILE_DIR="/home/user/share/Data/vpn"
+
+# Function to start a profile
+start_profile() {
+  local country_code=$1
+  local profiles=($(ls $PROFILE_DIR | grep "^${country_code}-"))
+
+  if [ ${#profiles[@]} -eq 0 ]; then
+    echo "No profiles found for country code: $country_code"
+    exit 1
+  fi
+
+  local random_profile=${profiles[$RANDOM % ${#profiles[@]}]}
+  local profile_path="$PROFILE_DIR/$random_profile"
+
+  echo "Starting profile: $random_profile"
+  sudo wg-quick up $profile_path
+}
+
+# Function to stop the active profile
+stop_profile() {
+  local active_interface=$(ip link show | grep -oP '^[0-9]+: \K(gb-[^:@]+)(?=:)')
+
+  if [ -z "$active_interface" ]; then
+    echo "No active WireGuard interface found"
+    exit 1
+  fi
+
+  echo "Stopping interface: $active_interface"
+  local config_file="$PROFILE_DIR/${active_interface}.conf"
+  if [ ! -f "$config_file" ]; then
+    echo "Configuration file not found: $config_file"
+    exit 1
+  fi
+  sudo wg-quick down $config_file
+}
+
+# Main script logic
+case $1 in
+  up)
+    if [ -z "$2" ]; then
+      start_profile "gb"
+    else
+      start_profile "$2"
+    fi
+    ;;
+  down)
+    stop_profile
+    ;;
+  *)
+    echo "Usage: mvpn {up [country code] | down}"
+    exit 1
+    ;;
+esac
