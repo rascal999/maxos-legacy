@@ -35,8 +35,8 @@
   systemd.services.ollama = lib.mkForce {
     description = "Ollama LLM Service (Docker)";
     wantedBy = [ "multi-user.target" ];
-    requires = [ "docker.service" "create-docker-network.service" ];
-    after = [ "docker.service" "create-docker-network.service" ];
+    requires = [ "docker.service" ];
+    after = [ "docker.service" ];
 
     serviceConfig = {
       Type = "exec";
@@ -56,7 +56,6 @@
           -p 11434:11434 \
           -e OLLAMA_KEEP_ALIVE=-1 \
           --rm \
-          --network ollama_network \
           ollama/ollama
       '';
       ExecStop = "${pkgs.docker}/bin/docker stop ollama";

@@ -13,7 +13,7 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${../../scripts/create-docker-network.sh}";
+      ExecStart = "${pkgs.docker}/bin/docker network create ollama_network || true";
     };
   };
 }

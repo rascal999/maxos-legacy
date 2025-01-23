@@ -5,8 +5,8 @@
   systemd.services.open-webui = {
     description = "Open WebUI for Ollama";
     wantedBy = [ "multi-user.target" ];
-    requires = [ "docker.service" "ollama.service" "create-docker-network.service" ];
-    after = [ "docker.service" "ollama.service" "create-docker-network.service" ];
+    requires = [ "docker.service" "ollama.service" ];
+    after = [ "docker.service" "ollama.service" ];
 
     serviceConfig = {
       Type = "exec";
@@ -21,7 +21,6 @@
           -e OLLAMA_API_BASE_URL=http://host.docker.internal:11434/api \
           -p 127.0.0.1:3000:8080 \
           --add-host host.docker.internal:host-gateway \
-          --network ollama_network \
           --rm \
           ghcr.io/open-webui/open-webui:main
       '';
