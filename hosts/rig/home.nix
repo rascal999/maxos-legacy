@@ -10,11 +10,18 @@
     ../../modules/tools/firefox/default.nix
     ../../modules/tools/vscode.nix
     ../../modules/tools/logseq.nix
+    ../../modules/tools/llm/default.nix
   ];
 
   # Enable home-manager and tools
   programs.home-manager.enable = true;
   modules.tools.logseq.enable = true;
+  modules.tools.llm = {
+    enable = true;
+    ollama.enable = true;
+    openWebui.enable = true;
+    chatbox.enable = true;
+  };
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home = {
