@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  services.docker = {
+  virtualisation.docker = {
     enable = true;
-    daemon = {
-      group = "docker";
-    };
   };
 }

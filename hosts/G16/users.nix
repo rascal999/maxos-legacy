@@ -6,7 +6,7 @@
     users.user = {
       isNormalUser = true;
       group = "users";
-      extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
+      extraGroups = [ "wheel" "networkmanager" "video" "audio" "docker" ];
       initialPassword = "nixos";
       createHome = true;
       home = "/home/user";

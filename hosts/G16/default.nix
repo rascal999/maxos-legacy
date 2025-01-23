@@ -14,6 +14,7 @@
     ../../modules/tools/syncthing.nix
     ../../modules/tools/llm/default.nix
     ../../modules/scripts/default.nix
+    ../../modules/tools/docker.nix  # Import Docker module
   ];
 
   # Disable system-wide Firefox
@@ -94,7 +95,7 @@
 
   # Add user to video group for backlight control and enable FUSE
   users.users.user.extraGroups = [ "video" ];
-  
+
   # Enable FUSE for AppImage support
   boot.supportedFilesystems = [ "fuse" ];
   boot.kernelModules = [ "fuse" ];

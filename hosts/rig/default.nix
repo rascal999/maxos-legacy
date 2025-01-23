@@ -13,6 +13,7 @@
     ../../modules/hardware/bluetooth.nix
     ../../modules/tools/syncthing.nix
     ../../modules/tools/llm/default.nix
+    ../../modules/tools/docker.nix  # Import Docker module
   ];
 
   # Disable system-wide Firefox

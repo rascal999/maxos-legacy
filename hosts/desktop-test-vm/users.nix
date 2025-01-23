@@ -1,14 +1,23 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  # Define user account
-  users.users.user = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "video" ];
-    initialPassword = "password";
-    shell = pkgs.zsh;
+  users = {
+    mutableUsers = true;
+    users.user = {
+      isNormalUser = true;
+      group = "users";
+      extraGroups = [ "wheel" "networkmanager" "video" "docker" ];
+      initialPassword = "password";
+      createHome = true;
+      home = "/home/user";
+      shell = pkgs.zsh;
+    };
   };
 
-  # Allow sudo without password for testing
-  security.sudo.wheelNeedsPassword = false;
+  # Enable display manager for easier login
+  services.xserver = {
+    enable = true;
+    displayManager.lightdm.enable = true;
+    desktopManager.xfce.enable = true;
+  };
 }

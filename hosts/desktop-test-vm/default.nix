@@ -5,7 +5,6 @@
     ./users.nix
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
-    ../../modules/tools/syncthing.nix
   ];
 
   # Disable system-wide Firefox
@@ -29,8 +28,8 @@
 
     # Keyboard layout
     xkb = {
-      layout = "us";
-      variant = "dvorak";
+      layout = "gb";
+      variant = "dvorakukp";
       options = "terminate:ctrl_alt_bksp";
     };
 
