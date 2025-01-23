@@ -78,6 +78,9 @@
 
   # Add required packages
   environment.systemPackages = with pkgs; [
+    # AppImage support
+    appimage-run
+
     # Graphics utilities
     glxinfo
     xorg.xrandr
@@ -89,8 +92,12 @@
     adwaita-qt
   ];
 
-  # Add user to video group for backlight control
+  # Add user to video group for backlight control and enable FUSE
   users.users.user.extraGroups = [ "video" ];
+  
+  # Enable FUSE for AppImage support
+  boot.supportedFilesystems = [ "fuse" ];
+  boot.kernelModules = [ "fuse" ];
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;

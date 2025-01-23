@@ -65,6 +65,9 @@
 
   # Add required packages
   environment.systemPackages = with pkgs; [
+    # AppImage support
+    appimage-run
+
     # NVIDIA tools
     nvidia-docker
     nvidia-container-toolkit
@@ -81,6 +84,10 @@
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
+
+  # Enable FUSE for AppImage support
+  boot.supportedFilesystems = [ "fuse" ];
+  boot.kernelModules = [ "fuse" ];
 
   # Enable home-manager with backup support
   home-manager = {

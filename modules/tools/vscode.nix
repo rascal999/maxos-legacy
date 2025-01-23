@@ -24,6 +24,14 @@
       }
       {
         key = "ctrl+t";
+        command = "roo-cline.openInNewTab";
+      }
+      {
+        key = "ctrl+shift+t";
+        command = "-workbench.action.reopenClosedEditor";
+      }
+      {
+        key = "ctrl+shift+t";
         command = "cline.openInNewTab";
       }
     ];
