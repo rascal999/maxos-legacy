@@ -42,6 +42,15 @@ format = " $icon {$signal_strength $ssid|Wired} "
 format_alt = " $icon {$signal_strength $ssid|Wired} $ip "
 
 [[block]]
+block = "custom"
+command = "/run/current-system/sw/bin/mvpn status"
+interval = 1
+json = true
+[[block.click]]
+button = "left"
+cmd = "/run/current-system/sw/bin/mvpn toggle"
+
+[[block]]
 block = "disk_space"
 path = "/"
 info_type = "available"
@@ -76,12 +85,3 @@ missing_format = ""
 block = "time"
 interval = 5
 format = " $icon $timestamp.datetime(f:'%V %m/%d %R') "
-
-[[block]]
-block = "custom"
-command = "/run/current-system/sw/bin/mvpn status"
-interval = 10
-format = "  $output "
-[[block.click]]
-button = "left"
-cmd = "/run/current-system/sw/bin/mvpn toggle"

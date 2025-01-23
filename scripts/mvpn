@@ -43,10 +43,9 @@ check_status() {
   local active_interface=$(ip link show | grep -oP '^[0-9]+: \K(gb-[^:@]+)(?=:)')
 
   if [ -z "$active_interface" ]; then
-    echo "VPN Off"
+    echo '{"icon": "", "state": "Warning", "text": "VPN off", "short_text": "VPN off"}'
   else
-    local ip_address=$(ip addr show $active_interface | grep 'inet ' | awk '{print $2}' | cut -d/ -f1)
-    echo "VPN: $ip_address"
+    echo '{"icon": "", "state": "Info", "text": "VPN on", "short_text": "VPN on"}'
   fi
 }
 
@@ -56,9 +55,13 @@ toggle_vpn() {
 
   if [ -z "$active_interface" ]; then
     start_profile "gb"
+    sleep 1  # Give the interface time to come up
   else
     stop_profile
+    sleep 1  # Give the interface time to go down
   fi
+  # Output the new status immediately for i3status-rs
+  check_status
 }
 
 # Main script logic
