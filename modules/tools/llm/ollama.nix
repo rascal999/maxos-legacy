@@ -53,7 +53,7 @@
           -e NVIDIA_DRIVER_CAPABILITIES=compute,utility \
           -e OLLAMA_DEBUG=1 \
           -v ollama:/root/.ollama \
-          -p 127.0.0.1:11434:11434 \
+          -p 11434:11434 \
           -e OLLAMA_KEEP_ALIVE=-1 \
           --rm \
           --network ollama_network \
@@ -90,9 +90,7 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = ''
-        ${pkgs.curl}/bin/curl -X POST http://localhost:11434/api/pull -d '{"name": "deepseek-r1:14b","options": {"num_gpu": 2}}'
-      '';
+      ExecStart = "${../../../scripts/load-ollama-model.sh}";
       Restart = "on-failure";
       RestartSec = "30s";
     };
