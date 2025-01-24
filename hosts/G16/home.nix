@@ -36,7 +36,6 @@
       # Development tools
       git
       gh
-      vscode
       neovim
       ripgrep
       fd
