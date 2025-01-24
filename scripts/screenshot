@@ -1,0 +1,32 @@
+#!/usr/bin/env zsh
+
+# Capture current date and time
+D_YEAR=$(date +%Y)
+D_MONTH=$(date +%m)
+D_DAY=$(date +%d)
+D_HOUR=$(date +%H)
+D_MINUTE=$(date +%M)
+D_SECOND=$(date +%S)
+
+# Create directory for screenshots
+mkdir -p "$HOME/screenshots/${D_YEAR}/${D_MONTH}/${D_DAY}"
+
+# Define the screenshot filename
+SCREENSHOT_PATH="$HOME/screenshots/${D_YEAR}/${D_MONTH}/${D_DAY}/${D_YEAR}${D_MONTH}${D_DAY}_${D_HOUR}${D_MINUTE}${D_SECOND}.png"
+
+# Take a screenshot
+if [[ "$1" == "focused" ]]; then
+  scrot --focused "$SCREENSHOT_PATH"
+else
+  scrot -s "$SCREENSHOT_PATH"
+fi
+
+# Check if screenshot was successful
+if [[ $? -eq 0 ]]; then
+  # Open the screenshot with Firefox
+  firefox "$SCREENSHOT_PATH"
+
+  # Copy the screenshot path to the clipboard
+  echo -n "$SCREENSHOT_PATH" | xclip -sel clip
+  xclip -sel clip -t image/png "$SCREENSHOT_PATH"
+fi

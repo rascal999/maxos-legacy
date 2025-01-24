@@ -29,6 +29,9 @@
     adwaita-icon-theme
     redshift  # For color temperature and brightness adjustment
     pkgs.chromium
+    scrot
+    pkgs.python3
+    pkgs.xclip
   ];
 
   # Enable dconf for GTK settings
