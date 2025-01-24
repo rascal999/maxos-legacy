@@ -24,6 +24,7 @@
 
   environment.systemPackages = with pkgs; [
     adwaita-icon-theme
+    awscli
     bc  # For floating point calculations in brightness control
     maim
     pciutils  # Provides lspci command
