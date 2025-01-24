@@ -28,6 +28,7 @@
     bc  # For floating point calculations in brightness control
     adwaita-icon-theme
     redshift  # For color temperature and brightness adjustment
+    pkgs.chromium
   ];
 
   # Enable dconf for GTK settings
