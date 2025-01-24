@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Default color temperature
-TEMP=3500
+TEMP=2300
 
 # Store brightness state
 BRIGHTNESS_FILE="/tmp/redshift_brightness"
