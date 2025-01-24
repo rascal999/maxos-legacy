@@ -175,6 +175,8 @@
 
         # Screenshot selection
         "--release Mod1+s" = "exec /run/current-system/sw/bin/screenshot --select";
+        # For G16
+        "--release Mod1+Shift+s" = "exec /run/current-system/sw/bin/screenshot";
       };
 
 
