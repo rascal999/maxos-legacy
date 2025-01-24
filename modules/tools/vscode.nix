@@ -3,6 +3,7 @@
 {
   programs.vscode = {
     enable = true;
+    package = pkgs.vscode-fhs;
     userSettings = {
       "workbench.startupEditor" = "none";
       "terminal.integrated.defaultProfile.linux" = "bash";
@@ -13,6 +14,10 @@
       "vim.insertModeKeyBindings" = [];
       "vim.normalModeKeyBindings" = [];
       "vim.visualModeKeyBindings" = [];
+      "settingsSync.ignoredSettings" = [];
+      "settingsSync.ignoredExtensions" = [];
+      "settingsSync.ignoredKeyBindings" = [];
+      "settingsSync.keybindingsPerPlatform" = false;
     };
     extensions = with pkgs.vscode-extensions; [
       vscodevim.vim
