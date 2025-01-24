@@ -12,7 +12,6 @@
     ../../modules/desktop/default.nix
     ../../modules/hardware/network.nix
     ../../modules/tools/syncthing.nix
-    ../../modules/tools/llm/default.nix
     ../../modules/scripts/default.nix
     ../../modules/tools/docker.nix  # Import Docker module
     ../../modules/tools/wireguard.nix  # Import WireGuard module
@@ -103,6 +102,9 @@
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
+
+  # Explicitly disable NVIDIA support for Docker
+  virtualisation.docker.enableNvidia = false;
 
   # Enable home-manager
   home-manager = {
