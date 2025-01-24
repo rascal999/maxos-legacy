@@ -173,6 +173,7 @@
         "${config.xsession.windowManager.i3.config.modifier}+k" = "workspace 9: pw; exec ${pkgs.keepassxc}/bin/keepassxc";
         "${config.xsession.windowManager.i3.config.modifier}+Return" = "exec $HOME/.local/bin/rofi-launcher";
         "${config.xsession.windowManager.i3.config.modifier}+Shift+l" = "exec systemctl poweroff";
+        "Mod1+c" = "exec ${pkgs.chromium}/bin/chromium";
       };
 
       # Monitor assignments defined in host-specific config
