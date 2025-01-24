@@ -8,6 +8,8 @@
     zsh-powerlevel10k  # For p10k command
   ];
 
+  home.file.".p10k.zsh".source = ./zsh/p10k.zsh;
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -62,11 +64,6 @@
           POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
           POWERLEVEL9K_MODE='nerdfont-complete'
         fi
-      fi
-
-      # Create p10k config if it doesn't exist
-      if [[ ! -f ~/.p10k.zsh ]]; then
-        cp ${./zsh/p10k.zsh} ~/.p10k.zsh 2>/dev/null
       fi
     '';
 
