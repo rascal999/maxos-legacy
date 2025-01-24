@@ -15,10 +15,10 @@ mkdir -p "$HOME/screenshots/${D_YEAR}/${D_MONTH}/${D_DAY}"
 SCREENSHOT_PATH="$HOME/screenshots/${D_YEAR}/${D_MONTH}/${D_DAY}/${D_YEAR}${D_MONTH}${D_DAY}_${D_HOUR}${D_MINUTE}${D_SECOND}.png"
 
 # Take a screenshot
-if [[ "$1" == "focused" ]]; then
-  scrot --focused "$SCREENSHOT_PATH"
-else
+if [[ "$1" == "--select" ]]; then
   scrot -s "$SCREENSHOT_PATH"
+else
+  maim -s -B "$SCREENSHOT_PATH"
 fi
 
 # Check if screenshot was successful

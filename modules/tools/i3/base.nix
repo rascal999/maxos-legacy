@@ -126,9 +126,8 @@
         "Mod1+Shift+c" = "kill";
         "Mod1+Shift+r" = "restart";
 
-        # Screenshot bindings
-        "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui";
-        "Shift+Print" = "exec ${pkgs.flameshot}/bin/flameshot full";
+        # Screenshot binding
+        "--release Print" = "exec /run/current-system/sw/bin/screenshot";
 
         # Media controls using pactl for PipeWire
         "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
@@ -174,9 +173,10 @@
         "${config.xsession.windowManager.i3.config.modifier}+Shift+l" = "exec systemctl poweroff";
         "Mod1+c" = "exec ${pkgs.chromium}/bin/chromium";
 
-        # Screenshot keybinding
-        "Mod1+s" = "exec zsh maxos/scripts/screenshot";
+        # Screenshot selection
+        "--release Mod1+s" = "exec /run/current-system/sw/bin/screenshot --select";
       };
+
 
       # Monitor assignments defined in host-specific config
       workspaceOutputAssign = [ ];

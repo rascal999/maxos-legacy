@@ -23,13 +23,15 @@
   };
 
   environment.systemPackages = with pkgs; [
-    xorg.xrandr
-    pciutils  # Provides lspci command
-    bc  # For floating point calculations in brightness control
     adwaita-icon-theme
+    bc  # For floating point calculations in brightness control
+    maim
+    pciutils  # Provides lspci command
     redshift  # For color temperature and brightness adjustment
-    pkgs.chromium
     scrot
+    xdotool
+    xorg.xrandr
+    pkgs.chromium
     pkgs.python3
     pkgs.xclip
   ];
