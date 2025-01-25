@@ -16,7 +16,14 @@
     ../../modules/tools/docker.nix  # Import Docker module
     ../../modules/tools/wireguard.nix  # Import WireGuard module
     ../../modules/tools/qemu.nix  # Import QEMU module
+    ../../modules/tools/rocketchat.nix  # Import Rocket.Chat module
   ];
+
+  # Enable Rocket.Chat service
+  services.rocketchat = {
+    enable = true;
+    port = 3200;  # Use port 3200 to avoid conflicts
+  };
 
   # Disable system-wide Firefox
   programs.firefox.enable = false;
