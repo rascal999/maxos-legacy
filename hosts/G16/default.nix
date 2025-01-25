@@ -15,6 +15,7 @@
     ../../modules/scripts/default.nix
     ../../modules/tools/docker.nix  # Import Docker module
     ../../modules/tools/wireguard.nix  # Import WireGuard module
+    ../../modules/tools/qemu.nix  # Import QEMU module
   ];
 
   # Disable system-wide Firefox

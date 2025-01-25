@@ -53,6 +53,7 @@
           -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics \
           -e OLLAMA_DEBUG=1 \
           -e OLLAMA_DISABLE_CPU=true \
+          -e OLLAMA_KV_CACHE_TYPE=q8_0 \
           -v ollama:/root/.ollama \
           -p 11434:11434 \
           -e OLLAMA_KEEP_ALIVE=-1 \
