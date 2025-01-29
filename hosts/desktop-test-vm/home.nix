@@ -9,10 +9,12 @@
     ../../modules/tools/rofi/default.nix
     ../../modules/tools/firefox/default.nix
     ../../modules/tools/vscode.nix
+    ../../modules/tools/micromamba.nix
   ];
 
-  # Enable home-manager
+  # Enable home-manager and tools
   programs.home-manager.enable = true;
+  modules.tools.micromamba.enable = true;
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home = {

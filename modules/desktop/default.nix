@@ -26,10 +26,13 @@
     adwaita-icon-theme
     awscli
     bc  # For floating point calculations in brightness control
+    jupyter
     maim
+    micromamba
     pciutils  # Provides lspci command
     redshift  # For color temperature and brightness adjustment
     scrot
+    uv
     xdotool
     xorg.xrandr
     pkgs.chromium
