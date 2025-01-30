@@ -19,7 +19,7 @@
           --name open-webui \
           -v open-webui:/app/backend/data \
           -e OLLAMA_API_BASE_URL=http://host.docker.internal:11434/api \
-          -p 127.0.0.1:3000:8080 \
+          -p 127.0.0.1:3001:8080 \
           --add-host host.docker.internal:host-gateway \
           --rm \
           ghcr.io/open-webui/open-webui:main
