@@ -43,6 +43,11 @@
       fd
       jq
       tree
+      
+      # Java development
+      jdk
+      maven
+      gradle
 
       # System tools
       htop
@@ -168,8 +173,8 @@
       { workspace = "1: web"; output = "eDP-1"; }
       { workspace = "2: code"; output = "eDP-1"; }
       { workspace = "3: term"; output = "eDP-1"; }
-      { workspace = "4: burp"; output = "eDP-1"; }
-      { workspace = "5: term"; output = "eDP-1"; }
+      { workspace = "4: term"; output = "eDP-1"; }
+      { workspace = "5: burp"; output = "eDP-1"; }
       { workspace = "8: logseq"; output = "eDP-1"; }
       { workspace = "9: pw"; output = "eDP-1"; }
     ];
