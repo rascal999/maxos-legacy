@@ -82,6 +82,33 @@
         local exit_code=$?
         local duration=$((SECONDS - __cmd_timestamp))
       }
+
+      # Copy most recent download to current directory
+      function cpd() {
+        local last_download
+        last_download=$(ls -t ~/Downloads | head -1)
+        if [[ -n "$last_download" ]]; then
+          cp -v ~/Downloads/"$last_download" .
+          echo "\nCurrent directory contents:"
+          ls -la
+        else
+          echo "No files found in ~/Downloads"
+        fi
+      }
+
+      # Copy most recent download to goose workspace
+      function cpw() {
+        local last_download
+        local workspace_dir="/home/user/monorepo/tools/goose/workspace"
+        last_download=$(ls -t ~/Downloads | head -1)
+        if [[ -n "$last_download" ]]; then
+          cp -v ~/Downloads/"$last_download" "$workspace_dir/"
+          echo "\nWorkspace directory contents:"
+          ls -la "$workspace_dir"
+        else
+          echo "No files found in ~/Downloads"
+        fi
+      }
     '';
 
     oh-my-zsh = {
