@@ -113,6 +113,19 @@
         ];
       };
 
+      hints = {
+        enabled = [
+          {
+            regex = "https?://[a-zA-Z0-9-._~:/?#@!$&'*+,;=%]+[^)]";
+            binding = {
+              key = "A";
+              mods = "Alt";
+            };
+            command = "xdg-open";
+          }
+        ];
+      };
+
       selection = {
         semantic_escape_chars = ",│`|:\"' ()[]{}<>\t";
         save_to_clipboard = true;

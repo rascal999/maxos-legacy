@@ -79,11 +79,12 @@
         { command = "i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
         { command = "sleep 2 && i3-msg 'workspace 1: web'"; notification = false; }
         # Launch other applications after Firefox is settled
-        { command = "sleep 3 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
-        { command = "sleep 4 && i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
-        { command = "sleep 5 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
-        { command = "sleep 6 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
-        { command = "sleep 7 && i3-msg 'workspace 1: web'"; notification = false; }
+        { command = "sleep 3 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
+        { command = "sleep 4 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
+        { command = "sleep 5 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
+        { command = "sleep 6 && i3-msg 'workspace 3: goose; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session \"/home/user/git/github/monorepo/tools/goose/docker/run-goose.sh session\"'"; notification = false; }
+        { command = "sleep 7 && i3-msg 'workspace 4: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
+        { command = "sleep 8 && i3-msg 'workspace 1: web'"; notification = false; }
         # Clear urgent flags after all apps have launched
         { command = "sleep 12 && clear-urgent"; notification = false; }
       ];
@@ -95,6 +96,7 @@
 
         # Work directory
         "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session ${../../../scripts/work-dir-tmux}";
+        "Mod1+w" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session 'cd /home/user/monorepo/tools/goose/workspace && eza --long --all --header --icons --git && $SHELL'";
 
         # Program launcher
         "Mod1+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
@@ -105,7 +107,6 @@
         "Mod1+Shift+space" = "floating toggle";
 
         # Layout management
-        "Mod1+w" = "layout tabbed";
         "Mod1+e" = "layout toggle split";
         "Mod1+Shift+h" = "split h";
         "Mod1+v" = "split v";
@@ -145,9 +146,9 @@
         "Mod1+0" = "workspace number 0: slack";
         "Mod1+1" = "workspace number 1: web";
         "Mod1+2" = "workspace number 2: code";
-        "Mod1+3" = "workspace number 3: term";
-        "Mod1+4" = "workspace number 4: burp";
-        "Mod1+5" = "workspace number 5: term";
+        "Mod1+3" = "workspace number 3: goose";
+        "Mod1+4" = "workspace number 4: term";
+        "Mod1+5" = "workspace number 5: burp";
         "Mod1+8" = "workspace number 8: logseq";
         "Mod1+9" = "workspace number 9: pw";
 
@@ -155,9 +156,9 @@
         "Mod1+Shift+0" = "move container to workspace 0: slack";
         "Mod1+Shift+1" = "move container to workspace 1: web";
         "Mod1+Shift+2" = "move container to workspace 2: code";
-        "Mod1+Shift+3" = "move container to workspace 3: term";
-        "Mod1+Shift+4" = "move container to workspace 4: burp";
-        "Mod1+Shift+5" = "move container to workspace 5: term";
+        "Mod1+Shift+3" = "move container to workspace 3: goose";
+        "Mod1+Shift+4" = "move container to workspace 4: term";
+        "Mod1+Shift+5" = "move container to workspace 5: burp";
         "Mod1+Shift+8" = "move container to workspace 8: logseq";
         "Mod1+Shift+9" = "move container to workspace 9: pw";
 
