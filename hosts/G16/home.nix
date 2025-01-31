@@ -11,12 +11,14 @@
     ../../modules/tools/vscode.nix
     ../../modules/tools/logseq.nix
     ../../modules/tools/micromamba.nix
+    ../../modules/tools/direnv.nix
   ];
 
   # Enable home-manager and tools
   programs.home-manager.enable = true;
   modules.tools.logseq.enable = true;
   modules.tools.micromamba.enable = true;
+  modules.tools.direnv.enable = true;
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home = {
@@ -126,11 +128,6 @@
         gc = "git commit";
         gp = "git push";
       };
-    };
-
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
     };
 
     fzf = {
