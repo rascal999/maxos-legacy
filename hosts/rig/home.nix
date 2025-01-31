@@ -55,6 +55,7 @@
       btop
       neofetch
       unzip
+      zip
       wget
       curl
 

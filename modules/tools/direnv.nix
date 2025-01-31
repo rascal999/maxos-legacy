@@ -10,27 +10,49 @@ in {
   };
 
   config = mkIf cfg.enable {
+    programs.zsh.initExtra = ''
+      function cd() {
+        if [ "$#" -eq 0 ]; then
+          builtin cd || return
+        else
+          builtin cd "$*" || return
+        fi
+
+        if [ -n "$VIRTUAL_ENV" ] && [[ ! "$PWD" =~ "$(dirname "$VIRTUAL_ENV")" ]]; then
+          deactivate
+        fi
+        if [ -d ".venv" ]; then
+          source .venv/bin/activate
+        elif [ -d "venv" ]; then
+          source venv/bin/activate
+        fi
+      }
+    '';
+
+    programs.bash.initExtra = ''
+      function cd() {
+        if [ "$#" -eq 0 ]; then
+          builtin cd || return
+        else
+          builtin cd "$*" || return
+        fi
+
+        if [ -n "$VIRTUAL_ENV" ] && [[ ! "$PWD" =~ "$(dirname "$VIRTUAL_ENV")" ]]; then
+          deactivate
+        fi
+        if [ -d ".venv" ]; then
+          source .venv/bin/activate
+        elif [ -d "venv" ]; then
+          source venv/bin/activate
+        fi
+      }
+    '';
+
     programs.direnv = {
       enable = true;
       nix-direnv.enable = true;
-      stdlib = ''
-        # Auto-source Python venv if it exists
-        layout_python() {
-          local venv=.venv
-          if [ -d "$venv" ]; then
-            source $venv/bin/activate
-          fi
-        }
-
-        # Auto-detect Python projects
-        has_python_project() {
-          test -e setup.py -o -e requirements.txt -o -e pyproject.toml
-        }
-
-        if has_python_project; then
-          layout python
-        fi
-      '';
+      enableZshIntegration = true;
+      enableBashIntegration = true;
     };
   };
 }
