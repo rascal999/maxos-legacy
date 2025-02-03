@@ -5,7 +5,11 @@
     ./users.nix
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
+    ../../modules/tools/npm.nix  # Import npm module
   ];
+
+  # Enable npm module
+  modules.tools.npm.enable = true;
 
   # Disable system-wide Firefox
   programs.firefox.enable = false;

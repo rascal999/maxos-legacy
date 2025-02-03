@@ -17,7 +17,11 @@
     ../../modules/tools/wireguard.nix  # Import WireGuard module
     ../../modules/tools/qemu.nix  # Import QEMU module
     ../../modules/tools/rocketchat.nix  # Import Rocket.Chat module
+    ../../modules/tools/npm.nix  # Import npm module
   ];
+
+  # Enable npm module
+  modules.tools.npm.enable = true;
 
   # Enable Rocket.Chat service
   services.rocketchat = {
@@ -78,6 +82,9 @@
     # AppImage support
     appimage-run
 
+    # Docker tools
+    docker-compose
+
     # NVIDIA tools
     nvidia-docker
     nvidia-container-toolkit
@@ -90,6 +97,7 @@
     # Qt theming
     libsForQt5.qt5ct
     adwaita-qt
+    python311
   ];
 
   # Disable Redshift service to avoid conflicts

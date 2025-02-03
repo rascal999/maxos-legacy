@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Use modesetting driver
+  # Enable NVIDIA driver
   services.xserver = {
-    videoDrivers = [ "modesetting" ];
+    videoDrivers = [ "nvidia" ];
     
     # Basic X11 configuration
     extraConfig = ''
@@ -13,12 +13,18 @@
         BusID "PCI:0:2:0"
         Option "Backlight" "intel_backlight"
       EndSection
+
+      Section "Device"
+        Identifier "NVIDIA"
+        Driver "nvidia"
+        BusID "PCI:1:0:0"
+      EndSection
     '';
   };
 
-  # Load Intel modules
-  boot.initrd.kernelModules = [ "i915" ];
-  boot.kernelModules = [ "i915" ];
+  # Load Intel and NVIDIA modules
+  boot.initrd.kernelModules = [ "i915" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+  boot.kernelModules = [ "i915" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   
   # Configure module loading
   boot.extraModprobeConfig = ''
@@ -26,7 +32,7 @@
     blacklist nouveau
   '';
 
-  # Add kernel parameters from G16 2024 guide
+  # Add kernel parameters
   boot.kernelParams = [
     "i915.force_probe=7d55"
     "rd.driver.blacklist=nouveau"
@@ -37,11 +43,30 @@
     "nvidia-drm.modeset=1"
   ];
 
+  # Enable NVIDIA hardware
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    modesetting.enable = true;
+    powerManagement.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    prime = {
+      offload.enable = true;
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+  };
+
+  # Enable NVIDIA Container Runtime
+  hardware.nvidia-container-toolkit.enable = true;
+
   # Basic graphics configuration
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [
       intel-media-driver
+      nvidia-vaapi-driver
     ];
   };
 }

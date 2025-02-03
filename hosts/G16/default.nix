@@ -11,12 +11,18 @@
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
     ../../modules/hardware/network.nix
+    ../../modules/hardware/bluetooth.nix
     ../../modules/tools/syncthing.nix
     ../../modules/scripts/default.nix
     ../../modules/tools/docker.nix  # Import Docker module
     ../../modules/tools/wireguard.nix  # Import WireGuard module
     ../../modules/tools/qemu.nix  # Import QEMU module
+    ../../modules/tools/npm.nix  # Import npm module
+    ./ollama.nix  # Import local Ollama configuration
   ];
+
+  # Enable npm module
+  modules.tools.npm.enable = true;
 
   # Disable system-wide Firefox
   programs.firefox.enable = false;
@@ -83,15 +89,24 @@
     # AppImage support
     appimage-run
 
+    # Docker tools
+    docker-compose
+
     # Graphics utilities
     glxinfo
     xorg.xrandr
     # Backlight utilities
     light
     acpilight
+    # NVIDIA tools
+    nvidia-docker
+    nvidia-container-toolkit
+    cudaPackages.cuda_nvcc
+    cudaPackages.cuda_cudart
     # Qt theming
     libsForQt5.qt5ct
     adwaita-qt
+    python311
   ];
 
   # Add user to video group for backlight control and enable FUSE
@@ -104,8 +119,8 @@
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
 
-  # Explicitly disable NVIDIA support for Docker
-  virtualisation.docker.enableNvidia = false;
+  # Enable NVIDIA support for Docker
+  virtualisation.docker.enableNvidia = true;
 
   # Enable home-manager
   home-manager = {
