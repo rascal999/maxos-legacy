@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+
+INSTALLED_BINARY="/run/current-system/sw/bin/electrum"
+VERSION="4.5.8"
+echo "Verifying Electrum version $VERSION..."
+
+# Check installed binary exists
+if [ ! -f "$INSTALLED_BINARY" ]; then
+    echo "Error: Electrum binary not found at $INSTALLED_BINARY"
+    exit 1
+fi
+
+# Get store path
+STORE_PATH=$(readlink -f "$INSTALLED_BINARY")
+STORE_PATH=${STORE_PATH%/bin/electrum}
+echo "Store path: $STORE_PATH"
+
+# Import GPG keys
+echo "Importing GPG keys..."
+gpg --keyserver keyserver.ubuntu.com --recv-keys "6694D8DE7BE8EE5631BED9502BD5824B7F9470E6" # ThomasV
+gpg --keyserver keyserver.ubuntu.com --recv-keys "637DB1E23370F84AFF88CCE03152347D07DA627C" # Emzy
+gpg --keyserver keyserver.ubuntu.com --recv-keys "0EEDCFD5CAFB459067349B23CA9EEEC43DF911DC" # SomberNight
+
+# Create temp directory
+TEMP_DIR=$(mktemp -d)
+cd $TEMP_DIR
+
+# Download source and signature
+echo "Downloading source and signature..."
+curl -L -s -o Electrum-$VERSION.tar.gz "https://download.electrum.org/$VERSION/Electrum-$VERSION.tar.gz"
+curl -L -s -o Electrum-$VERSION.tar.gz.asc "https://download.electrum.org/$VERSION/Electrum-$VERSION.tar.gz.asc"
+
+# Check if files were downloaded successfully
+if [ ! -f Electrum-$VERSION.tar.gz ] || [ ! -f Electrum-$VERSION.tar.gz.asc ]; then
+    echo "Error: Failed to download files"
+    cd - > /dev/null
+    rm -rf $TEMP_DIR
+    exit 1
+fi
+
+# Calculate source hash
+HASH=$(sha256sum Electrum-$VERSION.tar.gz | cut -d' ' -f1)
+echo "Source SHA256: $HASH"
+
+# Get hash from nixpkgs
+echo "Fetching nixpkgs hash..."
+BASE64_HASH=$(curl -s "https://raw.githubusercontent.com/NixOS/nixpkgs/release-24.11/pkgs/applications/misc/electrum/default.nix" | grep -o 'sha256-[A-Za-z0-9+/]*=' | cut -d'-' -f2)
+
+if [ -z "$BASE64_HASH" ]; then
+    echo "Error: Could not fetch hash from nixpkgs"
+    cd - > /dev/null
+    rm -rf $TEMP_DIR
+    exit 1
+fi
+
+# Convert base64 hash to hex using python
+NIXPKGS_HASH=$(python3 -c "
+import base64
+import sys
+h = sys.argv[1]
+# Add padding if needed
+h += '=' * (-len(h) % 4)
+print(base64.b64decode(h).hex())
+" "$BASE64_HASH")
+
+echo "Nixpkgs SHA256: $NIXPKGS_HASH"
+
+# Compare source hashes
+if [ "$HASH" != "$NIXPKGS_HASH" ]; then
+    echo "Error: Source hash does not match nixpkgs!"
+    echo "See: https://github.com/NixOS/nixpkgs/blob/release-24.11/pkgs/applications/misc/electrum/default.nix"
+    cd - > /dev/null
+    rm -rf $TEMP_DIR
+    exit 1
+fi
+
+echo "Source hash matches nixpkgs."
+
+# Verify signatures
+echo "Verifying GPG signatures..."
+VERIFY_OUTPUT=$(gpg --verify Electrum-$VERSION.tar.gz.asc Electrum-$VERSION.tar.gz 2>&1)
+echo "$VERIFY_OUTPUT"
+
+# Check for good signatures from all three developers
+THOMASV_SIG=$(echo "$VERIFY_OUTPUT" | grep -A1 "6694D8DE7BE8EE5631BED9502BD5824B7F9470E6" | grep "Good signature")
+EMZY_SIG=$(echo "$VERIFY_OUTPUT" | grep -A1 "637DB1E23370F84AFF88CCE03152347D07DA627C" | grep "Good signature")
+SOMBERNIGHT_SIG=$(echo "$VERIFY_OUTPUT" | grep -A1 "0EEDCFD5CAFB459067349B23CA9EEEC43DF911DC" | grep "Good signature")
+
+if [ -n "$THOMASV_SIG" ] && [ -n "$EMZY_SIG" ] && [ -n "$SOMBERNIGHT_SIG" ]; then
+    echo "Source signatures verified by all three developers."
+else
+    echo "Source verification failed! Missing signatures:"
+    [ -z "$THOMASV_SIG" ] && echo "- ThomasV"
+    [ -z "$EMZY_SIG" ] && echo "- Emzy"
+    [ -z "$SOMBERNIGHT_SIG" ] && echo "- SomberNight"
+    cd - > /dev/null
+    rm -rf $TEMP_DIR
+    exit 1
+fi
+
+# Verify store path integrity
+echo "Verifying binary integrity..."
+if nix-store --verify-path "$STORE_PATH" 2>/dev/null; then
+    echo "Binary verification successful! Store path integrity verified."
+    cd - > /dev/null
+    rm -rf $TEMP_DIR
+    exit 0
+else
+    echo "Binary verification failed! Store path integrity check failed."
+    cd - > /dev/null
+    rm -rf $TEMP_DIR
+    exit 1
+fi

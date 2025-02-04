@@ -44,6 +44,7 @@
       fd
       jq
       tree
+      pwgen
       
       # Java development
       jdk

@@ -26,6 +26,8 @@
     adwaita-icon-theme
     awscli
     bc  # For floating point calculations in brightness control
+    electrum  # Bitcoin wallet
+    gnupg  # For verifying Electrum binary
     jupyter
     maim
     micromamba
@@ -42,4 +44,9 @@
 
   # Enable dconf for GTK settings
   programs.dconf.enable = true;
+
+  # Shell aliases
+  environment.shellAliases = {
+    "verify-electrum" = "/home/user/git/github/monorepo/maxos/scripts/verify-electrum";
+  };
 }
