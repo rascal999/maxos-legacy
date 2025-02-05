@@ -22,7 +22,6 @@
     gnome-keyring
     redshift
     wmctrl
-    xclip
     xdotool
   ];
 
