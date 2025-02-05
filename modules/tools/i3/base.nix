@@ -22,6 +22,8 @@
     gnome-keyring
     redshift
     wmctrl
+    xclip
+    xdotool
   ];
 
   xsession.windowManager.i3 = {
@@ -178,6 +180,9 @@
         "--release Mod1+s" = "exec /run/current-system/sw/bin/screenshot --select";
         # For G16
         "--release Mod1+Shift+s" = "exec /run/current-system/sw/bin/screenshot";
+
+        # Insert timestamp
+        "Mod1+Shift+t" = "exec /run/current-system/sw/bin/insert-timestamp";
       };
 
 
