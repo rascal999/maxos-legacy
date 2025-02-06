@@ -166,6 +166,9 @@
         # Screen locking
         "Mod1+x" = "exec --no-startup-id ${pkgs.i3lock}/bin/i3lock -c 000000";
 
+        # Open shell at tickets directory
+        "Mod1+m" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session 'cd /home/user/mgp-monorepo/tickets && $SHELL'";
+
         # Quick launch frequently used applications
         "${config.xsession.windowManager.i3.config.modifier}+b" = "workspace 5: burp; exec ${pkgs.jdk}/bin/java -jar $(find /home/user/Downloads -name 'burpsuite_pro*.jar' -type f | sort -r | head -n1)";
         "${config.xsession.windowManager.i3.config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
