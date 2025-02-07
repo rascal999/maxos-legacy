@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [
+    ./burp.nix
+  ];
+
   home.file = {
     ".mozilla/firefox/default/search.json.mozlz4" = {
       enable = lib.mkForce false;

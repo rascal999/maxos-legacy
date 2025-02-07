@@ -183,6 +183,9 @@
         # For G16
         "--release Mod1+Shift+s" = "exec /run/current-system/sw/bin/screenshot";
 
+        # Launch Firefox with burp profile
+        "Mod1+Shift+Return" = "workspace 5: burp; exec ${pkgs.firefox}/bin/firefox -P burp";
+
         # Insert timestamp
         "Mod1+Shift+t" = "exec /run/current-system/sw/bin/insert-timestamp";
       };
