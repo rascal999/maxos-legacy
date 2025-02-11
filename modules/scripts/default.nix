@@ -7,10 +7,6 @@ let
   mvpnScript = pkgs.writeShellScriptBin "mvpn" (builtins.readFile ../../scripts/mvpn);
   screenshotScript = pkgs.writeShellScriptBin "screenshot" (builtins.readFile ../../scripts/screenshot);
   insertTimestamp = pkgs.writeShellScriptBin "insert-timestamp" (builtins.readFile ../../scripts/insert-timestamp);
-  cumScript = pkgs.writeShellScriptBin "cum" (
-    "#!${pkgs.stdenv.shell}
-    ${pkgs.bash}/bin/bash /home/user/git/github/monorepo/docker/baseimage/create_project.sh \"$@\""
-  );
 in
 {
   config = {
@@ -25,7 +21,6 @@ in
       pkgs.bc  # For floating point calculations
       pkgs.jq  # For JSON output in get command
       pkgs.redshift  # For color temperature and brightness adjustment
-      cumScript
     ];
   };
 }

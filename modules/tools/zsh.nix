@@ -109,6 +109,15 @@
           echo "No files found in ~/Downloads"
         fi
       }
+
+      # Create and enter new project directory
+      function cum() {
+        ${pkgs.bash}/bin/bash /home/user/git/github/monorepo/docker/baseimage/create_project.sh "$@"
+        if [ -f /tmp/cum_last_project ]; then
+          cd "$(cat /tmp/cum_last_project)"
+          rm /tmp/cum_last_project
+        fi
+      }
     '';
 
     oh-my-zsh = {
