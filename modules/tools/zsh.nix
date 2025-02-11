@@ -71,6 +71,26 @@
       # Source p10k config if it exists
       [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
+      # Source baseimage .env file
+      function se() {
+        local env_file="/home/user/git/github/monorepo/docker/baseimage/.env"
+        if [[ -f "$env_file" ]]; then
+          setopt NO_NOMATCH
+          echo "Sourcing environment variables:"
+          while IFS= read -r line || [[ -n "$line" ]]; do
+            if [[ ! "$line" =~ ^[[:space:]]*# && -n "$line" ]]; then
+              export "$line"
+              # Extract and print only the key part before =
+              echo "$line" | cut -d'=' -f1
+            fi
+          done < "$env_file"
+          unsetopt NO_NOMATCH
+        else
+          echo "Error: baseimage .env file not found at $env_file"
+          return 1
+        fi
+      }
+
       # Command execution time tracking and notification
       __cmd_timestamp=0
       
