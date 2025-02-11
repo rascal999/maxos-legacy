@@ -18,10 +18,14 @@
     ../../modules/tools/qemu.nix  # Import QEMU module
     ../../modules/tools/rocketchat.nix  # Import Rocket.Chat module
     ../../modules/tools/npm.nix  # Import npm module
+    ../../modules/tools/traefik.nix  # Import Traefik module
   ];
 
   # Enable npm module
   modules.tools.npm.enable = true;
+
+  # Enable Traefik API Gateway
+  modules.tools.traefik.enable = true;
 
   # Enable Rocket.Chat service
   services.rocketchat = {

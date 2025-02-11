@@ -3,6 +3,7 @@
 {
   imports = [
     ../tools/keepassxc.nix
+    ../tools/dns.nix  # Import DNS module for .h TLD resolution
   ];
 
   # Common desktop configuration
