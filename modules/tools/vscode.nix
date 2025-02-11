@@ -6,7 +6,7 @@
     package = pkgs.vscode-fhs;
     userSettings = {
       "workbench.startupEditor" = "none";
-      "terminal.integrated.defaultProfile.linux" = "bash";
+      "terminal.integrated.defaultProfile.linux" = "zsh";
       "keyboard.dispatch" = "keyCode";
       "vim.useSystemClipboard" = true;
       "editor.lineNumbers" = "relative";

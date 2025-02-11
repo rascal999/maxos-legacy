@@ -77,13 +77,12 @@
         if [[ -f "$env_file" ]]; then
           setopt NO_NOMATCH
           echo "Sourcing environment variables:"
-          while IFS= read -r line || [[ -n "$line" ]]; do
-            if [[ ! "$line" =~ ^[[:space:]]*# && -n "$line" ]]; then
-              export "$line"
-              # Extract and print only the key part before =
-              echo "$line" | cut -d'=' -f1
+          grep -v '^#' "$env_file" | while IFS='=' read -r key value; do
+            if [[ -n "$key" ]]; then
+              eval "export $key=$value"
+              echo "$key"
             fi
-          done < "$env_file"
+          done
           unsetopt NO_NOMATCH
         else
           echo "Error: baseimage .env file not found at $env_file"
