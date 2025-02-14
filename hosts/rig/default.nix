@@ -19,7 +19,11 @@
     ../../modules/tools/rocketchat.nix  # Import Rocket.Chat module
     ../../modules/tools/npm.nix  # Import npm module
     ../../modules/tools/traefik.nix  # Import Traefik module
+    ../../modules/tools/postman.nix  # Import Postman module
   ];
+
+  # Enable Postman
+  modules.tools.postman.enable = true;
 
   # Enable npm module
   modules.tools.npm.enable = true;

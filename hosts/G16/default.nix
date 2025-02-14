@@ -19,8 +19,12 @@
     ../../modules/tools/qemu.nix  # Import QEMU module
     ../../modules/tools/npm.nix  # Import npm module
     ../../modules/tools/traefik.nix  # Import Traefik module
+    ../../modules/tools/postman.nix  # Import Postman module
     ./ollama.nix  # Import local Ollama configuration
   ];
+
+  # Enable Postman
+  modules.tools.postman.enable = true;
 
   # Enable npm module
   modules.tools.npm.enable = true;
