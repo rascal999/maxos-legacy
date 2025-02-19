@@ -115,6 +115,7 @@
     libsForQt5.qt5ct
     adwaita-qt
     python311
+    vegeta  # HTTP load testing tool
   ];
 
   # Add user to video group for backlight control and enable FUSE

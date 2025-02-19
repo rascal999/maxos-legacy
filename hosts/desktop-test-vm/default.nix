@@ -83,6 +83,7 @@
     # Security tools
     sqlmap
     mitmproxy
+    vegeta  # HTTP load testing tool
   ];
 
   # Enable home-manager with backup support

@@ -106,6 +106,7 @@
     libsForQt5.qt5ct
     adwaita-qt
     python311
+    vegeta  # HTTP load testing tool
   ];
 
   # Disable Redshift service to avoid conflicts
