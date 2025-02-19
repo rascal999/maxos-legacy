@@ -44,20 +44,22 @@ in {
         fi
       }
 
-      # Override the cd command
+      # Hook into ZSH's chpwd function to handle all directory changes
+      autoload -U add-zsh-hook
+      add-zsh-hook chpwd check_venv
+
+      # Override the cd command (for explicit cd usage)
       function cd() {
         if [ "$#" -eq 0 ]; then
           builtin cd || return
         else
           builtin cd "$*" || return
         fi
-        check_venv
       }
 
       # Create/override the .. shorthand
       function ..() {
         builtin cd .. || return
-        check_venv
       }
 
       # Ensure initial venv check when shell starts
@@ -98,7 +100,7 @@ in {
         fi
       }
 
-      # Override the cd command
+      # For bash, we still need to override cd since it doesn't have chpwd
       function cd() {
         if [ "$#" -eq 0 ]; then
           builtin cd || return
@@ -114,8 +116,8 @@ in {
         check_venv
       }
 
-      # Ensure initial venv check when shell starts
-      check_venv
+      # Hook into PROMPT_COMMAND to handle directory changes
+      PROMPT_COMMAND="check_venv;$PROMPT_COMMAND"
     '';
 
     programs.direnv = {
