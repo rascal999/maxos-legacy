@@ -41,6 +41,8 @@
     pkgs.chromium
     pkgs.python3
     pkgs.xclip
+    sqlmap  # SQL injection testing tool
+    mitmproxy  # HTTP/HTTPS interception proxy
   ];
 
   # Enable dconf for GTK settings

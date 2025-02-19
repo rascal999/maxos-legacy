@@ -80,6 +80,9 @@
     # Qt theming
     libsForQt5.qt5ct
     adwaita-qt
+    # Security tools
+    sqlmap
+    mitmproxy
   ];
 
   # Enable home-manager with backup support
