@@ -32,6 +32,9 @@
   # Enable Traefik API Gateway
   modules.tools.traefik.enable = true;
 
+  # Enable fabric-ai
+  modules.tools.fabric-ai.enable = true;
+
   # Disable system-wide Firefox
   programs.firefox.enable = false;
 
