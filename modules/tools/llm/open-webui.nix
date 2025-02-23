@@ -1,7 +1,16 @@
 { config, lib, pkgs, ... }:
 
-{
-  # Configure Open WebUI service
+with lib;
+
+let
+  cfg = config.modules.tools.open-webui;
+in {
+  options.modules.tools.open-webui = {
+    enable = mkEnableOption "open-webui";
+  };
+
+  config = mkIf cfg.enable {
+    # Configure Open WebUI service
   systemd.services.open-webui = {
     description = "Open WebUI for Ollama";
     wantedBy = [ "multi-user.target" ];
@@ -10,6 +19,8 @@
 
     serviceConfig = {
       Type = "exec";
+      TimeoutStartSec = "300"; # 5 minutes for startup
+      TimeoutStopSec = "60"; # 1 minute for shutdown
       ExecStartPre = [
         "${pkgs.docker}/bin/docker pull ghcr.io/open-webui/open-webui:main"
         ''${pkgs.docker}/bin/docker rm -f open-webui || true''
@@ -26,7 +37,7 @@
       '';
       ExecStop = "${pkgs.docker}/bin/docker stop open-webui";
       Restart = "always";
-      RestartSec = "10s";
+      RestartSec = "30s"; # Increased delay between restarts
     };
   };
 
@@ -46,4 +57,5 @@
   };
 
   # Network creation service moved to a separate module
+  };
 }

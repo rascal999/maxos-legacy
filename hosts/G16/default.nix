@@ -20,7 +20,7 @@
     ../../modules/tools/npm.nix  # Import npm module
     ../../modules/tools/traefik.nix  # Import Traefik module
     ../../modules/tools/postman.nix  # Import Postman module
-    ./ollama.nix  # Import local Ollama configuration
+    ../../modules/tools/llm/default.nix  # Import LLM modules (fabric-ai, open-webui, and ollama)
   ];
 
   # Enable Postman
@@ -34,6 +34,9 @@
 
   # Enable fabric-ai
   modules.tools.fabric-ai.enable = true;
+
+  # Enable Open WebUI
+  modules.tools.open-webui.enable = true;
 
   # Disable system-wide Firefox
   programs.firefox.enable = false;
