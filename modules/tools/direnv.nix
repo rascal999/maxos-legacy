@@ -55,11 +55,13 @@ in {
         else
           builtin cd "$@" || return
         fi
+        check_venv || true  # Ignore errors from check_venv
       }
 
       # Create/override the .. shorthand
       function ..() {
         builtin cd .. || return
+        check_venv || true  # Ignore errors from check_venv
       }
 
       # Ensure initial venv check when shell starts
@@ -107,13 +109,13 @@ in {
         else
           builtin cd "$@" || return
         fi
-        check_venv
+        check_venv || true  # Ignore errors from check_venv
       }
 
       # Create/override the .. shorthand
       function ..() {
         builtin cd .. || return
-        check_venv
+        check_venv || true  # Ignore errors from check_venv
       }
 
       # Hook into PROMPT_COMMAND to handle directory changes
