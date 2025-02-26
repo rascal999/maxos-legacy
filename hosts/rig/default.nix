@@ -20,19 +20,17 @@
     ../../modules/tools/npm.nix  # Import npm module
     ../../modules/tools/traefik.nix  # Import Traefik module
     ../../modules/tools/postman.nix  # Import Postman module
+    ../../modules/tools/git-crypt.nix  # Import git-crypt module
   ];
 
-  # Enable Postman
-  modules.tools.postman.enable = true;
-
-  # Enable npm module
-  modules.tools.npm.enable = true;
-
-  # Enable Traefik API Gateway
-  modules.tools.traefik.enable = true;
-
-  # Enable fabric-ai
-  modules.tools.fabric-ai.enable = true;
+  # Enable tools
+  modules.tools = {
+    postman.enable = true;
+    npm.enable = true;
+    traefik.enable = true;
+    fabric-ai.enable = true;
+    git-crypt.enable = true;
+  };
 
   # Enable Rocket.Chat service
   services.rocketchat = {
