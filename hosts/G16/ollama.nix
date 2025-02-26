@@ -15,8 +15,8 @@
     };
   };
 
-  # Remove default ollama service to avoid conflicts
-  services.ollama.enable = false;
+  # Override default ollama service configuration
+  services.ollama.enable = lib.mkForce false;
 
   # Create Docker network for ollama
   systemd.services.ollama-network-setup = {
