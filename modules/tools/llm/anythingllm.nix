@@ -4,8 +4,9 @@ with lib;
 
 let
   cfg = config.modules.tools.anythingllm;
-  uid = 1000;
-  gid = 1000;
+  # Use a higher UID/GID for anythingllm to avoid conflicts with regular users
+  uid = 2000;  # Changed from 1000 to 2000
+  gid = 2000;  # Changed from 1000 to 2000
   secretsPath = "/home/user/git/github/monorepo/secrets/environments/mgp/env";
 in {
   options.modules.tools.anythingllm = {
@@ -130,6 +131,7 @@ in {
             -v ${cfg.storageLocation}:/app/server/storage \
             -v ${cfg.storageLocation}/plugins:/app/server/storage/plugins \
             -v ${cfg.storageLocation}/secrets:/app/server/storage/secrets \
+            -v /home/user/.ssh:/app/server/.ssh \
             -e STORAGE_DIR="/app/server/storage" \
             -e SECRETS_PATH="/app/server/storage/secrets/env" \
             -e JWT_SECRET="$JWT_SECRET" \
@@ -148,6 +150,8 @@ in {
             -e AGENT_LLM_PROVIDER=openrouter \
             -e OPENROUTER_MODEL_PREF=anthropic/claude-3.7-sonnet:beta \
             -e OPENROUTER_API_KEY="$OPENROUTER_API_KEY" \
+            -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" \
+            -e HOME="/app/server" \
             --add-host=host.docker.internal:host-gateway \
             --user ${toString uid}:${toString gid} \
             mintplexlabs/anythingllm
@@ -173,5 +177,8 @@ in {
 
     # Ensure Docker is enabled
     virtualisation.docker.enable = true;
+    
+    # Use the new option for NVIDIA container toolkit instead of the deprecated one
+    hardware.nvidia-container-toolkit.enable = config.virtualisation.docker.enableNvidia;
   };
 }
