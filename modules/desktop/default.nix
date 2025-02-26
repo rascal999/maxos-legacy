@@ -25,7 +25,7 @@
 
   environment.systemPackages = with pkgs; [
     adwaita-icon-theme
-    awscli
+    awscli2
     bc  # For floating point calculations in brightness control
     electrum  # Bitcoin wallet
     gnupg  # For verifying Electrum binary
