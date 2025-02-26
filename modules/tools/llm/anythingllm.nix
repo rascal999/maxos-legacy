@@ -10,7 +10,7 @@ in {
     enable = mkEnableOption "anythingllm";
     port = mkOption {
       type = types.port;
-      default = 3001;
+      default = 4000;
       description = "Port to run AnythingLLM on";
     };
   };
