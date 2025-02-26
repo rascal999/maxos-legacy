@@ -33,7 +33,7 @@ in {
     systemd.tmpfiles.rules = [
       "d ${cfg.storageLocation} 0755 ${toString uid} ${toString gid} -"
       "d ${cfg.storageLocation}/plugins 0755 ${toString uid} ${toString gid} -"
-      "d ${cfg.storageLocation}/plugins/agent-skills 0755 ${toString uid} ${toString gid} -"
+      # Don't create agent-skills directory, it will be mounted from the host
       "d ${cfg.storageLocation}/plugins/agent-flows 0755 ${toString uid} ${toString gid} -"
       "d ${cfg.storageLocation}/secrets 0755 ${toString uid} ${toString gid} -"
       "f ${cfg.storageLocation}/anythingllm.db 0666 ${toString uid} ${toString gid} -"
@@ -47,7 +47,7 @@ in {
         what = "/home/user/git/github/monorepo/tools/anythingllm/agent-skills";
         where = "${cfg.storageLocation}/plugins/agent-skills";
         type = "none";
-        options = "bind";
+        options = "bind,ro";  # Read-only bind mount to prevent ownership changes
         wantedBy = [ "multi-user.target" ];
         requiredBy = [ "anythingllm.service" ];
       }
@@ -107,8 +107,11 @@ in {
           "+${pkgs.coreutils}/bin/mkdir -p ${cfg.storageLocation}/plugins"
           "+${pkgs.coreutils}/bin/mkdir -p ${cfg.storageLocation}/plugins/agent-flows"
           "+${pkgs.coreutils}/bin/mkdir -p ${cfg.storageLocation}/secrets"
-          "+${pkgs.coreutils}/bin/chown -R ${toString uid}:${toString gid} ${cfg.storageLocation}/plugins"
-          "+${pkgs.coreutils}/bin/chmod -R 755 ${cfg.storageLocation}/plugins"
+          # Don't recursively chown the plugins directory, as it would affect the agent-skills mount
+          "+${pkgs.coreutils}/bin/chown ${toString uid}:${toString gid} ${cfg.storageLocation}/plugins"
+          "+${pkgs.coreutils}/bin/chmod 755 ${cfg.storageLocation}/plugins"
+          "+${pkgs.coreutils}/bin/chown -R ${toString uid}:${toString gid} ${cfg.storageLocation}/plugins/agent-flows"
+          "+${pkgs.coreutils}/bin/chmod -R 755 ${cfg.storageLocation}/plugins/agent-flows"
           "+${pkgs.coreutils}/bin/chown -R ${toString uid}:${toString gid} ${cfg.storageLocation}/secrets"
           "+${pkgs.coreutils}/bin/chmod -R 755 ${cfg.storageLocation}/secrets"
           
