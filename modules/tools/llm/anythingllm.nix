@@ -8,6 +8,7 @@ let
   uid = 2000;  # Changed from 1000 to 2000
   gid = 2000;  # Changed from 1000 to 2000
   secretsPath = "/home/user/git/github/monorepo/secrets/environments/mgp/env";
+  agentSkillsPath = "/home/user/git/github/monorepo/tools/anythingllm/agent-skills";
 in {
   options.modules.tools.anythingllm = {
     enable = mkEnableOption "anythingllm";
@@ -33,24 +34,17 @@ in {
     systemd.tmpfiles.rules = [
       "d ${cfg.storageLocation} 0755 ${toString uid} ${toString gid} -"
       "d ${cfg.storageLocation}/plugins 0755 ${toString uid} ${toString gid} -"
-      # Don't create agent-skills directory, it will be mounted from the host
+      "d ${cfg.storageLocation}/plugins/agent-skills 0755 ${toString uid} ${toString gid} -"
       "d ${cfg.storageLocation}/plugins/agent-flows 0755 ${toString uid} ${toString gid} -"
       "d ${cfg.storageLocation}/secrets 0755 ${toString uid} ${toString gid} -"
+      "d ${cfg.storageLocation}/comkey 0755 ${toString uid} ${toString gid} -"
       "f ${cfg.storageLocation}/anythingllm.db 0666 ${toString uid} ${toString gid} -"
       "f ${cfg.storageLocation}/jwt_secret 0644 ${toString uid} ${toString gid} -"
       "f ${cfg.storageLocation}/openrouter_api_key 0644 ${toString uid} ${toString gid} -"
     ];
 
-    # Mount unit for agent skills
+    # Mount unit for secrets directory
     systemd.mounts = [
-      {
-        what = "/home/user/git/github/monorepo/tools/anythingllm/agent-skills";
-        where = "${cfg.storageLocation}/plugins/agent-skills";
-        type = "none";
-        options = "bind,ro";  # Read-only bind mount to prevent ownership changes
-        wantedBy = [ "multi-user.target" ];
-        requiredBy = [ "anythingllm.service" ];
-      }
       # Mount secrets directory
       {
         what = secretsPath;
@@ -105,15 +99,21 @@ in {
           
           # Create plugins directory structure
           "+${pkgs.coreutils}/bin/mkdir -p ${cfg.storageLocation}/plugins"
+          "+${pkgs.coreutils}/bin/mkdir -p ${cfg.storageLocation}/plugins/agent-skills"
           "+${pkgs.coreutils}/bin/mkdir -p ${cfg.storageLocation}/plugins/agent-flows"
           "+${pkgs.coreutils}/bin/mkdir -p ${cfg.storageLocation}/secrets"
-          # Don't recursively chown the plugins directory, as it would affect the agent-skills mount
-          "+${pkgs.coreutils}/bin/chown ${toString uid}:${toString gid} ${cfg.storageLocation}/plugins"
-          "+${pkgs.coreutils}/bin/chmod 755 ${cfg.storageLocation}/plugins"
-          "+${pkgs.coreutils}/bin/chown -R ${toString uid}:${toString gid} ${cfg.storageLocation}/plugins/agent-flows"
-          "+${pkgs.coreutils}/bin/chmod -R 755 ${cfg.storageLocation}/plugins/agent-flows"
+          "+${pkgs.coreutils}/bin/mkdir -p ${cfg.storageLocation}/comkey"
+          
+          # Copy agent-skills directory from host to storage location
+          "+${pkgs.rsync}/bin/rsync -a ${agentSkillsPath}/ ${cfg.storageLocation}/plugins/agent-skills/"
+          
+          # Set permissions
+          "+${pkgs.coreutils}/bin/chown -R ${toString uid}:${toString gid} ${cfg.storageLocation}/plugins"
+          "+${pkgs.coreutils}/bin/chmod -R 755 ${cfg.storageLocation}/plugins"
           "+${pkgs.coreutils}/bin/chown -R ${toString uid}:${toString gid} ${cfg.storageLocation}/secrets"
           "+${pkgs.coreutils}/bin/chmod -R 755 ${cfg.storageLocation}/secrets"
+          "+${pkgs.coreutils}/bin/chown -R ${toString uid}:${toString gid} ${cfg.storageLocation}/comkey"
+          "+${pkgs.coreutils}/bin/chmod -R 755 ${cfg.storageLocation}/comkey"
           
           # Docker operations with retry
           "+${pkgs.bash}/bin/bash -c 'until ${pkgs.docker}/bin/docker pull mintplexlabs/anythingllm; do echo Retrying pull in 30s; sleep 30; done'"
@@ -156,7 +156,7 @@ in {
             -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" \
             -e HOME="/app/server" \
             --add-host=host.docker.internal:host-gateway \
-            --user 1000:100 \
+            --user ${toString uid}:${toString gid} \
             mintplexlabs/anythingllm
         '';
         ExecStop = "${pkgs.docker}/bin/docker stop anythingllm";
