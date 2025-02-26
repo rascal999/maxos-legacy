@@ -153,7 +153,7 @@ in {
             -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" \
             -e HOME="/app/server" \
             --add-host=host.docker.internal:host-gateway \
-            --user ${toString uid}:${toString gid} \
+            --user 1000:100 \
             mintplexlabs/anythingllm
         '';
         ExecStop = "${pkgs.docker}/bin/docker stop anythingllm";
