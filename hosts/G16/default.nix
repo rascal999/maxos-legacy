@@ -23,6 +23,7 @@
     ../../modules/tools/llm/default.nix  # Import LLM modules (fabric-ai, open-webui, and ollama)
     ../../modules/tools/git-crypt.nix  # Import git-crypt module
     ./ollama.nix  # Import local Ollama configuration
+    ../../modules/tools/simplescreenrecorder.nix  # Import SimpleScreenRecorder module
   ];
 
   # Enable tools
@@ -36,6 +37,17 @@
 
   # Enable Open WebUI
   modules.tools.open-webui.enable = true;
+
+  # Enable AnythingLLM
+  modules.tools.anythingllm = {
+    enable = true;
+    port = 3001;
+    # Don't specify openRouterApiKeyFile to avoid circular dependency
+    # The API key can be added directly to /var/lib/anythingllm/openrouter_api_key
+  };
+
+  # Enable SimpleScreenRecorder
+  modules.tools.simplescreenrecorder.enable = true;
 
   # Disable system-wide Firefox
   programs.firefox.enable = false;

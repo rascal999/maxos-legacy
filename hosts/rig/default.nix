@@ -21,6 +21,7 @@
     ../../modules/tools/traefik.nix  # Import Traefik module
     ../../modules/tools/postman.nix  # Import Postman module
     ../../modules/tools/git-crypt.nix  # Import git-crypt module
+    ../../modules/tools/simplescreenrecorder.nix  # Import SimpleScreenRecorder module
   ];
 
   # Enable tools
@@ -31,6 +32,20 @@
     fabric-ai.enable = true;
     git-crypt.enable = true;
   };
+
+  # Enable Open WebUI
+  modules.tools.open-webui.enable = true;
+
+  # Enable AnythingLLM
+  modules.tools.anythingllm = {
+    enable = true;
+    port = 3001;
+    # Don't specify openRouterApiKeyFile to avoid circular dependency
+    # The API key can be added directly to /var/lib/anythingllm/openrouter_api_key
+  };
+
+  # Enable SimpleScreenRecorder
+  modules.tools.simplescreenrecorder.enable = true;
 
   # Enable Rocket.Chat service
   services.rocketchat = {
@@ -116,6 +131,9 @@
   # Enable FUSE for AppImage support
   boot.supportedFilesystems = [ "fuse" ];
   boot.kernelModules = [ "fuse" ];
+
+  # Enable NVIDIA support for Docker
+  virtualisation.docker.enableNvidia = true;
 
   # Enable home-manager with backup support
   home-manager = {

@@ -14,16 +14,18 @@ in {
   systemd.services.open-webui = {
     description = "Open WebUI for Ollama";
     wantedBy = [ "multi-user.target" ];
-    requires = [ "docker.service" "ollama.service" ];
-    after = [ "docker.service" "ollama.service" ];
+    requires = [ "docker.service" "ollama.service" "ollama-volume-setup.service" ];
+    after = [ "docker.service" "ollama.service" "ollama-volume-setup.service" ];
 
     serviceConfig = {
       Type = "exec";
-      TimeoutStartSec = "300"; # 5 minutes for startup
+      TimeoutStartSec = "600"; # 10 minutes for startup
       TimeoutStopSec = "60"; # 1 minute for shutdown
       ExecStartPre = [
         "${pkgs.docker}/bin/docker pull ghcr.io/open-webui/open-webui:main"
         ''${pkgs.docker}/bin/docker rm -f open-webui || true''
+        # Add health check for ollama using bash
+        "${pkgs.bash}/bin/bash -c 'until ${pkgs.curl}/bin/curl -s http://localhost:11434/api/version >/dev/null; do sleep 5; done'"
       ];
       ExecStart = ''
         ${pkgs.docker}/bin/docker run \

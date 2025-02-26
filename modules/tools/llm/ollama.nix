@@ -35,13 +35,16 @@
   systemd.services.ollama = lib.mkForce {
     description = "Ollama LLM Service (Docker)";
     wantedBy = [ "multi-user.target" ];
-    requires = [ "docker.service" ];
-    after = [ "docker.service" ];
+    requires = [ "docker.service" "network-online.target" ];
+    after = [ "docker.service" "network-online.target" ];
 
     serviceConfig = {
       Type = "exec";
+      TimeoutStartSec = "10m";
+      Restart = "on-failure";
+      RestartSec = "30s";
       ExecStartPre = [
-        "${pkgs.docker}/bin/docker pull ollama/ollama:latest"
+        "+${pkgs.bash}/bin/bash -c 'until ${pkgs.docker}/bin/docker pull ollama/ollama:latest; do echo Retrying pull in 30s; sleep 30; done'"
         ''${pkgs.docker}/bin/docker rm -f ollama || true''
       ];
       ExecStart = ''
@@ -61,8 +64,6 @@
           ollama/ollama
       '';
       ExecStop = "${pkgs.docker}/bin/docker stop ollama";
-      Restart = "always";
-      RestartSec = "10s";
     };
   };
 
