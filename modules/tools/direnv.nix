@@ -53,7 +53,7 @@ in {
         if [ "$#" -eq 0 ]; then
           builtin cd || return
         else
-          builtin cd "$*" || return
+          builtin cd "$@" || return
         fi
       }
 
@@ -105,7 +105,7 @@ in {
         if [ "$#" -eq 0 ]; then
           builtin cd || return
         else
-          builtin cd "$*" || return
+          builtin cd "$@" || return
         fi
         check_venv
       }
