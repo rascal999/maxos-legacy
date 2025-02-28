@@ -24,6 +24,7 @@
     ../../modules/tools/git-crypt.nix  # Import git-crypt module
     ./ollama.nix  # Import local Ollama configuration
     ../../modules/tools/simplescreenrecorder.nix  # Import SimpleScreenRecorder module
+    ../../modules/tools/mongodb.nix  # Import MongoDB module
   ];
 
   # Enable tools
@@ -33,6 +34,7 @@
     traefik.enable = true;
     fabric-ai.enable = true;
     git-crypt.enable = true;
+    mongodb.enable = true;  # Enable MongoDB
   };
 
   # Enable Open WebUI
