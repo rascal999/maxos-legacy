@@ -23,6 +23,7 @@
     ../../modules/tools/git-crypt.nix  # Import git-crypt module
     ../../modules/tools/simplescreenrecorder.nix  # Import SimpleScreenRecorder module
     ../../modules/tools/mongodb.nix  # Import MongoDB module
+    ../../modules/tools/grafana.nix  # Import Grafana module
   ];
 
   # Enable tools
@@ -33,6 +34,7 @@
     fabric-ai.enable = true;
     git-crypt.enable = true;
     mongodb.enable = true;  # Enable MongoDB
+    grafana.enable = true;  # Enable Grafana
   };
 
   # Enable Open WebUI
