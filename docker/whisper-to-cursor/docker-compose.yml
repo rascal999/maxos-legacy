@@ -1,0 +1,18 @@
+services:
+  whisper-to-cursor:
+    build: .
+    container_name: whisper-to-cursor
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority
+      - /dev/snd:/dev/snd
+    environment:
+      - DISPLAY=${DISPLAY}
+      - PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native
+    devices:
+      - /dev/snd:/dev/snd
+    network_mode: host
+    privileged: true
+    restart: unless-stopped
+    stdin_open: true  # Keep STDIN open
+    tty: true         # Allocate a pseudo-TTY

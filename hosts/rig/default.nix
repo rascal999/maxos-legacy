@@ -24,7 +24,6 @@
     ../../modules/tools/simplescreenrecorder.nix  # Import SimpleScreenRecorder module
     ../../modules/tools/mongodb.nix  # Import MongoDB module
     ../../modules/tools/grafana.nix  # Import Grafana module
-    ../../modules/tools/openai-whisper.nix  # Import openai-whisper module
   ];
 
   # Enable tools
@@ -36,10 +35,6 @@
     git-crypt.enable = true;
     mongodb.enable = true;  # Enable MongoDB
     grafana.enable = true;  # Enable Grafana
-    openai-whisper = {
-      enable = true;
-      models = [ "base" "large" ];  # Download base and large models
-    };
   };
 
   # Enable Open WebUI

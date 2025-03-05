@@ -1,0 +1,8 @@
+openai-whisper
+# Use keyboard instead of pynput to avoid evdev dependency issues
+keyboard
+numpy
+torch
+# Use sounddevice instead of pyaudio for easier installation
+sounddevice
+soundfile

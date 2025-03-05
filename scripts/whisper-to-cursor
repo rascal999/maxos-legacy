@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Script to run the dockerized whisper-to-cursor
+
+# Get the path to the docker directory
+DOCKER_DIR="/home/user/git/github/monorepo/maxos/docker/whisper-to-cursor"
+
+# Check if the docker directory exists
+if [ ! -d "$DOCKER_DIR" ]; then
+    echo "Error: Docker directory not found at $DOCKER_DIR"
+    exit 1
+fi
+
+echo "Starting Whisper to Cursor..."
+echo "This will rebuild the Docker container to ensure the latest version is used."
+echo "Please position your cursor where you want the transcribed text to appear."
+echo "The application will record for 5 seconds, transcribe your speech, and type it at the cursor position."
+echo "Press Ctrl+C to exit at any time."
+echo ""
+
+# Run the dockerized whisper-to-cursor
+exec "$DOCKER_DIR/run-whisper-to-cursor.sh" "$@"
