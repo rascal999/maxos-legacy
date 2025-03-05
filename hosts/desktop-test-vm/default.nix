@@ -6,10 +6,17 @@
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
     ../../modules/tools/npm.nix  # Import npm module
+    ../../modules/tools/openai-whisper.nix  # Import openai-whisper module
   ];
 
   # Enable npm module
   modules.tools.npm.enable = true;
+  
+  # Enable openai-whisper module
+  modules.tools.openai-whisper = {
+    enable = true;
+    models = [ "base" "small" ];  # Download base and small models
+  };
 
   # Disable system-wide Firefox
   programs.firefox.enable = false;

@@ -45,9 +45,6 @@
   };
 
   config = lib.mkIf config.modules.tools.grafana.enable {
-    # Enable Docker
-    virtualisation.docker.enable = true;
-    
     # Create directories for Grafana with proper permissions
     systemd.tmpfiles.rules = [
       "d /home/user/git/github/monorepo/tools/grafana/data 0777 root root - -"

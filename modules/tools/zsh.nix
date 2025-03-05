@@ -129,6 +129,46 @@
         fi
       }
 
+      # Generate and optionally execute commands using fabric
+      function fabric_cmd() {
+        # Check if a prompt was provided
+        if [[ -z "$1" ]]; then
+          echo "Error: No prompt provided."
+          echo "Usage: fabric_cmd your prompt here"
+          return 1
+        fi
+
+        # Combine all arguments into a single prompt
+        local prompt="$*"
+        
+        # Generate the command using fabric
+        local cmd=$(echo "$prompt" | fabric -p create_command)
+        
+        # Display the generated command
+        echo "\nGenerated command:"
+        echo "----------------------------------------"
+        echo "$cmd"
+        echo "----------------------------------------"
+        
+        # Ask for confirmation before executing (N is default)
+        echo -n "Execute this command? (y/N): "
+        read confirm
+        
+        # Execute if confirmed with 'y' or 'Y', otherwise don't execute (default)
+        if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
+          echo "\nExecuting command..."
+          eval "$cmd"
+          echo "\nCommand execution completed."
+        else
+          echo "\nCommand not executed."
+        fi
+      }
+      
+      # Simple alias for fabric command generation
+      function f() {
+        fabric_cmd "$@"
+      }
+
       # Create and enter new project directory
       function cum() {
         ${pkgs.bash}/bin/bash /home/user/git/github/monorepo/docker/baseimage/create_project.sh "$@"
@@ -153,6 +193,7 @@
       lg = "lazygit";
       ff = "firefox";
       ls = "grc ls";
+      f = "fabric_cmd";
     };
 
     plugins = [
