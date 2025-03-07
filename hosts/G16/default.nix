@@ -137,6 +137,7 @@
     adwaita-qt
     python311
     vegeta  # HTTP load testing tool
+    nmap    # Network scanning tool
   ];
 
   # Add user to video group for backlight control and enable FUSE

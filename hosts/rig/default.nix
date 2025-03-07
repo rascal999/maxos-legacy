@@ -127,6 +127,7 @@
     adwaita-qt
     python311
     vegeta  # HTTP load testing tool
+    nmap    # Network scanning tool
   ];
 
   # Disable Redshift service to avoid conflicts
