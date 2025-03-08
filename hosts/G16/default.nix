@@ -35,8 +35,8 @@
     traefik.enable = true;
     fabric-ai.enable = true;
     git-crypt.enable = true;
-    mongodb.enable = true;  # Enable MongoDB
-    grafana.enable = true;  # Enable Grafana
+    mongodb.enable = false;  # Disable MongoDB
+    grafana.enable = false;  # Disable Grafana
   };
 
   # Enable Open WebUI
