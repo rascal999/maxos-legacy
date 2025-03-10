@@ -24,6 +24,7 @@
     ../../modules/tools/simplescreenrecorder.nix  # Import SimpleScreenRecorder module
     ../../modules/tools/mongodb.nix  # Import MongoDB module
     ../../modules/tools/grafana.nix  # Import Grafana module
+    ../../modules/tools/golang.nix  # Import Golang module
   ];
 
   # Enable tools
@@ -35,6 +36,7 @@
     git-crypt.enable = true;
     mongodb.enable = true;  # Enable MongoDB
     grafana.enable = true;  # Enable Grafana
+    golang.enable = true;   # Enable Golang
   };
 
   # Enable Open WebUI

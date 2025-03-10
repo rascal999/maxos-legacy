@@ -22,10 +22,10 @@
     ../../modules/tools/postman.nix  # Import Postman module
     ../../modules/tools/llm/default.nix  # Import LLM modules (fabric-ai, open-webui, and ollama)
     ../../modules/tools/git-crypt.nix  # Import git-crypt module
-    ./ollama.nix  # Import local Ollama configuration
     ../../modules/tools/simplescreenrecorder.nix  # Import SimpleScreenRecorder module
     ../../modules/tools/mongodb.nix  # Import MongoDB module
     ../../modules/tools/grafana.nix  # Import Grafana module
+    ../../modules/tools/golang.nix  # Import Golang module
   ];
 
   # Enable tools
@@ -37,6 +37,7 @@
     git-crypt.enable = true;
     mongodb.enable = false;  # Disable MongoDB
     grafana.enable = false;  # Disable Grafana
+    golang.enable = true;    # Enable Golang
   };
 
   # Enable Open WebUI
