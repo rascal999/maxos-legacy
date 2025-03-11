@@ -3,10 +3,26 @@
 # Directory containing WireGuard profiles
 PROFILE_DIR="/home/user/share/Data/vpn"
 
+# Function to add iptables rules to allow localhost and Docker traffic
+add_local_network_rules() {
+  echo "Adding rules to allow localhost and Docker traffic..."
+  
+  # Allow localhost (127.0.0.0/8)
+  sudo iptables -I OUTPUT -d 127.0.0.0/8 -j ACCEPT
+  
+  # Allow Docker networks (172.16.0.0/12)
+  sudo iptables -I OUTPUT -d 172.16.0.0/12 -j ACCEPT
+  
+  # Allow local networks (192.168.0.0/16) - this is already allowed in the WireGuard config
+  # but we add it here for completeness
+  sudo iptables -I OUTPUT -d 192.168.0.0/16 -j ACCEPT
+}
+
 # Function to start a profile
 start_profile() {
   local country_code=$1
-  local profiles=($(ls $PROFILE_DIR | grep "^${country_code}-"))
+  # Modified to only select .conf files, not backups
+  local profiles=($(ls $PROFILE_DIR | grep "^${country_code}-" | grep "\.conf$" | grep -v "\.bak"))
 
   if [ ${#profiles[@]} -eq 0 ]; then
     echo "No profiles found for country code: $country_code"
@@ -18,6 +34,9 @@ start_profile() {
 
   echo "Starting profile: $random_profile"
   sudo wg-quick up $profile_path
+  
+  # Add rules to allow localhost and Docker traffic after VPN is up
+  add_local_network_rules
 }
 
 # Function to stop the active profile
@@ -82,8 +101,12 @@ case $1 in
   toggle)
     toggle_vpn
     ;;
+  fix-local)
+    # Add a new command to just apply the fix without restarting the VPN
+    add_local_network_rules
+    ;;
   *)
-    echo "Usage: mvpn {up [country code] | down | status | toggle}"
+    echo "Usage: mvpn {up [country code] | down | status | toggle | fix-local}"
     exit 1
     ;;
 esac
