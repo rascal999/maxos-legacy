@@ -26,6 +26,9 @@
     ../../modules/tools/mongodb.nix  # Import MongoDB module
     ../../modules/tools/grafana.nix  # Import Grafana module
     ../../modules/tools/golang.nix  # Import Golang module
+    ../../modules/tools/kiwix.nix  # Import Kiwix module
+    ../../modules/tools/restic.nix  # Import restic backup module
+    ../../modules/tools/gitleaks.nix  # Import Gitleaks module
   ];
 
   # Enable tools
@@ -38,6 +41,15 @@
     mongodb.enable = false;  # Disable MongoDB
     grafana.enable = false;  # Disable Grafana
     golang.enable = true;    # Enable Golang
+    kiwix.enable = true;     # Enable Kiwix
+    gitleaks = {
+      enable = true;         # Enable Gitleaks for secret scanning
+      installGitHook = true; # Install pre-push git hook globally
+    };
+    restic = {
+      enable = true;         # Enable restic backup
+      hostSubdir = "G16";    # Store backups in G16 subdirectory
+    };
   };
 
   # Enable Open WebUI

@@ -1,0 +1,151 @@
+#!/usr/bin/env bash
+
+# Script to interact with Jira tickets
+# - View recently updated SECOPS tickets
+# - Create new SECOPS tickets
+# - Filter tickets using fzf
+
+# Source environment file for Jira credentials
+ENV_FILE="/home/user/git/github/monorepo/secrets/environments/mgp/env"
+if [ ! -f "$ENV_FILE" ]; then
+    echo "Error: Environment file not found at $ENV_FILE"
+    exit 1
+fi
+
+# Source the environment file
+source "$ENV_FILE"
+
+# Check if required variables are set
+if [ -z "$JIRA_HOST" ] || [ -z "$JIRA_EMAIL" ] || [ -z "$JIRA_API_TOKEN" ]; then
+    echo "Error: Missing Jira credentials in environment file"
+    exit 1
+fi
+
+# Jira project key
+PROJECT_KEY="SECOPS"
+
+# Function to fetch recently updated tickets
+fetch_recent_tickets() {
+    # JQL query to get recently updated tickets in the SECOPS project
+    local jql="project=$PROJECT_KEY ORDER BY updated DESC"
+    local encoded_jql=$(echo "$jql" | jq -sRr @uri)
+    
+    # Make API request to Jira
+    curl -s -X GET \
+        -H "Content-Type: application/json" \
+        -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
+        "$JIRA_HOST/rest/api/2/search?jql=$encoded_jql&maxResults=50" | \
+        jq -r '.issues[] | "\(.key) | \(.fields.summary)"'
+}
+
+# Function to create a new ticket
+create_ticket() {
+    echo "Creating a new SECOPS ticket"
+    echo "----------------------------"
+    
+    # Prompt for ticket summary
+    echo -n "Summary: "
+    read summary
+    
+    if [ -z "$summary" ]; then
+        echo "Error: Summary cannot be empty"
+        return 1
+    fi
+    
+    # Prompt for ticket description
+    echo "Description (press Ctrl+D when finished):"
+    description=$(cat)
+    
+    # Create JSON payload
+    local payload=$(jq -n \
+        --arg summary "$summary" \
+        --arg description "$description" \
+        --arg project "$PROJECT_KEY" \
+        '{
+            "fields": {
+                "project": {
+                    "key": $project
+                },
+                "summary": $summary,
+                "description": $description,
+                "issuetype": {
+                    "name": "Task"
+                }
+            }
+        }')
+    
+    # Make API request to create ticket
+    local response=$(curl -s -X POST \
+        -H "Content-Type: application/json" \
+        -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
+        -d "$payload" \
+        "$JIRA_HOST/rest/api/2/issue")
+    
+    # Check if ticket was created successfully
+    if echo "$response" | jq -e '.key' > /dev/null; then
+        local key=$(echo "$response" | jq -r '.key')
+        echo "Ticket created successfully: $key"
+    else
+        echo "Error creating ticket:"
+        echo "$response" | jq '.'
+    fi
+}
+
+# Main menu
+main_menu() {
+    local options=("View recent tickets" "Create new ticket" "Exit")
+    local selected=$(printf "%s\n" "${options[@]}" | fzf --prompt="Select an option: ")
+    
+    case "$selected" in
+        "View recent tickets")
+            # Fetch and display recent tickets with fzf
+            echo "Fetching recent SECOPS tickets..."
+            local tickets=$(fetch_recent_tickets)
+            if [ -z "$tickets" ]; then
+                echo "No tickets found"
+                read -p "Press Enter to continue..."
+                return
+            fi
+            
+            echo "$tickets" | fzf --prompt="Recent tickets (ESC: back, TAB: toggle preview): " \
+                --header="TICKET ID | SUMMARY" \
+                --preview="curl -s -X GET -H 'Content-Type: application/json' -u '$JIRA_EMAIL:$JIRA_API_TOKEN' '$JIRA_HOST/rest/api/2/issue/{1}' | jq -r '.fields.description // \"No description\"' | fold -s -w \$COLUMNS" \
+                --preview-window=right:50%:wrap
+            ;;
+        "Create new ticket")
+            create_ticket
+            read -p "Press Enter to continue..."
+            ;;
+        "Exit")
+            exit 0
+            ;;
+        *)
+            # If no option selected (e.g., ESC pressed), just return to loop
+            return
+            ;;
+    esac
+}
+
+# Check for required dependencies
+for cmd in curl jq fzf; do
+    if ! command -v $cmd &> /dev/null; then
+        echo "Error: Required command '$cmd' not found"
+        echo "Please install missing dependencies:"
+        echo "  - curl: HTTP client for API requests"
+        echo "  - jq: JSON processor for parsing API responses"
+        echo "  - fzf: Interactive filter for selecting tickets"
+        exit 1
+    fi
+done
+
+# Print banner
+echo "========================================"
+echo "  JIRA TICKET MANAGER - SECOPS PROJECT  "
+echo "========================================"
+echo ""
+
+# Run main menu in a loop
+while true; do
+    main_menu
+    echo ""
+done

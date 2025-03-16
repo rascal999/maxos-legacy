@@ -25,6 +25,8 @@
     ../../modules/tools/mongodb.nix  # Import MongoDB module
     ../../modules/tools/grafana.nix  # Import Grafana module
     ../../modules/tools/golang.nix  # Import Golang module
+    ../../modules/tools/restic.nix  # Import restic backup module
+    ../../modules/tools/gitleaks.nix  # Import Gitleaks module
   ];
 
   # Enable tools
@@ -37,6 +39,14 @@
     mongodb.enable = true;  # Enable MongoDB
     grafana.enable = true;  # Enable Grafana
     golang.enable = true;   # Enable Golang
+    gitleaks = {
+      enable = true;        # Enable Gitleaks for secret scanning
+      installGitHook = true; # Install pre-push git hook globally
+    };
+    restic = {
+      enable = true;        # Enable restic backup
+      hostSubdir = "rig";   # Store backups in rig subdirectory
+    };
   };
 
   # Enable Open WebUI
