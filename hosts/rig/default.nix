@@ -37,7 +37,7 @@
     fabric-ai.enable = true;
     git-crypt.enable = true;
     mongodb.enable = true;  # Enable MongoDB
-    grafana.enable = true;  # Enable Grafana
+    grafana.enable = false;  # Disable Grafana
     golang.enable = true;   # Enable Golang
     gitleaks = {
       enable = true;        # Enable Gitleaks for secret scanning
