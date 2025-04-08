@@ -25,6 +25,7 @@
     nixosModules = {
       security = import ./modules/security/default.nix;
       scripts = import ./modules/scripts/default.nix;
+      timezone = import ./modules/timezone.nix;
     };
 
     nixosConfigurations = {
@@ -41,6 +42,7 @@
             ];
           }
           self.nixosModules.scripts
+          self.nixosModules.timezone
           ./hosts/G16/default.nix
           home-manager.nixosModules.home-manager
           {
@@ -68,6 +70,7 @@
             ];
           }
           self.nixosModules.scripts
+          self.nixosModules.timezone
           ./hosts/desktop-test-vm/default.nix
           home-manager.nixosModules.home-manager
           {
@@ -98,6 +101,7 @@
             ];
           }
           self.nixosModules.scripts
+          self.nixosModules.timezone
           ./hosts/rig/default.nix
           home-manager.nixosModules.home-manager
           {
