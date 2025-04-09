@@ -42,11 +42,18 @@
         "rig" = {
           id = "CCHEGMG-5SBOBN3-SLJJZMY-7T7HNG4-BQDWU6T-C4FUI66-5EJ5CN5-I6N5MQR";
         };
+        "S24 Ultra" = {
+          id = "X2NWWAE-YDR3DXR-IMT3P7R-6XBL6ZA-5OEQEPU-DFE2HX2-57KZAHT-CYLCRAP";
+        };
       };
       folders = {
-        "share" = {
-          path = "/home/user/share";
-          devices = [ "G16" "rig" ];
+        "Data" = {
+          path = "/home/user/share/Data";
+          devices = [ "G16" "rig" "S24 Ultra" ];
+        };
+        "Media" = {
+          path = "/home/user/share/Media";
+          devices = [ "G16" "rig" "S24 Ultra" ];
         };
       };
       gui = {
