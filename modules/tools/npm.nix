@@ -9,6 +9,7 @@
     environment.systemPackages = with pkgs; [
       nodejs
       nodePackages.npm
+      esbuild  # Add esbuild JavaScript bundler
     ];
   };
 }
