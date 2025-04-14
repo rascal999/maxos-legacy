@@ -38,7 +38,10 @@
     traefik.enable = true;
     fabric-ai.enable = true;
     git-crypt.enable = true;
-    mongodb.enable = false;  # Disable MongoDB
+    mongodb = {
+      enable = true;         # Enable MongoDB
+      compass.enable = true;  # Enable MongoDB Compass GUI
+    };
     grafana.enable = false;  # Disable Grafana
     golang.enable = true;    # Enable Golang
     kiwix.enable = true;     # Enable Kiwix
