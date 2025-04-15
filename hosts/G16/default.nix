@@ -29,6 +29,7 @@
     ../../modules/tools/kiwix.nix  # Import Kiwix module
     ../../modules/tools/restic.nix  # Import restic backup module
     ../../modules/tools/gitleaks.nix  # Import Gitleaks module
+    ../../modules/tools/remmina.nix  # Import Remmina module
   ];
 
   # Enable tools
@@ -53,6 +54,7 @@
       enable = true;         # Enable restic backup
       hostSubdir = "G16";    # Store backups in G16 subdirectory
     };
+    remmina.enable = true;   # Enable Remmina
   };
 
   # Enable Open WebUI

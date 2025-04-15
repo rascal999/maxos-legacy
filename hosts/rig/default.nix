@@ -27,6 +27,7 @@
     ../../modules/tools/golang.nix  # Import Golang module
     ../../modules/tools/restic.nix  # Import restic backup module
     ../../modules/tools/gitleaks.nix  # Import Gitleaks module
+    ../../modules/tools/remmina.nix  # Import Remmina module
   ];
 
   # Enable tools
@@ -50,6 +51,7 @@
       enable = true;        # Enable restic backup
       hostSubdir = "rig";   # Store backups in rig subdirectory
     };
+    remmina.enable = true;  # Enable Remmina
   };
 
   # Enable Open WebUI
