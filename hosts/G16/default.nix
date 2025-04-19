@@ -23,26 +23,27 @@
     ../../modules/tools/llm/default.nix  # Import LLM modules (fabric-ai, open-webui, and ollama)
     ../../modules/tools/git-crypt.nix  # Import git-crypt module
     ../../modules/tools/simplescreenrecorder.nix  # Import SimpleScreenRecorder module
-    ../../modules/tools/mongodb.nix  # Import MongoDB module
+    #../../modules/tools/mongodb.nix  # Import MongoDB module
     ../../modules/tools/grafana.nix  # Import Grafana module
     ../../modules/tools/golang.nix  # Import Golang module
     ../../modules/tools/kiwix.nix  # Import Kiwix module
     ../../modules/tools/restic.nix  # Import restic backup module
     ../../modules/tools/gitleaks.nix  # Import Gitleaks module
     ../../modules/tools/remmina.nix  # Import Remmina module
+    ../../modules/tools/k3s.nix  # Import k3s module
   ];
 
   # Enable tools
   modules.tools = {
     postman.enable = true;
     npm.enable = true;
-    traefik.enable = true;
+    traefik.enable = false;  # Disable standalone Traefik to use k3s built-in one
     fabric-ai.enable = true;
     git-crypt.enable = true;
-    mongodb = {
-      enable = true;         # Enable MongoDB
-      compass.enable = true;  # Enable MongoDB Compass GUI
-    };
+    #mongodb = {
+    #  enable = true;         # Enable MongoDB
+    #  compass.enable = true;  # Enable MongoDB Compass GUI
+    #};
     grafana.enable = false;  # Disable Grafana
     golang.enable = true;    # Enable Golang
     kiwix.enable = true;     # Enable Kiwix
@@ -55,6 +56,13 @@
       hostSubdir = "G16";    # Store backups in G16 subdirectory
     };
     remmina.enable = true;   # Enable Remmina
+    k3s = {
+      enable = true;
+      role = "server";  # Configure as a server (control plane)
+      extraFlags = [
+        "--disable-cloud-controller"  # Disable cloud controller as this is a local setup
+      ];
+    };
   };
 
   # Enable Open WebUI
@@ -87,6 +95,11 @@
 
   # Set hostname
   networking.hostName = "G16";
+  
+  # Add hosts entries
+  networking.hosts = {
+    "127.0.0.1" = [ "management-api.local" ];
+  };
 
   # X11 configuration
   services.xserver = {
@@ -224,6 +237,14 @@
       };
     };
   };
+
+  # Configure 16GB swap file
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16 * 1024; # 16GB in MiB
+    }
+  ];
 
   # Set system state version
   system.stateVersion = "24.11";

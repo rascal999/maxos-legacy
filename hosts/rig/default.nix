@@ -28,13 +28,14 @@
     ../../modules/tools/restic.nix  # Import restic backup module
     ../../modules/tools/gitleaks.nix  # Import Gitleaks module
     ../../modules/tools/remmina.nix  # Import Remmina module
+    ../../modules/tools/k3s.nix  # Import k3s module
   ];
 
   # Enable tools
   modules.tools = {
     postman.enable = true;
     npm.enable = true;
-    traefik.enable = true;
+    traefik.enable = false;  # Disable standalone Traefik to use k3s built-in one
     fabric-ai.enable = true;
     git-crypt.enable = true;
     mongodb = {
@@ -52,6 +53,13 @@
       hostSubdir = "rig";   # Store backups in rig subdirectory
     };
     remmina.enable = true;  # Enable Remmina
+    k3s = {
+      enable = true;
+      role = "server";  # Configure as a server (control plane)
+      extraFlags = [
+        "--disable-cloud-controller"  # Disable cloud controller as this is a local setup
+      ];
+    };
   };
 
   # Enable Open WebUI
@@ -90,6 +98,11 @@
 
   # Set hostname
   networking.hostName = "rig";
+  
+  # Add hosts entries
+  networking.hosts = {
+    "127.0.0.1" = [ "management-api.local" ];
+  };
 
   # X11 configuration
   services.xserver = {
