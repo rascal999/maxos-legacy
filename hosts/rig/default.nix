@@ -101,7 +101,7 @@
   
   # Add hosts entries
   networking.hosts = {
-    "127.0.0.1" = [ "management-api.local" ];
+    "127.0.0.1" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
   };
 
   # X11 configuration
