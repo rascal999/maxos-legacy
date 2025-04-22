@@ -29,6 +29,7 @@
     ../../modules/tools/gitleaks.nix  # Import Gitleaks module
     ../../modules/tools/remmina.nix  # Import Remmina module
     ../../modules/tools/k3s.nix  # Import k3s module
+    ../../modules/tools/dnsmasq.nix  # Import dnsmasq module for DNS resolution
   ];
 
   # Enable tools
@@ -59,6 +60,10 @@
       extraFlags = [
         "--disable-cloud-controller"  # Disable cloud controller as this is a local setup
       ];
+    };
+    dnsmasq = {
+      enable = true;
+      testDomains = true;    # Enable *.test domain resolution to 127.0.0.1
     };
   };
 
