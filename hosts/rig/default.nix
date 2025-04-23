@@ -164,6 +164,16 @@
     vegeta  # HTTP load testing tool
     nmap    # Network scanning tool
     
+    # Multimedia tools
+    ffmpeg   # Video/audio processing tool
+    portaudio   # Cross-platform audio I/O library
+    stt      # Mozilla's Speech-to-Text engine
+    
+    # Development tools
+    gcc      # GNU Compiler Collection
+    pkg-config  # Helper tool for compiling applications and libraries
+    devbox   # Tool for creating isolated development environments
+    
     # Security tools
     ffuf     # Web fuzzer tool
     testssl  # TLS/SSL testing tool
