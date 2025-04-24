@@ -179,6 +179,7 @@
     ffmpeg   # Video/audio processing tool
     portaudio   # Cross-platform audio I/O library
     stt      # Mozilla's Speech-to-Text engine
+    openai-whisper  # OpenAI's speech recognition model
     
     # Development tools
     gcc      # GNU Compiler Collection
