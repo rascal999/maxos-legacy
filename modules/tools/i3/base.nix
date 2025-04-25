@@ -150,6 +150,7 @@
         "Mod1+3" = "workspace number 3: goose";
         "Mod1+4" = "workspace number 4: term";
         "Mod1+5" = "workspace number 5: burp";
+        "Mod1+6" = "workspace number 6: misc";
         "Mod1+8" = "workspace number 8: logseq";
         "Mod1+9" = "workspace number 9: pw";
 
@@ -160,6 +161,7 @@
         "Mod1+Shift+3" = "move container to workspace 3: goose";
         "Mod1+Shift+4" = "move container to workspace 4: term";
         "Mod1+Shift+5" = "move container to workspace 5: burp";
+        "Mod1+Shift+6" = "move container to workspace 6: misc";
         "Mod1+Shift+8" = "move container to workspace 8: logseq";
         "Mod1+Shift+9" = "move container to workspace 9: pw";
 
