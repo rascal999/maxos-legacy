@@ -32,7 +32,12 @@ in {
         no-resolv = true;
         
         # Use Google and Cloudflare DNS for non-local domains
-        server = [ "8.8.8.8" "1.1.1.1" ];
+        server = [
+          "8.8.8.8"
+          "1.1.1.1"
+          # Forward cluster internal DNS requests to CoreDNS (replace IP if needed)
+          "/cluster.local/10.43.0.10"
+        ];
       } // (optionalAttrs cfg.testDomains {
         # Resolve all .test domains to 192.168.0.100
         address = "/.test/192.168.0.100";

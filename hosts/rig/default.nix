@@ -30,6 +30,7 @@
     ../../modules/tools/remmina.nix  # Import Remmina module
     ../../modules/tools/k3s.nix  # Import k3s module
     ../../modules/tools/dnsmasq.nix  # Import dnsmasq module for DNS resolution
+    ../../modules/tools/openssl.nix  # Import OpenSSL module
   ];
 
   # Enable tools
@@ -64,6 +65,10 @@
     dnsmasq = {
       enable = true;
       testDomains = true;    # Enable *.test domain resolution to 127.0.0.1
+    };
+    openssl = {
+      enable = true;
+      installDevelopmentPackages = true;  # Install development packages
     };
   };
 

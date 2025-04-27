@@ -75,6 +75,16 @@ Located in `modules/tools/`:
 - Custom CSS themes
 - Extension management
 
+#### VS Code (`vscode.nix`)
+- VS Code editor configuration
+- Managed settings, extensions, and keybindings
+- Configured through NixOS
+
+#### VS Code Unmanaged (`vscode-unmanaged.nix`)
+- VS Code editor installation only
+- Settings JSON file not managed by NixOS
+- Allows user to manage settings directly through VS Code
+
 ## Module Usage
 
 ### Including Modules

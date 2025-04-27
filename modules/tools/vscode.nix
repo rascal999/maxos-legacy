@@ -7,6 +7,9 @@
     userSettings = {
       "workbench.startupEditor" = "none";
       "terminal.integrated.defaultProfile.linux" = "bash";
+      "terminal.integrated.env.linux" = {
+        "KUBECONFIG" = "/home/user/.kube/config";
+      };
       "keyboard.dispatch" = "keyCode";
       "vim.useSystemClipboard" = true;
       "editor.lineNumbers" = "relative";
