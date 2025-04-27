@@ -246,6 +246,14 @@
     };
   };
 
+  # Configure k3s container runtime (containerd) to treat the shared registry as insecure
+  environment.etc."rancher/k3s/registries.yaml".text = ''
+    mirrors:
+      "local-registry-service.kube-system.svc.cluster.local:5000":
+        endpoint:
+          - "http://local-registry-service.kube-system.svc.cluster.local:5000"
+  ''; # Semicolon separating this from the next attribute
+
   # Set system state version
-  system.stateVersion = "24.11";
+  system.stateVersion = "24.11"; # NO semicolon after the last attribute
 }
