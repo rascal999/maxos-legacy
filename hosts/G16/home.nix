@@ -170,10 +170,11 @@
     workspaceOutputAssign = [
       { workspace = "0: slack"; output = "eDP-1"; }
       { workspace = "1: web"; output = "eDP-1"; }
-      { workspace = "2: code"; output = "eDP-1"; }
-      { workspace = "3: term"; output = "eDP-1"; }
+      { workspace = "2: wcode"; output = "eDP-1"; }
+      { workspace = "3: pcode"; output = "eDP-1"; }
       { workspace = "4: term"; output = "eDP-1"; }
       { workspace = "5: burp"; output = "eDP-1"; }
+      { workspace = "6: goose"; output = "eDP-1"; }
       { workspace = "8: logseq"; output = "eDP-1"; }
       { workspace = "9: pw"; output = "eDP-1"; }
     ];

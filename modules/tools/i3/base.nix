@@ -44,7 +44,11 @@
         }
         {
           command = "urgent ignore";
-          criteria = { class = "^Code$"; };
+          criteria = { class = "^Code$"; title = "^VS Code Default$"; };
+        }
+        {
+          command = "urgent ignore";
+          criteria = { class = "^Code$"; title = "^VS Code Private$"; };
         }
         {
           command = "urgent ignore";
@@ -64,7 +68,9 @@
       assigns = {
         "0: slack" = [{ class = "^Slack$"; }];
         "1: web" = [{ class = "^Firefox$"; }];
-        "2: code" = [{ class = "^Code$"; }];
+        "2: wcode" = [{ class = "^Code$"; title = "^VS Code Default$"; }];
+        "3: pcode" = [{ class = "^Code$"; title = "^VS Code Private$"; }];
+        "6: goose" = [{ title = ".*Goose.*"; }];
         "8: logseq" = [{ class = "^Logseq$"; }];
         "9: pw" = [{ class = "^KeePassXC$"; }];
       };
@@ -82,10 +88,11 @@
         # Launch other applications after Firefox is settled
         { command = "sleep 3 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
         { command = "sleep 4 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
-        { command = "sleep 5 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code'"; notification = false; }
-        { command = "sleep 6 && i3-msg 'workspace 3: goose; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session \"/home/user/git/github/monorepo/tools/goose/docker/run-goose.sh session\"'"; notification = false; }
-        { command = "sleep 7 && i3-msg 'workspace 4: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
-        { command = "sleep 8 && i3-msg 'workspace 1: web'"; notification = false; }
+        { command = "sleep 5 && i3-msg 'workspace 2: wcode; exec ${pkgs.vscode}/bin/code --title \"VS Code Default\"'"; notification = false; }
+        { command = "sleep 6 && i3-msg 'workspace 3: pcode; exec ${pkgs.vscode}/bin/code --user-data-dir=/home/user/.config/Code-Private --title \"VS Code Private\"'"; notification = false; }
+        { command = "sleep 7 && i3-msg 'workspace 6: goose; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session \"/home/user/git/github/monorepo/tools/goose/docker/run-goose.sh session\"'"; notification = false; }
+        { command = "sleep 8 && i3-msg 'workspace 4: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
+        { command = "sleep 9 && i3-msg 'workspace 1: web'"; notification = false; }
         # Clear urgent flags after all apps have launched
         { command = "sleep 12 && clear-urgent"; notification = false; }
       ];
@@ -146,22 +153,22 @@
         # Workspace switching
         "Mod1+0" = "workspace number 0: slack";
         "Mod1+1" = "workspace number 1: web";
-        "Mod1+2" = "workspace number 2: code";
-        "Mod1+3" = "workspace number 3: goose";
+        "Mod1+2" = "workspace number 2: wcode";
+        "Mod1+3" = "workspace number 3: pcode";
         "Mod1+4" = "workspace number 4: term";
         "Mod1+5" = "workspace number 5: burp";
-        "Mod1+6" = "workspace number 6: misc";
+        "Mod1+6" = "workspace number 6: goose";
         "Mod1+8" = "workspace number 8: logseq";
         "Mod1+9" = "workspace number 9: pw";
 
         # Move container to workspace
         "Mod1+Shift+0" = "move container to workspace 0: slack";
         "Mod1+Shift+1" = "move container to workspace 1: web";
-        "Mod1+Shift+2" = "move container to workspace 2: code";
-        "Mod1+Shift+3" = "move container to workspace 3: goose";
+        "Mod1+Shift+2" = "move container to workspace 2: wcode";
+        "Mod1+Shift+3" = "move container to workspace 3: pcode";
         "Mod1+Shift+4" = "move container to workspace 4: term";
         "Mod1+Shift+5" = "move container to workspace 5: burp";
-        "Mod1+Shift+6" = "move container to workspace 6: misc";
+        "Mod1+Shift+6" = "move container to workspace 6: goose";
         "Mod1+Shift+8" = "move container to workspace 8: logseq";
         "Mod1+Shift+9" = "move container to workspace 9: pw";
 

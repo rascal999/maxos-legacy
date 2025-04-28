@@ -181,10 +181,11 @@
       { workspace = "0: slack"; output = "DP-4"; }
       # All other workspaces on ultrawide
       { workspace = "1: web"; output = "DP-2"; }
-      { workspace = "2: code"; output = "DP-2"; }
-      { workspace = "3: term"; output = "DP-2"; }
+      { workspace = "2: wcode"; output = "DP-2"; }
+      { workspace = "3: pcode"; output = "DP-2"; }
       { workspace = "4: term"; output = "DP-2"; }
       { workspace = "5: burp"; output = "DP-2"; }
+      { workspace = "6: goose"; output = "DP-2"; }
       { workspace = "8: logseq"; output = "DP-2"; }
       { workspace = "9: pw"; output = "DP-2"; }
     ];
