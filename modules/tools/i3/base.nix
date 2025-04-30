@@ -68,8 +68,6 @@
       assigns = {
         "0: slack" = [{ class = "^Slack$"; }];
         "1: web" = [{ class = "^Firefox$"; }];
-        "2: wcode" = [{ class = "^Code$"; title = "^VS Code Default$"; }];
-        "3: pcode" = [{ class = "^Code$"; title = "^VS Code Private$"; }];
         "6: goose" = [{ title = ".*Goose.*"; }];
         "8: logseq" = [{ class = "^Logseq$"; }];
         "9: pw" = [{ class = "^KeePassXC$"; }];
@@ -88,13 +86,13 @@
         # Launch other applications after Firefox is settled
         { command = "sleep 3 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
         { command = "sleep 4 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
-        { command = "sleep 5 && i3-msg 'workspace 2: wcode; exec ${pkgs.vscode}/bin/code --title \"VS Code Default\"'"; notification = false; }
-        { command = "sleep 6 && i3-msg 'workspace 3: pcode; exec ${pkgs.vscode}/bin/code --user-data-dir=/home/user/.config/Code-Private --title \"VS Code Private\"'"; notification = false; }
-        { command = "sleep 7 && i3-msg 'workspace 6: goose; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session \"/home/user/git/github/monorepo/tools/goose/docker/run-goose.sh session\"'"; notification = false; }
-        { command = "sleep 8 && i3-msg 'workspace 4: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
-        { command = "sleep 9 && i3-msg 'workspace 1: web'"; notification = false; }
+        { command = "sleep 5 && i3-msg 'workspace 2: wcode; exec ${pkgs.vscode}/bin/code; mark vscode_default'"; notification = false; }
+        { command = "sleep 7 && i3-msg 'workspace 3: pcode; exec ${pkgs.vscode}/bin/code --user-data-dir=/home/user/.config/Code-Private; mark vscode_private'"; notification = false; }
+        { command = "sleep 9 && i3-msg 'workspace 6: goose; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session \"/home/user/git/github/monorepo/tools/goose/docker/run-goose.sh session\"'"; notification = false; }
+        { command = "sleep 10 && i3-msg 'workspace 4: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
+        { command = "sleep 11 && i3-msg 'workspace 1: web'"; notification = false; }
         # Clear urgent flags after all apps have launched
-        { command = "sleep 12 && clear-urgent"; notification = false; }
+        { command = "sleep 14 && clear-urgent"; notification = false; }
       ];
 
       # Basic keybindings
