@@ -33,7 +33,10 @@
         system = "x86_64-linux";
         modules = [
           {
-            nixpkgs.config.allowUnfree = true;
+            nixpkgs.config = {
+              allowUnfree = true;
+              android_sdk.accept_license = true; # Accept Android SDK license
+            };
             nixpkgs.overlays = [
               nur.overlays.default
               (final: prev: {
@@ -64,7 +67,10 @@
         system = "x86_64-linux";
         modules = [
           {
-            nixpkgs.config.allowUnfree = true;
+            nixpkgs.config = {
+              allowUnfree = true;
+              android_sdk.accept_license = true; # Accept Android SDK license
+            };
             nixpkgs.overlays = [
               nur.overlays.default
             ];
@@ -92,7 +98,10 @@
         system = "x86_64-linux";
         modules = [
           {
-            nixpkgs.config.allowUnfree = true;
+            nixpkgs.config = {
+              allowUnfree = true;
+              android_sdk.accept_license = true; # Accept Android SDK license
+            };
             nixpkgs.overlays = [
               nur.overlays.default
               (final: prev: {
