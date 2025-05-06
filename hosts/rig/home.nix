@@ -173,6 +173,7 @@
     # Monitor setup in startup
     startup = [
       { command = "$HOME/.screenlayout/dual-monitor.sh"; notification = false; }
+      { command = "i3-msg 'debuglog on; shmlog on; shmlog size 26214400'"; notification = false; }
     ];
 
     # Workspace monitor assignments
