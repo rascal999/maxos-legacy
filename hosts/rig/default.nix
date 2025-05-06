@@ -162,6 +162,7 @@
     # Graphics utilities
     glxinfo
     xorg.xrandr
+    edid-decode
     # Qt theming
     libsForQt5.qt5ct
     adwaita-qt
