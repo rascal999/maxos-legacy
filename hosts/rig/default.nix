@@ -192,8 +192,8 @@
   boot.supportedFilesystems = [ "fuse" ];
   boot.kernelModules = [ "fuse" ];
 
-  # Disable NVIDIA support for Docker
-  virtualisation.docker.enableNvidia = false;
+  # Enable NVIDIA support for Docker
+  virtualisation.docker.enableNvidia = true;
 
   # Enable home-manager with backup support
   home-manager = {
