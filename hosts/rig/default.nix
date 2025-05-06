@@ -75,9 +75,9 @@
   # Enable Open WebUI
   modules.tools.open-webui.enable = true;
 
-  # Enable AnythingLLM
+  # AnythingLLM (disabled)
   modules.tools.anythingllm = {
-    enable = true;
+    enable = false;
     port = 3001;
     # Don't specify openRouterApiKeyFile to avoid circular dependency
     # The API key can be added directly to /var/lib/anythingllm/openrouter_api_key
