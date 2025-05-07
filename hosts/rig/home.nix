@@ -45,6 +45,7 @@
       jq
       tree
       pwgen
+      aider-chat
       
       # Java development
       jdk
@@ -93,7 +94,7 @@
         executable = true;
         text = ''
           #!/bin/sh
-          xrandr --output DP-0 --primary --mode 3440x1440 --rate 144 --output DP-3 --mode 2560x1440 --rate 120 --left-of DP-0
+          xrandr --output DP-0 --primary --mode 3440x1440 --rate 144 --pos 0x0 --output DP-4 --mode 2560x1440 --rate 144 --right-of DP-0
         '';
       };
       ".config/mimeapps.list".text = ''

@@ -7,7 +7,7 @@
     
     # Basic X11 configuration
     screenSection = ''
-      Option "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+      Option "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=Off, ForceCompositionPipeline=Off}"
       Option "TripleBuffer" "off"
       Option "AllowIndirectGLXProtocol" "off"
       Option "VariableRefresh" "off"

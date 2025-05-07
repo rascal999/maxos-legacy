@@ -46,6 +46,7 @@
       jq
       tree
       pwgen
+      aider-chat
       
       # Java development
       jdk
