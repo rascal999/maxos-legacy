@@ -167,6 +167,7 @@
     libsForQt5.qt5ct
     adwaita-qt
     python311
+    python3Packages.pip # Python package installer
     vegeta  # HTTP load testing tool
     nmap    # Network scanning tool
     
