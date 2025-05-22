@@ -141,6 +141,7 @@
     wireplumber               # Session manager for PipeWire
     rnnoise                   # RNNoise noise suppression plugin
     ladspaPlugins             # LADSPA plugins for audio processing
+    pulseaudio                # For pactl utility
     
     # Toggle script removed for now to simplify configuration
   ];

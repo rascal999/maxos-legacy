@@ -27,6 +27,7 @@
     helvum          # PipeWire patchbay
     pipewire        # PipeWire tools including pw-top
     wireplumber     # Session manager for PipeWire
+    pulseaudio      # For pactl utility
   ];
 
   # Load ALSA UCM config for ROG laptops

@@ -114,6 +114,16 @@
     "127.0.0.1" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
   };
 
+  # Udev rules for PTT script device access
+  services.udev.extraRules = ''
+    # Grant user 'user' read/write access to the specific mouse event device for PTT script
+    KERNEL=="event3", SUBSYSTEM=="input", OWNER="user", MODE="0660"
+    
+    # Grant 'input' group read/write access to uinput for PTT script to re-emit events.
+    # User 'user' should be part of the 'input' group.
+    KERNEL=="uinput", SUBSYSTEM=="misc", GROUP="input", MODE="0660", TAG+="uaccess"
+  '';
+
   # X11 configuration
   services.xserver = {
     enable = true;
@@ -185,6 +195,11 @@
     # Security tools
     ffuf     # Web fuzzer tool
     testssl  # TLS/SSL testing tool
+
+    # For Python PTT script
+    python3
+    python3Packages.evdev
+    python3Packages.python-uinput
   ];
 
   # Disable Redshift service to avoid conflicts
