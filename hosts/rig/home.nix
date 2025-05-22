@@ -108,6 +108,12 @@
       ".Xresources".text = ''
         Xft.dpi: 168
       '';
+
+      # Make the Stacey Assistant script available and executable
+      ".local/bin/start-stacey-assistant" = {
+        source = ../../scripts/start-stacey-assistant.sh; # Path relative to this home.nix file
+        executable = true;
+      };
     };
   };
 
@@ -163,6 +169,24 @@
     easyeffects = {
       enable = true;
       preset = "default";
+    };
+  };
+
+  # Systemd user service for Stacey Assistant
+  systemd.user.services.stacey-assistant = {
+    Unit = {
+      Description = "Stacey Assistant Service";
+      # Start after the graphical session is ready, adjust if network is needed earlier
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      # Execute the script using bash from Nix packages
+      ExecStart = "${pkgs.bash}/bin/bash ${config.home.homeDirectory}/.local/bin/start-stacey-assistant";
+      Restart = "on-failure"; # Restart the service if it fails
+      RestartSec = "10s";      # Wait 10 seconds before restarting
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ]; # Ensure it's started with the user session
     };
   };
 
