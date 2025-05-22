@@ -170,31 +170,6 @@
   # Note: Ensure the user 'user' is part of the 'input' group at the system level
   # (e.g., in users.nix: users.users.user.extraGroups = [ "input" ];)
   # for /dev/input/event* access needed by the python-ptt.py script.
-  systemd.user.services.python-ptt = {
-    Unit = {
-      Description = "Python Push-to-Talk User Service";
-      # After graphical session and user's pipewire/wireplumber should be up.
-      After = [ "graphical-session.target" "pipewire.service" "wireplumber.service" ];
-      # Wants = [ "pipewire.service" "wireplumber.service" ]; # Optional: try to start them if not up.
-    };
-    # NixOS home-manager option to add packages to service PATH
-    Service = {
-      # The script path is relative to this home.nix file.
-      ExecStart = ''
-        ${(pkgs.python3.withPackages (ps: [ ps.evdev ps.python-uinput ]))}/bin/python3 \
-        ${./../../scripts/python-ptt.py}
-      '';
-      Environment = [ "PATH=${lib.makeBinPath [ pkgs.wireplumber ]}:/run/current-system/sw/bin:/usr/bin:/bin" ]; # Set PATH for wpctl
-      Restart = "always";
-      RestartSec = "10s";
-      StandardOutput = "journal"; # Log to user's journal
-      StandardError = "journal";  # Log to user's journal
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ]; # Start with the graphical session.
-    };
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 

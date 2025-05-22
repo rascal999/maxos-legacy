@@ -7,6 +7,7 @@
     ./nvidia.nix
     ./audio.nix
     ./monitors.nix
+    ./keyd.nix # Import keyd configuration
     ../../modules/security/default.nix
     ../../modules/desktop/default.nix
     ../../modules/hardware/network.nix
@@ -95,6 +96,9 @@
   # Disable system-wide Firefox
   programs.firefox.enable = false;
 
+  # Enable Solaar/Logitech device support
+  hardware.logitech.wireless.enable = true;
+
   # Enable zsh
   programs.zsh.enable = true;
 
@@ -122,6 +126,8 @@
     # Grant 'input' group read/write access to uinput for PTT script to re-emit events.
     # User 'user' should be part of the 'input' group.
     KERNEL=="uinput", SUBSYSTEM=="misc", GROUP="input", MODE="0660", TAG+="uaccess"
+    # Logitech USB Receiver hidraw access
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", MODE="0660", GROUP="plugdev"
   '';
 
   # X11 configuration
@@ -200,7 +206,13 @@
     python3
     python3Packages.evdev
     python3Packages.python-uinput
+    solaar # Logitech device management tool
+    usbutils # For lsusb
+    pkgs.evsieve # For advanced input event manipulation (PTT script)
   ];
+
+  # Add user to plugdev group for Logitech device access
+  users.users.user.extraGroups = [ "plugdev" ];
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
@@ -271,6 +283,25 @@
         endpoint:
           - "http://local-registry-service.kube-system.svc.cluster.local:5000"
   ''; # Semicolon separating this from the next attribute
+
+  systemd.user.services.direct-ptt = {
+    description = "Direct Push-to-Talk script using evsieve for Logitech mouse";
+    after = [ "graphical-session.target" "pipewire.service" "wireplumber.service" ]; # Ensure audio services are up
+    wantedBy = [ "graphical-session.target" ]; # Start when graphical session is ready
+
+    serviceConfig = {
+      Type = "simple";
+      # IMPORTANT: Ensure this path is correct and the script is executable (chmod +x)
+      # This assumes your monorepo is at /home/user/git/
+      # A Nix-packaged script would be more robust.
+      ExecStart = "${pkgs.bash}/bin/bash /home/user/git/github/monorepo/maxos/scripts/direct-push-to-talk.sh";
+      Restart = "on-failure";
+      RestartSec = "5s";
+      # No User/Group needed as it's a user service, runs as the user enabling it.
+      # Set PATH to include necessary commands for the script
+      Environment = "PATH=${lib.makeBinPath [ pkgs.coreutils pkgs.evsieve pkgs.wireplumber pkgs.gawk ]}";
+    };
+  };
 
   # Set system state version
   system.stateVersion = "24.11"; # NO semicolon after the last attribute

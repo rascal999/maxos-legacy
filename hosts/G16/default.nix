@@ -195,6 +195,7 @@
     # Security tools
     ffuf     # Web fuzzer tool
     testssl  # TLS/SSL testing tool
+    usbutils # For lsusb
   ];
 
   # Add user to video group for backlight control and enable FUSE

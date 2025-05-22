@@ -11,7 +11,7 @@ import time
 from evdev import InputDevice, UInput, ecodes, AbsInfo # Import UInput and AbsInfo
 
 # Configuration
-AUDIO_DEVICE_ID = "94"  # Jabra EVOLVE 20 MS Mono (ID from wpctl status)
+AUDIO_DEVICE_ID = "116"  # Jabra EVOLVE 20 MS Mono (ID from wpctl status)
 MOUSE_DEVICE_PATH = "/dev/input/event3"  # G502 X mouse
 TARGET_KEY_CODE = ecodes.BTN_SIDE
 KEY_PRESS_VALUE = 1
