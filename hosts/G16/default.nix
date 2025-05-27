@@ -196,6 +196,7 @@
     ffuf     # Web fuzzer tool
     testssl  # TLS/SSL testing tool
     usbutils # For lsusb
+    goose-cli # Database migration tool
   ];
 
   # Add user to video group for backlight control and enable FUSE
@@ -209,7 +210,7 @@
   services.redshift.enable = false;
 
   # Enable NVIDIA support for Docker
-  virtualisation.docker.enableNvidia = true;
+  hardware.nvidia-container-toolkit.enable = true;
 
   # Enable home-manager
   home-manager = {
@@ -270,5 +271,5 @@
   ];
 
   # Set system state version
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

@@ -76,8 +76,9 @@
     # Backup tools
     restic
     rclone
+    goose-cli # Database migration tool
   ];
 
   # Set system state version
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

@@ -74,7 +74,7 @@
   };
 
   # Enable Open WebUI
-  modules.tools.open-webui.enable = true;
+  modules.tools.open-webui.enable = false;
 
   # AnythingLLM (disabled)
   modules.tools.anythingllm = {
@@ -209,6 +209,7 @@
     solaar # Logitech device management tool
     usbutils # For lsusb
     pkgs.evsieve # For advanced input event manipulation (PTT script)
+    goose-cli # Database migration tool
   ];
 
   # Add user to plugdev group for Logitech device access
@@ -304,5 +305,5 @@
   };
 
   # Set system state version
-  system.stateVersion = "24.11"; # NO semicolon after the last attribute
+  system.stateVersion = "25.05"; # NO semicolon after the last attribute
 }

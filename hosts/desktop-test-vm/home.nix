@@ -20,11 +20,11 @@
   home = {
     username = "user";
     homeDirectory = lib.mkForce "/home/user";
-    stateVersion = "24.11";
+    stateVersion = "25.05";
 
     packages = with pkgs; [
       # Fonts
-      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+      nerd-fonts.jetbrains-mono
 
       # Development tools
       git

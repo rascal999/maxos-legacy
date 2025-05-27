@@ -50,7 +50,7 @@
       };
     };
     profiles.default = {
-      search.default = "Google";
+      search.default = "google";
       isDefault = true;
       settings = {
         # Enable dark theme

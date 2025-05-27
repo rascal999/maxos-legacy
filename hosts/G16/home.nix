@@ -24,7 +24,7 @@
   home = {
     username = "user";
     homeDirectory = lib.mkForce "/home/user";
-    stateVersion = "24.11";  # Please read the comment below
+    stateVersion = "25.05";  # Please read the comment below
 
     # The home.stateVersion option does not have a default and must be set
     # First time users of home-manager should read:
@@ -32,7 +32,8 @@
 
     packages = with pkgs; [
       # Fonts
-      (nerdfonts.override { fonts = [ "JetBrainsMono" "Meslo" ]; })
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.meslo-lg
 
       # Media controls
       playerctl

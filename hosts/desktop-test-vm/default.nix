@@ -84,6 +84,7 @@
     sqlmap
     mitmproxy
     vegeta  # HTTP load testing tool
+    goose-cli # Database migration tool
   ];
 
   # Enable home-manager with backup support
@@ -149,5 +150,5 @@
   };
 
   # Set system state version
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }
