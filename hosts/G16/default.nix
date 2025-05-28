@@ -200,6 +200,9 @@
     testssl  # TLS/SSL testing tool
     usbutils # For lsusb
     goose-cli # Database migration tool
+    
+    # Keyring support
+    gnome-keyring
   ];
 
   # Add user to video group for backlight control and enable FUSE
@@ -211,6 +214,9 @@
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
+
+  # Enable GNOME keyring service
+  services.gnome.gnome-keyring.enable = true;
 
   # Enable NVIDIA support for Docker
   hardware.nvidia-container-toolkit.enable = true;

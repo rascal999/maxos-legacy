@@ -209,6 +209,9 @@
     usbutils # For lsusb
     pkgs.evsieve # For advanced input event manipulation (PTT script)
     goose-cli # Database migration tool
+    
+    # Keyring support
+    gnome-keyring
   ];
 
   # Add user to plugdev group for Logitech device access
@@ -216,6 +219,9 @@
 
   # Disable Redshift service to avoid conflicts
   services.redshift.enable = false;
+
+  # Enable GNOME keyring service
+  services.gnome.gnome-keyring.enable = true;
 
   # Enable FUSE for AppImage support
   boot.supportedFilesystems = [ "fuse" ];
