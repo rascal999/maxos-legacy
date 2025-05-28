@@ -103,6 +103,9 @@
     ];
   };
 
+  # Enable PAM service for i3lock
+  security.pam.services.i3lock.enable = true;
+
   # Set hostname
   networking.hostName = "G16";
   

@@ -17,7 +17,7 @@
     ../../modules/tools/docker.nix  # Import Docker module
     ../../modules/tools/wireguard.nix  # Import WireGuard module
     ../../modules/tools/qemu.nix  # Import QEMU module
-    ../../modules/tools/rocketchat.nix  # Import Rocket.Chat module
+    # ../../modules/tools/rocketchat.nix  # Import Rocket.Chat module
     ../../modules/tools/npm.nix  # Import npm module
     ../../modules/tools/traefik.nix  # Import Traefik module
     ../../modules/tools/postman.nix  # Import Postman module
@@ -87,11 +87,7 @@
   # Enable SimpleScreenRecorder
   modules.tools.simplescreenrecorder.enable = true;
 
-  # Enable Rocket.Chat service
-  services.rocketchat = {
-    enable = true;
-    port = 3200;  # Use port 3200 to avoid conflicts
-  };
+  # Rocket.Chat service disabled (module import commented out)
 
   # Disable system-wide Firefox
   programs.firefox.enable = false;
@@ -109,6 +105,9 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKy1zrCNG5lCnBXaZwgyUgt5Yd01j695xBSgdoJXKrY1 user@nixos"  # G16's key
     ];
   };
+
+  # Enable PAM service for i3lock
+  security.pam.services.i3lock.enable = true;
 
   # Set hostname
   networking.hostName = "rig";

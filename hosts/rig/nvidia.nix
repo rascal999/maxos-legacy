@@ -23,13 +23,16 @@
   # NVIDIA driver configuration
   hardware.nvidia = {
     # Use the latest driver
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
 
     # Enable modesetting
     modesetting.enable = true;
 
     # Enable the NVIDIA settings menu
     nvidiaSettings = true;
+
+    # Use open-source kernel modules
+    open = false;
 
     # OpenGL configuration
     prime = {

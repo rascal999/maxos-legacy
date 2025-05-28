@@ -47,6 +47,7 @@
       tree
       pwgen
       aider-chat
+      openai-whisper
       
       # Java development
       jdk
