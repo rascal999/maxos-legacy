@@ -22,8 +22,8 @@
 
   # NVIDIA driver configuration
   hardware.nvidia = {
-    # Use the latest driver
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    # Use the beta driver for better compatibility with newer kernels/features
+    package = config.boot.kernelPackages.nvidiaPackages.beta; # Changed from .production
 
     # Enable modesetting
     modesetting.enable = true;
@@ -31,8 +31,8 @@
     # Enable the NVIDIA settings menu
     nvidiaSettings = true;
 
-    # Use open-source kernel modules
-    open = false;
+    # Use open-source kernel modules (fix for kernel 6.15 GPL symbol issue)
+    open = true;
 
     # OpenGL configuration
     prime = {
