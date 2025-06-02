@@ -86,6 +86,7 @@
         { command = "sleep 6 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
         { command = "sleep 8 && i3-msg 'workspace 2: wcode; exec ${pkgs.vscode}/bin/code; mark vscode_default'"; notification = false; }
         { command = "sleep 12 && i3-msg 'workspace 3: pcode; exec ${pkgs.vscode}/bin/code --user-data-dir=/home/user/.config/Code-Private; mark vscode_private'"; notification = false; }
+        { command = "sleep 14 && i3-msg 'workspace 1: web'"; notification = false; }
         # Clear urgent flags after all apps have launched
         { command = "sleep 16 && clear-urgent"; notification = false; }
       ];
