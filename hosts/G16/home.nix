@@ -165,9 +165,6 @@
     };
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # i3 configuration for G16
   xsession.windowManager.i3.config = {
     workspaceOutputAssign = [

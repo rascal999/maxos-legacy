@@ -196,8 +196,6 @@
   # Note: Ensure the user 'user' is part of the 'input' group at the system level
   # (e.g., in users.nix: users.users.user.extraGroups = [ "input" ];)
   # for /dev/input/event* access needed by the python-ptt.py script.
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # i3 configuration for rig
   xsession.windowManager.i3.config = {

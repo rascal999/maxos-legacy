@@ -32,6 +32,7 @@
     ../../modules/tools/k3s.nix  # Import k3s module
     ../../modules/tools/dnsmasq.nix  # Import dnsmasq module for DNS resolution
     ../../modules/tools/openssl.nix  # Import OpenSSL module
+    ../../modules/tools/steam.nix  # Import Steam module
   ];
 
   # Enable tools
@@ -71,6 +72,7 @@
       enable = true;
       installDevelopmentPackages = true;  # Install development packages
     };
+    steam.enable = true; # Enable Steam
   };
 
   # Enable Open WebUI
@@ -229,7 +231,6 @@
 
   # Enable NVIDIA support for Docker (using the recommended approach)
   hardware.nvidia-container-toolkit.enable = true;
-  # Deprecated: virtualisation.docker.enableNvidia = true;
 
   # Enable home-manager with backup support
   home-manager = {
@@ -308,6 +309,9 @@
       Environment = "PATH=${lib.makeBinPath [ pkgs.coreutils pkgs.evsieve pkgs.wireplumber pkgs.gawk ]}";
     };
   };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   # Set system state version
   system.stateVersion = "25.05"; # NO semicolon after the last attribute

@@ -33,6 +33,7 @@
     ../../modules/tools/k3s.nix  # Import k3s module
     ../../modules/tools/dnsmasq.nix  # Import dnsmasq module for DNS resolution
     ../../modules/tools/openssl.nix  # Import OpenSSL module
+    ../../modules/tools/steam.nix  # Import Steam module
   ];
 
   # Enable tools
@@ -73,6 +74,7 @@
       enable = true;
       installDevelopmentPackages = true;  # Install development packages
     };
+    steam.enable = true; # Enable Steam
   };
 
   # Enable Open WebUI
@@ -278,6 +280,9 @@
       size = 16 * 1024; # 16GB in MiB
     }
   ];
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   # Set system state version
   system.stateVersion = "25.05";
