@@ -50,13 +50,27 @@ update_system() {
     sudo nixos-rebuild switch --flake ".#$HOSTNAME"
 }
 
+# Function to perform garbage collection
+garbage_collect() {
+    echo "Performing NixOS garbage collection..."
+    echo "This will remove old generations of profiles and unreferenced store paths."
+    sudo nix-collect-garbage -d
+    sudo nix-store --gc
+    echo "Garbage collection complete."
+}
+
 case "$1" in
     "update")
         update_system
         ;;
+    "gc")
+        garbage_collect
+        ;;
     *)
-        echo "Usage: maxos update"
+        echo "Usage: maxos [command]"
+        echo "Commands:"
         echo "  update    - Pull changes and rebuild system"
+        echo "  gc        - Perform NixOS garbage collection to save disk space"
         exit 1
         ;;
 esac

@@ -39,7 +39,11 @@
       sync.enable = false;  # Desktop doesn't need Optimus/PRIME
       offload.enable = false;
     };
+    # nvidia-container-toolkit was here, moved to top-level hardware
   };
+
+  # Enable nvidia-container-toolkit for Docker GPU passthrough
+  hardware.nvidia-container-toolkit.enable = true;
 
   # Configure module loading
   boot.extraModprobeConfig = ''

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./ollama.nix
+    #./ollama.nix
     ./open-webui.nix
     ./fabric-ai.nix
     ./anythingllm.nix
