@@ -33,6 +33,7 @@
     ../../modules/tools/dnsmasq.nix  # Import dnsmasq module for DNS resolution
     ../../modules/tools/openssl.nix  # Import OpenSSL module
     ../../modules/tools/steam.nix  # Import Steam module
+    ../../modules/tools/whatsapp-mcp.nix  # Import WhatsApp MCP module
   ];
 
   # Enable tools
@@ -73,6 +74,12 @@
       installDevelopmentPackages = true;  # Install development packages
     };
     steam.enable = true; # Enable Steam
+    whatsapp-mcp = {
+      enable = true;
+      user = "user"; # Use the main user account instead of a system user
+      group = "users"; # Use the users group
+      dataDir = "/home/user/git/github/whatsapp-mcp/data"; # Store data in the git repo
+    };
   };
 
   # Enable Open WebUI
