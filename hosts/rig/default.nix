@@ -59,7 +59,7 @@
     };
     remmina.enable = true;  # Enable Remmina
     k3s = {
-      enable = true;
+      enable = false;
       role = "server";  # Configure as a server (control plane)
       extraFlags = [
         "--disable-cloud-controller"  # Disable cloud controller as this is a local setup
