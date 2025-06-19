@@ -202,9 +202,11 @@
     testssl  # TLS/SSL testing tool
     usbutils # For lsusb
     goose-cli # Database migration tool
+    clamav   # Antivirus scanner
     
     # Keyring support
     gnome-keyring
+    kubectl # Kubernetes command-line tool
   ];
 
   # Add user to video group for backlight control and enable FUSE

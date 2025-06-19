@@ -209,6 +209,7 @@
     # Security tools
     ffuf     # Web fuzzer tool
     testssl  # TLS/SSL testing tool
+    clamav   # Antivirus scanner
 
     # For Python PTT script
     python3
@@ -221,6 +222,7 @@
     
     # Keyring support
     gnome-keyring
+    kubectl # Kubernetes command-line tool
   ];
 
   # Add user to plugdev group for Logitech device access
