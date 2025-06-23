@@ -34,6 +34,7 @@
     ../../modules/tools/dnsmasq.nix  # Import dnsmasq module for DNS resolution
     ../../modules/tools/openssl.nix  # Import OpenSSL module
     ../../modules/tools/steam.nix  # Import Steam module
+    ../../modules/tools/tor-browser  # Import Tor Browser module
   ];
 
   # Enable tools
@@ -75,6 +76,7 @@
       installDevelopmentPackages = true;  # Install development packages
     };
     steam.enable = true; # Enable Steam
+    tor-browser.enable = true;  # Enable Tor Browser
   };
 
   # Enable Open WebUI

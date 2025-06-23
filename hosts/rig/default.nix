@@ -34,6 +34,7 @@
     ../../modules/tools/openssl.nix  # Import OpenSSL module
     ../../modules/tools/steam.nix  # Import Steam module
     ../../modules/tools/whatsapp-mcp.nix  # Import WhatsApp MCP module
+    ../../modules/tools/tor-browser  # Import Tor Browser module
   ];
 
   # Enable tools
@@ -80,6 +81,7 @@
       group = "users"; # Use the users group
       dataDir = "/home/user/git/github/whatsapp-mcp/data"; # Store data in the git repo
     };
+   tor-browser.enable = true;  # Enable Tor Browser
   };
 
   # Enable Open WebUI
