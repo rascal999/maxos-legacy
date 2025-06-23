@@ -82,6 +82,13 @@ device = "BAT1"
 missing_format = ""
 
 [[block]]
+block = "custom"
+command = "/home/user/git/github/monorepo/maxos/scripts/get_weather.sh"
+interval = 900
+json = true
+format = " $text "
+
+[[block]]
 block = "time"
 interval = 5
 format = " $icon $timestamp.datetime(f:'%V %m/%d %R') "
