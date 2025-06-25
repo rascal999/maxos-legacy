@@ -31,7 +31,7 @@ in
         };
         customDNS = {
           mapping = {
-            "moneyapi-api-testingeu.wl.preprod.mangopay.ninja" = "100.64.0.3";
+            "moneyapi-api-testingeu.wl.preprod.mangopay.ninja" = "100.64.0.1";
           };
         };
         conditional = {
