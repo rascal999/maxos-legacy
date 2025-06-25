@@ -4,6 +4,7 @@
   virtualisation = {
     libvirtd = {
       enable = true;
+      networks.default.enable = false;
       qemu = {
         package = pkgs.qemu;
         swtpm.enable = true;

@@ -16,7 +16,7 @@
     ../../modules/tools/llm/default.nix
     ../../modules/tools/docker.nix  # Import Docker module
     ../../modules/tools/wireguard.nix  # Import WireGuard module
-    ../../modules/tools/qemu.nix  # Import QEMU module
+    # ../../modules/tools/qemu.nix  # Import QEMU module
     # ../../modules/tools/rocketchat.nix  # Import Rocket.Chat module
     ../../modules/tools/npm.nix  # Import npm module
     ../../modules/tools/traefik.nix  # Import Traefik module
@@ -30,11 +30,11 @@
     ../../modules/tools/gitleaks.nix  # Import Gitleaks module
     ../../modules/tools/remmina.nix  # Import Remmina module
     ../../modules/tools/k3s.nix  # Import k3s module
-    ../../modules/tools/dnsmasq.nix  # Import dnsmasq module for DNS resolution
     ../../modules/tools/openssl.nix  # Import OpenSSL module
     ../../modules/tools/steam.nix  # Import Steam module
     ../../modules/tools/whatsapp-mcp.nix  # Import WhatsApp MCP module
     ../../modules/tools/tor-browser  # Import Tor Browser module
+    ../../modules/tools/blocky.nix  # Import Blocky module
   ];
 
   # Enable tools
@@ -66,10 +66,7 @@
         "--disable-cloud-controller"  # Disable cloud controller as this is a local setup
       ];
     };
-    dnsmasq = {
-      enable = true;
-      testDomains = true;    # Enable *.test domain resolution to 127.0.0.1
-    };
+    blocky.enable = true;
     openssl = {
       enable = true;
       installDevelopmentPackages = true;  # Install development packages
@@ -83,6 +80,7 @@
     };
    tor-browser.enable = true;  # Enable Tor Browser
   };
+
 
   # Enable Open WebUI
   modules.tools.open-webui.enable = false;
@@ -225,6 +223,7 @@
     # Keyring support
     gnome-keyring
     kubectl # Kubernetes command-line tool
+    bind # For dig command
   ];
 
   # Add user to plugdev group for Logitech device access

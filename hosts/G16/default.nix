@@ -31,10 +31,10 @@
     ../../modules/tools/gitleaks.nix  # Import Gitleaks module
     ../../modules/tools/remmina.nix  # Import Remmina module
     ../../modules/tools/k3s.nix  # Import k3s module
-    ../../modules/tools/dnsmasq.nix  # Import dnsmasq module for DNS resolution
     ../../modules/tools/openssl.nix  # Import OpenSSL module
     ../../modules/tools/steam.nix  # Import Steam module
     ../../modules/tools/tor-browser  # Import Tor Browser module
+    ../../modules/tools/blocky.nix  # Import Blocky module
   ];
 
   # Enable tools
@@ -67,17 +67,15 @@
         "--disable-cloud-controller"  # Disable cloud controller as this is a local setup
       ];
     };
-    dnsmasq = {
-      enable = true;
-      testDomains = true;    # Enable *.test domain resolution to 127.0.0.1
-    };
+    blocky.enable = true;
     openssl = {
       enable = true;
       installDevelopmentPackages = true;  # Install development packages
     };
     steam.enable = true; # Enable Steam
     tor-browser.enable = true;  # Enable Tor Browser
-  };
+   };
+ 
 
   # Enable Open WebUI
   modules.tools.open-webui.enable = true;
@@ -209,6 +207,7 @@
     # Keyring support
     gnome-keyring
     kubectl # Kubernetes command-line tool
+    bind # For dig command
   ];
 
   # Add user to video group for backlight control and enable FUSE
