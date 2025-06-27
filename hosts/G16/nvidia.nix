@@ -58,7 +58,7 @@
   };
 
   # Enable NVIDIA Container Runtime
-  hardware.nvidia-container-toolkit.enable = true;
+  hardware.nvidia-container-toolkit.enable = lib.mkForce true;
 
   # Basic graphics configuration
   hardware.graphics = {
