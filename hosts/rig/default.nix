@@ -80,7 +80,7 @@
     };
    tor-browser.enable = true;  # Enable Tor Browser
   };
-
+  modules.tools.ollama.enable = true;
 
   # Enable Open WebUI
   modules.tools.open-webui.enable = false;
