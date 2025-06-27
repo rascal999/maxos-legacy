@@ -16,7 +16,7 @@
     ../../modules/scripts/default.nix
     ../../modules/tools/docker.nix  # Import Docker module
     ../../modules/tools/wireguard.nix  # Import WireGuard module
-    ../../modules/tools/qemu.nix  # Import QEMU module
+    # ../../modules/tools/qemu.nix  # Import QEMU module
     ../../modules/tools/npm.nix  # Import npm module
     ../../modules/tools/traefik.nix  # Import Traefik module
     ../../modules/tools/postman.nix  # Import Postman module
