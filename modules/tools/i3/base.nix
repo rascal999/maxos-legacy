@@ -68,7 +68,6 @@
       assigns = {
         "0: slack" = [{ class = "^Slack$"; }];
         "1: web" = [{ class = "^Firefox$"; }];
-        "6: goose" = [{ title = ".*Goose.*"; }];
         "8: logseq" = [{ class = "^Logseq$"; }];
         "9: pw" = [{ class = "^KeePassXC$"; }];
       };
@@ -80,15 +79,14 @@
         { command = "redshift -O 3500 -b 0.6"; notification = false; }
         # Start pasystray for volume control
         { command = "pasystray"; notification = false; }
-        { command = "i3-msg 'workspace 4: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
+        { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
         { command = "sleep 2 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
         { command = "sleep 4 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
         { command = "sleep 6 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
-        { command = "sleep 8 && i3-msg 'workspace 2: wcode; exec ${pkgs.vscode}/bin/code; mark vscode_default'"; notification = false; }
-        { command = "sleep 12 && i3-msg 'workspace 3: pcode; exec ${pkgs.vscode}/bin/code --user-data-dir=/home/user/.config/Code-Private; mark vscode_private'"; notification = false; }
-        { command = "sleep 14 && i3-msg 'workspace 1: web'"; notification = false; }
+        { command = "sleep 8 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code; mark vscode_default'"; notification = false; }
+        { command = "sleep 12 && i3-msg 'workspace 1: web'"; notification = false; }
         # Clear urgent flags after all apps have launched
-        { command = "sleep 16 && clear-urgent"; notification = false; }
+        { command = "sleep 14 && clear-urgent"; notification = false; }
       ];
 
       # Basic keybindings
@@ -98,7 +96,6 @@
 
         # Work directory
         "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session ${../../../scripts/work-dir-tmux}";
-        "Mod1+w" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session 'cd /home/user/monorepo/tools/goose/workspace && eza --long --all --header --icons --git && $SHELL'";
 
         # Program launcher
         "Mod1+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
@@ -147,22 +144,24 @@
         # Workspace switching
         "Mod1+0" = "workspace number 0: slack";
         "Mod1+1" = "workspace number 1: web";
-        "Mod1+2" = "workspace number 2: wcode";
-        "Mod1+3" = "workspace number 3: pcode";
-        "Mod1+4" = "workspace number 4: term";
-        "Mod1+5" = "workspace number 5: burp";
-        "Mod1+6" = "workspace number 6: goose";
+        "Mod1+2" = "workspace number 2: code";
+        "Mod1+3" = "workspace number 3: term";
+        "Mod1+4" = "workspace number 4: burp";
+        "Mod1+5" = "workspace number 5: term";
+        "Mod1+6" = "workspace number 6: term";
+        "Mod1+7" = "workspace number 7: term";
         "Mod1+8" = "workspace number 8: logseq";
         "Mod1+9" = "workspace number 9: pw";
 
         # Move container to workspace
         "Mod1+Shift+0" = "move container to workspace 0: slack";
         "Mod1+Shift+1" = "move container to workspace 1: web";
-        "Mod1+Shift+2" = "move container to workspace 2: wcode";
-        "Mod1+Shift+3" = "move container to workspace 3: pcode";
-        "Mod1+Shift+4" = "move container to workspace 4: term";
-        "Mod1+Shift+5" = "move container to workspace 5: burp";
-        "Mod1+Shift+6" = "move container to workspace 6: goose";
+        "Mod1+Shift+2" = "move container to workspace 2: code";
+        "Mod1+Shift+3" = "move container to workspace 3: term";
+        "Mod1+Shift+4" = "move container to workspace 4: burp";
+        "Mod1+Shift+5" = "move container to workspace 5: term";
+        "Mod1+Shift+6" = "move container to workspace 6: term";
+        "Mod1+Shift+7" = "move container to workspace 7: term";
         "Mod1+Shift+8" = "move container to workspace 8: logseq";
         "Mod1+Shift+9" = "move container to workspace 9: pw";
 
@@ -173,7 +172,7 @@
         "Mod1+m" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session 'cd /home/user/mgp-monorepo/tickets && $SHELL'";
 
         # Quick launch frequently used applications
-        "${config.xsession.windowManager.i3.config.modifier}+b" = "workspace 5: burp; exec ${pkgs.jdk}/bin/java -jar $(find /home/user/Downloads -name 'burpsuite_pro*.jar' -type f | sort -r | head -n1)";
+        "${config.xsession.windowManager.i3.config.modifier}+b" = "workspace 4: burp; exec ${pkgs.jdk}/bin/java -jar $(find /home/user/Downloads -name 'burpsuite_pro*.jar' -type f | sort -r | head -n1)";
         "${config.xsession.windowManager.i3.config.modifier}+n" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
         "${config.xsession.windowManager.i3.config.modifier}+l" = "exec ${pkgs.i3lock}/bin/i3lock -c 000000";
         "${config.xsession.windowManager.i3.config.modifier}+k" = "workspace 9: pw; exec ${pkgs.keepassxc}/bin/keepassxc";
@@ -187,7 +186,7 @@
         "--release Mod1+Shift+s" = "exec /run/current-system/sw/bin/screenshot";
 
         # Launch Firefox with burp profile
-        "Mod1+Shift+Return" = "workspace 5: burp; exec ${pkgs.firefox}/bin/firefox -P burp";
+        "Mod1+Shift+Return" = "workspace 4: burp; exec ${pkgs.firefox}/bin/firefox -P burp";
 
         # Insert timestamp
         "Mod1+Shift+t" = "exec /run/current-system/sw/bin/insert-timestamp";
