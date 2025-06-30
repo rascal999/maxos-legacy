@@ -35,6 +35,8 @@
     ../../modules/tools/steam.nix  # Import Steam module
     ../../modules/tools/tor-browser  # Import Tor Browser module
     ../../modules/tools/blocky.nix  # Import Blocky module
+    ../../modules/tools/trivy.nix  # Import Trivy module
+    ../../modules/tools/semgrep.nix  # Import Semgrep module
   ];
 
   # Enable tools
@@ -75,8 +77,10 @@
     steam.enable = true; # Enable Steam
     tor-browser.enable = true;  # Enable Tor Browser
    };
-  modules.tools.ollama.enable = true;
+  modules.tools.trivy.enable = true; # Enable Trivy
+  modules.tools.semgrep.enable = true; # Enable Semgrep
 
+  modules.tools.ollama.enable = true;
   # Enable Open WebUI
   modules.tools.open-webui.enable = true;
 
@@ -222,6 +226,15 @@
 
   # Enable GNOME keyring service
   services.gnome.gnome-keyring.enable = true;
+
+  # Enable security module with default settings
+  security = {
+    enable = true;
+    authorizedKeys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICjMXN/z0u4Sf/+ODpG49ZFBNHqcZFxNgFhTts1GAJrr user@nixos"  # rig's key
+    ];
+    pam.services.i3lock.enable = true;
+  };
 
   # Enable NVIDIA support for Docker
   hardware.nvidia-container-toolkit.enable = true;

@@ -35,6 +35,8 @@
     ../../modules/tools/whatsapp-mcp.nix  # Import WhatsApp MCP module
     ../../modules/tools/tor-browser  # Import Tor Browser module
     ../../modules/tools/blocky.nix  # Import Blocky module
+    ../../modules/tools/trivy.nix  # Import Trivy module
+    ../../modules/tools/semgrep.nix  # Import Semgrep module
   ];
 
   # Enable tools
@@ -80,6 +82,8 @@
     };
    tor-browser.enable = true;  # Enable Tor Browser
   };
+  modules.tools.trivy.enable = true; # Enable Trivy
+  modules.tools.semgrep.enable = true; # Enable Semgrep
   modules.tools.ollama.enable = true;
 
   # Enable Open WebUI
