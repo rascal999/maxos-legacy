@@ -37,6 +37,7 @@
     ../../modules/tools/blocky.nix  # Import Blocky module
     ../../modules/tools/trivy.nix  # Import Trivy module
     ../../modules/tools/semgrep.nix  # Import Semgrep module
+    ../../modules/tools/gpsbabel.nix  # Import GPSBabel module
   ];
 
   # Enable tools
@@ -81,6 +82,7 @@
       dataDir = "/home/user/git/github/whatsapp-mcp/data"; # Store data in the git repo
     };
    tor-browser.enable = true;  # Enable Tor Browser
+   gpsbabel.enable = true;  # Enable GPSBabel
   };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep

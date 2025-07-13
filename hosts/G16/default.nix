@@ -37,6 +37,7 @@
     ../../modules/tools/blocky.nix  # Import Blocky module
     ../../modules/tools/trivy.nix  # Import Trivy module
     ../../modules/tools/semgrep.nix  # Import Semgrep module
+    ../../modules/tools/gpsbabel.nix  # Import GPSBabel module
   ];
 
   # Enable tools
@@ -76,6 +77,7 @@
     };
     steam.enable = true; # Enable Steam
     tor-browser.enable = true;  # Enable Tor Browser
+    gpsbabel.enable = true;  # Enable GPSBabel
    };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep
@@ -107,10 +109,8 @@
     authorizedKeys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICjMXN/z0u4Sf/+ODpG49ZFBNHqcZFxNgFhTts1GAJrr user@nixos"  # rig's key
     ];
+    pam.services.i3lock.enable = true;
   };
-
-  # Enable PAM service for i3lock
-  security.pam.services.i3lock.enable = true;
 
   # Set hostname
   networking.hostName = "G16";
@@ -227,14 +227,6 @@
   # Enable GNOME keyring service
   services.gnome.gnome-keyring.enable = true;
 
-  # Enable security module with default settings
-  security = {
-    enable = true;
-    authorizedKeys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICjMXN/z0u4Sf/+ODpG49ZFBNHqcZFxNgFhTts1GAJrr user@nixos"  # rig's key
-    ];
-    pam.services.i3lock.enable = true;
-  };
 
   # Enable NVIDIA support for Docker
   hardware.nvidia-container-toolkit.enable = true;
