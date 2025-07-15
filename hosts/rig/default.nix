@@ -35,8 +35,10 @@
     ../../modules/tools/whatsapp-mcp.nix  # Import WhatsApp MCP module
     ../../modules/tools/tor-browser  # Import Tor Browser module
     ../../modules/tools/blocky.nix  # Import Blocky module
-    ../../modules/tools/trivy.nix  # Import Trivy module
+    ../../modules/tools/grype.nix  # Import Grype module
     ../../modules/tools/semgrep.nix  # Import Semgrep module
+    ../../modules/tools/syft.nix  # Import Syft module
+    ../../modules/tools/trivy.nix  # Import Trivy module
     ../../modules/tools/gpsbabel.nix  # Import GPSBabel module
   ];
 
@@ -87,6 +89,8 @@
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep
   modules.tools.ollama.enable = true;
+  modules.tools.syft.enable = true; # Enable Syft
+  modules.tools.grype.enable = true; # Enable Grype
 
   # Enable Open WebUI
   modules.tools.open-webui.enable = false;
