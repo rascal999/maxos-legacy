@@ -40,6 +40,7 @@
     ../../modules/tools/syft.nix  # Import Syft module
     ../../modules/tools/trivy.nix  # Import Trivy module
     ../../modules/tools/gpsbabel.nix  # Import GPSBabel module
+    ../../modules/tools/linuxquota.nix  # Import Linux quota module
   ];
 
   # Enable tools
@@ -83,9 +84,14 @@
       group = "users"; # Use the users group
       dataDir = "/home/user/git/github/whatsapp-mcp/data"; # Store data in the git repo
     };
-   tor-browser.enable = true;  # Enable Tor Browser
-   gpsbabel.enable = true;  # Enable GPSBabel
-  };
+    tor-browser.enable = true;  # Enable Tor Browser
+    gpsbabel.enable = true;  # Enable GPSBabel
+    linuxquota = {
+      enable = true;
+      enableUserQuotas = true;
+      enableGroupQuotas = true;
+    };
+   };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep
   modules.tools.ollama.enable = true;
