@@ -41,6 +41,7 @@
     ../../modules/tools/trivy.nix  # Import Trivy module
     ../../modules/tools/gpsbabel.nix  # Import GPSBabel module
     ../../modules/tools/linuxquota.nix  # Import Linux quota module
+    ../../modules/tools/sshfs.nix  # Import SSHFS module
   ];
 
   # Enable tools
@@ -91,6 +92,7 @@
       enableUserQuotas = true;
       enableGroupQuotas = true;
     };
+    sshfs.enable = true;  # Enable SSHFS
    };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep

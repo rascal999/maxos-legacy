@@ -38,6 +38,7 @@
     ../../modules/tools/trivy.nix  # Import Trivy module
     ../../modules/tools/semgrep.nix  # Import Semgrep module
     ../../modules/tools/gpsbabel.nix  # Import GPSBabel module
+    ../../modules/tools/sshfs.nix  # Import SSHFS module
   ];
 
   # Enable tools
@@ -78,6 +79,7 @@
     steam.enable = true; # Enable Steam
     tor-browser.enable = true;  # Enable Tor Browser
     gpsbabel.enable = true;  # Enable GPSBabel
+    sshfs.enable = true;  # Enable SSHFS
    };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep
