@@ -42,6 +42,8 @@
     ../../modules/tools/gpsbabel.nix  # Import GPSBabel module
     ../../modules/tools/linuxquota.nix  # Import Linux quota module
     ../../modules/tools/sshfs.nix  # Import SSHFS module
+    ../../modules/tools/forgejo.nix  # Import Forgejo module
+    ../../modules/tools/forgejo-runner.nix  # Import Forgejo runner module
   ];
 
   # Enable tools
@@ -93,6 +95,35 @@
       enableGroupQuotas = true;
     };
     sshfs.enable = true;  # Enable SSHFS
+    forgejo = {
+      enable = true;
+      port = 3000;
+      domain = "172.17.0.1";
+      rootUrl = "http://172.17.0.1:3000/";
+      actions.enable = true;
+      lfs.enable = true;
+    };
+    forgejo-runner = {
+      enable = true;  # Enabled - token file has been created
+      enableDocker = true;
+      enableIPv6 = false;
+      instances.rig-runner = {
+        enable = true;  # Enabled - token file has been created
+        name = "rig-runner";
+        url = "http://172.17.0.1:3000/";
+        tokenFile = "/var/lib/forgejo-runner/rig-runner-token";  # Token file created
+        labels = [
+          "docker:docker://python:3.11-bookworm"
+          "ubuntu-latest:docker://ubuntu:latest"
+          "nixos-latest:docker://nixos/nix"
+        ];
+        settings = {
+          container = {
+            network = "host";  # Use host networking to access 172.17.0.1:3000
+          };
+        };
+      };
+    };
    };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep

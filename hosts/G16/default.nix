@@ -39,6 +39,8 @@
     ../../modules/tools/semgrep.nix  # Import Semgrep module
     ../../modules/tools/gpsbabel.nix  # Import GPSBabel module
     ../../modules/tools/sshfs.nix  # Import SSHFS module
+    ../../modules/tools/forgejo.nix  # Import Forgejo module
+    ../../modules/tools/forgejo-runner.nix  # Import Forgejo runner module
   ];
 
   # Enable tools
@@ -80,6 +82,31 @@
     tor-browser.enable = true;  # Enable Tor Browser
     gpsbabel.enable = true;  # Enable GPSBabel
     sshfs.enable = true;  # Enable SSHFS
+    forgejo = {
+      enable = true;
+      port = 3000;
+      domain = "localhost";
+      rootUrl = "http://localhost:3000/";
+      actions.enable = true;
+      lfs.enable = true;
+    };
+    forgejo-runner = {
+      enable = false;  # Disabled until proper registration token file is created
+      enableDocker = true;
+      enableIPv6 = false;
+      instances.G16-runner = {
+        enable = false;  # Disabled until proper registration token file is created
+        name = "G16-runner";
+        url = "http://localhost:3000/";  # Connect to local forgejo instance
+        tokenFile = "/var/lib/forgejo-runner/G16-runner-token";  # Create this file with TOKEN=<actual-token>
+        labels = [
+          "docker:docker://node:20-bookworm"
+          "ubuntu-latest:docker://ubuntu:latest"
+          "nixos-latest:docker://nixos/nix"
+          "gpu:docker://nvidia/cuda:12.0-runtime-ubuntu22.04"  # GPU support for G16
+        ];
+      };
+    };
    };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep
