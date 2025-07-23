@@ -33,7 +33,7 @@
         }
         {
           key = "ctrl+t";
-          command = "roo-cline.openInNewTab";
+          command = "kilo-code.openInNewTab";
         }
         {
           key = "ctrl+shift+t";
