@@ -3,6 +3,27 @@
 # Directory containing WireGuard profiles
 PROFILE_DIR="/home/user/share/Data/vpn"
 
+# European country codes (excluding GB)
+EUROPE_COUNTRIES=("at" "be" "bg" "hr" "cy" "cz" "dk" "ee" "fi" "fr" "de" "gr" "hu" "ie" "it" "lv" "lt" "lu" "mt" "nl" "pl" "pt" "ro" "sk" "si" "es" "se" "ch" "no" "is")
+
+# Function to get a random European country
+get_random_european_country() {
+  echo "${EUROPE_COUNTRIES[$RANDOM % ${#EUROPE_COUNTRIES[@]}]}"
+}
+
+# Function to get active interface pattern for European countries
+get_active_interface() {
+  local pattern=""
+  for country in "${EUROPE_COUNTRIES[@]}"; do
+    if [ -z "$pattern" ]; then
+      pattern="${country}-[^:@]+"
+    else
+      pattern="${pattern}|${country}-[^:@]+"
+    fi
+  done
+  ip link show | grep -oP "^[0-9]+: \K(${pattern})(?=:)"
+}
+
 # Function to add iptables rules to allow localhost and Docker traffic
 add_local_network_rules() {
   echo "Adding rules to allow localhost and Docker traffic..."
@@ -41,7 +62,7 @@ start_profile() {
 
 # Function to stop the active profile
 stop_profile() {
-  local active_interface=$(ip link show | grep -oP '^[0-9]+: \K(gb-[^:@]+)(?=:)')
+  local active_interface=$(get_active_interface)
 
   if [ -z "$active_interface" ]; then
     echo "No active WireGuard interface found"
@@ -59,7 +80,7 @@ stop_profile() {
 
 # Function to check the status of the VPN
 check_status() {
-  local active_interface=$(ip link show | grep -oP '^[0-9]+: \K(gb-[^:@]+)(?=:)')
+  local active_interface=$(get_active_interface)
 
   if [ -z "$active_interface" ]; then
     echo '{"icon": "", "state": "Warning", "text": "VPN off", "short_text": "VPN off"}'
@@ -70,10 +91,11 @@ check_status() {
 
 # Function to toggle the VPN status
 toggle_vpn() {
-  local active_interface=$(ip link show | grep -oP '^[0-9]+: \K(gb-[^:@]+)(?=:)')
+  local active_interface=$(get_active_interface)
 
   if [ -z "$active_interface" ]; then
-    start_profile "gb"
+    local random_country=$(get_random_european_country)
+    start_profile "$random_country"
     sleep 1  # Give the interface time to come up
   else
     stop_profile
@@ -87,7 +109,8 @@ toggle_vpn() {
 case $1 in
   up)
     if [ -z "$2" ]; then
-      start_profile "gb"
+      local random_country=$(get_random_european_country)
+      start_profile "$random_country"
     else
       start_profile "$2"
     fi
@@ -107,6 +130,7 @@ case $1 in
     ;;
   *)
     echo "Usage: mvpn {up [country code] | down | status | toggle | fix-local}"
+    echo "Available European countries: ${EUROPE_COUNTRIES[*]}"
     exit 1
     ;;
 esac

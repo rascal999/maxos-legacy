@@ -8,7 +8,8 @@
 # without relying on keyd. It's an alternative approach if keyd isn't working.
 
 # Description of the target microphone to control
-TARGET_AUDIO_DESC="Jabra EVOLVE 20 MS Mono" # Exact name of the source device
+#TARGET_AUDIO_DESC="Jabra EVOLVE 20 MS Mono" # Exact name of the source device
+TARGET_AUDIO_DESC="USB Composite Device"
 # This will be dynamically populated
 AUDIO_DEVICE=""
 # Stable mouse event device path for Logitech USB Receiver
