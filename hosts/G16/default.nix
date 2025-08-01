@@ -41,6 +41,10 @@
     ../../modules/tools/sshfs.nix  # Import SSHFS module
     ../../modules/tools/forgejo.nix  # Import Forgejo module
     ../../modules/tools/forgejo-runner.nix  # Import Forgejo runner module
+    ../../modules/tools/faas-cli.nix  # Import faas-cli module
+    ../../modules/tools/kind.nix  # Import kind module
+    ../../modules/tools/qdirstat.nix  # Import QDirStat module
+    ../../modules/tools/forgejo-cli.nix  # Import Forgejo CLI module
   ];
 
   # Enable tools
@@ -107,6 +111,10 @@
         ];
       };
     };
+    faas-cli.enable = true;  # Enable faas-cli
+    kind.enable = true;  # Enable kind (Kubernetes in Docker)
+    qdirstat.enable = true;  # Enable QDirStat
+    forgejo-cli.enable = true;  # Enable Forgejo CLI
    };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep
