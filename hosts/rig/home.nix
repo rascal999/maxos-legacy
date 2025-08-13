@@ -96,7 +96,7 @@
         executable = true;
         text = ''
           #!/bin/sh
-          xrandr --output DP-0 --primary --mode 3440x1440 --rate 144 --pos 0x0 --output DP-4 --mode 2560x1440 --rate 144 --right-of DP-0
+          xrandr --output DP-2 --primary --mode 3440x1440 --rate 144 --pos 0x0 --output DP-4 --mode 2560x1440 --rate 144 --right-of DP-2
         '';
       };
       ".config/mimeapps.list".text = ''
@@ -210,14 +210,14 @@
       # Left monitor - Communication
       { workspace = "0: slack"; output = "DP-4"; }
       # All other workspaces on ultrawide
-      { workspace = "1: web"; output = "DP-0"; }
-      { workspace = "2: wcode"; output = "DP-0"; }
-      { workspace = "3: pcode"; output = "DP-0"; }
-      { workspace = "4: term"; output = "DP-0"; }
-      { workspace = "5: burp"; output = "DP-0"; }
-      { workspace = "6: goose"; output = "DP-0"; }
-      { workspace = "8: logseq"; output = "DP-0"; }
-      { workspace = "9: pw"; output = "DP-0"; }
+      { workspace = "1: web"; output = "DP-2"; }
+      { workspace = "2: wcode"; output = "DP-2"; }
+      { workspace = "3: pcode"; output = "DP-2"; }
+      { workspace = "4: term"; output = "DP-2"; }
+      { workspace = "5: burp"; output = "DP-2"; }
+      { workspace = "6: goose"; output = "DP-2"; }
+      { workspace = "8: logseq"; output = "DP-2"; }
+      { workspace = "9: pw"; output = "DP-2"; }
     ];
   };
 }

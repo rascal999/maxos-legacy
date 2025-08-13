@@ -46,8 +46,10 @@
     ../../modules/tools/forgejo-runner.nix  # Import Forgejo runner module
     ../../modules/tools/faas-cli.nix  # Import faas-cli module
     ../../modules/tools/kind.nix  # Import kind module
+    ../../modules/tools/skaffold.nix  # Import Skaffold module
     ../../modules/tools/qdirstat.nix  # Import QDirStat module
     ../../modules/tools/forgejo-cli.nix  # Import Forgejo CLI module
+    ../../modules/tools/mosh.nix  # Import Mosh module
   ];
 
   # Enable tools
@@ -130,8 +132,10 @@
      };
     faas-cli.enable = true;  # Enable faas-cli
     kind.enable = true;  # Enable kind (Kubernetes in Docker)
+    skaffold.enable = true;  # Enable Skaffold
     qdirstat.enable = true;  # Enable QDirStat
     forgejo-cli.enable = true;  # Enable Forgejo CLI
+    mosh.enable = true;  # Enable Mosh (mobile shell)
    };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep
