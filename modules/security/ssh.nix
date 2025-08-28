@@ -17,7 +17,8 @@ in {
     services.openssh = {
       enable = true;
       settings = {
-        PasswordAuthentication = false;
+        PasswordAuthentication = true;   # Allow password authentication
+        PubkeyAuthentication = true;     # Also allow key-based authentication
         PermitRootLogin = "no";
         X11Forwarding = false;
         MaxAuthTries = 3;

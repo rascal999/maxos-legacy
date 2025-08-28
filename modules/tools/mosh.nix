@@ -8,6 +8,12 @@ in {
   options.modules.tools.mosh = {
     enable = mkEnableOption "Mosh (mobile shell) support";
     
+    enableServer = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to enable the Mosh server";
+    };
+    
     openFirewall = mkOption {
       type = types.bool;
       default = true;
@@ -27,6 +33,12 @@ in {
       mosh
     ];
 
+    # Enable Mosh server if requested
+    programs.mosh = mkIf cfg.enableServer {
+      enable = true;
+      withUtempter = true;  # Enable utempter support for proper session tracking
+    };
+
     # Open firewall ports for Mosh if requested
     networking.firewall = mkIf cfg.openFirewall {
       allowedUDPPortRanges = [
@@ -34,7 +46,7 @@ in {
       ];
     };
 
-    # Ensure SSH is available (Mosh requires SSH for initial connection)
-    services.openssh.enable = mkDefault true;
+    # Note: SSH server configuration is handled by modules/security/ssh.nix
+    # Mosh requires SSH for initial connection, which is enabled through the security module
   };
 }
