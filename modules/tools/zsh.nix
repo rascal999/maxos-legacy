@@ -192,6 +192,7 @@
       ff = "firefox";
       ls = "grc ls";
       f = "fabric_cmd";
+      k = "kubectl";
     };
 
     plugins = [

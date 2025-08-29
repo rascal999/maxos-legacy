@@ -73,7 +73,7 @@
     };
     remmina.enable = true;   # Enable Remmina
     k3s = {
-      enable = false;
+      enable = true;
       role = "server";  # Configure as a server (control plane)
       extraFlags = [
         "--disable-cloud-controller"  # Disable cloud controller as this is a local setup
@@ -114,7 +114,7 @@
       };
     };
     faas-cli.enable = true;  # Enable faas-cli
-    kind.enable = true;  # Enable kind (Kubernetes in Docker)
+    kind.enable = false;  # Disable kind (Kubernetes in Docker)
     skaffold.enable = true;  # Enable Skaffold
     qdirstat.enable = true;  # Enable QDirStat
     forgejo-cli.enable = true;  # Enable Forgejo CLI
@@ -150,8 +150,10 @@
     authorizedKeys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICjMXN/z0u4Sf/+ODpG49ZFBNHqcZFxNgFhTts1GAJrr user@nixos"  # rig's key
     ];
-    pam.services.i3lock.enable = true;
   };
+
+  # Enable PAM service for i3lock
+  security.pam.services.i3lock.enable = true;
 
   # Set hostname
   networking.hostName = "G16";

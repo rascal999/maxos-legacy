@@ -75,7 +75,7 @@
     };
     remmina.enable = true;  # Enable Remmina
     k3s = {
-      enable = false;
+      enable = true;
       role = "server";  # Configure as a server (control plane)
       extraFlags = [
         "--disable-cloud-controller"  # Disable cloud controller as this is a local setup
@@ -131,7 +131,7 @@
       };
      };
     faas-cli.enable = true;  # Enable faas-cli
-    kind.enable = true;  # Enable kind (Kubernetes in Docker)
+    kind.enable = false;  # Disable kind (Kubernetes in Docker)
     skaffold.enable = true;  # Enable Skaffold
     qdirstat.enable = true;  # Enable QDirStat
     forgejo-cli.enable = true;  # Enable Forgejo CLI
