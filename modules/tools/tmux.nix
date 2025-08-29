@@ -31,8 +31,8 @@
      set -g update-environment "DISPLAY SSH_AUTH_SOCK SSH_CONNECTION WINDOWID XAUTHORITY TERM COLORTERM"
      set-environment -g COLORTERM "truecolor"
      
-     # Ensure zsh picks up environment
-     set -g default-command "${pkgs.zsh}/bin/zsh -l"
+     # Ensure zsh picks up environment and sources .zshrc
+     set -g default-command "${pkgs.zsh}/bin/zsh -l -i"
      
      # Key bindings
      bind "e" send-keys "exit" \; send-keys "Enter"

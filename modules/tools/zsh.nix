@@ -6,6 +6,8 @@
     grc    # Generic colouriser
     lazygit # Terminal UI for git
     zsh-powerlevel10k  # For p10k command
+    libnotify  # For desktop notifications
+    xdotool    # For window focus detection
   ];
 
   home.file.".p10k.zsh".source = ./zsh/p10k.zsh;
@@ -89,15 +91,92 @@
       }
 
       # Command execution time tracking and notification
-      __cmd_timestamp=0
+      # Only initialize if not already set (to avoid resetting during sourcing)
+      [[ -z "$__cmd_timestamp" ]] && __cmd_timestamp=0
+      [[ -z "$__cmd_command" ]] && __cmd_command=""
+      [[ -z "$__terminal_focused" ]] && __terminal_focused=1
+      
+      # Store the terminal window ID for focus comparison
+      __terminal_window_id=""
+      
+      # Get terminal window ID
+      function get_terminal_window_id() {
+        if command -v xdotool >/dev/null 2>&1; then
+          __terminal_window_id=$(xdotool getactivewindow 2>/dev/null)
+        fi
+      }
+      
+      # Check if terminal window is currently focused
+      function check_terminal_focus() {
+        if command -v xdotool >/dev/null 2>&1 && [[ -n "$__terminal_window_id" ]]; then
+          local active_window=$(xdotool getactivewindow 2>/dev/null)
+          if [[ "$active_window" == "$__terminal_window_id" ]]; then
+            __terminal_focused=1
+          else
+            __terminal_focused=0
+          fi
+        else
+          __terminal_focused=1  # Assume focused if xdotool not available
+        fi
+      }
       
       function preexec() {
         __cmd_timestamp=$SECONDS
+        __cmd_command="$1"
+        # Store the terminal window ID when command starts
+        get_terminal_window_id
+        __terminal_focused=1  # Assume focused at start
       }
       
       function precmd() {
         local exit_code=$?
         local duration=$((SECONDS - __cmd_timestamp))
+        
+        # Check if terminal is currently focused (at command completion)
+        check_terminal_focus
+        
+        # Only notify if command took more than 3 seconds and terminal is NOT focused now
+        if [[ $duration -gt 3 && $__terminal_focused -eq 0 && -n "$__cmd_command" ]]; then
+          local status_msg
+          local urgency="normal"
+          
+          if [[ $exit_code -eq 0 ]]; then
+            status_msg="✅ Command completed successfully"
+          else
+            status_msg="❌ Command failed (exit code: $exit_code)"
+            urgency="critical"
+          fi
+          
+          # Format duration
+          local duration_str
+          if [[ $duration -ge 3600 ]]; then
+            duration_str="$(($duration / 3600))h $(($duration % 3600 / 60))m $(($duration % 60))s"
+          elif [[ $duration -ge 60 ]]; then
+            duration_str="$(($duration / 60))m $(($duration % 60))s"
+          else
+            duration_str="''${duration}s"
+          fi
+          
+          # Truncate command if too long
+          local cmd_display="$__cmd_command"
+          if [[ ''${#cmd_display} -gt 50 ]]; then
+            cmd_display="''${cmd_display:0:47}..."
+          fi
+          
+          # Send notification
+          if command -v notify-send >/dev/null 2>&1; then
+            notify-send \
+              --urgency="$urgency" \
+              --expire-time=5000 \
+              --app-name="Terminal" \
+              "$status_msg" \
+              "Command: $cmd_display\nDuration: $duration_str"
+          fi
+        fi
+        
+        # Reset variables
+        __cmd_command=""
+        __terminal_focused=1
       }
 
       # Copy most recent download to current directory
