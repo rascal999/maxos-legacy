@@ -34,6 +34,17 @@
      # Ensure zsh picks up environment and sources .zshrc
      set -g default-command "${pkgs.zsh}/bin/zsh -l -i"
      
+     # Automatic window renaming based on hostname and current directory
+     set -g automatic-rename on
+     set -g automatic-rename-format '#(echo "#{pane_current_command}@$(hostname -s):#{b:pane_current_path}")'
+     
+     # Alternative: Show just hostname and current directory
+     # set -g automatic-rename-format '#(echo "$(hostname -s):#{b:pane_current_path}")'
+     
+     # Update window title when SSH connection changes
+     set -g set-titles on
+     set -g set-titles-string '#(echo "$(hostname -s):#{session_name}:#{window_index}:#{pane_current_path}")'
+     
      # Key bindings
      bind "e" send-keys "exit" \; send-keys "Enter"
      bind "Enter" send-keys "eza --long --all --header --icons --git" \; send-keys "Enter"

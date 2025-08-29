@@ -254,6 +254,53 @@
           rm /tmp/cum_last_project
         fi
       }
+
+      # TMUX hostname-based window naming
+      function ssh() {
+        # Store original window name if in tmux
+        if [[ -n "$TMUX" ]]; then
+          local original_name=$(tmux display-message -p '#W')
+          
+          # Extract hostname from ssh command
+          local hostname=""
+          for arg in "$@"; do
+            if [[ "$arg" != -* ]]; then
+              hostname="$arg"
+              break
+            fi
+          done
+          
+          # Set window name to remote hostname
+          if [[ -n "$hostname" ]]; then
+            tmux rename-window "$hostname"
+          fi
+          
+          # Call actual ssh command
+          command ssh "$@"
+          local ssh_exit_code=$?
+          
+          # Restore original window name after ssh exits
+          tmux rename-window "$original_name"
+          
+          return $ssh_exit_code
+        else
+          # Not in tmux, just call ssh normally
+          command ssh "$@"
+        fi
+      }
+
+      # Function to manually update tmux window name with current hostname
+      function tmux_update_hostname() {
+        if [[ -n "$TMUX" ]]; then
+          local current_hostname=$(hostname -s)
+          tmux rename-window "$current_hostname"
+        else
+          echo "Not in a tmux session"
+        fi
+      }
+
+      # Alias for quick hostname update
+      alias tuh='tmux_update_hostname'
     '';
 
     oh-my-zsh = {
