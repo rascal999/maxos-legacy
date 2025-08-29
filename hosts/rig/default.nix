@@ -356,10 +356,10 @@
 
   # Configure k3s container runtime (containerd) to treat the shared registry as insecure
   environment.etc."rancher/k3s/registries.yaml".text = ''
-    mirrors:
-      "local-registry-service.kube-system.svc.cluster.local:5000":
-        endpoint:
-          - "http://local-registry-service.kube-system.svc.cluster.local:5000"
+    configs:
+      "registry.localhost":
+        tls:
+          insecure_skip_verify: true
   ''; # Semicolon separating this from the next attribute
 
   systemd.user.services.direct-ptt = {

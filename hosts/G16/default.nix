@@ -324,6 +324,14 @@
     };
   };
 
+  # Configure k3s container runtime (containerd) to treat the shared registry as insecure
+  environment.etc."rancher/k3s/registries.yaml".text = ''
+    configs:
+      "registry.localhost":
+        tls:
+          insecure_skip_verify: true
+  '';
+
   # Configure 16GB swap file
   swapDevices = [
     {
