@@ -47,6 +47,7 @@
     ../../modules/tools/qdirstat.nix  # Import QDirStat module
     ../../modules/tools/forgejo-cli.nix  # Import Forgejo CLI module
     ../../modules/tools/mosh.nix  # Import Mosh module
+    ../../modules/tools/argocd.nix  # Import ArgoCD CLI module
   ];
 
   # Enable tools
@@ -119,6 +120,7 @@
     qdirstat.enable = true;  # Enable QDirStat
     forgejo-cli.enable = true;  # Enable Forgejo CLI
     mosh.enable = true;  # Enable Mosh (mobile shell)
+    argocd.enable = true;  # Enable ArgoCD CLI
    };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep
