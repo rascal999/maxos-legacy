@@ -89,9 +89,9 @@ update_boot_config() {
     ssh_exec "sudo cryptsetup open ${TARGET_DISK}p2 cryptroot 2>/dev/null || true"
     
     # Get the actual UUIDs from the system
-    local luks_uuid=$(ssh_exec "blkid -s UUID -o value ${TARGET_DISK}p2")
-    local efi_uuid=$(ssh_exec "blkid -s UUID -o value ${TARGET_DISK}p1")
-    local root_uuid=$(ssh_exec "blkid -s UUID -o value /dev/mapper/cryptroot")
+    local luks_uuid=$(ssh_exec "sudo blkid ${TARGET_DISK}p2 | grep -o 'UUID=\"[^\"]*\"' | cut -d'\"' -f2")
+    local efi_uuid=$(ssh_exec "sudo blkid ${TARGET_DISK}p1 | grep -o 'UUID=\"[^\"]*\"' | cut -d'\"' -f2")
+    local root_uuid=$(ssh_exec "sudo blkid /dev/mapper/cryptroot | grep -o 'UUID=\"[^\"]*\"' | cut -d'\"' -f2")
     
     log_info "Detected UUIDs:"
     log_info "  LUKS partition: $luks_uuid"
