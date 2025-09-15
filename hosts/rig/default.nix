@@ -61,8 +61,8 @@
     fabric-ai.enable = true;
     git-crypt.enable = true;
     mongodb = {
-      enable = true;        # Enable MongoDB
-      compass.enable = true; # Enable MongoDB Compass GUI
+      enable = false;        # Disable MongoDB for faster installation
+      compass.enable = false; # Disable MongoDB Compass GUI
     };
     grafana.enable = false;  # Disable Grafana
     golang.enable = true;   # Enable Golang
