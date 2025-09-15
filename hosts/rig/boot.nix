@@ -7,7 +7,7 @@
 
   # Boot configuration
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_14; # Changed from pkgs.linuxPackages_latest
+    kernelPackages = pkgs.linuxPackages_latest; # Use latest supported kernel
     kernelModules = [ "kvm-intel" ];
     kernelParams = [ 
       "quiet"
