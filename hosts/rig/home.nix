@@ -31,8 +31,7 @@
 
     packages = with pkgs; [
       # Fonts
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.meslo-lg
+      (nerdfonts.override { fonts = [ "JetBrainsMono" "Meslo" ]; })
 
       # Media controls
       playerctl
