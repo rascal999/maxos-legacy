@@ -85,23 +85,36 @@ check_hardware_config_generated() {
 update_boot_config() {
     log_info "Updating boot configuration with correct UUIDs..."
     
+    # Ensure cryptroot is open to get root UUID
+    ssh_exec "sudo cryptsetup open ${TARGET_DISK}p2 cryptroot 2>/dev/null || true"
+    
     # Get the actual UUIDs from the system
     local luks_uuid=$(ssh_exec "blkid -s UUID -o value ${TARGET_DISK}p2")
     local efi_uuid=$(ssh_exec "blkid -s UUID -o value ${TARGET_DISK}p1")
-    local root_uuid=$(ssh_exec "sudo cryptsetup open ${TARGET_DISK}p2 cryptroot 2>/dev/null || true; blkid -s UUID -o value /dev/mapper/cryptroot")
+    local root_uuid=$(ssh_exec "blkid -s UUID -o value /dev/mapper/cryptroot")
     
     log_info "Detected UUIDs:"
     log_info "  LUKS partition: $luks_uuid"
     log_info "  EFI partition: $efi_uuid"
     log_info "  Root partition: $root_uuid"
     
+    # Validate UUIDs are not empty
+    if [[ -z "$luks_uuid" || -z "$efi_uuid" || -z "$root_uuid" ]]; then
+        log_error "Failed to detect UUIDs. Cannot proceed with installation."
+        exit 1
+    fi
+    
     # Update the boot.nix file with correct UUIDs
     ssh_exec "
         cd /tmp/monorepo/maxos &&
         cp hosts/rig/boot.nix hosts/rig/boot.nix.backup &&
-        sed -i 's|device = \"/dev/disk/by-uuid/.*\";|device = \"/dev/disk/by-uuid/$luks_uuid\";|' hosts/rig/boot.nix &&
-        sed -i 's|device = \"/dev/disk/by-uuid/.*\";|device = \"/dev/disk/by-uuid/$root_uuid\";|' hosts/rig/boot.nix &&
-        sed -i 's|device = \"/dev/disk/by-uuid/.*\";|device = \"/dev/disk/by-uuid/$efi_uuid\";|' hosts/rig/boot.nix
+        # Update LUKS device UUID
+        sed -i 's|device = \"/dev/disk/by-uuid/1dbe6ded-7ad7-454c-8e4b-cbf97ebde301\"|device = \"/dev/disk/by-uuid/$luks_uuid\"|' hosts/rig/boot.nix &&
+        # Update root filesystem UUID
+        sed -i 's|device = \"/dev/disk/by-uuid/72998983-4655-405d-80a8-4ff6a0729a19\"|device = \"/dev/disk/by-uuid/$root_uuid\"|' hosts/rig/boot.nix &&
+        # Update EFI filesystem UUID
+        sed -i 's|device = \"/dev/disk/by-uuid/A302-1B51\"|device = \"/dev/disk/by-uuid/$efi_uuid\"|' hosts/rig/boot.nix &&
+        echo 'Boot configuration updated successfully'
     "
     
     log_success "Boot configuration updated with correct UUIDs"
