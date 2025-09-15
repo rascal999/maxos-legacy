@@ -7,7 +7,7 @@
 
   # Boot configuration
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest; # Use latest supported kernel
+    kernelPackages = pkgs.linuxPackages_6_12; # Use stable kernel compatible with NVIDIA
     kernelModules = [ "kvm-intel" ];
     kernelParams = [ 
       "quiet"
