@@ -41,6 +41,21 @@ fi
 
 echo "Starting disk setup..."
 
+# Unmount any mounted partitions from this disk
+echo "Unmounting any mounted partitions..."
+umount "${DISK}"* 2>/dev/null || true
+umount /mnt/boot 2>/dev/null || true
+umount /mnt 2>/dev/null || true
+
+# Close any open LUKS containers
+echo "Closing any open LUKS containers..."
+cryptsetup close cryptroot 2>/dev/null || true
+
+# Force kernel to re-read partition table
+echo "Forcing kernel to re-read partition table..."
+partprobe "$DISK" 2>/dev/null || true
+sleep 2
+
 # Create GPT partition table
 echo "Creating GPT partition table..."
 parted "$DISK" mklabel gpt
