@@ -141,7 +141,7 @@
    };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep
-  modules.tools.ollama.enable = true;
+  modules.tools.ollama.enable = false;
   modules.tools.syft.enable = true; # Enable Syft
   modules.tools.grype.enable = true; # Enable Grype
 
