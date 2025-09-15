@@ -281,7 +281,7 @@
     solaar # Logitech device management tool
     usbutils # For lsusb
     pkgs.evsieve # For advanced input event manipulation (PTT script)
-    goose-cli # Database migration tool
+    # goose-cli # Database migration tool (not available in 24.11)
     
     # Keyring support
     gnome-keyring
