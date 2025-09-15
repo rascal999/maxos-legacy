@@ -39,9 +39,6 @@
             };
             nixpkgs.overlays = [
               nur.overlays.default
-              (final: prev: {
-                linuxPackages_latest = pkgs-unstable.linuxPackages_latest;
-              })
             ];
           }
           self.nixosModules.scripts
@@ -104,10 +101,6 @@
             };
             nixpkgs.overlays = [
               nur.overlays.default
-              (final: prev: {
-                # Pull specific packages from unstable
-                linuxPackages_latest = pkgs-unstable.linuxPackages_latest;
-              })
             ];
           }
           self.nixosModules.scripts
