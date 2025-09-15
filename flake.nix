@@ -54,7 +54,7 @@
                 imports = [
                   ./hosts/G16/home.nix
                 ];
-                home.stateVersion = "25.05";
+                home.stateVersion = "24.11";
               };
             };
           }
@@ -85,7 +85,7 @@
                 imports = [
                   ./hosts/desktop-test-vm/home.nix
                 ];
-                home.stateVersion = "25.05";
+                home.stateVersion = "24.11";
               };
             };
           }
@@ -116,7 +116,7 @@
                 imports = [
                   ./hosts/rig/home.nix
                 ];
-                home.stateVersion = "25.05";
+                home.stateVersion = "24.11";
               };
             };
           }
