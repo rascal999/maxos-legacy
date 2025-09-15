@@ -11,7 +11,7 @@ in {
     bucketName = mkOption {
       type = types.str;
       default = "alm-backup";
-      description = "Wasabi bucket name";
+      description = "S3 bucket name (Wasabi/Backblaze B2)";
     };
     
     hostSubdir = mkOption {
@@ -34,31 +34,67 @@ in {
     
     awsAccessKeyFile = mkOption {
       type = types.str;
-      default = "/home/user/git/github/monorepo/secrets/environments/personal/.wasabi-access-key";
-      description = "Path to the file containing the AWS/Wasabi access key";
+      default = "/home/user/git/github/monorepo/secrets/environments/personal/.b2-access-key";
+      description = "Path to the file containing the S3 access key (Backblaze B2 keyID)";
     };
     
     awsSecretKeyFile = mkOption {
       type = types.str;
-      default = "/home/user/git/github/monorepo/secrets/environments/personal/.wasabi-secret-key";
-      description = "Path to the file containing the AWS/Wasabi secret key";
+      default = "/home/user/git/github/monorepo/secrets/environments/personal/.b2-secret-key";
+      description = "Path to the file containing the S3 secret key (Backblaze B2 applicationKey)";
     };
     
     s3Endpoint = mkOption {
       type = types.str;
-      default = "s3.eu-west-1.wasabisys.com";
-      description = "S3 endpoint for Wasabi (eu-west-1 region)";
+      default = "s3.us-west-004.backblazeb2.com";
+      description = "S3 endpoint for Backblaze B2 (adjust region as needed)";
     };
     
     paths = mkOption {
       type = types.listOf types.str;
-      default = [ "/home/user/share" ];
+      default = [ "/home/user" ];
       description = "Paths to back up";
     };
     
     excludes = mkOption {
       type = types.listOf types.str;
-      default = [ "*.tmp" "*.temp" "*/node_modules" "*/target" ];
+      default = [
+        "*.tmp"
+        "*.temp"
+        "*/node_modules"
+        "*/target"
+        "*/.cache"
+        "*/.local/share/Trash"
+        "*/.thumbnails"
+        "*/Downloads"
+        "*/.docker"
+        "*/.npm"
+        "*/.cargo/registry"
+        "*/.cargo/git"
+        "*/go/pkg"
+        "*/.rustup"
+        "*/.gradle"
+        "*/.m2"
+        "*/.ivy2"
+        "*/.sbt"
+        "*/venv"
+        "*/__pycache__"
+        "*.pyc"
+        "*.pyo"
+        "*/.git"
+        "*/.svn"
+        "*/.hg"
+        "*/lost+found"
+        "/home/user/.local/share/Steam"
+        "/home/user/.steam"
+        "/home/user/.wine"
+        "/home/user/.PlayOnLinux"
+        "/home/user/VirtualBox VMs"
+        "/home/user/.VirtualBox"
+        "/home/user/.vagrant.d"
+        "/home/user/.minikube"
+        "/home/user/.kube/cache"
+      ];
       description = "Patterns to exclude from backup";
     };
     
@@ -99,10 +135,10 @@ in {
       in {
         RESTIC_REPOSITORY = actualRepository;
         RESTIC_PASSWORD_FILE = cfg.passwordFile;
-        # Use AWS environment variables for Wasabi authentication
+        # Use AWS environment variables for Backblaze B2 authentication
         AWS_ACCESS_KEY_ID_FILE = cfg.awsAccessKeyFile;
         AWS_SECRET_ACCESS_KEY_FILE = cfg.awsSecretKeyFile;
-        # Set the S3 endpoint for Wasabi
+        # Set the S3 endpoint for Backblaze B2
         AWS_ENDPOINT = cfg.s3Endpoint;
       };
       

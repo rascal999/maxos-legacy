@@ -70,7 +70,8 @@ check_repo_cloned() {
 }
 
 check_disk_setup() {
-    ssh_exec "[[ -b /dev/mapper/cryptroot ]]"
+    # Check if any disk has LUKS partitions (crypto_LUKS filesystem)
+    ssh_exec "sudo blkid -t TYPE=crypto_LUKS >/dev/null 2>&1"
 }
 
 check_partitions_mounted() {
@@ -85,22 +86,61 @@ check_hardware_config_generated() {
 update_boot_config() {
     log_info "Updating boot configuration with correct UUIDs..."
     
-    # Ensure cryptroot is open to get root UUID
-    ssh_exec "sudo cryptsetup open ${TARGET_DISK}p2 cryptroot 2>/dev/null || true"
+    # Get the actual disk device from cryptroot mapping if TARGET_DISK is not properly set
+    if [[ -z "$TARGET_DISK" ]] || [[ "$TARGET_DISK" =~ ├─ ]]; then
+        local actual_disk
+        actual_disk=$(ssh_exec "sudo cryptsetup status cryptroot | grep 'device:' | awk '{print \$2}' | sed 's/p[0-9]*$//'")
+        
+        if [[ -z "$actual_disk" ]]; then
+            log_error "Could not determine disk from cryptroot mapping"
+            ssh_exec "sudo cryptsetup status cryptroot || echo 'cryptroot not found'"
+            exit 1
+        fi
+        
+        TARGET_DISK="$actual_disk"
+        log_info "Detected target disk from cryptroot: $TARGET_DISK"
+    fi
     
-    # Get the actual UUIDs from the system
-    local luks_uuid=$(ssh_exec "sudo blkid ${TARGET_DISK}p2 | grep -o 'UUID=\"[^\"]*\"' | cut -d'\"' -f2")
-    local efi_uuid=$(ssh_exec "sudo blkid ${TARGET_DISK}p1 | grep -o 'UUID=\"[^\"]*\"' | cut -d'\"' -f2")
-    local root_uuid=$(ssh_exec "sudo blkid /dev/mapper/cryptroot | grep -o 'UUID=\"[^\"]*\"' | cut -d'\"' -f2")
+    # Determine partition names based on disk type
+    local efi_part root_part
+    if [[ "$TARGET_DISK" =~ ^/dev/nvme ]]; then
+        efi_part="${TARGET_DISK}p1"
+        root_part="${TARGET_DISK}p2"
+    else
+        efi_part="${TARGET_DISK}1"
+        root_part="${TARGET_DISK}2"
+    fi
+    
+    log_info "Using partitions: EFI=$efi_part, LUKS=$root_part"
+    
+    # Ensure cryptroot is open to get root UUID
+    ssh_exec "sudo cryptsetup open $root_part cryptroot 2>/dev/null || true"
+    
+    # Get UUIDs using blkid directly - more reliable than parsing lsblk
+    local luks_uuid efi_uuid root_uuid
+    
+    # Get LUKS UUID
+    luks_uuid=$(ssh_exec "sudo blkid $root_part -s UUID -o value 2>/dev/null || echo ''")
+    
+    # Get EFI UUID
+    efi_uuid=$(ssh_exec "sudo blkid $efi_part -s UUID -o value 2>/dev/null || echo ''")
+    
+    # Get root filesystem UUID
+    root_uuid=$(ssh_exec "sudo blkid /dev/mapper/cryptroot -s UUID -o value 2>/dev/null || echo ''")
     
     log_info "Detected UUIDs:"
-    log_info "  LUKS partition: $luks_uuid"
-    log_info "  EFI partition: $efi_uuid"
-    log_info "  Root partition: $root_uuid"
+    log_info "  LUKS partition ($root_part): $luks_uuid"
+    log_info "  EFI partition ($efi_part): $efi_uuid"
+    log_info "  Root partition (/dev/mapper/cryptroot): $root_uuid"
     
     # Validate UUIDs are not empty
     if [[ -z "$luks_uuid" || -z "$efi_uuid" || -z "$root_uuid" ]]; then
-        log_error "Failed to detect UUIDs. Cannot proceed with installation."
+        log_error "Failed to detect one or more UUIDs:"
+        [[ -z "$luks_uuid" ]] && log_error "  - LUKS UUID missing"
+        [[ -z "$efi_uuid" ]] && log_error "  - EFI UUID missing"
+        [[ -z "$root_uuid" ]] && log_error "  - Root UUID missing"
+        log_error "Debug information:"
+        ssh_exec "sudo lsblk -f $TARGET_DISK* /dev/mapper/cryptroot 2>/dev/null || true"
         exit 1
     fi
     
@@ -108,12 +148,16 @@ update_boot_config() {
     ssh_exec "
         cd /tmp/monorepo/maxos &&
         cp hosts/rig/boot.nix hosts/rig/boot.nix.backup &&
+        # Set variables for UUID replacement
+        LUKS_UUID='$luks_uuid' &&
+        EFI_UUID='$efi_uuid' &&
+        ROOT_UUID='$root_uuid' &&
         # Update LUKS device UUID
-        sed -i 's|device = \"/dev/disk/by-uuid/1dbe6ded-7ad7-454c-8e4b-cbf97ebde301\"|device = \"/dev/disk/by-uuid/$luks_uuid\"|' hosts/rig/boot.nix &&
+        sed -i \"s|device = \\\"/dev/disk/by-uuid/1dbe6ded-7ad7-454c-8e4b-cbf97ebde301\\\"|device = \\\"/dev/disk/by-uuid/\$LUKS_UUID\\\"|\" hosts/rig/boot.nix &&
         # Update root filesystem UUID
-        sed -i 's|device = \"/dev/disk/by-uuid/72998983-4655-405d-80a8-4ff6a0729a19\"|device = \"/dev/disk/by-uuid/$root_uuid\"|' hosts/rig/boot.nix &&
+        sed -i \"s|device = \\\"/dev/disk/by-uuid/72998983-4655-405d-80a8-4ff6a0729a19\\\"|device = \\\"/dev/disk/by-uuid/\$ROOT_UUID\\\"|\" hosts/rig/boot.nix &&
         # Update EFI filesystem UUID
-        sed -i 's|device = \"/dev/disk/by-uuid/A302-1B51\"|device = \"/dev/disk/by-uuid/$efi_uuid\"|' hosts/rig/boot.nix &&
+        sed -i \"s|device = \\\"/dev/disk/by-uuid/A302-1B51\\\"|device = \\\"/dev/disk/by-uuid/\$EFI_UUID\\\"|\" hosts/rig/boot.nix &&
         echo 'Boot configuration updated successfully'
     "
     
@@ -488,17 +532,40 @@ main() {
     # Choose disk for installation (only if not already set up)
     if ! check_disk_setup; then
         choose_disk
+        # Setup LUKS encryption
+        setup_luks_remote
     else
         log_info "LUKS disk already set up, detecting target disk..."
-        TARGET_DISK=$(ssh_exec "lsblk -o NAME,TYPE | grep -B1 crypt | head -1 | awk '{print \"/dev/\" \$1}' | sed 's/[0-9]*$//'")
-        log_success "Detected target disk: $TARGET_DISK"
+        # Find the disk that contains LUKS partitions
+        local luks_partition
+        luks_partition=$(ssh_exec "sudo blkid -t TYPE=crypto_LUKS -o device | head -1")
+        if [[ -z "$luks_partition" ]]; then
+            log_error "Could not detect LUKS partition"
+            exit 1
+        fi
+        
+        # Extract base disk name from partition
+        if [[ "$luks_partition" =~ ^/dev/nvme ]]; then
+            TARGET_DISK=$(echo "$luks_partition" | sed 's/p[0-9]*$//')
+        else
+            TARGET_DISK=$(echo "$luks_partition" | sed 's/[0-9]*$//')
+        fi
+        
+        log_success "Detected target disk: $TARGET_DISK (LUKS partition: $luks_partition)"
+        log_success "LUKS encryption already set up"
+        
+        # Prompt to open LUKS partition if not already open
+        if ! ssh_exec "sudo cryptsetup status cryptroot >/dev/null 2>&1"; then
+            log_info "LUKS partition needs to be opened..."
+            ssh_exec -t "sudo cryptsetup open $luks_partition cryptroot"
+            log_success "LUKS partition opened"
+        else
+            log_success "LUKS partition already open"
+        fi
     fi
     
     # Choose NixOS profile
     show_profiles
-    
-    # Setup LUKS encryption
-    setup_luks_remote
     
     # Mount partitions
     mount_partitions_remote
