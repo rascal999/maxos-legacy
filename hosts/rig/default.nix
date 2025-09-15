@@ -178,8 +178,8 @@
     ];
   };
 
-  # Enable PAM service for i3lock
-  security.pam.services.i3lock.enable = true;
+  # PAM service for i3lock (not available in 24.11)
+  # security.pam.services.i3lock.enable = true;
 
   # Set hostname
   networking.hostName = "rig";
