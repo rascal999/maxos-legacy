@@ -77,6 +77,9 @@
     restic
     rclone
     goose-cli # Database migration tool
+    
+    # Deployment tools
+    colmena # NixOS deployment tool
   ];
 
   # Set system state version

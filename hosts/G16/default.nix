@@ -257,6 +257,7 @@
     gnome-keyring
     kubectl # Kubernetes command-line tool
     bind # For dig command
+    colmena # NixOS deployment tool
   ];
 
   # Add user to video group for backlight control and enable FUSE
