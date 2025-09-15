@@ -23,7 +23,7 @@
   home = {
     username = "user";
     homeDirectory = lib.mkForce "/home/user";
-    stateVersion = "25.05";  # Please read the comment below
+    stateVersion = "24.11";  # Please read the comment below
 
     # The home.stateVersion option does not have a default and must be set
     # First time users of home-manager should read:
