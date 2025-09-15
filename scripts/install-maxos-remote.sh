@@ -81,6 +81,32 @@ check_hardware_config_generated() {
     ssh_exec "[[ -f /mnt/etc/nixos/hardware-configuration.nix ]]"
 }
 
+# Update boot configuration with correct UUIDs
+update_boot_config() {
+    log_info "Updating boot configuration with correct UUIDs..."
+    
+    # Get the actual UUIDs from the system
+    local luks_uuid=$(ssh_exec "blkid -s UUID -o value ${TARGET_DISK}p2")
+    local efi_uuid=$(ssh_exec "blkid -s UUID -o value ${TARGET_DISK}p1")
+    local root_uuid=$(ssh_exec "sudo cryptsetup open ${TARGET_DISK}p2 cryptroot 2>/dev/null || true; blkid -s UUID -o value /dev/mapper/cryptroot")
+    
+    log_info "Detected UUIDs:"
+    log_info "  LUKS partition: $luks_uuid"
+    log_info "  EFI partition: $efi_uuid"
+    log_info "  Root partition: $root_uuid"
+    
+    # Update the boot.nix file with correct UUIDs
+    ssh_exec "
+        cd /tmp/monorepo/maxos &&
+        cp hosts/rig/boot.nix hosts/rig/boot.nix.backup &&
+        sed -i 's|device = \"/dev/disk/by-uuid/.*\";|device = \"/dev/disk/by-uuid/$luks_uuid\";|' hosts/rig/boot.nix &&
+        sed -i 's|device = \"/dev/disk/by-uuid/.*\";|device = \"/dev/disk/by-uuid/$root_uuid\";|' hosts/rig/boot.nix &&
+        sed -i 's|device = \"/dev/disk/by-uuid/.*\";|device = \"/dev/disk/by-uuid/$efi_uuid\";|' hosts/rig/boot.nix
+    "
+    
+    log_success "Boot configuration updated with correct UUIDs"
+}
+
 # Show usage
 show_usage() {
     cat << EOF
@@ -466,6 +492,9 @@ main() {
     
     # Generate hardware configuration
     generate_hardware_config_remote
+    
+    # Update boot configuration with correct UUIDs
+    update_boot_config
     
     # Install NixOS
     install_nixos_remote
