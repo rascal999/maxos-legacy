@@ -201,20 +201,27 @@ in {
       let
         selectedPattern = patterns.${cfg.preset};
         
-        # Apply bundle configuration
+        # Apply bundle configuration with customizations
         bundleConfig = mkMerge (mapAttrsToList (bundleName: bundleSettings:
-          { modules.toolBundles.${bundleName} = bundleSettings; }
+          let
+            customBundleSettings = cfg.customizations.${bundleName} or {};
+            mergedSettings = recursiveUpdate bundleSettings customBundleSettings;
+          in
+          { modules.toolBundles.${bundleName} = mergedSettings; }
         ) selectedPattern.bundles);
         
-        # Apply hardware configuration  
+        # Apply hardware configuration with customizations
         hardwareConfig = mkMerge (mapAttrsToList (hwType: hwSettings:
-          { maxos.hardware.${hwType} = hwSettings; }
+          let
+            customHwSettings = cfg.customizations.hardware.${hwType} or {};
+            mergedHwSettings = recursiveUpdate hwSettings customHwSettings;
+          in
+          { maxos.hardware.${hwType} = mergedHwSettings; }
         ) selectedPattern.hardware);
         
       in mkMerge [
         bundleConfig
         hardwareConfig
-        cfg.customizations
       ]
     ))
     

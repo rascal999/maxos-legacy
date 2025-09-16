@@ -85,18 +85,18 @@ in {
     ./tool-bundles/devops.nix
     ./tool-bundles/remote-work.nix
     ./tool-bundles/gaming.nix
-    ./tool-bundles/usage-patterns.nix
+    # ./tool-bundles/usage-patterns.nix  # Temporarily disabled due to recursion
     
     # Hardware profiles
     ./hardware/laptop.nix
     ./hardware/desktop.nix
     ./hardware/server.nix
     
-    # Host profiles
-    ./profiles/gaming-workstation.nix
-    ./profiles/developer-workstation.nix  
-    ./profiles/home-server.nix
-    ./profiles/minimal-desktop.nix
+    # Note: Host profiles are imported directly by hosts, not globally
+    # ./profiles/gaming-workstation.nix
+    # ./profiles/developer-workstation.nix  
+    # ./profiles/home-server.nix
+    # ./profiles/minimal-desktop.nix
   ] 
   # Dynamically discovered system-level tool modules
   ++ systemToolImports

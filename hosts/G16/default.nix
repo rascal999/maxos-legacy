@@ -15,6 +15,9 @@
     
     # MaxOS gaming workstation profile
     ../../modules/profiles/gaming-workstation.nix
+    
+    # Security configuration
+    ../../modules/security/default.nix
   ];
 
   # Basic system identification
@@ -59,31 +62,24 @@
     };
   };
 
-  # Use content creator usage pattern (gaming + streaming + development)
-  modules.toolBundles.usagePatterns = {
-    enable = true;
-    preset = "content-creator";
-    
-    customizations = {
-      # AI development tools
-      aiMl.profile = "developer";
-      aiMl.enableWebInterface = false;  # Disabled for now
-      
-      # Development capabilities
-      webdev.enable = false;  # Disabled for now
-      kubernetes.enable = false;  # Disabled for now
-      
-      # Enhanced gaming and content creation
-      gaming.profile = "enthusiast";
-      contentCreation.profile = "streamer";
-    };
+  # Temporarily disable usage patterns due to recursion issue
+  # Will re-enable once fixed
+  # modules.toolBundles.usagePatterns = {
+  #   enable = true;
+  #   preset = "content-creator";
+  # };
+  
+  # The gaming-workstation profile handles most bundle configuration
+  # Only override specific settings here
+  modules.toolBundles = {
+    aiMl.enableWebInterface = false;  # Disable AI web interface for now
   };
 
   # G16-specific tool configuration
   modules.tools = {
-    # AI tools (selective enabling)
-    ollama.enable = false;
-    open-webui.enable = false;
+    # AI tools (selective enabling) - use mkForce to override bundle defaults
+    ollama.enable = lib.mkForce false;
+    open-webui.enable = lib.mkForce false;
     anythingllm = {
       enable = true;
       port = 3001;
@@ -132,12 +128,16 @@
       };
     };
     
-    # PAM for i3lock
-    pam.services.i3lock.enable = true;
     
     # Disable conflicting services
     redshift.enable = false;
   };
+  
+  # PAM for i3lock
+  security.pam.services.i3lock = {};
+  
+  # Enable zsh since user shell is set to zsh
+  programs.zsh.enable = true;
 
   # Networking
   networking.hosts = {

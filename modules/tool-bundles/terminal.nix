@@ -35,19 +35,15 @@ in {
 
   config = mkIf cfg.enable {
     modules.tools = {
-      # Core terminal
-      alacritty.enable = true;
-      zsh.enable = mkIf cfg.enableEnhancedShell true;
-      
-      # Terminal multiplexer
-      tmux.enable = mkIf cfg.enableMultiplexer true;
-      
-      # Development environment
-      direnv.enable = mkIf cfg.enableDevelopmentEnv true;
-      
-      # Input and navigation
+      # System-level terminal tools
       keyd.enable = mkIf (cfg.profile != "minimal") true;
-      rofi.enable = mkIf (cfg.profile == "poweruser") true;
+      
+      # Note: The following are handled via home-manager:
+      # - Terminal: alacritty (home-manager module)
+      # - Shell: zsh (home-manager module) 
+      # - Multiplexer: tmux (home-manager module)
+      # - Environment: direnv (home-manager module)
+      # - Launcher: rofi (home-manager module)
     };
   };
 }

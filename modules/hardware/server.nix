@@ -85,7 +85,7 @@ in {
     # CPU performance
     powerManagement.cpuFreqGovernor = cfg.performance.governor;
     
-    # Kernel parameters for server optimization
+    # Combined kernel parameters for server optimization
     boot.kernelParams = [
       # Memory management
       "vm.swappiness=${toString cfg.memory.swappiness}"
@@ -98,6 +98,8 @@ in {
     ] ++ optionals cfg.network.enableBBR [
       "net.core.default_qdisc=fq"
       "net.ipv4.tcp_congestion_control=bbr"
+    ] ++ optionals cfg.storage.enableNuma [
+      "numa_balancing=enable"
     ];
 
     # Sysctl optimizations for servers
@@ -143,8 +145,8 @@ in {
     hardware.cpu.intel.updateMicrocode = mkIf cfg.monitoring.enable true;
     hardware.cpu.amd.updateMicrocode = mkIf cfg.monitoring.enable true;
     
-    # Temperature monitoring
-    programs.lm-sensors.enable = mkIf cfg.monitoring.sensors true;
+    # Temperature monitoring  
+    # Note: lm-sensors is included in systemPackages instead of programs
 
     # Server-specific packages
     environment.systemPackages = with pkgs; mkIf cfg.enable [
@@ -172,10 +174,5 @@ in {
     
     # Enable system statistics collection
     services.sysstat.enable = mkIf cfg.monitoring.enable true;
-
-    # NUMA optimizations
-    boot.kernelParams = mkIf cfg.storage.enableNuma [
-      "numa_balancing=enable"
-    ];
   };
 }

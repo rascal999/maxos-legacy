@@ -72,7 +72,7 @@ with lib;
   hardware = {
     opengl = {
       enable = mkDefault true;
-      driSupport = mkDefault true;
+      # driSupport is deprecated and automatically enabled
     };
   };
 }

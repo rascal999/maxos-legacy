@@ -77,21 +77,30 @@ in {
     # Performance optimizations
     powerManagement.cpuFreqGovernor = mkIf cfg.performance.highPerformance cfg.performance.governor;
     
-    # Kernel parameters for performance
-    boot.kernelParams = mkIf cfg.performance.highPerformance [
-      "mitigations=off"  # Disable CPU mitigations for performance
-      "transparent_hugepage=always"
-    ];
+    # Combined kernel parameters
+    boot.kernelParams = 
+      (optionals cfg.performance.highPerformance [
+        "mitigations=off"  # Disable CPU mitigations for performance
+        "transparent_hugepage=always"
+      ])
+      ++ (optionals cfg.storage.ssd [
+        "elevator=noop"
+      ]);
 
     # Graphics acceleration
     hardware.opengl = mkIf cfg.graphics.enable {
       enable = true;
-      driSupport = true;
+      # driSupport is deprecated and automatically enabled
       driSupport32Bit = true;
     };
 
-    # NVIDIA support
-    services.xserver.videoDrivers = mkIf cfg.graphics.nvidia [ "nvidia" ];
+    # GPU drivers (mutually exclusive)
+    services.xserver.videoDrivers = 
+      if cfg.graphics.nvidia then [ "nvidia" ]
+      else if cfg.graphics.amd then [ "amdgpu" ]
+      else [ ];
+
+    # NVIDIA configuration
     hardware.nvidia = mkIf cfg.graphics.nvidia {
       modesetting.enable = true;
       powerManagement.enable = false; # Desktop doesn't need power saving
@@ -99,13 +108,10 @@ in {
       open = false; # Use proprietary driver
       nvidiaSettings = true;
     };
-
-    # AMD GPU support
-    services.xserver.videoDrivers = mkIf cfg.graphics.amd [ "amdgpu" ];
     
     # Audio configuration
     sound.enable = mkIf cfg.audio.enable true;
-    hardware.pulseaudio.enable = mkIf cfg.audio.enable false; # Use PipeWire instead
+    hardware.pulseaudio.enable = false; # Always use PipeWire instead
     
     services.pipewire = mkIf cfg.audio.enable {
       enable = true;
@@ -120,9 +126,6 @@ in {
 
     # SSD optimizations
     services.fstrim.enable = mkIf (cfg.storage.ssd && cfg.storage.trim) true;
-    
-    # I/O scheduler for SSDs
-    boot.kernelParams = mkIf cfg.storage.ssd [ "elevator=noop" ];
 
     # Desktop-specific packages
     environment.systemPackages = with pkgs; mkIf cfg.enable [

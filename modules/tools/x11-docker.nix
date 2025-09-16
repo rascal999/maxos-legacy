@@ -24,7 +24,7 @@ in {
       xorg.xauth
       xdotool
       xclip
-      pyautogui
+      python3Packages.pyautogui
     ];
     
     # Create a script to allow X11 connections from Docker

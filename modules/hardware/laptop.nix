@@ -122,15 +122,16 @@ in {
     services.blueman.enable = mkIf cfg.wireless.bluetooth true;
 
     # Essential laptop packages
-    environment.systemPackages = with pkgs; mkIf cfg.enable [
-      acpi
-      powertop
-      brightnessctl
-    ] ++ optionals cfg.display.backlight [
-      light
-      acpilight
-    ] ++ optionals cfg.wireless.bluetooth [
-      bluetoothctl
-    ];
+    environment.systemPackages = with pkgs; 
+      (optionals cfg.enable [
+        acpi
+        powertop
+        brightnessctl
+      ]) ++ (optionals cfg.display.backlight [
+        light
+        acpilight
+      ]) ++ (optionals cfg.wireless.bluetooth [
+        bluez
+      ]);
   };
 }

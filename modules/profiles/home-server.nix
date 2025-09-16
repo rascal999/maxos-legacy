@@ -64,7 +64,10 @@ with lib;
   # Security hardening
   security = {
     enable = mkDefault true;
-    profile = mkDefault "server";
+    sshHardening = mkDefault true;
+    firewallEnable = mkDefault true;
+    enableAudit = mkDefault true;
+    strongPasswords = mkDefault true;
   };
 
   # User configuration

@@ -47,12 +47,9 @@ in {
       # Web interfaces
       open-webui.enable = mkIf cfg.enableWebInterface true;
       
-      # Development integration
-      claude-code.enable = mkIf cfg.enableDevelopmentTools true;
-      fabric-ai.enable = mkIf cfg.enableDevelopmentTools true;
-      
-      # Data science environment
-      micromamba.enable = mkIf cfg.enableDataScience true;
+      # Note: The following are handled via home-manager:
+      # - Development: claude-code, fabric-ai (home-manager modules)
+      # - Data science: micromamba (home-manager module)
     };
   };
 }
