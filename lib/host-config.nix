@@ -1,0 +1,60 @@
+{ nixpkgs, home-manager, nur, sops-nix, self }:
+
+let
+  lib = nixpkgs.lib;
+  
+  # Common configuration shared by all hosts
+  commonModules = [
+    {
+      nixpkgs.config = {
+        allowUnfree = true;
+        android_sdk.accept_license = true;
+      };
+      nixpkgs.overlays = [
+        nur.overlays.default
+      ];
+    }
+    ../modules/system.nix   # Import system-level MaxOS modules only
+    self.nixosModules.scripts
+    self.nixosModules.timezone
+    sops-nix.nixosModules.sops
+    home-manager.nixosModules.home-manager
+  ];
+  
+  # Common home-manager configuration
+  commonHomeManagerConfig = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    backupFileExtension = lib.mkDefault "backup";
+  };
+
+in rec {
+  # Create a NixOS configuration with standard MaxOS settings
+  mkMaxOSHost = { hostname, hostPath, userName ? "user", homeConfigPath ? null }:
+    nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = commonModules ++ [
+        hostPath
+        {
+          home-manager = commonHomeManagerConfig // {
+            users.${userName} = { pkgs, ... }: {
+              imports = [ 
+                ../modules/home.nix  # Import home-manager modules
+              ] ++ lib.optionals (homeConfigPath != null) [ homeConfigPath ];
+              home.stateVersion = "25.05";
+            };
+          };
+          # Set the hostname and user configuration
+          networking.hostName = hostname;
+          maxos.user.name = userName;
+        }
+      ];
+    };
+    
+  # Variant for hosts with custom home configuration
+  mkMaxOSHostWithHome = { hostname, hostPath, homeConfigPath, userName ? "user" }:
+    mkMaxOSHost {
+      inherit hostname hostPath userName;
+      homeConfigPath = homeConfigPath;
+    };
+}

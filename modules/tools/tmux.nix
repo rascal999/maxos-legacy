@@ -1,4 +1,15 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
+
+with lib;
+
+let
+  cfg = config.modules.tools.tmux;
+in {
+  options.modules.tools.tmux = {
+    enable = mkEnableOption "Tmux terminal multiplexer";
+  };
+
+  config = mkIf cfg.enable {
   home.packages = with pkgs; [
     eza
     duf
@@ -64,6 +75,6 @@
      set -g mouse on
      set -g set-clipboard on
    '';
-
+    };
   };
 }

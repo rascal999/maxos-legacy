@@ -26,21 +26,33 @@ in {
       description = "Path to the restic repository (automatically constructed if empty)";
     };
     
+    useSopsSecrets = mkOption {
+      type = types.bool;
+      default = config.maxos.secrets.enable or false;
+      description = "Use sops-managed secrets instead of plain files";
+    };
+    
     passwordFile = mkOption {
       type = types.str;
-      default = "/home/user/git/github/monorepo/secrets/environments/personal/.restic-password";
+      default = if cfg.useSopsSecrets 
+        then config.sops.secrets.restic_password.path or "${config.maxos.user.secretsDirectory}/environments/personal/.restic-password"
+        else "${config.maxos.user.secretsDirectory}/environments/personal/.restic-password";
       description = "Path to the file containing the repository password";
     };
     
     awsAccessKeyFile = mkOption {
       type = types.str;
-      default = "/home/user/git/github/monorepo/secrets/environments/personal/.b2-access-key";
+      default = if cfg.useSopsSecrets 
+        then config.sops.secrets.b2_access_key.path or "${config.maxos.user.secretsDirectory}/environments/personal/.b2-access-key"
+        else "${config.maxos.user.secretsDirectory}/environments/personal/.b2-access-key";
       description = "Path to the file containing the S3 access key (Backblaze B2 keyID)";
     };
     
     awsSecretKeyFile = mkOption {
       type = types.str;
-      default = "/home/user/git/github/monorepo/secrets/environments/personal/.b2-secret-key";
+      default = if cfg.useSopsSecrets 
+        then config.sops.secrets.b2_secret_key.path or "${config.maxos.user.secretsDirectory}/environments/personal/.b2-secret-key"
+        else "${config.maxos.user.secretsDirectory}/environments/personal/.b2-secret-key";
       description = "Path to the file containing the S3 secret key (Backblaze B2 applicationKey)";
     };
     
@@ -52,7 +64,7 @@ in {
     
     paths = mkOption {
       type = types.listOf types.str;
-      default = [ "/home/user" ];
+      default = [ config.maxos.user.homeDirectory ];
       description = "Paths to back up";
     };
     
@@ -85,15 +97,15 @@ in {
         "*/.svn"
         "*/.hg"
         "*/lost+found"
-        "/home/user/.local/share/Steam"
-        "/home/user/.steam"
-        "/home/user/.wine"
-        "/home/user/.PlayOnLinux"
-        "/home/user/VirtualBox VMs"
-        "/home/user/.VirtualBox"
-        "/home/user/.vagrant.d"
-        "/home/user/.minikube"
-        "/home/user/.kube/cache"
+        "${config.maxos.user.homeDirectory}/.local/share/Steam"
+        "${config.maxos.user.homeDirectory}/.steam"
+        "${config.maxos.user.homeDirectory}/.wine"
+        "${config.maxos.user.homeDirectory}/.PlayOnLinux"
+        "${config.maxos.user.homeDirectory}/VirtualBox VMs"
+        "${config.maxos.user.homeDirectory}/.VirtualBox"
+        "${config.maxos.user.homeDirectory}/.vagrant.d"
+        "${config.maxos.user.homeDirectory}/.minikube"
+        "${config.maxos.user.homeDirectory}/.kube/cache"
       ];
       description = "Patterns to exclude from backup";
     };
@@ -112,6 +124,22 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # Configure sops secrets if enabled
+    sops.secrets = mkIf cfg.useSopsSecrets {
+      restic_password = {
+        owner = config.maxos.user.name;
+        mode = "0400";
+      };
+      b2_access_key = {
+        owner = config.maxos.user.name;
+        mode = "0400";
+      };
+      b2_secret_key = {
+        owner = config.maxos.user.name;
+        mode = "0400";
+      };
+    };
+    
     environment.systemPackages = with pkgs; [
       restic
       rclone  # Often used with restic for remote repositories
@@ -167,7 +195,7 @@ in {
       
       serviceConfig = {
         Type = "oneshot";
-        User = "user";
+        User = config.maxos.user.name;
         IOSchedulingClass = "idle";
         CPUSchedulingPolicy = "idle";
       };

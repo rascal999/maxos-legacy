@@ -11,6 +11,18 @@
   # Enable npm module
   modules.tools.npm.enable = true;
 
+  # Basic filesystem configuration for VM
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/vm-root";
+    fsType = "ext4";
+  };
+
+  # Boot configuration
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/vda"; # VM disk
+  };
+
   # Disable system-wide Firefox
   programs.firefox.enable = false;
 

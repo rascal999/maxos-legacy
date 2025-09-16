@@ -3,22 +3,28 @@
 {
   imports = [
     ../../modules/tools/i3/desktop.nix
-    ../../modules/tools/tmux.nix
-    ../../modules/tools/alacritty.nix
-    ../../modules/tools/zsh.nix
     ../../modules/tools/rofi/default.nix
     ../../modules/tools/firefox/default.nix
-    ../../modules/tools/vscode.nix
-    ../../modules/tools/logseq.nix
     ../../modules/tools/micromamba.nix
     ../../modules/tools/direnv.nix
+    ../../modules/tools/claude-code.nix
   ];
 
-  # Enable home-manager and tools
+  # Enable home-manager and specific tools
   programs.home-manager.enable = true;
-  modules.tools.logseq.enable = true;
-  modules.tools.micromamba.enable = true;
-  modules.tools.direnv.enable = true;
+  
+  # Enable individual tools that need home-manager configuration
+  modules.tools = {
+    logseq.enable = true;
+    micromamba.enable = true;
+    direnv.enable = true;
+    
+    # These are now handled by tool bundles but we enable them here for home-manager config
+    tmux.enable = true;
+    alacritty.enable = true;
+    zsh.enable = true;
+    vscode.enable = true;
+  };
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home = {

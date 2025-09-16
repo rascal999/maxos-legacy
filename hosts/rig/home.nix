@@ -12,6 +12,7 @@
     ../../modules/tools/logseq.nix
     ../../modules/tools/micromamba.nix
     ../../modules/tools/direnv.nix
+    ../../modules/tools/claude-code.nix
   ];
 
   # Enable home-manager and tools

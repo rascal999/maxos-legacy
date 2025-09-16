@@ -5,6 +5,12 @@ let cfg = config.modules.tools.logseq;
 in {
   options.modules.tools.logseq = {
     enable = mkEnableOption "logseq";
+    
+    homeDirectory = mkOption {
+      type = types.str;
+      default = "/home/user";
+      description = "User's home directory path";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -18,7 +24,7 @@ in {
        :feature/enable-journals? true
        :feature/enable-whiteboards? true
        :feature/enable-flashcards? true
-       :default-graphs {:primary "/home/user/share/Data/logseq"}
+       :default-graphs {:primary "${cfg.homeDirectory}/share/Data/logseq"}
        :feature/enable-block-timestamps? false
        :feature/enable-timetracking? false
        :feature/enable-git-auto-push? false

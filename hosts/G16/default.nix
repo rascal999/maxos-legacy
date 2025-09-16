@@ -14,116 +14,50 @@
     ../../modules/hardware/bluetooth.nix
     ../../modules/tools/syncthing.nix
     ../../modules/scripts/default.nix
-    ../../modules/tools/docker.nix  # Import Docker module
-    ../../modules/tools/wireguard.nix  # Import WireGuard module
-    # ../../modules/tools/qemu.nix  # Import QEMU module
-    ../../modules/tools/npm.nix  # Import npm module
-    ../../modules/tools/traefik.nix  # Import Traefik module
-    ../../modules/tools/postman.nix  # Import Postman module
     ../../modules/tools/llm/default.nix  # Import LLM modules (fabric-ai, open-webui, and ollama)
-    ../../modules/tools/git-crypt.nix  # Import git-crypt module
-    ../../modules/tools/simplescreenrecorder.nix  # Import SimpleScreenRecorder module
-    #../../modules/tools/mongodb.nix  # Import MongoDB module
-    ../../modules/tools/grafana.nix  # Import Grafana module
-    ../../modules/tools/golang.nix  # Import Golang module
-    ../../modules/tools/kiwix.nix  # Import Kiwix module
-    ../../modules/tools/restic.nix  # Import restic backup module
-    ../../modules/tools/gitleaks.nix  # Import Gitleaks module
-    ../../modules/tools/remmina.nix  # Import Remmina module
-    ../../modules/tools/k3s.nix  # Import k3s module
-    ../../modules/tools/openssl.nix  # Import OpenSSL module
-    ../../modules/tools/steam.nix  # Import Steam module
     ../../modules/tools/tor-browser  # Import Tor Browser module
-    ../../modules/tools/blocky.nix  # Import Blocky module
-    ../../modules/tools/trivy.nix  # Import Trivy module
-    ../../modules/tools/semgrep.nix  # Import Semgrep module
-    ../../modules/tools/gpsbabel.nix  # Import GPSBabel module
-    ../../modules/tools/sshfs.nix  # Import SSHFS module
-    ../../modules/tools/forgejo.nix  # Import Forgejo module
-    ../../modules/tools/forgejo-runner.nix  # Import Forgejo runner module
-    ../../modules/tools/faas-cli.nix  # Import faas-cli module
-    ../../modules/tools/kind.nix  # Import kind module
-    ../../modules/tools/skaffold.nix  # Import Skaffold module
-    ../../modules/tools/qdirstat.nix  # Import QDirStat module
-    ../../modules/tools/forgejo-cli.nix  # Import Forgejo CLI module
-    ../../modules/tools/mosh.nix  # Import Mosh module
-    ../../modules/tools/argocd.nix  # Import ArgoCD CLI module
+    # Import tool bundles
+    ../../modules/tool-bundles/desktop.nix
+    ../../modules/tool-bundles/development.nix
+    ../../modules/tool-bundles/security.nix
+    ../../modules/tool-bundles/server.nix
   ];
 
-  # Enable tools
+  # Configure user settings
+  maxos.user = {
+    name = "user";
+    homeDirectory = "/home/user";
+    gitDirectory = "/home/user/git";
+    monorepoDirectory = "/home/user/git/github/monorepo";
+    secretsDirectory = "/home/user/git/github/monorepo/secrets";
+    workspaceDirectory = "/home/user/monorepo/tools/goose/workspace";
+  };
+
+  # Enable secrets management
+  maxos.secrets.enable = true;
+
+  # Enable tool bundles for organized configuration (temporarily disabled for testing)
+  modules.toolBundles = {
+    desktop.enable = false;
+    development.enable = false; 
+    security.enable = false;
+    server.enable = false;
+  };
+
+  # Configure specific tools with custom settings (minimal set for testing)
   modules.tools = {
-    postman.enable = true;
-    npm.enable = true;
-    traefik.enable = false;  # Disable standalone Traefik to use k3s built-in one
-    fabric-ai.enable = true;
-    git-crypt.enable = true;
-    #mongodb = {
-    #  enable = true;         # Enable MongoDB
-    #  compass.enable = true;  # Enable MongoDB Compass GUI
-    #};
-    grafana.enable = false;  # Disable Grafana
-    golang.enable = true;    # Enable Golang
-    kiwix.enable = true;     # Enable Kiwix
-    gitleaks = {
-      enable = true;         # Enable Gitleaks for secret scanning
-      installGitHook = true; # Install pre-push git hook globally
-    };
+    # Basic tools that should work
+    docker.enable = true;
+    chromium.enable = true;
+    keepassxc.enable = true;
+    
+    # Configure restic with secrets
     restic = {
-      enable = true;         # Enable restic backup
-      hostSubdir = "G16";    # Store backups in G16 subdirectory
-    };
-    remmina.enable = true;   # Enable Remmina
-    k3s = {
       enable = true;
-      role = "server";  # Configure as a server (control plane)
-      extraFlags = [
-        "--disable-cloud-controller"  # Disable cloud controller as this is a local setup
-      ];
+      hostSubdir = "G16";
+      useSopsSecrets = true;
     };
-    blocky.enable = true;
-    openssl = {
-      enable = true;
-      installDevelopmentPackages = true;  # Install development packages
-    };
-    steam.enable = true; # Enable Steam
-    tor-browser.enable = true;  # Enable Tor Browser
-    gpsbabel.enable = true;  # Enable GPSBabel
-    sshfs.enable = true;  # Enable SSHFS
-    forgejo = {
-      enable = true;
-      port = 3000;
-      domain = "localhost";
-      rootUrl = "http://localhost:3000/";
-      actions.enable = true;
-      lfs.enable = true;
-    };
-    forgejo-runner = {
-      enable = false;  # Disabled until proper registration token file is created
-      enableDocker = true;
-      enableIPv6 = false;
-      instances.G16-runner = {
-        enable = false;  # Disabled until proper registration token file is created
-        name = "G16-runner";
-        url = "http://localhost:3000/";  # Connect to local forgejo instance
-        tokenFile = "/var/lib/forgejo-runner/G16-runner-token";  # Create this file with TOKEN=<actual-token>
-        labels = [
-          "docker:docker://node:20-bookworm"
-          "ubuntu-latest:docker://ubuntu:latest"
-          "nixos-latest:docker://nixos/nix"
-          "gpu:docker://nvidia/cuda:12.0-runtime-ubuntu22.04"  # GPU support for G16
-        ];
-      };
-    };
-    faas-cli.enable = true;  # Enable faas-cli
-    kind.enable = false;  # Disable kind (Kubernetes in Docker)
-    skaffold.enable = true;  # Enable Skaffold
-    qdirstat.enable = true;  # Enable QDirStat
-    forgejo-cli.enable = true;  # Enable Forgejo CLI
-    mosh.enable = true;  # Enable Mosh (mobile shell)
-    argocd.enable = true;  # Enable ArgoCD CLI
-   };
-  modules.tools.trivy.enable = true; # Enable Trivy
-  modules.tools.semgrep.enable = true; # Enable Semgrep
+  };
 
   modules.tools.ollama.enable = true;
   # Enable Open WebUI
@@ -284,9 +218,6 @@
     users.user = { pkgs, ... }: {
       imports = [
         ./home.nix
-        ../../modules/tools/i3/desktop.nix
-        ../../modules/tools/alacritty.nix
-        ../../modules/tools/zsh.nix
       ];
 
       # GTK configuration

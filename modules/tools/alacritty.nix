@@ -1,6 +1,15 @@
 { config, lib, pkgs, ... }:
 
-{
+with lib;
+
+let
+  cfg = config.modules.tools.alacritty;
+in {
+  options.modules.tools.alacritty = {
+    enable = mkEnableOption "Alacritty terminal emulator";
+  };
+
+  config = mkIf cfg.enable {
   programs.alacritty = {
     enable = true;
     settings = {
@@ -133,8 +142,9 @@
     };
   };
 
-  # Ensure required fonts are available
-  home.packages = with pkgs; [
-    nerd-fonts.meslo-lg
-  ];
+    # Ensure required fonts are available
+    home.packages = with pkgs; [
+      nerd-fonts.meslo-lg
+    ];
+  };
 }

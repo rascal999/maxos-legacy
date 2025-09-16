@@ -11,9 +11,13 @@
     nur = {
       url = "github:nix-community/NUR";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nur, ... }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nur, sops-nix, ... }@inputs: 
   let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
@@ -21,106 +25,53 @@
       inherit system;
       config.allowUnfree = true;
     };
+    
+    # Import host configuration helpers
+    hostConfig = import ./lib/host-config.nix { inherit nixpkgs home-manager nur sops-nix self; };
   in {
     nixosModules = {
+      # Core modules
       security = import ./modules/security/default.nix;
       scripts = import ./modules/scripts/default.nix;
       timezone = import ./modules/timezone.nix;
+      user = import ./modules/core/user.nix;
+      secrets = import ./modules/core/secrets.nix;
+      
+      # Tool bundles
+      developmentBundle = import ./modules/tool-bundles/development.nix;
+      securityBundle = import ./modules/tool-bundles/security.nix;
+      desktopBundle = import ./modules/tool-bundles/desktop.nix;
+      serverBundle = import ./modules/tool-bundles/server.nix;
+      
+      # Individual tools (selected tools for external use)
+      docker = import ./modules/tools/docker.nix;
+      restic = import ./modules/tools/restic.nix;
+      zsh = import ./modules/tools/zsh.nix;
+      vscode = import ./modules/tools/vscode.nix;
     };
 
     nixosConfigurations = {
-      G16 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          {
-            nixpkgs.config = {
-              allowUnfree = true;
-              android_sdk.accept_license = true; # Accept Android SDK license
-            };
-            nixpkgs.overlays = [
-              nur.overlays.default
-            ];
-          }
-          self.nixosModules.scripts
-          self.nixosModules.timezone
-          ./hosts/G16/default.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = lib.mkDefault "backup";
-              users.user = { pkgs, ... }: {
-                imports = [
-                  ./hosts/G16/home.nix
-                ];
-                home.stateVersion = "25.05";
-              };
-            };
-          }
-        ];
+      test = hostConfig.mkMaxOSHost {
+        hostname = "test";
+        hostPath = ./hosts/test/default.nix;
       };
-      desktop-test-vm = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          {
-            nixpkgs.config = {
-              allowUnfree = true;
-              android_sdk.accept_license = true; # Accept Android SDK license
-            };
-            nixpkgs.overlays = [
-              nur.overlays.default
-            ];
-          }
-          self.nixosModules.scripts
-          self.nixosModules.timezone
-          ./hosts/desktop-test-vm/default.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = lib.mkDefault "backup";
-              users.user = { pkgs, ... }: {
-                imports = [
-                  ./hosts/desktop-test-vm/home.nix
-                ];
-                home.stateVersion = "25.05";
-              };
-            };
-          }
-        ];
+      
+      G16 = hostConfig.mkMaxOSHostWithHome {
+        hostname = "G16";
+        hostPath = ./hosts/G16/default.nix;
+        homeConfigPath = ./hosts/G16/home.nix;
       };
-      rig = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          {
-            nixpkgs.config = {
-              allowUnfree = true;
-              android_sdk.accept_license = true; # Accept Android SDK license
-            };
-            nixpkgs.overlays = [
-              nur.overlays.default
-            ];
-          }
-          self.nixosModules.scripts
-          self.nixosModules.timezone
-          ./hosts/rig/default.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = lib.mkDefault "backup";
-              users.user = { pkgs, ... }: {
-                imports = [
-                  ./hosts/rig/home.nix
-                ];
-                home.stateVersion = "25.05";
-              };
-            };
-          }
-        ];
+      
+      desktop-test-vm = hostConfig.mkMaxOSHostWithHome {
+        hostname = "desktop-test-vm";
+        hostPath = ./hosts/desktop-test-vm/default.nix;
+        homeConfigPath = ./hosts/desktop-test-vm/home.nix;
+      };
+      
+      rig = hostConfig.mkMaxOSHostWithHome {
+        hostname = "rig";
+        hostPath = ./hosts/rig/default.nix;
+        homeConfigPath = ./hosts/rig/home.nix;
       };
     };
   };

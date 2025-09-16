@@ -1,6 +1,21 @@
 { config, lib, pkgs, ... }:
 
-{
+with lib;
+
+let
+  cfg = config.modules.tools.vscode;
+in {
+  options.modules.tools.vscode = {
+    enable = mkEnableOption "Visual Studio Code editor";
+    
+    homeDirectory = mkOption {
+      type = types.str;
+      default = "/home/user";
+      description = "User's home directory path";
+    };
+  };
+
+  config = mkIf cfg.enable {
   programs.vscode = {
     enable = true;
     package = pkgs.vscode-fhs;
@@ -8,7 +23,7 @@
       "workbench.startupEditor" = "none";
       "terminal.integrated.defaultProfile.linux" = "bash";
       "terminal.integrated.env.linux" = {
-        "KUBECONFIG" = "/home/user/.kube/config";
+        "KUBECONFIG" = "${cfg.homeDirectory}/.kube/config";
       };
       "keyboard.dispatch" = "keyCode";
       "vim.useSystemClipboard" = true;
@@ -43,5 +58,6 @@
         command = "cline.openInNewTab";
       }
     ];
+    };
   };
 }

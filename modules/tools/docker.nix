@@ -1,12 +1,32 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
-{
-  virtualisation.docker = {
-    enable = true;
-    # Enable live restore to keep containers running during daemon restarts
-    liveRestore = false; # Disabled for Kind compatibility
-    # Configure daemon settings for better Kubernetes compatibility
-    daemon.settings = {
+with lib;
+
+let
+  cfg = config.modules.tools.docker;
+in {
+  options.modules.tools.docker = {
+    enable = mkEnableOption "Docker containerization platform";
+    
+    liveRestore = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable live restore to keep containers running during daemon restarts (disabled for Kind compatibility)";
+    };
+    
+    enableExperimental = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable experimental Docker features";
+    };
+  };
+
+  config = mkIf cfg.enable {
+    virtualisation.docker = {
+      enable = true;
+      liveRestore = cfg.liveRestore;
+      # Configure daemon settings for better Kubernetes compatibility
+      daemon.settings = {
       # Use systemd as cgroup driver (recommended for Kubernetes)
       "exec-opts" = ["native.cgroupdriver=systemd"];
       # Enable IPv6 support
@@ -30,16 +50,17 @@
         }
       ];
       # Enable experimental features for better Kind support
-      "experimental" = false;
+      "experimental" = cfg.enableExperimental;
       # Configure for better performance with many containers
       "max-concurrent-downloads" = 10;
       "max-concurrent-uploads" = 5;
+      };
     };
-  };
-  
-  # Ensure Docker starts after network is ready
-  systemd.services.docker = {
-    after = [ "network-online.target" "firewall.service" ];
-    wants = [ "network-online.target" ];
+    
+    # Ensure Docker starts after network is ready
+    systemd.services.docker = {
+      after = [ "network-online.target" "firewall.service" ];
+      wants = [ "network-online.target" ];
+    };
   };
 }

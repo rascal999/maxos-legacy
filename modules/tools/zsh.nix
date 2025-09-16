@@ -1,6 +1,27 @@
 { config, pkgs, lib, ... }:
 
-{
+with lib;
+
+let
+  cfg = config.modules.tools.zsh;
+in {
+  options.modules.tools.zsh = {
+    enable = mkEnableOption "Zsh shell with custom configuration";
+    
+    monorepoDirectory = mkOption {
+      type = types.str;
+      default = "/home/user/git/github/monorepo";
+      description = "Path to the main monorepo directory";
+    };
+    
+    workspaceDirectory = mkOption {
+      type = types.str;
+      default = "/home/user/monorepo/tools/goose/workspace";
+      description = "Default workspace directory";
+    };
+  };
+
+  config = mkIf cfg.enable {
   home.packages = with pkgs; [
     mcfly  # Shell history search
     grc    # Generic colouriser
@@ -73,7 +94,7 @@
 
       # Source baseimage .env file
       function se() {
-        local env_file="/home/user/git/github/monorepo/docker/baseimage/.env"
+        local env_file="${cfg.monorepoDirectory}/docker/baseimage/.env"
         if [[ -f "$env_file" ]]; then
           setopt NO_NOMATCH
           echo "Sourcing environment variables:"
@@ -195,7 +216,7 @@
       # Copy most recent download to goose workspace
       function cpw() {
         local last_download
-        local workspace_dir="/home/user/monorepo/tools/goose/workspace"
+        local workspace_dir="${cfg.workspaceDirectory}"
         last_download=$(ls -t ~/Downloads | head -1)
         if [[ -n "$last_download" ]]; then
           cp -v ~/Downloads/"$last_download" "$workspace_dir/"
@@ -248,7 +269,7 @@
 
       # Create and enter new project directory
       function cum() {
-        ${pkgs.bash}/bin/bash /home/user/git/github/monorepo/docker/baseimage/create_project.sh "$@"
+        ${pkgs.bash}/bin/bash ${cfg.monorepoDirectory}/docker/baseimage/create_project.sh "$@"
         if [ -f /tmp/cum_last_project ]; then
           cd "$(cat /tmp/cum_last_project)"
           rm /tmp/cum_last_project
@@ -333,5 +354,6 @@
         file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
       }
     ];
+    };
   };
 }
