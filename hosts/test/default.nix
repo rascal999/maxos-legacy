@@ -2,9 +2,8 @@
 
 {
   imports = [
-    # Test basic imports
-    ../../modules/core/user.nix
-    ../../modules/core/secrets.nix
+    # Import main system modules
+    ../../modules/system.nix
   ];
 
   # Test user configuration

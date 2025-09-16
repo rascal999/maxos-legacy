@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, osConfig ? {}, ... }:
 
 with lib;
 
@@ -41,10 +41,23 @@ in {
       default = "/home/user/monorepo/tools/goose/workspace";
       description = "Default workspace directory";
     };
+    
+    # Additional unified config options
+    email = mkOption {
+      type = types.str;
+      default = "user@example.com";
+      description = "User's email address";
+    };
+    
+    fullName = mkOption {
+      type = types.str;
+      default = "MaxOS User";
+      description = "User's full name";
+    };
   };
 
   config = {
-    # Ensure the user exists
+    # System user configuration - always applied in system context
     users.users.${cfg.name} = {
       isNormalUser = true;
       home = cfg.homeDirectory;

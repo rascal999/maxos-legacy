@@ -37,11 +37,15 @@ in rec {
         hostPath
         {
           home-manager = commonHomeManagerConfig // {
-            users.${userName} = { pkgs, ... }: {
+            users.${userName} = { pkgs, osConfig, ... }: {
               imports = [ 
                 ../modules/home.nix  # Import home-manager modules
+                ../modules/core/user-home.nix  # Import home-manager user config
               ] ++ lib.optionals (homeConfigPath != null) [ homeConfigPath ];
               home.stateVersion = "25.05";
+              
+              # Make system user config available in home-manager context
+              _module.args.osConfig = osConfig;
             };
           };
           # Set the hostname and user configuration

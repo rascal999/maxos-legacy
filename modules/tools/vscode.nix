@@ -1,18 +1,15 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, osConfig ? {}, ... }:
 
 with lib;
 
 let
   cfg = config.modules.tools.vscode;
+  # Use unified config from either system or home-manager context
+  userConfig = if osConfig != {} then osConfig.maxos.user else config.maxos.user;
 in {
   options.modules.tools.vscode = {
     enable = mkEnableOption "Visual Studio Code editor";
-    
-    homeDirectory = mkOption {
-      type = types.str;
-      default = "/home/user";
-      description = "User's home directory path";
-    };
+    # Removed duplicate homeDirectory option - using unified config instead
   };
 
   config = mkIf cfg.enable {
@@ -23,7 +20,7 @@ in {
       "workbench.startupEditor" = "none";
       "terminal.integrated.defaultProfile.linux" = "bash";
       "terminal.integrated.env.linux" = {
-        "KUBECONFIG" = "${cfg.homeDirectory}/.kube/config";
+        "KUBECONFIG" = "${userConfig.homeDirectory}/.kube/config";
       };
       "keyboard.dispatch" = "keyCode";
       "vim.useSystemClipboard" = true;

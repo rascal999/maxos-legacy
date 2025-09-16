@@ -1,16 +1,14 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, osConfig ? {}, ... }:
 
 with lib;
-let cfg = config.modules.tools.logseq;
+let 
+  cfg = config.modules.tools.logseq;
+  # Use unified config from either system or home-manager context
+  userConfig = if osConfig != {} then osConfig.maxos.user else config.maxos.user;
 in {
   options.modules.tools.logseq = {
     enable = mkEnableOption "logseq";
-    
-    homeDirectory = mkOption {
-      type = types.str;
-      default = "/home/user";
-      description = "User's home directory path";
-    };
+    # Removed duplicate homeDirectory option - using unified config instead
   };
 
   config = mkIf cfg.enable {
@@ -24,7 +22,7 @@ in {
        :feature/enable-journals? true
        :feature/enable-whiteboards? true
        :feature/enable-flashcards? true
-       :default-graphs {:primary "${cfg.homeDirectory}/share/Data/logseq"}
+       :default-graphs {:primary "${userConfig.homeDirectory}/share/Data/logseq"}
        :feature/enable-block-timestamps? false
        :feature/enable-timetracking? false
        :feature/enable-git-auto-push? false
