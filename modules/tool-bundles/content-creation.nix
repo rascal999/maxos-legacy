@@ -47,10 +47,12 @@ in {
       # Gaming
       steam.enable = mkIf cfg.enableGaming true;
       
-      # Writing and productivity
-      logseq.enable = mkIf cfg.enableWriting true;
-      firefox.enable = mkIf cfg.enableWriting true;
-      syncthing.enable = mkIf cfg.enableWriting true;
+      # Note: syncthing needs proper module format
+      # syncthing.enable = mkIf cfg.enableWriting true;
+      
+      # Note: The following are handled via home-manager:
+      # - Writing: logseq (home-manager module)
+      # - Browser: firefox (home-manager module)
       
       # Graphics and multimedia support
       x11-docker.enable = mkIf cfg.enableDockerGraphics true;

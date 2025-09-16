@@ -6,6 +6,7 @@ let
   
   # Define system-level modules (those that don't use home-manager)
   systemLevelModules = [
+    "argocd"
     "blocky"
     "chromium" 
     "docker"
@@ -28,7 +29,7 @@ let
     "restic"
     "semgrep"
     "simplescreenrecorder"
-    "syncthing"
+    "steam"
     "syft"
     "trivy"
     "whatsapp-mcp"

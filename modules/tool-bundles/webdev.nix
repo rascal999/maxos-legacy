@@ -41,22 +41,20 @@ in {
 
   config = mkIf cfg.enable {
     modules.tools = {
-      # Frontend development
+      # Frontend development (system-level)
       npm.enable = mkIf cfg.enableFrontend true;
-      vscode.enable = mkIf cfg.enableFrontend true;
       chromium.enable = mkIf cfg.enableFrontend true;
       
-      # Backend development
-      docker.enable = mkIf cfg.enableBackend true;
+      # Note: vscode is handled via home-manager
+      
+      # Backend development and containerization
+      docker.enable = mkIf (cfg.enableBackend || cfg.enableContainerization) true;
       
       # API development and testing
       postman.enable = mkIf cfg.enableTesting true;
       
       # Infrastructure (fullstack)
       # Infrastructure tools would go here
-      
-      # Containerization
-      docker.enable = mkIf cfg.enableContainerization true;
     };
   };
 }

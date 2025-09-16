@@ -1,7 +1,17 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
-{
-  environment.systemPackages = with pkgs; [
-    wireguard-tools
-  ];
+with lib;
+
+let
+  cfg = config.modules.tools.wireguard;
+in {
+  options.modules.tools.wireguard = {
+    enable = mkEnableOption "WireGuard VPN tools";
+  };
+
+  config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      wireguard-tools
+    ];
+  };
 }

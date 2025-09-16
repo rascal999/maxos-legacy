@@ -45,16 +45,17 @@ in {
       # Core desktop essentials
       chromium.enable = mkIf cfg.enableDesktop true;
       keepassxc.enable = mkIf cfg.enableDesktop true;
-      syncthing.enable = mkIf cfg.enableDesktop true;
+      # Note: syncthing needs proper module format
+      # syncthing.enable = mkIf cfg.enableDesktop true;
       
-      # Development essentials  
-      vscode.enable = mkIf cfg.enableDevelopment true;
+      # Development essentials (system-level)
       docker.enable = mkIf cfg.enableDevelopment true;
-      git-crypt.enable = mkIf cfg.enableDevelopment true;
       
-      # Productivity (standard and full profiles)
-      logseq.enable = mkIf cfg.enableProductivity true;
-      remmina.enable = mkIf cfg.enableProductivity true;
+      # Note: The following are handled via home-manager:
+      # - Editor: vscode (home-manager module)
+      # - Security: git-crypt (home-manager module)
+      # - Productivity: logseq (home-manager module)
+      # - Remote: remmina (home-manager module)
       
       # Full profile additions
       simplescreenrecorder.enable = mkIf (cfg.profile == "full") true;

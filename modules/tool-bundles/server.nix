@@ -59,30 +59,21 @@ in {
 
   config = mkIf cfg.enable {
     modules.tools = {
-      # Kubernetes (k3s and skaffold are system-level, argocd is home-manager)
+      # Kubernetes 
       k3s.enable = mkIf cfg.kubernetes true;
-      skaffold.enable = mkIf cfg.kubernetes true;
+      argocd.enable = mkIf cfg.kubernetes true;
       
       # Networking
-      traefik.enable = mkIf cfg.networking true;
       blocky.enable = mkIf cfg.networking true;
-      # wireguard.enable = mkIf cfg.networking true;  # Needs proper module format
-      
-      # Databases
-      mongodb.enable = mkIf cfg.databases true;
+      wireguard.enable = mkIf cfg.networking true;
       
       # Monitoring
       grafana.enable = mkIf cfg.monitoring true;
       
-      # Version control
-      forgejo.enable = mkIf cfg.vcs true;
-      forgejo-runner.enable = mkIf cfg.vcs true;
-      forgejo-cli.enable = mkIf cfg.vcs true;
-      
       # Backup
       restic.enable = mkIf cfg.backup true;
       
-      # Note: QEMU module needs to be converted to proper module format
+      # Note: qemu module needs proper module format conversion
       # qemu.enable = mkIf cfg.virtualization true;
     };
   };

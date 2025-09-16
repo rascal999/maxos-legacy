@@ -91,7 +91,6 @@ let
         
         # Data storage
         postgresql.enable = true;
-        mongodb.enable = true;
         
         # No additional tools needed beyond databases and AI tools
       };
@@ -113,24 +112,21 @@ let
         docker.enableCompose = true;
         k3s.enable = true;
         
-        # Reverse proxy and networking
-        traefik.enable = true;
+        # Networking
         wireguard.enable = true;
         blocky.enable = true;
         
         # Monitoring and management
         grafana.enable = true;
         
-        # Version control
-        forgejo.enable = true;
-        forgejo-runner.enable = true;
+        # Version control and CI/CD
+        argocd.enable = true;
         
         # Backup and storage
         restic.enable = true;
         
         # Databases
         postgresql.enable = true;
-        mongodb.enable = true;
         
         # No additional management tools needed
       };
@@ -223,7 +219,6 @@ in {
     (mkIf cfg.dataScientist {
       modules.tools = {
         grafana.enable = mkDefault true;
-        mongodb.enable = mkDefault true;
       };
       maxos.user = {
         workspaceDirectory = mkDefault "/home/user/data-projects";
@@ -237,9 +232,8 @@ in {
       modules.tools = {
         docker.enable = mkDefault true;
         k3s.enable = mkDefault true;
-        traefik.enable = mkDefault true;
         grafana.enable = mkDefault true;
-        forgejo.enable = mkDefault true;
+        argocd.enable = mkDefault true;
         restic.enable = mkDefault true;
       };
       maxos.user = {

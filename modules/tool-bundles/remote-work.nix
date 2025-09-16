@@ -41,20 +41,15 @@ in {
 
   config = mkIf cfg.enable {
     modules.tools = {
-      # Remote access
-      remmina.enable = mkIf cfg.enableRemoteAccess true;
-      sshfs.enable = mkIf cfg.enableRemoteAccess true;
-      mosh.enable = mkIf cfg.enableRemoteAccess true;
-      
-      # Secure connectivity
+      # System-level remote tools
       wireguard.enable = mkIf cfg.enableSecureConnectivity true;
-      
-      # Communication and collaboration
       whatsapp-mcp.enable = mkIf cfg.enableCollaboration true;
+      # Note: syncthing needs proper module format
+      # syncthing.enable = mkIf cfg.enableFilesync true;
       
-      # File synchronization and productivity
-      syncthing.enable = mkIf cfg.enableFilesync true;
-      logseq.enable = mkIf cfg.enableCollaboration true;
+      # Note: The following are handled via home-manager:
+      # - Remote access: remmina, sshfs, mosh (home-manager modules)
+      # - Productivity: logseq (home-manager module)
       
       # Essential tools for all profiles
       keepassxc.enable = true;
