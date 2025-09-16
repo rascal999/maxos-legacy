@@ -388,5 +388,5 @@
   nixpkgs.config.allowUnfree = true;
 
   # Set system state version
-  system.stateVersion = "24.11"; # NO semicolon after the last attribute
+  system.stateVersion = "25.05"; # NO semicolon after the last attribute
 }

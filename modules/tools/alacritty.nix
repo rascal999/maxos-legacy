@@ -135,6 +135,6 @@
 
   # Ensure required fonts are available
   home.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "Meslo" ]; })
+    nerd-fonts.meslo-lg
   ];
 }
