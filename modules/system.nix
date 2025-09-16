@@ -10,10 +10,6 @@ let
     "chromium" 
     "docker"
     "docker-network"
-    "faas-cli"
-    "forgejo"
-    "forgejo-cli"
-    "forgejo-runner"
     "gitleaks"
     "golang"
     "grafana"
@@ -24,20 +20,16 @@ let
     "kind"
     "kiwix"
     "linuxquota"
-    "mongodb"
     "npm"
     "openssl"
     "postman"
     "pulseaudio-docker"
     "qdirstat"
     "restic"
-    "rocketchat"
     "semgrep"
     "simplescreenrecorder"
-    "skaffold"
     "syncthing"
     "syft"
-    "traefik"
     "trivy"
     "whatsapp-mcp"
     "wireguard"
@@ -80,6 +72,18 @@ in {
     ./tool-bundles/development.nix
     ./tool-bundles/security.nix
     ./tool-bundles/server.nix
+    
+    # New tool bundles
+    ./tool-bundles/workstation.nix
+    ./tool-bundles/server-stack.nix
+    ./tool-bundles/terminal.nix
+    ./tool-bundles/ai-ml.nix
+    ./tool-bundles/content-creation.nix
+    ./tool-bundles/kubernetes.nix
+    ./tool-bundles/webdev.nix
+    ./tool-bundles/devops.nix
+    ./tool-bundles/remote-work.nix
+    ./tool-bundles/gaming.nix
   ] 
   # Dynamically discovered system-level tool modules
   ++ systemToolImports
