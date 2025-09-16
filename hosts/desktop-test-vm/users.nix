@@ -1,23 +1,19 @@
 { config, lib, pkgs, ... }:
 
 {
-  users = {
-    mutableUsers = true;
-    users.user = {
-      isNormalUser = true;
-      group = "users";
-      extraGroups = [ "wheel" "networkmanager" "video" "docker" ];
-      initialPassword = "password";
-      createHome = true;
-      home = "/home/user";
-      shell = pkgs.zsh;
-    };
-  };
+  imports = [
+    ../../modules/core/shared-user.nix
+  ];
 
-  # Enable display manager for easier login
-  services.xserver = {
+  # Use shared user configuration
+  maxos.sharedUser = {
     enable = true;
-    displayManager.lightdm.enable = true;
-    desktopManager.xfce.enable = true;
+    username = "user";
+    initialPassword = "password";
+    shell = pkgs.zsh;
+    extraGroups = [ "wheel" "networkmanager" "video" "docker" ];
+    enableDisplayManager = true;
+    displayManager = "lightdm";
+    desktopEnvironment = "xfce";
   };
 }

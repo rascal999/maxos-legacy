@@ -2,13 +2,19 @@
 
 {
   imports = [
-    ../../modules/tools/i3/server.nix
-    ../../modules/tools/tmux.nix
-    ../../modules/tools/alacritty.nix
+    ../../modules/home-profiles/server.nix
+    ../../modules/package-bundles/default.nix
   ];
 
-  # Enable home-manager
-  programs.home-manager.enable = true;
+  # Server profile provides base configuration
+  # Package bundles provide common package sets
+  maxos.packageBundles = {
+    enable = true;
+    serverBundle = true;
+    installTarget = "home";
+  };
+  
+  # Additional server-specific configuration
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home = {
@@ -17,41 +23,13 @@
     stateVersion = "25.05";
 
     packages = with pkgs; [
-      # System administration
-      htop
-      btop
-      iotop
-      iftop
-      nethogs
-      nmap
-      tcpdump
-      mtr
-      
-      # Terminal utilities
-      neovim
-      ripgrep
-      fd
-      jq
-      tree
-      wget
-      curl
-      unzip
-      tmux
-      
-      # Monitoring and logging
+      # Packages provided by serverBundle via package-bundles
+      # Additional server-specific packages:
       prometheus
       grafana
       lnav
-      
-      # Development tools
-      git
-      gh
-      
-      # Security tools
       fail2ban
       ufw
-      
-      # System tools
       smartmontools
       lm_sensors
       ethtool

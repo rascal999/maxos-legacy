@@ -2,16 +2,20 @@
 
 {
   imports = [
-    ../../modules/tools/i3/desktop.nix
-    ../../modules/tools/rofi/default.nix
-    ../../modules/tools/firefox/default.nix
-    ../../modules/tools/micromamba.nix
-    ../../modules/tools/direnv.nix
+    ../../modules/home-profiles/development.nix
     ../../modules/tools/claude-code.nix
+    ../../modules/package-bundles/default.nix
   ];
 
-  # Enable home-manager and specific tools
-  programs.home-manager.enable = true;
+  # Development profile provides base configuration
+  # Package bundles provide common package sets
+  maxos.packageBundles = {
+    enable = true;
+    developmentBundle = true;
+    installTarget = "home";
+  };
+  
+  # Additional tool-specific configuration below
   
   # Enable individual tools that need home-manager configuration
   modules.tools = {
@@ -37,58 +41,10 @@
     # https://nix-community.github.io/home-manager/index.html#sec-install-standalone
 
     packages = with pkgs; [
-      # Fonts
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.meslo-lg
-
-      # Media controls
-      playerctl
-
-      # Development tools
-      git
-      gh
-      neovim
-      ripgrep
-      fd
-      jq
-      tree
-      pwgen
+      # Packages provided by developmentBundle via package-bundles
+      # Additional packages not in bundles:
       aider-chat
       openai-whisper
-      
-      # Java development
-      jdk
-      maven
-      gradle
-
-      # System tools
-      htop
-      btop
-      neofetch
-      unzip
-      zip
-      wget
-      curl
-
-      libreoffice
-      vlc
-      gimp
-      
-      # Communication
-      slack
-      discord
-      
-      # File management
-      pcmanfm
-      ranger
-      feh
-      
-      # System monitoring and management
-      networkmanagerapplet
-      arandr
-      redshift
-      brightnessctl
-      pasystray
     ];
 
     # Environment variables

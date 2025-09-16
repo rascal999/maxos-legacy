@@ -2,18 +2,10 @@
 
 {
   imports = [
-    ../../modules/tools/i3/desktop.nix
-    ../../modules/tools/tmux.nix
-    ../../modules/tools/alacritty.nix
-    ../../modules/tools/zsh.nix
-    ../../modules/tools/rofi/default.nix
-    ../../modules/tools/firefox/default.nix
-    ../../modules/tools/vscode.nix
-    ../../modules/tools/micromamba.nix
+    ../../modules/home-profiles/development.nix
   ];
 
-  # Enable home-manager and tools
-  programs.home-manager.enable = true;
+  # Development profile provides base configuration
   modules.tools.micromamba.enable = true;
 
   # Home Manager needs a bit of information about you and the paths it should manage

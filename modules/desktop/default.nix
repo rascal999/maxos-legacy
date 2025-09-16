@@ -3,6 +3,7 @@
 {
   imports = [
     ../tools/keepassxc.nix
+    ./display-manager.nix
   ];
 
   # Common desktop configuration
@@ -16,10 +17,15 @@
   # X server configuration
   services.xserver.enable = true;
 
-  # Display manager configuration
-  services.displayManager.autoLogin = {
+  # Display manager configuration - moved to display-manager.nix
+  maxos.desktop.displayManager = {
     enable = true;
-    user = "user";
+    manager = "lightdm";
+    desktopEnvironment = "xfce";
+    autoLogin = {
+      enable = true;
+      user = "user";
+    };
   };
 
   environment.systemPackages = with pkgs; [

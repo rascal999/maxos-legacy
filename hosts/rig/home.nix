@@ -2,21 +2,12 @@
 
 {
   imports = [
-    ../../modules/tools/i3/desktop.nix
-    ../../modules/tools/tmux.nix
-    ../../modules/tools/alacritty.nix
-    ../../modules/tools/zsh.nix
-    ../../modules/tools/rofi/default.nix
-    ../../modules/tools/firefox/default.nix
-    ../../modules/tools/vscode.nix
+    ../../modules/home-profiles/development.nix
     ../../modules/tools/logseq.nix
-    ../../modules/tools/micromamba.nix
-    ../../modules/tools/direnv.nix
     ../../modules/tools/claude-code.nix
   ];
 
-  # Enable home-manager and tools
-  programs.home-manager.enable = true;
+  # Development profile provides base configuration
   modules.tools.micromamba.enable = true;
   modules.tools.direnv.enable = true;
 
