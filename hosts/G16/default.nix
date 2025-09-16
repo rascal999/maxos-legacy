@@ -33,8 +33,8 @@
     workspaceDirectory = "/home/user/monorepo/tools/goose/workspace";
   };
 
-  # Enable secrets management
-  maxos.secrets.enable = true;
+  # Enable secrets management (disabled - secrets file missing)
+  maxos.secrets.enable = false;
 
   # Enable tool bundles for organized configuration (temporarily disabled for testing)
   modules.toolBundles = {
@@ -51,17 +51,17 @@
     chromium.enable = true;
     keepassxc.enable = true;
     
-    # Configure restic with secrets
+    # Configure restic (disabled - secrets not available)
     restic = {
-      enable = true;
+      enable = false;
       hostSubdir = "G16";
-      useSopsSecrets = true;
+      useSopsSecrets = false;
     };
   };
 
-  modules.tools.ollama.enable = true;
+  modules.tools.ollama.enable = false;
   # Enable Open WebUI
-  modules.tools.open-webui.enable = true;
+  modules.tools.open-webui.enable = false;
 
   # Enable AnythingLLM
   modules.tools.anythingllm = {
