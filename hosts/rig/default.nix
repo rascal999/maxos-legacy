@@ -25,6 +25,10 @@
   
   # Override tool configurations to disable SOPS secrets
   maxos.tools.restic.useSopsSecrets = false;
+  
+  # Explicitly disable AI tools that might cause build issues
+  maxos.tools.ollama.enable = lib.mkForce false;
+  maxos.tools.open-webui.enable = lib.mkForce false;
 
   # Rocket.Chat service disabled (module import commented out)
 

@@ -336,21 +336,24 @@ test_github_connection_remote() {
 clone_maxos_remote() {
     if check_repo_cloned; then
         log_success "MaxOS repository already cloned, updating..."
-        ssh_exec "cd /tmp/monorepo/maxos && git pull"
+        ssh_exec "cd /tmp/monorepo/maxos && git stash && git pull && git stash pop 2>/dev/null || true"
         log_success "Repository updated"
-        return 0
+    else
+        log_info "Cloning MaxOS repository on remote system..."
+        ssh_exec "
+            cd /tmp &&
+            rm -rf monorepo &&
+            git clone git@github.com:rascal999/monorepo.git &&
+            cd monorepo/maxos &&
+            ls -la
+        "
+        log_success "MaxOS repository cloned to /tmp/monorepo/maxos on remote system"
     fi
     
-    log_info "Cloning MaxOS repository on remote system..."
-    ssh_exec "
-        cd /tmp &&
-        rm -rf monorepo &&
-        git clone git@github.com:rascal999/monorepo.git &&
-        cd monorepo/maxos &&
-        ls -la
-    "
-    
-    log_success "MaxOS repository cloned to /tmp/monorepo/maxos on remote system"
+    # Ensure git tree is clean for flake operations
+    log_info "Ensuring git repository is clean..."
+    ssh_exec "cd /tmp/monorepo && git status --porcelain | wc -l | grep -q '^0$' || (git add . && git commit -m 'Auto-commit during installation')"
+    log_success "Git repository is clean"
 }
 
 # Show available disks on remote system
