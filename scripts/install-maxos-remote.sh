@@ -615,8 +615,17 @@ boot_only_mode() {
     # Commit and push UUID changes
     commit_uuid_changes
     
+    # Rebuild the system with updated configuration
+    log_info "Rebuilding system with updated boot configuration..."
+    ssh_exec -t "
+        cd /tmp/monorepo/maxos &&
+        sudo nixos-rebuild switch --flake '.#$NIXOS_PROFILE'
+    "
+    log_success "System rebuilt with updated configuration"
+    
     log_success "Boot configuration update completed!"
     log_info "Updated boot configuration for $NIXOS_PROFILE profile with current disk UUIDs"
+    log_info "System has been rebuilt and should now boot correctly"
 }
 
 # Main installation function
