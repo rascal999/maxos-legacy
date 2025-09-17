@@ -58,7 +58,7 @@
       neededForBoot = true;
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/1677-DACD";
+      device = "/dev/disk/by-uuid/BFFF-104F";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
