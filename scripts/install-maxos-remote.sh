@@ -550,8 +550,12 @@ commit_uuid_changes() {
     ssh_exec "
         cd /tmp/monorepo &&
         git add . &&
-        git commit -m 'Update $NIXOS_PROFILE boot configuration with actual disk UUIDs from installation' &&
-        git push
+        if git diff --staged --quiet; then
+            echo 'No changes to commit'
+        else
+            git commit -m 'Update $NIXOS_PROFILE boot configuration with actual disk UUIDs from installation' &&
+            git push
+        fi
     "
     
     log_success "UUID changes committed and pushed to repository"
