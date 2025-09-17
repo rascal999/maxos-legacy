@@ -13,15 +13,15 @@
     ./audio.nix
     ./power.nix
     
-    # MaxOS gaming workstation profile
-    ../../modules/profiles/gaming-workstation.nix
-    
-    # Security configuration
-    ../../modules/security/default.nix
+    # MaxOS gaming workstation profile (new layered structure)
+    ../../modules/06-profiles/profiles/gaming-workstation.nix
   ];
 
   # Basic system identification
   networking.hostName = "G16";
+  
+  # Enable centralized font management
+  maxos.fonts.enable = true;
   
   # User configuration
   maxos.user = {
@@ -62,8 +62,7 @@
     };
   };
 
-  # Temporarily disable usage patterns due to recursion issue
-  # Will re-enable once fixed
+  # Usage patterns temporarily disabled due to recursion issue
   # modules.toolBundles.usagePatterns = {
   #   enable = true;
   #   preset = "content-creator";
@@ -76,14 +75,10 @@
   };
 
   # G16-specific tool configuration
-  modules.tools = {
+  maxos.tools = {
     # AI tools (selective enabling) - use mkForce to override bundle defaults
     ollama.enable = lib.mkForce false;
     open-webui.enable = lib.mkForce false;
-    anythingllm = {
-      enable = true;
-      port = 3001;
-    };
     
     # Content creation and gaming
     simplescreenrecorder.enable = true;
@@ -92,18 +87,23 @@
     # Development essentials
     docker.enable = true;
     chromium.enable = true;
+    brave.enable = true;
     keepassxc.enable = true;
     
-    # Backup (disabled - no secrets configured yet)
+    # Backup system with SOPS integration
     restic = {
-      enable = false;
+      enable = true;
       hostSubdir = "G16";
-      useSopsSecrets = false;
+      useSopsSecrets = true;
     };
   };
 
-  # Secrets management (disabled until configured)
-  maxos.secrets.enable = false;
+  # Secrets management
+  maxos.secrets = {
+    enable = true;
+    age.generateKey = true;
+    defaultSopsFile = "${config.maxos.user.secretsDirectory}/hosts/G16/secrets.yaml";
+  };
 
   # Security configuration
   security = {

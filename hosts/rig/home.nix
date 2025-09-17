@@ -8,7 +8,6 @@
   ];
 
   # Development profile provides base configuration
-  modules.tools.micromamba.enable = true;
   modules.tools.direnv.enable = true;
 
   # Home Manager needs a bit of information about you and the paths it should manage
@@ -22,9 +21,7 @@
     # https://nix-community.github.io/home-manager/index.html#sec-install-standalone
 
     packages = with pkgs; [
-      # Fonts
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.meslo-lg
+      # Fonts now managed centrally via maxos.fonts
 
       # Media controls
       playerctl

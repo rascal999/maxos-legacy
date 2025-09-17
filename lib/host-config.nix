@@ -14,7 +14,7 @@ let
         nur.overlays.default
       ];
     }
-    ../modules/system.nix   # Import system-level MaxOS modules only
+    ../modules/system-layered.nix   # Import layered system-level MaxOS modules
     self.nixosModules.scripts
     self.nixosModules.timezone
     sops-nix.nixosModules.sops
@@ -38,9 +38,8 @@ in rec {
         {
           home-manager = commonHomeManagerConfig // {
             users.${userName} = { pkgs, osConfig, ... }: {
-              imports = [ 
-                ../modules/home.nix  # Import home-manager modules
-                ../modules/core/user-home.nix  # Import home-manager user config
+              imports = [
+                ../modules/home-layered.nix  # Import layered home-manager modules
               ] ++ lib.optionals (homeConfigPath != null) [ homeConfigPath ];
               home.stateVersion = "25.05";
               

@@ -34,20 +34,20 @@
       security = import ./modules/security/default.nix;
       scripts = import ./modules/scripts/default.nix;
       timezone = import ./modules/timezone.nix;
-      user = import ./modules/core/user.nix;
-      secrets = import ./modules/core/secrets.nix;
+      user = import ./modules/01-core/system/user.nix;
+      secrets = import ./modules/01-core/system/secrets.nix;
       
       # Tool bundles
-      developmentBundle = import ./modules/tool-bundles/development.nix;
-      securityBundle = import ./modules/tool-bundles/security.nix;
-      desktopBundle = import ./modules/tool-bundles/desktop.nix;
-      serverBundle = import ./modules/tool-bundles/server.nix;
+      developmentBundle = import ./modules/05-bundles/tool-bundles/development.nix;
+      securityBundle = import ./modules/05-bundles/tool-bundles/security.nix;
+      desktopBundle = import ./modules/05-bundles/tool-bundles/desktop.nix;
+      serverBundle = import ./modules/05-bundles/tool-bundles/server.nix;
       
       # Individual tools (selected tools for external use)
-      docker = import ./modules/tools/docker.nix;
-      restic = import ./modules/tools/restic.nix;
-      zsh = import ./modules/tools/zsh.nix;
-      vscode = import ./modules/tools/vscode.nix;
+      docker = import ./modules/04-applications/system/tools/containers/docker/docker.nix;
+      restic = import ./modules/04-applications/system/tools/data/backup/restic.nix;
+      zsh = import ./modules/04-applications/system/tools/terminal/shells/zsh.nix;
+      vscode = import ./modules/04-applications/system/tools/development/editors/vscode.nix;
     };
 
     nixosConfigurations = {

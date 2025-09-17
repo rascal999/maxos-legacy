@@ -1,0 +1,12 @@
+keys:
+  - &age_key age1yezl874r6dxr9ns3tzj3tm90yamek9ln5842p2pqhgc3p8he0y7smhxhnu
+
+creation_rules:
+  - path_regex: secrets/hosts/G16/.*\.yaml$
+    age: *age_key
+  - path_regex: secrets/hosts/rig/.*\.yaml$
+    age: *age_key
+  - path_regex: secrets/hosts/test/.*\.yaml$
+    age: *age_key
+  - path_regex: secrets/.*\.yaml$
+    age: *age_key

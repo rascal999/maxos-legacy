@@ -6,7 +6,6 @@
   ];
 
   # Development profile provides base configuration
-  modules.tools.micromamba.enable = true;
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home = {

@@ -2,8 +2,7 @@
 
 {
   imports = [
-    # Import main system modules
-    ../../modules/system.nix
+    # Import main system modules - handled by host-config.nix
   ];
 
   # Test user configuration
@@ -12,8 +11,15 @@
     homeDirectory = "/home/user";
   };
 
-  # Test secrets (disabled for now)
-  maxos.secrets.enable = false;
+  # Enable secrets management for testing
+  maxos.secrets = {
+    enable = true;
+    age.generateKey = true;
+    defaultSopsFile = "${config.maxos.user.secretsDirectory}/hosts/test/secrets.yaml";
+  };
+  
+  # Enable centralized font management
+  maxos.fonts.enable = true;
 
   # Test individual tools that we know work
   modules.tools = {

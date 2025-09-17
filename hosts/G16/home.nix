@@ -2,39 +2,47 @@
 
 {
   imports = [
-    ../../modules/home-profiles/development.nix
-    ../../modules/tools/claude-code.nix
-    ../../modules/package-bundles/default.nix
+    # ../../modules/home-profiles/development.nix  # Disabled - imports hybrid modules that conflict with layered structure
+    # ../../modules/tools/claude-code.nix  # Disabled - hybrid module conflicts with layered structure
+    # ../../modules/package-bundles/default.nix  # Temporarily disabled due to environment option error
   ];
 
   # Development profile provides base configuration
   # Package bundles provide common package sets
-  maxos.packageBundles = {
-    enable = true;
-    developmentBundle = true;
-    installTarget = "home";
-  };
+  # maxos.packageBundles = {
+  #   enable = true;
+  #   developmentBundle = true;
+  #   installTarget = "home";
+  # };
   
   # Additional tool-specific configuration below
   
   # Enable individual tools that need home-manager configuration
-  modules.tools = {
-    logseq.enable = true;
-    micromamba.enable = true;
+  # Note: Hybrid modules disabled - using pure home-manager or system-only modules
+  maxos.tools = {
+    # Terminal and shell
+    zsh.enable = true;
+    alacritty.enable = true;
+    tmux.enable = true;
+    
+    # Window manager
+    i3.enable = true;
+    
+    # Development tools
+    vscode.enable = true;
     direnv.enable = true;
     
-    # These are now handled by tool bundles but we enable them here for home-manager config
-    tmux.enable = true;
-    alacritty.enable = true;
-    zsh.enable = true;
-    vscode.enable = true;
+    # Applications
+    firefox.enable = true;
+    logseq.enable = true;
+    remmina.enable = true;
   };
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home = {
     username = "user";
     homeDirectory = lib.mkForce "/home/user";
-    stateVersion = "25.05";  # Please read the comment below
+    stateVersion = lib.mkForce "25.05";  # Please read the comment below
 
     # The home.stateVersion option does not have a default and must be set
     # First time users of home-manager should read:
@@ -45,6 +53,8 @@
       # Additional packages not in bundles:
       aider-chat
       openai-whisper
+      
+      # Fonts now managed centrally via maxos.fonts
     ];
 
     # Environment variables

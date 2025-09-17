@@ -36,6 +36,8 @@ Repository: https://github.com/rascal999/monorepo/tree/main/maxos
 - [Installation Guide](docs/installation.md) - Complete installation instructions
 - [Module Documentation](docs/modules.md) - Details about available modules
 - [Usage Guide](docs/usage.md) - Daily usage and maintenance
+- [Layered Architecture](docs/layered-architecture.md) - New recursion-safe module structure
+- [Recursion Prevention Guide](docs/recursion-prevention-guide.md) - Architectural patterns and design principles
 
 ## Quick Start
 
@@ -53,11 +55,29 @@ maxos/
 │   ├── desktop/      # Desktop configuration
 │   ├── server/       # Server configuration
 │   └── desktop-test-vm/ # VM testing configuration
-├── modules/          # Reusable NixOS modules
-│   ├── security/    # Security configurations
-│   └── tools/       # Tool-specific configurations
+├── modules/          # Layered NixOS modules (recursion-safe)
+│   ├── 01-core/      # Foundation layer (user, secrets, fonts)
+│   ├── 02-hardware/  # Hardware abstraction (laptop, desktop, server)
+│   ├── 03-services/  # System services (docker, k3s, wireguard)
+│   ├── 04-applications/ # User applications (vscode, alacritty, zsh)
+│   ├── 05-bundles/   # Tool combinations (development, security, gaming)
+│   ├── 06-profiles/  # Complete environments (workstation, server)
+│   ├── security/     # Security configurations
+│   └── scripts/      # Script modules
+├── templates/        # Safe module templates
 └── scripts/         # Utility scripts
 ```
+
+## Architecture
+
+MaxOS uses a **layered architecture** to prevent infinite recursion issues:
+
+- **Layer separation**: Higher layers can depend on lower layers, never the reverse
+- **Context separation**: System and home-manager modules are completely separate
+- **Safe patterns**: All modules follow recursion-prevention guidelines
+- **Enhanced validation**: Comprehensive dependency checking and error reporting
+
+See [Layered Architecture](docs/layered-architecture.md) for detailed information.
 
 ## Contributing
 

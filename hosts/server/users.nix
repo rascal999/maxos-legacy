@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../modules/core/shared-user.nix
+    ../../modules/01-core/system/user.nix
   ];
 
   # Use shared user configuration for server

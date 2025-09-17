@@ -8,49 +8,8 @@
     ./audio.nix
     ./monitors.nix
     ./keyd.nix # Import keyd configuration
-    ../../modules/security/default.nix
-    ../../modules/desktop/default.nix
-    ../../modules/hardware/network.nix
-    ../../modules/hardware/bluetooth.nix
-    ../../modules/tools/syncthing.nix
-    ../../modules/tools/llm/default.nix
-    ../../modules/tools/docker.nix  # Import Docker module
-    ../../modules/tools/wireguard.nix  # Import WireGuard module
-    # ../../modules/tools/qemu.nix  # Import QEMU module
-    # ../../modules/tools/rocketchat.nix  # Import Rocket.Chat module
-    ../../modules/tools/npm.nix  # Import npm module
-    ../../modules/tools/traefik.nix  # Import Traefik module
-    ../../modules/tools/postman.nix  # Import Postman module
-    ../../modules/tools/git-crypt.nix  # Import git-crypt module
-    ../../modules/tools/simplescreenrecorder.nix  # Import SimpleScreenRecorder module
-    ../../modules/tools/mongodb.nix  # Import MongoDB module
-    ../../modules/tools/grafana.nix  # Import Grafana module
-    ../../modules/tools/golang.nix  # Import Golang module
-    ../../modules/tools/restic.nix  # Import restic backup module
-    ../../modules/tools/gitleaks.nix  # Import Gitleaks module
-    ../../modules/tools/remmina.nix  # Import Remmina module
-    ../../modules/tools/k3s.nix  # Import k3s module
-    ../../modules/tools/openssl.nix  # Import OpenSSL module
-    ../../modules/tools/steam.nix  # Import Steam module
-    ../../modules/tools/whatsapp-mcp.nix  # Import WhatsApp MCP module
-    ../../modules/tools/tor-browser  # Import Tor Browser module
-    ../../modules/tools/blocky.nix  # Import Blocky module
-    ../../modules/tools/grype.nix  # Import Grype module
-    ../../modules/tools/semgrep.nix  # Import Semgrep module
-    ../../modules/tools/syft.nix  # Import Syft module
-    ../../modules/tools/trivy.nix  # Import Trivy module
-    ../../modules/tools/gpsbabel.nix  # Import GPSBabel module
-    ../../modules/tools/linuxquota.nix  # Import Linux quota module
-    ../../modules/tools/sshfs.nix  # Import SSHFS module
-    ../../modules/tools/forgejo.nix  # Import Forgejo module
-    ../../modules/tools/forgejo-runner.nix  # Import Forgejo runner module
-    ../../modules/tools/faas-cli.nix  # Import faas-cli module
-    ../../modules/tools/kind.nix  # Import kind module
-    ../../modules/tools/skaffold.nix  # Import Skaffold module
-    ../../modules/tools/qdirstat.nix  # Import QDirStat module
-    ../../modules/tools/forgejo-cli.nix  # Import Forgejo CLI module
-    ../../modules/tools/mosh.nix  # Import Mosh module
-    ../../modules/tools/argocd.nix  # Import ArgoCD CLI module
+    # Note: Individual tool imports removed - now handled by layered system
+    # Tools are configured via modules.tools.* options below
   ];
 
   # Enable tools
@@ -73,6 +32,7 @@
     restic = {
       enable = true;        # Enable restic backup
       hostSubdir = "rig";   # Store backups in rig subdirectory
+      useSopsSecrets = true; # Use SOPS for backup credentials
     };
     remmina.enable = true;  # Enable Remmina
     k3s = {
@@ -135,9 +95,9 @@
     kind.enable = false;  # Disable kind (Kubernetes in Docker)
     skaffold.enable = true;  # Enable Skaffold
     qdirstat.enable = true;  # Enable QDirStat
-    forgejo-cli.enable = true;  # Enable Forgejo CLI
     mosh.enable = true;  # Enable Mosh (mobile shell)
     argocd.enable = true;  # Enable ArgoCD CLI
+    brave.enable = true;  # Enable Brave browser
    };
   modules.tools.trivy.enable = true; # Enable Trivy
   modules.tools.semgrep.enable = true; # Enable Semgrep
@@ -148,13 +108,6 @@
   # Enable Open WebUI
   modules.tools.open-webui.enable = false;
 
-  # AnythingLLM (disabled)
-  modules.tools.anythingllm = {
-    enable = false;
-    port = 3001;
-    # Don't specify openRouterApiKeyFile to avoid circular dependency
-    # The API key can be added directly to /var/lib/anythingllm/openrouter_api_key
-  };
 
   # Enable SimpleScreenRecorder
   modules.tools.simplescreenrecorder.enable = true;
@@ -183,6 +136,26 @@
 
   # Set hostname
   networking.hostName = "rig";
+  
+  # Enable centralized font management
+  maxos.fonts.enable = true;
+  
+  # Enable secrets management
+  maxos.secrets = {
+    enable = true;
+    age.generateKey = true;
+    defaultSopsFile = "${config.maxos.user.secretsDirectory}/hosts/rig/secrets.yaml";
+  };
+  
+  # User configuration
+  maxos.user = {
+    name = "user";
+    homeDirectory = "/home/user";
+    gitDirectory = "/home/user/git";
+    monorepoDirectory = "/home/user/git/github/monorepo";
+    secretsDirectory = "/home/user/git/github/monorepo/secrets";
+    workspaceDirectory = "/home/user/projects";
+  };
   
   # Add hosts entries
   networking.hosts = {
@@ -315,8 +288,7 @@
       imports = [
         ./home.nix
         ../../modules/tools/i3/desktop.nix
-        ../../modules/tools/alacritty.nix
-        ../../modules/tools/zsh.nix
+        # Note: alacritty and zsh now imported via layered home system
       ];
 
       # GTK configuration

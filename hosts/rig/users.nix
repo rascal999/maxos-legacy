@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../modules/core/shared-user.nix
+    ../../modules/01-core/system/user.nix
   ];
 
   # Use shared user configuration with additional groups
@@ -14,6 +14,6 @@
     extraGroups = [ "wheel" "networkmanager" "video" "audio" "docker" "tty" "input" ];
     enableDisplayManager = true;
     displayManager = "lightdm";
-    desktopEnvironment = "xfce";
+    desktopEnvironment = "i3";
   };
 }
