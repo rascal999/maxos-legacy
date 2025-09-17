@@ -21,6 +21,7 @@
     enableSecurity = true;
     enableMultimedia = true;
     enableInfrastructure = true;
+    useSopsSecrets = false;  # Disable SOPS secrets
   };
 
   # Rocket.Chat service disabled (module import commented out)
