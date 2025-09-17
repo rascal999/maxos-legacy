@@ -619,11 +619,22 @@ boot_only_mode() {
     # Commit and push UUID changes
     commit_uuid_changes
     
-    # Rebuild the system with updated configuration
+    # Rebuild the system with updated configuration using nixos-enter
     log_info "Rebuilding system with updated boot configuration..."
     ssh_exec -t "
-        cd /tmp/monorepo/maxos &&
-        sudo nixos-rebuild switch --flake '.#$NIXOS_PROFILE'
+        # Mount the installed system
+        sudo mkdir -p /mnt &&
+        sudo mount /dev/mapper/cryptroot /mnt &&
+        sudo mount /dev/nvme1n1p1 /mnt/boot &&
+        
+        # Copy the updated repository to the installed system
+        sudo cp -r /tmp/monorepo /mnt/tmp/ &&
+        
+        # Use nixos-enter to properly enter the installed system and rebuild
+        sudo nixos-enter --root /mnt -- bash -c '
+            cd /tmp/monorepo/maxos &&
+            nixos-rebuild switch --flake \".#$NIXOS_PROFILE\"
+        '
     "
     log_success "System rebuilt with updated configuration"
     
