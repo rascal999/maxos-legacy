@@ -112,16 +112,19 @@
         background = "#000000";
         greeters.gtk.theme.name = "Adwaita-dark";
       };
-      
-      # Enable autologin
-      displayManager.autoLogin = {
-        enable = true;
-        user = "user";
-      };
     };
     
     # Disable conflicting services
     redshift.enable = false;
+  };
+  
+  # Display manager session and autologin configuration
+  displayManager = {
+    defaultSession = "none+i3";
+    autoLogin = {
+      enable = true;
+      user = "user";
+    };
   };
   
   # PAM for i3lock

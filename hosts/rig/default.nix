@@ -114,16 +114,17 @@
         theme.name = "Adwaita-dark";
       };
     };
-    
+  };
+
+  # Display manager session configuration
+  services.displayManager = {
+    defaultSession = "none+i3";
     # Enable autologin
-    displayManager.autoLogin = {
+    autoLogin = {
       enable = true;
       user = "user";
     };
   };
-
-  # Display manager session configuration
-  services.displayManager.defaultSession = "none+i3";
 
   # Add required packages
   environment.systemPackages = with pkgs; [
