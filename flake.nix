@@ -74,9 +74,16 @@
         homeConfigPath = ./hosts/rig/home.nix;
       };
       
-      rig-minimal = hostConfig.mkMaxOSHost {
-        hostname = "rig-minimal";
-        hostPath = ./hosts/rig-minimal/default.nix;
+      rig-minimal = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hosts/rig-minimal/default.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
+        ];
       };
     };
   };

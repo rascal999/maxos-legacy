@@ -6,37 +6,23 @@
     ./users.nix
   ];
 
-  # Ultra-minimal rig configuration for rapid install script testing
-  # Focus: LUKS encryption + console only + SSH access
-
-  # User configuration
-  maxos.user = {
-    name = "user";
-    homeDirectory = "/home/user";
-  };
-
-  # Disable all optional tools and services
-  maxos.tools.restic.useSopsSecrets = false;
-
-  # Basic system services - minimal set
-  services = {
-    # SSH for remote access only
-    openssh = {
-      enable = true;
-      settings = {
-        PasswordAuthentication = false;
-        PermitRootLogin = "no";
-      };
-    };
-    
-    # Network management
-    networkmanager.enable = true;
-  };
+  # Ultra-minimal standalone NixOS configuration for rapid install script testing
+  # No MaxOS modules - pure NixOS configuration
 
   # Basic networking
   networking = {
     hostName = "rig-minimal";
     firewall.enable = true;
+    networkmanager.enable = true;
+  };
+
+  # SSH for remote access only
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
   };
 
   # Minimal system packages - just essentials
