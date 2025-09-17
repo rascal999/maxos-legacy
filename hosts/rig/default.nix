@@ -21,8 +21,10 @@
     enableSecurity = true;
     enableMultimedia = true;
     enableInfrastructure = true;
-    useSopsSecrets = false;  # Disable SOPS secrets
   };
+  
+  # Override tool configurations to disable SOPS secrets
+  maxos.tools.restic.useSopsSecrets = false;
 
   # Rocket.Chat service disabled (module import commented out)
 
