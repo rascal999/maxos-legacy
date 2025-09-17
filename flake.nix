@@ -15,9 +15,13 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nur, sops-nix, ... }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nur, sops-nix, disko, ... }@inputs:
   let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
@@ -27,7 +31,7 @@
     };
     
     # Import host configuration helpers
-    hostConfig = import ./lib/host-config.nix { inherit nixpkgs home-manager nur sops-nix self; };
+    hostConfig = import ./lib/host-config.nix { inherit nixpkgs home-manager nur sops-nix disko self; };
   in {
     nixosModules = {
       # Core modules
@@ -72,12 +76,15 @@
         hostname = "rig";
         hostPath = ./hosts/rig/default.nix;
         homeConfigPath = ./hosts/rig/home.nix;
+        diskoPath = ./hosts/rig/disko.nix;
       };
       
       rig-minimal = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           ./hosts/rig-minimal/default.nix
+          ./hosts/rig-minimal/disko.nix
+          disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

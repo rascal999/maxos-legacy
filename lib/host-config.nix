@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, nur, sops-nix, self }:
+{ nixpkgs, home-manager, nur, sops-nix, disko, self }:
 
 let
   lib = nixpkgs.lib;
@@ -30,11 +30,15 @@ let
 
 in rec {
   # Create a NixOS configuration with standard MaxOS settings
-  mkMaxOSHost = { hostname, hostPath, userName ? "user", homeConfigPath ? null }:
+  mkMaxOSHost = { hostname, hostPath, userName ? "user", homeConfigPath ? null, diskoPath ? null }:
     nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = commonModules ++ [
         hostPath
+      ] ++ lib.optionals (diskoPath != null) [
+        diskoPath
+        disko.nixosModules.disko
+      ] ++ [
         {
           home-manager = commonHomeManagerConfig // {
             users.${userName} = { pkgs, osConfig, ... }: {
@@ -55,9 +59,9 @@ in rec {
     };
     
   # Variant for hosts with custom home configuration
-  mkMaxOSHostWithHome = { hostname, hostPath, homeConfigPath, userName ? "user" }:
+  mkMaxOSHostWithHome = { hostname, hostPath, homeConfigPath, userName ? "user", diskoPath ? null }:
     mkMaxOSHost {
-      inherit hostname hostPath userName;
+      inherit hostname hostPath userName diskoPath;
       homeConfigPath = homeConfigPath;
     };
 }
