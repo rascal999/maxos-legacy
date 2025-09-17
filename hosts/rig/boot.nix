@@ -53,7 +53,7 @@
   # Filesystem configuration
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/a6d30279-d2aa-47c0-9b8d-19adfd9c735c";
+      device = "/dev/disk/by-uuid/e6d7c781-6a09-403c-8cfc-4a7da6a3d298";
       fsType = "ext4";
       neededForBoot = true;
     };
