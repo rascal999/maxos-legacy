@@ -29,7 +29,7 @@
     git.enable = true;
     
     # System tools
-    core-utilities.enable = true;
+    system-utilities.enable = true;
   };
 
   # Basic system services
