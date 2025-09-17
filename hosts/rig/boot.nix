@@ -19,7 +19,7 @@
       # LUKS support
       luks.devices = {
         cryptroot = {
-          device = "/dev/disk/by-uuid/1a00bd7d-658d-4ce9-95cb-bdcbbd758704";
+          device = "/dev/disk/by-uuid/6f4fecf6-9f3f-4fac-9248-b216822b302f";
           preLVM = true;
           allowDiscards = true;
           bypassWorkqueues = true;
@@ -53,7 +53,7 @@
   # Filesystem configuration
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/5aa78c0c-4b0f-4428-97b6-dea4c575556a";
+      device = "/dev/disk/by-uuid/a9db45e6-b2b4-4171-978c-73bb324781c5";
       fsType = "ext4";
       neededForBoot = true;
     };
