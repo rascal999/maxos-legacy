@@ -47,7 +47,9 @@ in {
     };
 
     # Ensure Remmina's configuration directory exists
-    home.file.".config/remmina/remmina.pref".text = ''
+    home.file.".config/remmina/remmina.pref" = {
+      force = true;  # Allow overwriting existing files
+      text = ''
         [remmina_pref]
         auto_scroll=true
         hide_toolbar=false
@@ -112,7 +114,8 @@ in {
         use_client_side_decoration=true
         minimize_to_tray=true
         start_in_tray=true
-      '';
+        '';
+    };
     
     assertions = [
       {
