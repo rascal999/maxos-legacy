@@ -53,6 +53,9 @@ in {
 
   config = mkIf cfg.enable {
     maxos.tools = {
+      # Essential desktop theming (provides dconf support)
+      gtk-theme.enable = true;
+      
       # System utilities (htop, btop, neofetch, unzip, zip, wget, curl)
       system-utilities.enable = mkIf cfg.enableAll true;
       
