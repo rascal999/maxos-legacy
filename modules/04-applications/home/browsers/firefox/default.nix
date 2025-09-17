@@ -83,6 +83,13 @@ in {
         "browser.sessionstore.max_windows_undo" = 10;
         # Disable password saving prompts
         "signon.rememberSignons" = false;
+        # Font configuration - use system defaults instead of JetBrains
+        "font.name.serif.x-western" = "serif";
+        "font.name.sans-serif.x-western" = "sans-serif";
+        "font.name.monospace.x-western" = "monospace";
+        "font.default.x-western" = "sans-serif";
+        # Ensure Firefox uses system font settings
+        "browser.display.use_system_colors" = true;
       };
       userChrome = ''
         /* Pin DarkReader extension button */

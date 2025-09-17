@@ -59,7 +59,8 @@ in {
       enable = true;
       defaultFonts = {
         monospace = [ cfg.primary cfg.fallback ];
-        sansSerif = [ cfg.primary cfg.fallback ];
+        # Use system defaults for sansSerif to avoid affecting browsers
+        sansSerif = [ "DejaVu Sans" "Liberation Sans" "sans-serif" ];
       };
     };
   };
