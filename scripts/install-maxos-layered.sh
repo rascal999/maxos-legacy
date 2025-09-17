@@ -23,7 +23,6 @@ SSH_USER=""
 SSH_HOST=""
 TARGET_DISK=""
 NIXOS_PROFILE=""
-BOOT_ONLY=false
 DISCOVERY_ONLY=false
 AUTO_REBOOT=false
 
@@ -41,14 +40,12 @@ Required Options:
     -h, --host HOST         SSH hostname/IP (e.g., 192.168.1.110)
 
 Optional Options:
-    --boot-only             Only update boot configuration (layers 1-3, 5-7)
     --discovery-only        Only discover system information (layers 1-3)
     --auto-reboot           Automatically reboot after installation
     --help                  Show this help message
 
 Execution Modes:
     Full Installation:      All layers 1-7 for complete fresh installation
-    Boot-Only Mode:         Layers 1-3, 5-7 for configuration fixes
     Discovery Mode:         Layers 1-3 for system inspection only
 
 Layer Architecture:
@@ -62,7 +59,6 @@ Layer Architecture:
 
 Examples:
     $0 -u nixos -h 192.168.1.110                    # Full installation
-    $0 -u nixos -h 192.168.1.110 --boot-only        # Fix boot configuration
     $0 -u nixos -h 192.168.1.110 --discovery-only   # Inspect system only
 
 WARNING: Full installation will DESTROY all data on the chosen disk!
@@ -81,10 +77,6 @@ parse_args() {
             -h|--host)
                 SSH_HOST="$2"
                 shift 2
-                ;;
-            --boot-only)
-                BOOT_ONLY=true
-                shift
                 ;;
             --discovery-only)
                 DISCOVERY_ONLY=true
@@ -112,29 +104,6 @@ parse_args() {
         show_usage
         exit 1
     fi
-}
-
-# Execute boot-only mode (layers 1-3, 5-7)
-execute_boot_only_mode() {
-    echo "MaxOS Boot Configuration Fix"
-    echo "============================"
-    echo
-    
-    log_info "Boot-only mode: fixing boot configuration with current disk UUIDs"
-    
-    # Execute layers
-    execute_layer1_foundation
-    execute_layer2_repository
-    execute_layer3_discovery
-    
-    # Interactive profile selection
-    select_profile
-    
-    execute_layer5_configuration
-    execute_layer6_installation
-    execute_layer7_finalization
-    
-    display_final_status
 }
 
 # Execute discovery-only mode (layers 1-3)
@@ -194,8 +163,6 @@ main() {
     # Execute based on mode
     if [[ "$DISCOVERY_ONLY" == "true" ]]; then
         execute_discovery_mode
-    elif [[ "$BOOT_ONLY" == "true" ]]; then
-        execute_boot_only_mode
     else
         execute_full_installation
     fi
