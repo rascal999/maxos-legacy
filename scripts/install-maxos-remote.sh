@@ -144,21 +144,25 @@ update_boot_config() {
         exit 1
     fi
     
-    # Update the boot.nix file with correct UUIDs
+    # Update the boot.nix file with correct UUIDs for the target profile
     ssh_exec "
         cd /tmp/monorepo/maxos &&
-        cp hosts/rig/boot.nix hosts/rig/boot.nix.backup &&
-        # Set variables for UUID replacement
-        LUKS_UUID='$luks_uuid' &&
-        EFI_UUID='$efi_uuid' &&
-        ROOT_UUID='$root_uuid' &&
-        # Update LUKS device UUID
-        sed -i \"s|device = \\\"/dev/disk/by-uuid/1dbe6ded-7ad7-454c-8e4b-cbf97ebde301\\\"|device = \\\"/dev/disk/by-uuid/\$LUKS_UUID\\\"|\" hosts/rig/boot.nix &&
-        # Update root filesystem UUID
-        sed -i \"s|device = \\\"/dev/disk/by-uuid/72998983-4655-405d-80a8-4ff6a0729a19\\\"|device = \\\"/dev/disk/by-uuid/\$ROOT_UUID\\\"|\" hosts/rig/boot.nix &&
-        # Update EFI filesystem UUID
-        sed -i \"s|device = \\\"/dev/disk/by-uuid/A302-1B51\\\"|device = \\\"/dev/disk/by-uuid/\$EFI_UUID\\\"|\" hosts/rig/boot.nix &&
-        echo 'Boot configuration updated successfully'
+        if [[ -f hosts/$NIXOS_PROFILE/boot.nix ]]; then
+            cp hosts/$NIXOS_PROFILE/boot.nix hosts/$NIXOS_PROFILE/boot.nix.backup &&
+            # Set variables for UUID replacement
+            LUKS_UUID='$luks_uuid' &&
+            EFI_UUID='$efi_uuid' &&
+            ROOT_UUID='$root_uuid' &&
+            # Update UUIDs in the target profile's boot.nix using generic patterns
+            sed -i \"s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"/dev/disk/by-uuid/\$LUKS_UUID\\\"|g\" hosts/$NIXOS_PROFILE/boot.nix &&
+            # More specific replacements for different filesystem types
+            sed -i \"s|/dev/disk/by-uuid/[a-fA-F0-9-]* # LUKS|/dev/disk/by-uuid/\$LUKS_UUID|g\" hosts/$NIXOS_PROFILE/boot.nix &&
+            sed -i \"s|/dev/disk/by-uuid/[A-F0-9-]* # EFI|/dev/disk/by-uuid/\$EFI_UUID|g\" hosts/$NIXOS_PROFILE/boot.nix &&
+            sed -i \"s|/dev/disk/by-uuid/[a-fA-F0-9-]* # Root|/dev/disk/by-uuid/\$ROOT_UUID|g\" hosts/$NIXOS_PROFILE/boot.nix &&
+            echo 'Boot configuration updated successfully for profile: $NIXOS_PROFILE'
+        else
+            echo 'Warning: No boot.nix found for profile $NIXOS_PROFILE, using hardware-configuration.nix'
+        fi
     "
     
     log_success "Boot configuration updated with correct UUIDs"
