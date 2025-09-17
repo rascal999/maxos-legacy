@@ -24,9 +24,8 @@
     i3.enable = true;
     alacritty.enable = true;
     
-    # Basic tools for testing
-    firefox.enable = true;
-    git.enable = true;
+    # Basic development tools
+    development-core.enable = true;
     
     # System tools
     system-utilities.enable = true;
@@ -64,6 +63,11 @@
     hostName = "rig-minimal";
     firewall.enable = true;
   };
+
+  # Add basic packages for testing
+  environment.systemPackages = with pkgs; [
+    firefox  # Basic browser for testing
+  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
