@@ -436,6 +436,17 @@ setup_luks_remote() {
     log_success "LUKS encryption setup completed"
 }
 
+# Force setup LUKS encryption (for fresh installs)
+setup_luks_remote_force() {
+    log_info "Setting up LUKS encryption on $TARGET_DISK (forced)..."
+    ssh_exec -t "
+        cd /tmp/monorepo/maxos &&
+        sudo ./scripts/setup-luks.sh $TARGET_DISK
+    "
+    
+    log_success "LUKS encryption setup completed"
+}
+
 # Mount partitions on remote system
 mount_partitions_remote() {
     if check_partitions_mounted; then
@@ -584,7 +595,7 @@ main() {
                     # Close any open LUKS devices first
                     ssh_exec "sudo cryptsetup close cryptroot 2>/dev/null || true"
                     # Setup LUKS encryption (this will wipe the disk)
-                    setup_luks_remote
+                    setup_luks_remote_force
                     break
                     ;;
                 *)
