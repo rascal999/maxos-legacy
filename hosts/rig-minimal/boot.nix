@@ -14,17 +14,7 @@
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
       
-      # LUKS support
-      luks.devices = {
-        cryptroot = {
-          device = "/dev/disk/by-uuid/6f4fecf6-9f3f-4fac-9248-b216822b302f";
-          preLVM = true;
-          allowDiscards = true;
-          bypassWorkqueues = true;
-        };
-      };
-
-      # Ensure LUKS modules are included
+      # LUKS modules - disko will handle device configuration
       kernelModules = [
         "aes"
         "aesni_intel"
@@ -47,19 +37,7 @@
     };
   };
 
-  # Filesystem configuration
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/a9db45e6-b2b4-4171-978c-73bb324781c5";
-      fsType = "ext4";
-      neededForBoot = true;
-    };
-    "/boot" = {
-      device = "/dev/disk/by-uuid/6F2D-6ACC";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
-  };
+  # Filesystem configuration handled by disko
 
   # Minimal packages for testing
   environment.systemPackages = with pkgs; [
