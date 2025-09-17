@@ -16,13 +16,19 @@
     networkmanager.enable = true;
   };
 
-  # SSH for remote access only
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
-      PermitRootLogin = "no";
+  # Basic system services
+  services = {
+    # SSH for remote access
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
     };
+    
+    # Auto-login for testing - no password needed
+    getty.autologinUser = "user";
   };
 
   # Minimal system packages - just essentials
