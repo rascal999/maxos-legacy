@@ -12,105 +12,16 @@
     # Tools are configured via modules.tools.* options below
   ];
 
-  # Enable tools
-  modules.tools = {
-    postman.enable = true;
-    npm.enable = true;
-    traefik.enable = false;  # Disable standalone Traefik to use k3s built-in one
-    fabric-ai.enable = true;
-    git-crypt.enable = true;
-    mongodb = {
-      enable = false;        # Disable MongoDB for faster installation
-      compass.enable = false; # Disable MongoDB Compass GUI
-    };
-    grafana.enable = false;  # Disable Grafana
-    golang.enable = true;   # Enable Golang
-    gitleaks = {
-      enable = true;        # Enable Gitleaks for secret scanning
-      installGitHook = true; # Install pre-push git hook globally
-    };
-    restic = {
-      enable = true;        # Enable restic backup
-      hostSubdir = "rig";   # Store backups in rig subdirectory
-      useSopsSecrets = true; # Use SOPS for backup credentials
-    };
-    remmina.enable = true;  # Enable Remmina
-    k3s = {
-      enable = true;
-      role = "server";  # Configure as a server (control plane)
-      extraFlags = [
-        "--disable-cloud-controller"  # Disable cloud controller as this is a local setup
-      ];
-    };
-    blocky.enable = true;
-    openssl = {
-      enable = true;
-      installDevelopmentPackages = true;  # Install development packages
-    };
-    steam.enable = true; # Enable Steam
-    whatsapp-mcp = {
-      enable = true;
-      user = "user"; # Use the main user account instead of a system user
-      group = "users"; # Use the users group
-      dataDir = "/home/user/git/github/whatsapp-mcp/data"; # Store data in the git repo
-    };
-    tor-browser.enable = true;  # Enable Tor Browser
-    gpsbabel.enable = true;  # Enable GPSBabel
-    linuxquota = {
-      enable = true;
-      enableUserQuotas = true;
-      enableGroupQuotas = true;
-    };
-    sshfs.enable = true;  # Enable SSHFS
-    forgejo = {
-      enable = true;
-      port = 3000;
-      domain = "172.17.0.1";
-      rootUrl = "http://172.17.0.1:3000/";
-      actions.enable = true;
-      lfs.enable = true;
-    };
-    forgejo-runner = {
-      enable = true;  # Enabled - token file has been created
-      enableDocker = true;
-      enableIPv6 = false;
-      instances.rig-runner = {
-        enable = true;  # Enabled - token file has been created
-        name = "rig-runner";
-        url = "http://172.17.0.1:3000/";
-        tokenFile = "/var/lib/forgejo-runner/rig-runner-token";  # Token file created
-        labels = [
-          "docker:docker://python:3.11-bookworm"
-          "ubuntu-latest:docker://ubuntu:latest"
-          "nixos-latest:docker://nixos/nix"
-        ];
-        settings = {
-          container = {
-            network = "host";  # Use host networking to access 172.17.0.1:3000
-          };
-        };
-      };
-     };
-    faas-cli.enable = true;  # Enable faas-cli
-    kind.enable = false;  # Disable kind (Kubernetes in Docker)
-    skaffold.enable = true;  # Enable Skaffold
-    qdirstat.enable = true;  # Enable QDirStat
-    mosh.enable = true;  # Enable Mosh (mobile shell)
-    argocd.enable = true;  # Enable ArgoCD CLI
-    brave.enable = true;  # Enable Brave browser
-   };
-  modules.tools.trivy.enable = true; # Enable Trivy
-  modules.tools.semgrep.enable = true; # Enable Semgrep
-  modules.tools.ollama.enable = false;
-  modules.tools.syft.enable = true; # Enable Syft
-  modules.tools.grype.enable = true; # Enable Grype
-
-  # Enable Open WebUI
-  modules.tools.open-webui.enable = false;
-
-
-  # Enable SimpleScreenRecorder
-  modules.tools.simplescreenrecorder.enable = true;
+  # Use comprehensive workstation profile
+  maxos.profiles.comprehensiveWorkstation = {
+    enable = true;
+    profile = "full";  # full profile includes all tools and capabilities
+    enableDevelopment = true;
+    enableGaming = true;
+    enableSecurity = true;
+    enableMultimedia = true;
+    enableInfrastructure = true;
+  };
 
   # Rocket.Chat service disabled (module import commented out)
 
@@ -287,33 +198,32 @@
     users.user = { pkgs, ... }: {
       imports = [
         ./home.nix
-        ../../modules/tools/i3/desktop.nix
-        # Note: alacritty and zsh now imported via layered home system
+        # Note: i3, alacritty and zsh now imported via layered home system
       ];
 
       # GTK configuration
       gtk = {
         enable = true;
         theme = {
-          name = "Adwaita-dark";
-          package = pkgs.adwaita-icon-theme;
+          name = lib.mkForce "Adwaita-dark";
+          package = lib.mkForce pkgs.adwaita-icon-theme;
         };
         iconTheme = {
-          name = "Adwaita";
-          package = pkgs.adwaita-icon-theme;
+          name = lib.mkForce "Adwaita";
+          package = lib.mkForce pkgs.adwaita-icon-theme;
         };
         gtk3.extraConfig = {
-          gtk-application-prefer-dark-theme = true;
+          gtk-application-prefer-dark-theme = lib.mkForce true;
         };
         gtk4.extraConfig = {
-          gtk-application-prefer-dark-theme = true;
+          gtk-application-prefer-dark-theme = lib.mkForce true;
         };
       };
 
       # Qt configuration
       qt = {
         enable = true;
-        platformTheme.name = "qtct";
+        platformTheme.name = lib.mkForce "qtct";
         style = {
           name = "adwaita-dark";
           package = pkgs.adwaita-qt;

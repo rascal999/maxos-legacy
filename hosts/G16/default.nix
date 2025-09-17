@@ -13,8 +13,7 @@
     ./audio.nix
     ./power.nix
     
-    # MaxOS gaming workstation profile (new layered structure)
-    ../../modules/06-profiles/profiles/gaming-workstation.nix
+    # Note: Now using comprehensive workstation profile instead of gaming-workstation
   ];
 
   # Basic system identification
@@ -62,18 +61,16 @@
     };
   };
 
-  # Usage patterns temporarily disabled due to recursion issue
-  # modules.toolBundles.usagePatterns = {
-  #   enable = true;
-  #   preset = "content-creator";
-  # };
-  
-  # The gaming-workstation profile handles most bundle configuration
-  # Only override specific settings here
-  modules.toolBundles = {
-    aiMl.enableWebInterface = false;  # Disable AI web interface for now
+  # Use comprehensive workstation profile (same as rig)
+  maxos.profiles.comprehensiveWorkstation = {
+    enable = true;
+    profile = "full";  # full profile includes all tools and capabilities
+    enableDevelopment = true;
+    enableGaming = true;
+    enableSecurity = true;
+    enableMultimedia = true;
+    enableInfrastructure = false;  # G16 laptop doesn't need k3s infrastructure
   };
-
 
   # Secrets management
   maxos.secrets = {
@@ -90,31 +87,16 @@
     ];
   };
 
-  # G16-specific tool configuration
+  # G16-specific overrides
   maxos.tools = {
-    # AI tools (selective enabling) - use mkForce to override bundle defaults
+    # Override backup subdirectory for G16
+    restic = {
+      hostSubdir = lib.mkForce "G16";
+    };
+    
+    # AI tools disabled for laptop
     ollama.enable = lib.mkForce false;
     open-webui.enable = lib.mkForce false;
-    
-    # Content creation and gaming
-    simplescreenrecorder.enable = true;
-    steam.enable = true;
-    
-    # Development essentials
-    docker.enable = true;
-    chromium.enable = true;
-    brave.enable = true;
-    keepassxc.enable = true;
-    
-    # Desktop theming
-    gtk-theme.enable = true;
-    
-    # Backup system with SOPS integration
-    restic = {
-      enable = true;
-      hostSubdir = "G16";
-      useSopsSecrets = true;
-    };
   };
 
   # G16-specific system configuration

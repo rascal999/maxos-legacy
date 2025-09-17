@@ -47,6 +47,12 @@ in {
 
   config = mkIf cfg.enable {
     maxos.tools = {
+      # Core development tools (git, neovim, ripgrep, fd, jq, tree, pwgen)
+      development-core.enable = mkIf cfg.enableAll true;
+      
+      # Java development tools (jdk, maven, gradle)
+      java.enable = mkIf cfg.enableAll true;
+      
       # Git tools (gitleaks is system-level, git-crypt is home-manager)
       gitleaks.enable = mkIf cfg.git true;
       

@@ -58,8 +58,8 @@ with lib;
   # Developer-specific tools
   maxos.tools = {
     # Core development
-    docker.enable = mkDefault true;
-    kind.enable = mkDefault true;
+    # docker.enable = mkDefault true;  # Handled by bundles
+    # kind.enable = mkDefault true;    # Not available in layered system
     npm.enable = mkDefault true;
     golang.enable = mkDefault true;
     

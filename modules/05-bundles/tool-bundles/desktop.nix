@@ -53,6 +53,21 @@ in {
 
   config = mkIf cfg.enable {
     maxos.tools = {
+      # System utilities (htop, btop, neofetch, unzip, zip, wget, curl)
+      system-utilities.enable = mkIf cfg.enableAll true;
+      
+      # Multimedia applications (VLC, GIMP, LibreOffice)
+      multimedia-apps.enable = mkIf cfg.multimedia true;
+      
+      # Communication tools (Slack, Discord)
+      communication.enable = mkIf cfg.enableAll true;
+      
+      # File management tools (PCManFM, Ranger, feh)
+      file-management.enable = mkIf cfg.enableAll true;
+      
+      # Desktop monitoring tools (playerctl, networkmanagerapplet, etc.)
+      desktop-monitoring.enable = mkIf cfg.enableAll true;
+      
       # Web browsers (system-level)
       chromium.enable = mkIf cfg.browsers true;
       

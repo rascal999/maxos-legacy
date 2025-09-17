@@ -7,10 +7,10 @@ with lib;
 {
   imports = [
     # Core bundles for server
-    ../tool-bundles/server-stack.nix
-    ../tool-bundles/devops.nix
-    ../tool-bundles/ai-ml.nix
-    ../security/default.nix
+    ../../05-bundles/tool-bundles/server-stack.nix
+    ../../05-bundles/tool-bundles/devops.nix
+    ../../05-bundles/tool-bundles/ai-ml.nix
+    ../../security/default.nix
   ];
 
   # Enable tool bundles with server-focused profiles

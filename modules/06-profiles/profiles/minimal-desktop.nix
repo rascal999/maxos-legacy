@@ -7,8 +7,8 @@ with lib;
 {
   imports = [
     # Minimal bundle set
-    ../tool-bundles/terminal.nix
-    ../tool-bundles/desktop.nix
+    ../../05-bundles/tool-bundles/terminal.nix
+    ../../05-bundles/tool-bundles/desktop.nix
   ];
 
   # Enable bundles with minimal profiles

@@ -2,13 +2,32 @@
 
 {
   imports = [
-    ../../modules/home-profiles/development.nix
-    ../../modules/tools/logseq.nix
-    ../../modules/tools/claude-code.nix
+    # Using layered home system like G16
+    # ../../modules/home-profiles/development.nix  # Disabled - imports hybrid modules that conflict with layered structure
+    # ../../modules/tools/logseq.nix               # Disabled - hybrid module conflicts with layered structure
+    # ../../modules/tools/claude-code.nix          # Disabled - hybrid module conflicts with layered structure
   ];
 
-  # Development profile provides base configuration
-  modules.tools.direnv.enable = true;
+  # Enable individual tools that need home-manager configuration
+  # Note: Using layered system like G16
+  maxos.tools = {
+    # Terminal and shell
+    zsh.enable = true;
+    alacritty.enable = true;
+    tmux.enable = true;
+    
+    # Window manager
+    i3.enable = true;
+    
+    # Development tools
+    vscode.enable = true;
+    direnv.enable = true;
+    
+    # Applications
+    firefox.enable = true;
+    logseq.enable = true;
+    remmina.enable = true;
+  };
 
   # Home Manager needs a bit of information about you and the paths it should manage
   home = {
@@ -21,56 +40,12 @@
     # https://nix-community.github.io/home-manager/index.html#sec-install-standalone
 
     packages = with pkgs; [
-      # Fonts now managed centrally via maxos.fonts
-
-      # Media controls
-      playerctl
-
-      # Development tools
-      git
-      gh
-      neovim
-      ripgrep
-      fd
-      jq
-      tree
-      pwgen
+      # Packages provided by layered system and tool bundles
+      # Only unique packages not available through layered modules:
       aider-chat
       openai-whisper
       
-      # Java development
-      jdk
-      maven
-      gradle
-
-      # System tools
-      htop
-      btop
-      neofetch
-      unzip
-      zip
-      wget
-      curl
-
-      libreoffice
-      vlc
-      gimp
-      
-      # Communication
-      slack
-      discord
-      
-      # File management
-      pcmanfm
-      ranger
-      feh
-      
-      # System monitoring and management
-      networkmanagerapplet
-      arandr
-      redshift
-      brightnessctl
-      pasystray
+      # Fonts now managed centrally via maxos.fonts
     ];
 
     # Environment variables

@@ -5,15 +5,26 @@
     ../../modules/01-core/system/user.nix
   ];
 
-  # Use shared user configuration with additional groups
-  maxos.sharedUser = {
+  # Use layered user configuration
+  maxos.user = {
     enable = true;
-    username = "user";
+    name = "user";
+    homeDirectory = "/home/user";
+    fullName = "MaxOS User";
+    email = "user@example.com";
+  };
+  
+  # System user configuration (additional settings)
+  users.users.user = {
     initialPassword = "nixos";
     shell = pkgs.zsh;
     extraGroups = [ "wheel" "networkmanager" "video" "audio" "docker" "tty" "input" ];
-    enableDisplayManager = true;
-    displayManager = "lightdm";
-    desktopEnvironment = "i3";
+  };
+  
+  # Display manager configuration (moved to system level)
+  services.xserver = {
+    enable = true;
+    displayManager.lightdm.enable = true;
+    windowManager.i3.enable = true;
   };
 }

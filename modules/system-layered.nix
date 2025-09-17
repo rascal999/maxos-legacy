@@ -40,11 +40,14 @@
     # Desktop Environment
     ./04-applications/system/tools/desktop/input/keyd.nix
     ./04-applications/system/tools/desktop/themes/gtk.nix
+    ./04-applications/system/tools/desktop/monitoring.nix
     
     # Development Tools
     ./04-applications/system/tools/development/api-tools/postman.nix
     ./04-applications/system/tools/development/languages/golang.nix
     ./04-applications/system/tools/development/languages/npm.nix
+    ./04-applications/system/tools/development/core-tools.nix
+    ./04-applications/system/tools/development/languages/java.nix
     
     # Infrastructure
     ./04-applications/system/tools/infrastructure/monitoring/blocky.nix
@@ -56,6 +59,7 @@
     ./04-applications/system/tools/multimedia/gaming/steam.nix
     ./04-applications/system/tools/multimedia/knowledge/kiwix.nix
     ./04-applications/system/tools/multimedia/recording/simplescreenrecorder.nix
+    ./04-applications/system/tools/multimedia/applications.nix
     
     # Security
     ./04-applications/system/tools/security/crypto/git-crypt.nix
@@ -75,6 +79,16 @@
     
     # Virtualization
     ./04-applications/system/tools/virtualization/qemu.nix
+    
+    # Communication
+    ./04-applications/system/tools/communication/messaging.nix
+    
+    # File Management
+    ./04-applications/system/tools/file-management/managers.nix
+    
+    # System Utilities
+    ./04-applications/system/tools/system/core-utilities.nix
+    
     # Note: Hybrid modules (alacritty, zsh, vscode, tmux, etc.) are in home-layered.nix
     # Note: Services (docker, k3s, wireguard) are in Layer 3
     
@@ -93,6 +107,13 @@
     ./05-bundles/tool-bundles/devops.nix
     ./05-bundles/tool-bundles/remote-work.nix
     ./05-bundles/tool-bundles/gaming.nix
+    
+    # Layer 6: Profiles (depends on bundles)
+    ./06-profiles/profiles/developer-workstation.nix
+    ./06-profiles/profiles/gaming-workstation.nix
+    ./06-profiles/profiles/home-server.nix
+    ./06-profiles/profiles/minimal-desktop.nix
+    ./06-profiles/profiles/comprehensive-workstation.nix
     
     # Additional system modules
     ./security/default.nix
