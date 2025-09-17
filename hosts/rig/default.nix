@@ -51,11 +51,11 @@
   # Enable centralized font management
   maxos.fonts.enable = true;
   
-  # Enable secrets management
+  # Disable secrets management for now
   maxos.secrets = {
-    enable = true;
-    age.generateKey = true;
-    defaultSopsFile = "${config.maxos.user.secretsDirectory}/hosts/rig/secrets.yaml";
+    enable = false;
+    age.generateKey = false;
+    # defaultSopsFile = "${config.maxos.user.secretsDirectory}/hosts/rig/secrets.yaml";
   };
   
   # User configuration
