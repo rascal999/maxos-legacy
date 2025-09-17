@@ -151,14 +151,15 @@ update_boot_config() {
             cp hosts/$NIXOS_PROFILE/boot.nix hosts/$NIXOS_PROFILE/boot.nix.backup &&
             # Set variables for UUID replacement
             LUKS_UUID='$luks_uuid' &&
-            EFI_UUID='$efi_uuid' &&
             ROOT_UUID='$root_uuid' &&
+            EFI_PART='$efi_part' &&
             # Update LUKS device UUID (in luks.devices section)
             sed -i \"/luks\.devices/,/};/ s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"/dev/disk/by-uuid/\$LUKS_UUID\\\"|\" hosts/$NIXOS_PROFILE/boot.nix &&
             # Update root filesystem UUID (in fileSystems.\"/\" section)
             sed -i \"/fileSystems = {/,/};/ { /\\\"\/\\\" = {/,/};/ s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"/dev/disk/by-uuid/\$ROOT_UUID\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix &&
-            # Update EFI filesystem UUID (in fileSystems.\"/boot\" section)
-            sed -i \"/fileSystems = {/,/};/ { /\\\"\/boot\\\" = {/,/};/ s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"/dev/disk/by-uuid/\$EFI_UUID\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix &&
+            # Update EFI filesystem to use direct device path (more reliable than UUID for FAT32)
+            sed -i \"/fileSystems = {/,/};/ { /\\\"\/boot\\\" = {/,/};/ s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"\$EFI_PART\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix &&
+            sed -i \"/fileSystems = {/,/};/ { /\\\"\/boot\\\" = {/,/};/ s|device = \\\"/dev/[a-zA-Z0-9/]*\\\"|device = \\\"\$EFI_PART\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix &&
             echo 'Boot configuration updated successfully for profile: $NIXOS_PROFILE'
         else
             echo 'Warning: No boot.nix found for profile $NIXOS_PROFILE, using hardware-configuration.nix'
