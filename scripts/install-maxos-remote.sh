@@ -17,6 +17,7 @@ SSH_USER=""
 SSH_HOST=""
 TARGET_DISK=""
 NIXOS_PROFILE=""
+BOOT_ONLY=false
 
 # SSH options for key-only authentication
 SSH_OPTS="-o PasswordAuthentication=no -o PubkeyAuthentication=yes -o PreferredAuthentications=publickey -o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=10"
@@ -193,15 +194,19 @@ MaxOS Remote Installation Script
 This script runs on a NixOS machine and uses SSH to install MaxOS 
 on a remote NixOS live USB system with LUKS encryption.
 
-Usage: $0 -u SSH_USER -h SSH_HOST
+Usage: $0 -u SSH_USER -h SSH_HOST [OPTIONS]
 
 Required Options:
     -u, --user USER         SSH username (e.g., nixos)
     -h, --host HOST         SSH hostname/IP (e.g., 192.168.1.110)
+
+Optional Options:
+    --boot-only             Only update boot configuration with current disk UUIDs (for debugging)
     --help                  Show this help message
 
 Examples:
-    $0 -u nixos -h 192.168.1.110
+    $0 -u nixos -h 192.168.1.110                    # Full installation
+    $0 -u nixos -h 192.168.1.110 --boot-only        # Just update boot config
 
 The script will:
 1. Install Git on remote system
@@ -229,6 +234,10 @@ parse_args() {
             -h|--host)
                 SSH_HOST="$2"
                 shift 2
+                ;;
+            --boot-only)
+                BOOT_ONLY=true
+                shift
                 ;;
             --help)
                 show_usage
@@ -558,6 +567,58 @@ reboot_remote() {
     log_info "You will need to enter the LUKS passphrase during boot"
 }
 
+# Boot-only mode function
+boot_only_mode() {
+    echo "MaxOS Boot Configuration Update"
+    echo "==============================="
+    echo
+    
+    log_info "Boot-only mode: updating boot configuration with current disk UUIDs"
+    
+    # Find existing LUKS partition
+    if ! check_disk_setup; then
+        log_error "No LUKS partition found. Boot-only mode requires existing LUKS setup."
+        exit 1
+    fi
+    
+    local luks_partition
+    luks_partition=$(ssh_exec "sudo blkid -t TYPE=crypto_LUKS -o device | head -1")
+    if [[ -z "$luks_partition" ]]; then
+        log_error "Could not detect LUKS partition"
+        exit 1
+    fi
+    
+    # Extract base disk name from partition
+    if [[ "$luks_partition" =~ ^/dev/nvme ]]; then
+        TARGET_DISK=$(echo "$luks_partition" | sed 's/p[0-9]*$//')
+    else
+        TARGET_DISK=$(echo "$luks_partition" | sed 's/[0-9]*$//')
+    fi
+    
+    log_info "Detected target disk: $TARGET_DISK (LUKS partition: $luks_partition)"
+    
+    # Open LUKS partition if needed
+    if ! ssh_exec "sudo cryptsetup status cryptroot >/dev/null 2>&1"; then
+        log_info "LUKS partition needs to be opened..."
+        ssh_exec -t "sudo cryptsetup open $luks_partition cryptroot"
+        log_success "LUKS partition opened"
+    else
+        log_success "LUKS partition already open"
+    fi
+    
+    # Choose NixOS profile
+    show_profiles
+    
+    # Update boot configuration with correct UUIDs
+    update_boot_config
+    
+    # Commit and push UUID changes
+    commit_uuid_changes
+    
+    log_success "Boot configuration update completed!"
+    log_info "Updated boot configuration for $NIXOS_PROFILE profile with current disk UUIDs"
+}
+
 # Main installation function
 main() {
     echo "MaxOS Remote Installation Script"
@@ -581,6 +642,12 @@ main() {
     
     # Clone MaxOS repository on remote system
     clone_maxos_remote
+    
+    # Check if boot-only mode
+    if [[ "$BOOT_ONLY" == "true" ]]; then
+        boot_only_mode
+        return 0
+    fi
     
     # Check if LUKS disk already exists and give user choice
     if check_disk_setup; then
