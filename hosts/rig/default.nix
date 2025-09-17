@@ -114,6 +114,12 @@
         theme.name = "Adwaita-dark";
       };
     };
+    
+    # Enable autologin
+    displayManager.autoLogin = {
+      enable = true;
+      user = "user";
+    };
   };
 
   # Display manager session configuration

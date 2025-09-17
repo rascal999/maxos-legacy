@@ -112,6 +112,12 @@
         background = "#000000";
         greeters.gtk.theme.name = "Adwaita-dark";
       };
+      
+      # Enable autologin
+      displayManager.autoLogin = {
+        enable = true;
+        user = "user";
+      };
     };
     
     # Disable conflicting services
