@@ -58,7 +58,7 @@
       neededForBoot = true;
     };
     "/boot" = {
-      device = "/dev/nvme1n1p1";  # Use direct device path for EFI partition
+      device = "/dev/disk/by-uuid/39AD-D3AF";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };

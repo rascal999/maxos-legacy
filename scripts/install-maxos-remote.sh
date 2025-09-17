@@ -152,14 +152,30 @@ update_boot_config() {
             # Set variables for UUID replacement
             LUKS_UUID='$luks_uuid' &&
             ROOT_UUID='$root_uuid' &&
+            EFI_UUID='$efi_uuid' &&
             EFI_PART='$efi_part' &&
+            
+            echo 'Updating UUIDs in boot configuration:' &&
+            echo '  LUKS UUID: '$luks_uuid &&
+            echo '  Root UUID: '$root_uuid &&
+            echo '  EFI UUID: '$efi_uuid &&
+            echo '  EFI Partition: '$efi_part &&
+            
             # Update LUKS device UUID (in luks.devices section)
             sed -i \"/luks\.devices/,/};/ s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"/dev/disk/by-uuid/\$LUKS_UUID\\\"|\" hosts/$NIXOS_PROFILE/boot.nix &&
+            
             # Update root filesystem UUID (in fileSystems.\"/\" section)
             sed -i \"/fileSystems = {/,/};/ { /\\\"\/\\\" = {/,/};/ s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"/dev/disk/by-uuid/\$ROOT_UUID\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix &&
-            # Update EFI filesystem to use direct device path (more reliable than UUID for FAT32)
-            sed -i \"/fileSystems = {/,/};/ { /\\\"\/boot\\\" = {/,/};/ s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"\$EFI_PART\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix &&
-            sed -i \"/fileSystems = {/,/};/ { /\\\"\/boot\\\" = {/,/};/ s|device = \\\"/dev/[a-zA-Z0-9/]*\\\"|device = \\\"\$EFI_PART\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix &&
+            
+            # For EFI partition, try UUID first, fallback to device path if UUID format is problematic
+            if [[ \$EFI_UUID =~ ^[A-F0-9]{4}-[A-F0-9]{4}$ ]]; then
+                echo 'Using EFI UUID (valid FAT32 format): '\$EFI_UUID &&
+                sed -i \"/fileSystems = {/,/};/ { /\\\"\/boot\\\" = {/,/};/ s|device = \\\"/dev/[^\\\"]*\\\"|device = \\\"/dev/disk/by-uuid/\$EFI_UUID\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix
+            else
+                echo 'EFI UUID format invalid, using device path: '\$EFI_PART &&
+                sed -i \"/fileSystems = {/,/};/ { /\\\"\/boot\\\" = {/,/};/ s|device = \\\"/dev/[^\\\"]*\\\"|device = \\\"\$EFI_PART\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix
+            fi &&
+            
             echo 'Boot configuration updated successfully for profile: $NIXOS_PROFILE'
         else
             echo 'Warning: No boot.nix found for profile $NIXOS_PROFILE, using hardware-configuration.nix'
