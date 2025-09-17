@@ -529,13 +529,10 @@ main() {
     # Clone MaxOS repository on remote system
     clone_maxos_remote
     
-    # Choose disk for installation (only if not already set up)
-    if ! check_disk_setup; then
-        choose_disk
-        # Setup LUKS encryption
-        setup_luks_remote
-    else
-        log_info "LUKS disk already set up, detecting target disk..."
+    # Check if LUKS disk already exists and give user choice
+    if check_disk_setup; then
+        log_warning "LUKS encrypted disk detected on remote system"
+        
         # Find the disk that contains LUKS partitions
         local luks_partition
         luks_partition=$(ssh_exec "sudo blkid -t TYPE=crypto_LUKS -o device | head -1")
@@ -551,17 +548,55 @@ main() {
             TARGET_DISK=$(echo "$luks_partition" | sed 's/[0-9]*$//')
         fi
         
-        log_success "Detected target disk: $TARGET_DISK (LUKS partition: $luks_partition)"
-        log_success "LUKS encryption already set up"
+        log_info "Detected target disk: $TARGET_DISK (LUKS partition: $luks_partition)"
+        echo
+        echo "Options:"
+        echo "1. Continue with existing LUKS setup (preserve data)"
+        echo "2. Fresh install (DESTROY ALL DATA and recreate LUKS)"
+        echo
         
-        # Prompt to open LUKS partition if not already open
-        if ! ssh_exec "sudo cryptsetup status cryptroot >/dev/null 2>&1"; then
-            log_info "LUKS partition needs to be opened..."
-            ssh_exec -t "sudo cryptsetup open $luks_partition cryptroot"
-            log_success "LUKS partition opened"
-        else
-            log_success "LUKS partition already open"
-        fi
+        while true; do
+            read -p "Choose option (1 or 2): " choice
+            case $choice in
+                1)
+                    log_info "Continuing with existing LUKS setup..."
+                    # Prompt to open LUKS partition if not already open
+                    if ! ssh_exec "sudo cryptsetup status cryptroot >/dev/null 2>&1"; then
+                        log_info "LUKS partition needs to be opened..."
+                        ssh_exec -t "sudo cryptsetup open $luks_partition cryptroot"
+                        log_success "LUKS partition opened"
+                    else
+                        log_success "LUKS partition already open"
+                    fi
+                    break
+                    ;;
+                2)
+                    log_warning "Fresh install selected - ALL DATA WILL BE DESTROYED!"
+                    echo
+                    log_warning "This will completely wipe $TARGET_DISK and recreate LUKS encryption"
+                    read -p "Are you absolutely sure? (type 'DESTROY' to confirm): " confirm
+                    if [[ "$confirm" != "DESTROY" ]]; then
+                        log_info "Fresh install cancelled"
+                        exit 0
+                    fi
+                    
+                    log_info "Performing fresh install on $TARGET_DISK..."
+                    # Close any open LUKS devices first
+                    ssh_exec "sudo cryptsetup close cryptroot 2>/dev/null || true"
+                    # Setup LUKS encryption (this will wipe the disk)
+                    setup_luks_remote
+                    break
+                    ;;
+                *)
+                    log_error "Invalid choice. Please enter 1 or 2"
+                    ;;
+            esac
+        done
+    else
+        # No LUKS found, proceed with normal disk selection
+        choose_disk
+        # Setup LUKS encryption
+        setup_luks_remote
     fi
     
     # Choose NixOS profile
