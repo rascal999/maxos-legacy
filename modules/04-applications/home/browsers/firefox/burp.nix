@@ -15,7 +15,7 @@
     profiles.burp = {
       id = 1;
       isDefault = false;
-      search.default = "Google";
+      search.default = "google";
       settings = {
         # Enable dark theme
         "browser.theme.content-theme" = 0;

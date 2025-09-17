@@ -85,7 +85,7 @@ in {
     };
 
     # Display and backlight
-    services.xserver.libinput = mkIf cfg.touchpad.enable {
+    services.libinput = mkIf cfg.touchpad.enable {
       enable = true;
       touchpad = {
         naturalScrolling = cfg.touchpad.naturalScrolling;

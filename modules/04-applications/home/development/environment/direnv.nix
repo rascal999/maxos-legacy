@@ -10,7 +10,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs.zsh.initExtra = ''
+    programs.zsh.initContent = ''
       function find_and_activate_venv() {
         local current_dir="$PWD"
         while [[ "$current_dir" != "/" ]]; do

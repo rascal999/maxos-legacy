@@ -71,7 +71,7 @@ with lib;
 
   # Hardware optimizations
   hardware = {
-    opengl = {
+    graphics = {
       enable = mkDefault true;
       # driSupport is deprecated and automatically enabled
     };

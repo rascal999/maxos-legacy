@@ -42,6 +42,11 @@
         efiSupport = true;
         enableCryptodisk = true;
         useOSProber = true;
+        # Reduce os-prober verbosity and device mapper warnings
+        extraConfig = ''
+          # Suppress os-prober warnings about device mapper devices
+          GRUB_DISABLE_OS_PROBER_WARNINGS=true
+        '';
       };
     };
   };

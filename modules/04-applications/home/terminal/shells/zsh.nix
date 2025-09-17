@@ -48,7 +48,7 @@ in {
       share = false;  # Disable sharing to prevent race conditions
     };
 
-    initExtra = ''
+    initContent = ''
       # Set terminal font
       if [[ "$TERM" == "xterm-256color" || "$TERM" == "screen-256color" || "$TERM" == "alacritty" ]]; then
         POWERLEVEL9K_MODE='nerdfont-complete'
