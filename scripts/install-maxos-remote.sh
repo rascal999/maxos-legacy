@@ -153,12 +153,12 @@ update_boot_config() {
             LUKS_UUID='$luks_uuid' &&
             EFI_UUID='$efi_uuid' &&
             ROOT_UUID='$root_uuid' &&
-            # Update UUIDs in the target profile's boot.nix using generic patterns
-            sed -i \"s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"/dev/disk/by-uuid/\$LUKS_UUID\\\"|g\" hosts/$NIXOS_PROFILE/boot.nix &&
-            # More specific replacements for different filesystem types
-            sed -i \"s|/dev/disk/by-uuid/[a-fA-F0-9-]* # LUKS|/dev/disk/by-uuid/\$LUKS_UUID|g\" hosts/$NIXOS_PROFILE/boot.nix &&
-            sed -i \"s|/dev/disk/by-uuid/[A-F0-9-]* # EFI|/dev/disk/by-uuid/\$EFI_UUID|g\" hosts/$NIXOS_PROFILE/boot.nix &&
-            sed -i \"s|/dev/disk/by-uuid/[a-fA-F0-9-]* # Root|/dev/disk/by-uuid/\$ROOT_UUID|g\" hosts/$NIXOS_PROFILE/boot.nix &&
+            # Update LUKS device UUID (in luks.devices section)
+            sed -i \"/luks\.devices/,/};/ s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"/dev/disk/by-uuid/\$LUKS_UUID\\\"|\" hosts/$NIXOS_PROFILE/boot.nix &&
+            # Update root filesystem UUID (in fileSystems.\"/\" section)
+            sed -i \"/fileSystems = {/,/};/ { /\\\"\/\\\" = {/,/};/ s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"/dev/disk/by-uuid/\$ROOT_UUID\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix &&
+            # Update EFI filesystem UUID (in fileSystems.\"/boot\" section)
+            sed -i \"/fileSystems = {/,/};/ { /\\\"\/boot\\\" = {/,/};/ s|device = \\\"/dev/disk/by-uuid/[a-fA-F0-9-]*\\\"|device = \\\"/dev/disk/by-uuid/\$EFI_UUID\\\"|; }\" hosts/$NIXOS_PROFILE/boot.nix &&
             echo 'Boot configuration updated successfully for profile: $NIXOS_PROFILE'
         else
             echo 'Warning: No boot.nix found for profile $NIXOS_PROFILE, using hardware-configuration.nix'
