@@ -350,10 +350,14 @@ clone_maxos_remote() {
         log_success "MaxOS repository cloned to /tmp/monorepo/maxos on remote system"
     fi
     
-    # Ensure git tree is clean for flake operations
-    log_info "Ensuring git repository is clean..."
-    ssh_exec "cd /tmp/monorepo && git status --porcelain | wc -l | grep -q '^0$' || (git add . && git commit -m 'Auto-commit during installation')"
-    log_success "Git repository is clean"
+    # Configure git user for potential commits later
+    log_info "Configuring git user identity..."
+    ssh_exec "
+        cd /tmp/monorepo &&
+        git config user.email 'install-script@maxos.local' &&
+        git config user.name 'MaxOS Install Script'
+    "
+    log_success "Git user identity configured"
 }
 
 # Show available disks on remote system
@@ -513,6 +517,20 @@ install_nixos_remote() {
     log_success "NixOS installation completed"
 }
 
+# Commit and push UUID changes
+commit_uuid_changes() {
+    log_info "Committing and pushing UUID changes to repository..."
+    
+    ssh_exec "
+        cd /tmp/monorepo &&
+        git add . &&
+        git commit -m 'Update $NIXOS_PROFILE boot configuration with actual disk UUIDs from installation' &&
+        git push
+    "
+    
+    log_success "UUID changes committed and pushed to repository"
+}
+
 # Reboot remote system
 reboot_remote() {
     log_info "Installation complete. Rebooting remote system..."
@@ -631,6 +649,9 @@ main() {
     
     # Install NixOS
     install_nixos_remote
+    
+    # Commit and push UUID changes
+    commit_uuid_changes
     
     # Reboot
     reboot_remote
