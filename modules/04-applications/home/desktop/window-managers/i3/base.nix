@@ -20,6 +20,39 @@ in {
   config = mkIf (cfg.enable && dependenciesValid) {
     programs.home-manager.enable = true;
 
+  # GTK theme configuration for dark theme
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+    cursorTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+  # Qt theme configuration for consistency
+  qt = {
+    enable = true;
+    platformTheme.name = "gtk3";
+    style.name = "adwaita-dark";
+  };
+
+  # Enable dconf for GTK settings
+  dconf.enable = true;
+
   # Shell aliases
   programs.bash = {
     enable = true;
@@ -44,6 +77,10 @@ in {
     enable = true;
     config = {
       modifier = "Mod1";  # Use Alt key as modifier
+      
+      # Enable workspace back-and-forth functionality
+      # This allows Alt+1 to switch back to previous workspace when pressed again
+      workspaceAutoBackAndForth = true;
 
       # Window rules for workspace assignment and urgent hints
       window.commands = [

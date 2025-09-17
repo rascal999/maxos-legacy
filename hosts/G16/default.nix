@@ -74,29 +74,6 @@
     aiMl.enableWebInterface = false;  # Disable AI web interface for now
   };
 
-  # G16-specific tool configuration
-  maxos.tools = {
-    # AI tools (selective enabling) - use mkForce to override bundle defaults
-    ollama.enable = lib.mkForce false;
-    open-webui.enable = lib.mkForce false;
-    
-    # Content creation and gaming
-    simplescreenrecorder.enable = true;
-    steam.enable = true;
-    
-    # Development essentials
-    docker.enable = true;
-    chromium.enable = true;
-    brave.enable = true;
-    keepassxc.enable = true;
-    
-    # Backup system with SOPS integration
-    restic = {
-      enable = true;
-      hostSubdir = "G16";
-      useSopsSecrets = true;
-    };
-  };
 
   # Secrets management
   maxos.secrets = {
@@ -113,6 +90,33 @@
     ];
   };
 
+  # G16-specific tool configuration
+  maxos.tools = {
+    # AI tools (selective enabling) - use mkForce to override bundle defaults
+    ollama.enable = lib.mkForce false;
+    open-webui.enable = lib.mkForce false;
+    
+    # Content creation and gaming
+    simplescreenrecorder.enable = true;
+    steam.enable = true;
+    
+    # Development essentials
+    docker.enable = true;
+    chromium.enable = true;
+    brave.enable = true;
+    keepassxc.enable = true;
+    
+    # Desktop theming
+    gtk-theme.enable = true;
+    
+    # Backup system with SOPS integration
+    restic = {
+      enable = true;
+      hostSubdir = "G16";
+      useSopsSecrets = true;
+    };
+  };
+
   # G16-specific system configuration
   services = {
     # X11 and i3 (from gaming-workstation profile, but customized)
@@ -127,7 +131,6 @@
         greeters.gtk.theme.name = "Adwaita-dark";
       };
     };
-    
     
     # Disable conflicting services
     redshift.enable = false;

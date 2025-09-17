@@ -39,6 +39,7 @@
     
     # Desktop Environment
     ./04-applications/system/tools/desktop/input/keyd.nix
+    ./04-applications/system/tools/desktop/themes/gtk.nix
     
     # Development Tools
     ./04-applications/system/tools/development/api-tools/postman.nix
