@@ -73,6 +73,11 @@
         hostPath = ./hosts/rig/default.nix;
         homeConfigPath = ./hosts/rig/home.nix;
       };
+      
+      rig-minimal = hostConfig.mkMaxOSHost {
+        hostname = "rig-minimal";
+        hostPath = ./hosts/rig-minimal/default.nix;
+      };
     };
   };
 }
