@@ -69,6 +69,8 @@ in {
     wmctrl
     xdotool
     i3status-rust
+    blueman
+    networkmanagerapplet
   ];
   # Copy i3status-rust configuration
   home.file.".config/i3status-rust/config-default.toml".source = ./config-default.toml;
@@ -131,6 +133,10 @@ in {
         { command = "redshift -O 3500 -b 0.6"; notification = false; }
         # Start pwvucontrol for PipeWire volume control
         { command = "pwvucontrol"; notification = false; }
+        # Start bluetooth applet
+        { command = "sleep 1 && ${pkgs.blueman}/bin/blueman-applet"; notification = false; }
+        # Start network manager applet
+        { command = "sleep 1 && ${pkgs.networkmanagerapplet}/bin/nm-applet"; notification = false; }
         { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
         { command = "sleep 2 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
         { command = "sleep 4 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }

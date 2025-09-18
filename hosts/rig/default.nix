@@ -12,6 +12,17 @@
     # Tools are configured via modules.tools.* options below
   ];
 
+  # Hardware profile for desktop rig (only wireless/bluetooth, graphics and audio handled by specific configs)
+  maxos.hardware.desktop = {
+    enable = true;
+    graphics.enable = false;  # Handled by nvidia.nix
+    audio.enable = false;     # Handled by audio.nix
+    wireless = {
+      enable = true;
+      bluetooth = true;
+    };
+  };
+
   # Use comprehensive workstation profile
   maxos.profiles.comprehensiveWorkstation = {
     enable = true;

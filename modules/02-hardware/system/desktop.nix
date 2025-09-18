@@ -58,6 +58,20 @@ in {
       };
     };
     
+    wireless = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Enable wireless networking";
+      };
+      
+      bluetooth = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Enable bluetooth support";
+      };
+    };
+    
     storage = {
       ssd = mkOption {
         type = types.bool;
@@ -102,23 +116,20 @@ in {
 
     # NVIDIA configuration
     hardware.nvidia = mkIf cfg.graphics.nvidia {
-      modesetting.enable = true;
-      powerManagement.enable = false; # Desktop doesn't need power saving
-      powerManagement.finegrained = false;
-      open = false; # Use proprietary driver
-      nvidiaSettings = true;
+      modesetting.enable = mkDefault true;
+      powerManagement.enable = mkDefault false; # Desktop doesn't need power saving
+      powerManagement.finegrained = mkDefault false;
+      open = mkDefault false; # Use proprietary driver
+      nvidiaSettings = mkDefault true;
     };
     
     # Audio configuration
-    sound.enable = mkIf cfg.audio.enable true;
-    hardware.pulseaudio.enable = false; # Always use PipeWire instead
-    
     services.pipewire = mkIf cfg.audio.enable {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = cfg.audio.lowLatency;
+      enable = mkDefault true;
+      alsa.enable = mkDefault true;
+      alsa.support32Bit = mkDefault true;
+      pulse.enable = mkDefault true;
+      jack.enable = mkDefault cfg.audio.lowLatency;
     };
 
     # Real-time audio group
@@ -128,20 +139,34 @@ in {
     services.fstrim.enable = mkIf (cfg.storage.ssd && cfg.storage.trim) true;
 
     # Desktop-specific packages
-    environment.systemPackages = with pkgs; mkIf cfg.enable [
+    environment.systemPackages = mkIf cfg.enable (with pkgs; [
       glxinfo
       vulkan-tools
       pciutils
       usbutils
-    ] ++ optionals cfg.graphics.nvidia [
+    ] ++ (optionals cfg.graphics.nvidia [
       nvidia-docker
       nvidia-container-toolkit
       cudaPackages.cuda_nvcc
       cudaPackages.cuda_cudart
-    ] ++ optionals cfg.audio.lowLatency [
+    ]) ++ (optionals cfg.audio.lowLatency [
       qjackctl
       carla
-    ];
+    ]) ++ (optionals cfg.wireless.bluetooth [
+      bluez
+    ]));
+
+    # Wireless networking
+    networking.wireless.enable = mkIf cfg.wireless.enable false; # Use NetworkManager instead
+    networking.networkmanager.enable = mkIf cfg.wireless.enable true;
+
+    # Bluetooth
+    hardware.bluetooth = mkIf cfg.wireless.bluetooth {
+      enable = true;
+      powerOnBoot = true;
+    };
+
+    services.blueman.enable = mkIf cfg.wireless.bluetooth true;
 
     # Enable container GPU support for NVIDIA
     hardware.nvidia-container-toolkit.enable = mkIf cfg.graphics.nvidia true;
