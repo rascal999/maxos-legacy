@@ -40,6 +40,9 @@
   # Enable Kubernetes tooling
   maxos.tools.helmfile.enable = true;
   
+  # Enable iSCSI storage support
+  maxos.tools.open-iscsi.enable = true;
+  
   # Explicitly disable AI tools that might cause build issues
   maxos.tools.ollama.enable = lib.mkForce false;
   maxos.tools.open-webui.enable = lib.mkForce false;

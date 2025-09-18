@@ -17,6 +17,7 @@
     # Layer 3: Services modules (depends on core + hardware)
     ./03-services/system/docker.nix
     ./03-services/system/k3s.nix
+    ./03-services/system/open-iscsi.nix
     ./03-services/system/wireguard.nix
     
     # Layer 4: Applications (depends on services) - system-only tools

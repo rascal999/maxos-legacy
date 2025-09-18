@@ -104,6 +104,9 @@
       ];
     };
     
+    # Enable iSCSI storage support
+    open-iscsi.enable = true;
+    
     # AI tools disabled for laptop
     ollama.enable = lib.mkForce false;
     open-webui.enable = lib.mkForce false;
