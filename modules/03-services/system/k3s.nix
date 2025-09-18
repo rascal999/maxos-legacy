@@ -1,20 +1,22 @@
 { config, lib, pkgs, ... }:
 
-# This module enables and configures k3s, a lightweight Kubernetes distribution.
+# MaxOS K3s Service Wrapper (Layer 3 - Services)
 #
-# The kubeconfig file will be created with 644 permissions (readable by all users)
-# at /etc/rancher/k3s/k3s.yaml, so kubectl can be used without sudo.
-#
-# The KUBECONFIG environment variable is automatically set to /etc/rancher/k3s/k3s.yaml
-# for all users, so kubectl commands will work without additional configuration.
+# This module wraps the standard NixOS k3s service with MaxOS-specific
+# configuration and stability improvements, following layered architecture.
 
 with lib;
 
 let
   cfg = config.maxos.tools.k3s;
+  
+  # Validate dependencies exist before referencing them
+  dependenciesValid =
+    config.maxos.user.enable or true;
+    
 in {
   options.maxos.tools.k3s = {
-    enable = mkEnableOption "k3s lightweight Kubernetes";
+    enable = mkEnableOption "k3s lightweight Kubernetes via MaxOS wrapper";
     
     role = mkOption {
       type = types.enum [ "server" "agent" ];
@@ -41,52 +43,40 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    # Install k3s and kubectl
+  config = mkIf (cfg.enable && dependenciesValid) {
+    assertions = [
+      {
+        assertion = dependenciesValid;
+        message = "MaxOS k3s wrapper requires user module to be enabled";
+      }
+    ];
+
+    # Use standard NixOS k3s service with MaxOS enhancements
+    services.k3s = {
+      enable = true;
+      role = cfg.role;
+      serverAddr = mkIf (cfg.role == "agent") cfg.serverAddr;
+      token = mkIf (cfg.role == "agent") cfg.token;
+      # Use clusterInit for fresh installations (cluster data was cleaned)
+      clusterInit = mkIf (cfg.role == "server") true;  # Required for first node
+      extraFlags = (if cfg.role == "server" then [
+        # IPv4 binding fixes to prevent IPv6 localhost issues
+        "--bind-address=0.0.0.0"
+        # Let K3S auto-detect the advertise address (don't use loopback)
+        "--kube-apiserver-arg=bind-address=0.0.0.0"
+        "--write-kubeconfig-mode=644"  # Make kubeconfig readable by all users
+      ] else []) ++ cfg.extraFlags;
+    };
+    
+    # MaxOS-specific enhancements
     environment.systemPackages = with pkgs; [
-      k3s
       kubectl
       kubernetes-helm
     ];
 
-    # Configure and enable k3s service
-    systemd.services.k3s = {
-      description = "k3s: Lightweight Kubernetes";
-      documentation = [ "https://k3s.io" ];
-      wants = [ "network-online.target" ];
-      after = [ "network-online.target" ];
-      wantedBy = [ "multi-user.target" ];
-      
-      path = [ pkgs.k3s ];
-      
-      serviceConfig = {
-        Type = "notify";
-        KillMode = "process";
-        Delegate = "yes";
-        LimitNOFILE = "infinity";
-        LimitNPROC = "infinity";
-        LimitCORE = "infinity";
-        TasksMax = "infinity";
-        TimeoutStartSec = "0";
-        Restart = "always";
-        RestartSec = "5s";
-        ExecStart = let
-          args = if cfg.role == "server" then
-            [ "server"
-              "--write-kubeconfig-mode" "644"  # Make kubeconfig readable by all users
-            ] ++ cfg.extraFlags
-          else
-            [ "agent"
-              "--server" cfg.serverAddr
-              "--token" cfg.token
-            ] ++ cfg.extraFlags;
-        in "${pkgs.k3s}/bin/k3s ${concatStringsSep " " args}";
-      };
-    };
-
-    # Configure firewall for k3s
+    # Configure firewall for k3s (only for servers)
     networking.firewall = mkIf (cfg.role == "server") {
-      allowedTCPPorts = [ 6443 ];  # Kubernetes API
+      allowedTCPPorts = [ 6443 ]; # k3s API server
     };
 
     # Set up KUBECONFIG environment variable for all users
