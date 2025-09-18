@@ -35,7 +35,7 @@ in {
     includeAudioTray = mkOption {
       type = types.bool;
       default = true;
-      description = "Include audio system tray (pasystray)";
+      description = "Include PipeWire volume control (pwvucontrol)";
     };
     
     includeRedshift = mkOption {
@@ -57,7 +57,7 @@ in {
     ] ++ optionals cfg.includeBrightnessControl [
       brightnessctl
     ] ++ optionals cfg.includeAudioTray [
-      pasystray
+      pwvucontrol
     ] ++ optionals cfg.includeRedshift [
       redshift
     ];

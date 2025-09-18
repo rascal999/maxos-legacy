@@ -109,10 +109,7 @@ in {
 
     # Additional individual tools not covered by bundles
     maxos.tools = {
-      # AI/ML tools
-      fabric-ai.enable = cfg.profile == "full" || cfg.profile == "ultimate";
-      
-      # Infrastructure services
+      # Infrastructure services - use MaxOS k3s wrapper (Layer 3)
       k3s = mkIf cfg.enableInfrastructure {
         enable = true;
         role = "server";
@@ -120,6 +117,8 @@ in {
           "--disable-cloud-controller"
         ];
       };
+      # AI/ML tools
+      fabric-ai.enable = cfg.profile == "full" || cfg.profile == "ultimate";
       
       blocky.enable = mkDefault cfg.enableInfrastructure;
       
