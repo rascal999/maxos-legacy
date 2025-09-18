@@ -145,6 +145,7 @@ in {
       
       # Kubernetes tools
       argocd.enable = mkDefault cfg.enableInfrastructure;
+      helmfile.enable = mkDefault cfg.enableInfrastructure;
       
       # AI tools (selective enabling)
       grafana.enable = mkDefault false;

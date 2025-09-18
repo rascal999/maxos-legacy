@@ -69,7 +69,7 @@
     enableGaming = true;
     enableSecurity = true;
     enableMultimedia = true;
-    enableInfrastructure = false;  # G16 laptop doesn't need k3s infrastructure
+    enableInfrastructure = true;  # Enable k3s infrastructure for G16
   };
 
   # Secrets management
@@ -92,6 +92,16 @@
     # Override backup subdirectory for G16
     restic = {
       hostSubdir = lib.mkForce "G16";
+    };
+    
+    # Enable Kubernetes tooling
+    helmfile.enable = true;
+    k3s = {
+      enable = true;
+      role = "server";
+      extraFlags = [
+        "--disable-cloud-controller"
+      ];
     };
     
     # AI tools disabled for laptop
@@ -119,7 +129,7 @@
   };
   
   # Display manager session and autologin configuration
-  displayManager = {
+  services.displayManager = {
     defaultSession = "none+i3";
     autoLogin = {
       enable = true;

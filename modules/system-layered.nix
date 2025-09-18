@@ -30,6 +30,7 @@
     
     # Containers
     ./04-applications/system/tools/containers/kubernetes/argocd.nix
+    ./04-applications/system/tools/containers/kubernetes/helmfile.nix
     
     # Data Management
     ./04-applications/system/tools/data/analysis/linuxquota.nix

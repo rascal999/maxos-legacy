@@ -49,6 +49,7 @@ in {
       
       # GitOps and deployment
       argocd.enable = mkIf cfg.enableGitOps true;
+      helmfile.enable = mkIf cfg.enableDevelopmentWorkflow true;
       
       # Production infrastructure
       grafana.enable = mkIf cfg.enableProductionTools true;
