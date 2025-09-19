@@ -72,11 +72,11 @@
     enableInfrastructure = true;  # Enable k3s infrastructure for G16
   };
 
-  # Secrets management
+  # Disable secrets management for now
   maxos.secrets = {
-    enable = true;
-    age.generateKey = true;
-    defaultSopsFile = "${config.maxos.user.secretsDirectory}/hosts/G16/secrets.yaml";
+    enable = false;
+    age.generateKey = false;
+    # defaultSopsFile = "${config.maxos.user.secretsDirectory}/hosts/G16/secrets.yaml";
   };
 
   # Security configuration
@@ -92,6 +92,7 @@
     # Override backup subdirectory for G16
     restic = {
       hostSubdir = lib.mkForce "G16";
+      useSopsSecrets = false;
     };
     
     # Enable Kubernetes tooling
