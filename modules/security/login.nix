@@ -6,6 +6,9 @@ let
   cfg = config.security;
 in {
   config = mkIf cfg.enable {
+    # Enable sudo
+    security.sudo.enable = true;
+    
     # Configure sudo to not require password
     security.sudo.extraRules = [
       {

@@ -23,7 +23,7 @@ in {
     crypto = mkOption {
       type = types.bool;
       default = cfg.enableAll;
-      description = "Enable cryptographic tools (OpenSSL)";
+      description = "Enable cryptographic tools (OpenSSL, git-crypt)";
     };
     
     monitoring = mkOption {
@@ -49,6 +49,7 @@ in {
       
       # Cryptographic tools
       openssl.enable = mkIf cfg.crypto true;
+      git-crypt.enable = mkIf cfg.crypto true;
       
       # Password management
       keepassxc.enable = mkIf cfg.passwordManagement true;

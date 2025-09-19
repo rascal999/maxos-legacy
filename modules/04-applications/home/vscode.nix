@@ -20,11 +20,21 @@ in {
   config = mkIf (cfg.enable && dependenciesValid) {
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode-fhs;
+    package = pkgs.vscode;
     profiles.default = {
       userSettings = {
         "workbench.startupEditor" = "none";
-        "terminal.integrated.defaultProfile.linux" = "bash";
+        "terminal.integrated.defaultProfile.linux" = "zsh";
+        "terminal.integrated.profiles.linux" = {
+          "zsh" = {
+            "path" = "zsh";
+            "icon" = "terminal-bash";
+          };
+          "bash" = {
+            "path" = "bash";
+            "icon" = "terminal-bash";
+          };
+        };
         "terminal.integrated.env.linux" = {
           "KUBECONFIG" = "${userConfig.homeDirectory}/.kube/config";
         };

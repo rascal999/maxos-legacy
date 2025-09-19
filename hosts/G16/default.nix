@@ -99,6 +99,11 @@
     k3s = {
       enable = true;
       role = "server";
+      traefik = {
+        enable = true;
+        hostPort = false;  # Disable hostPort in favor of static IP
+        staticIP = "127.0.0.2";  # Use secondary loopback IP for domains
+      };
       extraFlags = [
         "--disable-cloud-controller"
       ];

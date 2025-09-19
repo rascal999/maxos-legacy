@@ -39,6 +39,19 @@
   
   # Enable Kubernetes tooling
   maxos.tools.helmfile.enable = true;
+  maxos.tools.k3s = {
+    enable = true;
+    role = "server";
+    traefik = {
+      enable = true;
+      hostPort = false;  # Disable hostPort in favor of static IP
+      staticIP = "127.0.0.2";  # Use secondary loopback IP for domains
+    };
+    extraFlags = [
+      "--disable-cloud-controller"
+      "--disable=servicelb"  # Disable built-in ServiceLB to prevent hostPort bindings
+    ];
+  };
   
   # Enable iSCSI storage support
   maxos.tools.open-iscsi.enable = true;
@@ -94,7 +107,7 @@
   
   # Add hosts entries
   networking.hosts = {
-    "127.0.0.1" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
+    "127.0.0.2" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
   };
 
   # Udev rules for PTT script device access

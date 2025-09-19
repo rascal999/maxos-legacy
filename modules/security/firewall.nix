@@ -10,6 +10,8 @@ in {
       enable = true;
       allowedTCPPorts = [
         22    # SSH
+        80    # HTTP (for hostPort and localhost access)
+        443   # HTTPS (for hostPort and localhost access)
         22000 # Syncthing Transfer Protocol
         11434 # Ollama
         3000  # Open WebUI
@@ -33,6 +35,7 @@ in {
       ];
       # Allow traffic on Docker and Kubernetes bridge interfaces
       trustedInterfaces = [
+        "lo"          # Loopback interface (localhost/127.0.0.1)
         "docker0"     # Default Docker bridge
         "br-+"        # Docker custom bridges (pattern match)
         "cni+"        # CNI interfaces (pattern match)
