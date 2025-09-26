@@ -106,7 +106,7 @@
         staticIP = "127.0.0.2";  # Use secondary loopback IP for domains
       };
       extraFlags = [
-        "--disable-cloud-controller"
+        # servicelb is automatically disabled when staticIP is configured
       ];
     };
     
@@ -154,7 +154,7 @@
 
   # Networking
   networking.hosts = {
-    "127.0.0.1" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
+    "127.0.0.2" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
   };
 
   # K3s registry configuration

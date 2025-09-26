@@ -115,7 +115,8 @@ in {
         Type = "simple";
         Restart = "always";
         RestartSec = "5s";
-        ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:80,bind=${cfg.traefik.staticIP},reuseaddr,fork TCP:10.43.78.186:80";
+        ExecStart = "${pkgs.bash}/bin/bash -c 'TRAEFIK_IP=$(${pkgs.kubectl}/bin/kubectl get svc -n kube-system traefik -o jsonpath=\"{.spec.clusterIP}\" 2>/dev/null || echo \"10.43.0.1\"); ${pkgs.socat}/bin/socat TCP-LISTEN:80,bind=${cfg.traefik.staticIP},reuseaddr,fork TCP:$TRAEFIK_IP:80'";
+        Environment = "KUBECONFIG=/etc/rancher/k3s/k3s.yaml";
       };
     };
     
@@ -128,7 +129,8 @@ in {
         Type = "simple";
         Restart = "always";
         RestartSec = "5s";
-        ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:443,bind=${cfg.traefik.staticIP},reuseaddr,fork TCP:10.43.78.186:443";
+        ExecStart = "${pkgs.bash}/bin/bash -c 'TRAEFIK_IP=$(${pkgs.kubectl}/bin/kubectl get svc -n kube-system traefik -o jsonpath=\"{.spec.clusterIP}\" 2>/dev/null || echo \"10.43.0.1\"); ${pkgs.socat}/bin/socat TCP-LISTEN:443,bind=${cfg.traefik.staticIP},reuseaddr,fork TCP:$TRAEFIK_IP:443'";
+        Environment = "KUBECONFIG=/etc/rancher/k3s/k3s.yaml";
       };
     };
     

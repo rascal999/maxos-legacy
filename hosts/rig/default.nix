@@ -48,8 +48,8 @@
       staticIP = "127.0.0.2";  # Use secondary loopback IP for domains
     };
     extraFlags = [
-      "--disable-cloud-controller"
-      "--disable=servicelb"  # Disable built-in ServiceLB to prevent hostPort bindings
+      # servicelb is automatically disabled when staticIP is configured
+      # disable-cloud-controller is automatically added for server role
     ];
   };
   
