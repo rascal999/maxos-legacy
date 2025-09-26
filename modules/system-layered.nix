@@ -52,6 +52,7 @@
     ./04-applications/system/tools/development/languages/java.nix
     
     # Infrastructure
+    ./04-applications/system/tools/infrastructure/cloud/aws-cli.nix
     ./04-applications/system/tools/infrastructure/monitoring/blocky.nix
     ./04-applications/system/tools/infrastructure/monitoring/grafana.nix
     ./04-applications/system/tools/infrastructure/networking/mosh.nix

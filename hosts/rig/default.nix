@@ -39,6 +39,7 @@
   
   # Enable Kubernetes tooling
   maxos.tools.helmfile.enable = true;
+  maxos.tools.aws-cli.enable = true;
   maxos.tools.k3s = {
     enable = true;
     role = "server";

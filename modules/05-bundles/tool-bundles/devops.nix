@@ -54,7 +54,7 @@ in {
       grype.enable = mkIf cfg.enableSecurityScanning true;
       
       # Cloud-native tools
-      # Additional cloud-native tools would go here
+      aws-cli.enable = mkDefault (cfg.profile == "complete" || cfg.profile == "core");
     };
   };
 }

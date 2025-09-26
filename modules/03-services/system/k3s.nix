@@ -115,7 +115,10 @@ in {
         Type = "simple";
         Restart = "always";
         RestartSec = "5s";
-        ExecStart = "${pkgs.bash}/bin/bash -c 'TRAEFIK_IP=$(${pkgs.kubectl}/bin/kubectl get svc -n kube-system traefik -o jsonpath=\"{.spec.clusterIP}\" 2>/dev/null || echo \"10.43.0.1\"); ${pkgs.socat}/bin/socat TCP-LISTEN:80,bind=${cfg.traefik.staticIP},reuseaddr,fork TCP:$TRAEFIK_IP:80'";
+        # Wait for k3s API and traefik service to be ready before starting
+        ExecStartPre = "${pkgs.bash}/bin/bash -c 'echo \"Waiting for k3s API and traefik service...\"; while ! ${pkgs.kubectl}/bin/kubectl get svc -n kube-system traefik >/dev/null 2>&1; do echo \"Waiting for traefik service...\"; sleep 2; done; echo \"Traefik service found, starting proxy...\"'";
+        # Use retry loop instead of hardcoded fallback
+        ExecStart = "${pkgs.bash}/bin/bash -c 'while true; do TRAEFIK_IP=$(${pkgs.kubectl}/bin/kubectl get svc -n kube-system traefik -o jsonpath=\"{.spec.clusterIP}\" 2>/dev/null); if [[ -n \"$TRAEFIK_IP\" && \"$TRAEFIK_IP\" != \"null\" ]]; then echo \"Using traefik IP: $TRAEFIK_IP\"; exec ${pkgs.socat}/bin/socat TCP-LISTEN:80,bind=${cfg.traefik.staticIP},reuseaddr,fork TCP:$TRAEFIK_IP:80; fi; echo \"Failed to get traefik IP, retrying in 5s...\"; sleep 5; done'";
         Environment = "KUBECONFIG=/etc/rancher/k3s/k3s.yaml";
       };
     };
@@ -129,7 +132,10 @@ in {
         Type = "simple";
         Restart = "always";
         RestartSec = "5s";
-        ExecStart = "${pkgs.bash}/bin/bash -c 'TRAEFIK_IP=$(${pkgs.kubectl}/bin/kubectl get svc -n kube-system traefik -o jsonpath=\"{.spec.clusterIP}\" 2>/dev/null || echo \"10.43.0.1\"); ${pkgs.socat}/bin/socat TCP-LISTEN:443,bind=${cfg.traefik.staticIP},reuseaddr,fork TCP:$TRAEFIK_IP:443'";
+        # Wait for k3s API and traefik service to be ready before starting
+        ExecStartPre = "${pkgs.bash}/bin/bash -c 'echo \"Waiting for k3s API and traefik service...\"; while ! ${pkgs.kubectl}/bin/kubectl get svc -n kube-system traefik >/dev/null 2>&1; do echo \"Waiting for traefik service...\"; sleep 2; done; echo \"Traefik service found, starting proxy...\"'";
+        # Use retry loop instead of hardcoded fallback
+        ExecStart = "${pkgs.bash}/bin/bash -c 'while true; do TRAEFIK_IP=$(${pkgs.kubectl}/bin/kubectl get svc -n kube-system traefik -o jsonpath=\"{.spec.clusterIP}\" 2>/dev/null); if [[ -n \"$TRAEFIK_IP\" && \"$TRAEFIK_IP\" != \"null\" ]]; then echo \"Using traefik IP: $TRAEFIK_IP\"; exec ${pkgs.socat}/bin/socat TCP-LISTEN:443,bind=${cfg.traefik.staticIP},reuseaddr,fork TCP:$TRAEFIK_IP:443; fi; echo \"Failed to get traefik IP, retrying in 5s...\"; sleep 5; done'";
         Environment = "KUBECONFIG=/etc/rancher/k3s/k3s.yaml";
       };
     };

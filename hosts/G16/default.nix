@@ -97,6 +97,7 @@
     
     # Enable Kubernetes tooling
     helmfile.enable = true;
+    aws-cli.enable = true;
     k3s = {
       enable = true;
       role = "server";
