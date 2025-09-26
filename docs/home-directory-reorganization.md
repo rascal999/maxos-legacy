@@ -23,8 +23,6 @@ The current `/home/user` directory is cluttered with:
 │   ├── Videos/        # Video files
 │   ├── Music/         # Audio files
 │   └── Downloads/     # Downloaded files (temporary)
-├── Sync/              # Syncthing synchronized files
-├── Backups/           # Local backups and archives
 ├── Tools/             # Standalone tools and utilities
 ├── Workspace/         # Current working directory/scratch space
 ├── Archive/           # Old files to keep but not actively used
