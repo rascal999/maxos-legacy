@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Create today's work directory
-WORK_DIR="/home/user/work/$(date +%Y/%m/%d)"
+WORK_DIR="/home/user/work/notes/$(date +%Y/%m/%d)"
 mkdir -p "$WORK_DIR"
 
 # Change to the directory and show contents
