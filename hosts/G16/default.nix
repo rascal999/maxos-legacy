@@ -114,6 +114,33 @@
     # Enable iSCSI storage support
     open-iscsi.enable = true;
     
+    # Enable Redis for development and caching
+    redis = {
+      enable = true;
+      maxMemory = "512mb";
+      maxMemoryPolicy = "allkeys-lru";
+      appendOnly = true;
+      logLevel = "notice";
+      redisInsight = {
+        enable = true;
+        port = 8001;
+        host = "127.0.0.1";
+      };
+    };
+    
+    # Enable MongoDB CE for document database development
+    mongodb-ce = {
+      enable = true;
+      port = 27017;
+      bind = "127.0.0.1";
+      enableAuth = false;  # Disabled for local development
+      storageEngine = "wiredTiger";
+      journaling = true;
+      logLevel = "normal";
+      cacheSizeGB = 1;  # 1GB cache for laptop (smaller than desktop)
+      databases = [ "development" "testing" ];
+    };
+    
     # AI tools disabled for laptop
     ollama.enable = lib.mkForce false;
     open-webui.enable = lib.mkForce false;

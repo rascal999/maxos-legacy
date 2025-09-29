@@ -57,6 +57,34 @@
   # Enable iSCSI storage support
   maxos.tools.open-iscsi.enable = true;
   
+  # Enable Redis for development and caching
+  maxos.tools.redis = {
+    enable = true;
+    maxMemory = "1gb";
+    maxMemoryPolicy = "allkeys-lru";
+    appendOnly = true;
+    logLevel = "notice";
+    databases = 16;
+    redisInsight = {
+      enable = false;
+      port = 8001;
+      host = "127.0.0.1";
+    };
+  };
+  
+  # Enable MongoDB CE for document database development
+  maxos.tools.mongodb-ce = {
+    enable = true;
+    port = 27017;
+    bind = "127.0.0.1";
+    enableAuth = false;  # Disabled for local development
+    storageEngine = "wiredTiger";
+    journaling = true;
+    logLevel = "normal";
+    cacheSizeGB = 2;  # 2GB cache for desktop
+    databases = [ "development" "testing" ];
+  };
+  
   # Explicitly disable AI tools that might cause build issues
   maxos.tools.ollama.enable = lib.mkForce false;
   maxos.tools.open-webui.enable = lib.mkForce false;

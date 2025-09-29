@@ -55,6 +55,7 @@ in {
       
       # Cloud-native tools
       aws-cli.enable = mkDefault (cfg.profile == "complete" || cfg.profile == "core");
+      terraform.enable = mkDefault (cfg.profile == "complete" || cfg.profile == "core");
     };
   };
 }

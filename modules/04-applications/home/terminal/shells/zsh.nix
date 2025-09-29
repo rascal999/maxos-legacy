@@ -37,7 +37,6 @@ in {
     autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-
     history = {
       size = 100000;
       save = 100000;

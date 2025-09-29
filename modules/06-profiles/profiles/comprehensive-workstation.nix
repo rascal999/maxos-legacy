@@ -104,6 +104,7 @@ in {
       
       devops = mkIf cfg.enableInfrastructure {
         enable = true;
+        profile = mkForce "complete";  # Override conflicting profile settings
       };
     };
 
@@ -146,6 +147,9 @@ in {
       # Kubernetes tools
       argocd.enable = mkDefault cfg.enableInfrastructure;
       helmfile.enable = mkDefault cfg.enableInfrastructure;
+      
+      # Infrastructure as Code tools
+      terraform.enable = mkDefault cfg.enableInfrastructure;
       
       # AI tools (selective enabling)
       grafana.enable = mkDefault false;

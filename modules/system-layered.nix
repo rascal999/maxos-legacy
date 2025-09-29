@@ -17,7 +17,9 @@
     # Layer 3: Services modules (depends on core + hardware)
     ./03-services/system/docker.nix
     ./03-services/system/k3s.nix
+    ./03-services/system/mongodb-ce.nix
     ./03-services/system/open-iscsi.nix
+    ./03-services/system/redis.nix
     ./03-services/system/wireguard.nix
     
     # Layer 4: Applications (depends on services) - system-only tools
@@ -53,6 +55,7 @@
     
     # Infrastructure
     ./04-applications/system/tools/infrastructure/cloud/aws-cli.nix
+    ./04-applications/system/tools/infrastructure/cloud/terraform.nix
     ./04-applications/system/tools/infrastructure/monitoring/blocky.nix
     ./04-applications/system/tools/infrastructure/monitoring/grafana.nix
     ./04-applications/system/tools/infrastructure/networking/mosh.nix
