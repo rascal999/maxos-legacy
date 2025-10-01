@@ -65,6 +65,7 @@
     ./04-applications/system/tools/multimedia/gaming/steam.nix
     ./04-applications/system/tools/multimedia/knowledge/kiwix.nix
     ./04-applications/system/tools/multimedia/recording/simplescreenrecorder.nix
+    ./04-applications/system/tools/multimedia/recording/screenshot-tools.nix
     ./04-applications/system/tools/multimedia/applications.nix
     
     # Security

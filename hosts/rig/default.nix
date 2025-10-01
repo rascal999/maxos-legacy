@@ -37,6 +37,12 @@
   # Override tool configurations to disable SOPS secrets
   maxos.tools.restic.useSopsSecrets = false;
   
+  # Disable blocky to fix WireGuard DNS resolution
+  maxos.tools.blocky.enable = lib.mkForce false;
+  
+  # Enable screenshot tools (maim and scrot) for screenshot script
+  maxos.tools.screenshot-tools.enable = true;
+  
   # Enable Kubernetes tooling
   maxos.tools.helmfile.enable = true;
   maxos.tools.aws-cli.enable = true;
@@ -44,9 +50,9 @@
     enable = true;
     role = "server";
     traefik = {
-      enable = true;
-      hostPort = false;  # Disable hostPort in favor of static IP
-      staticIP = "127.0.0.2";  # Use secondary loopback IP for domains
+      enable = false;  # Disabled in favor of standalone Traefik with MetalLB
+      hostPort = false;
+      staticIP = "";  # Cleared since traefik is disabled
     };
     extraFlags = [
       # servicelb is automatically disabled when staticIP is configured
@@ -245,6 +251,7 @@
     kubectl # Kubernetes command-line tool
     bind # For dig command
     colmena # NixOS deployment tool
+    postgresql # PostgreSQL client tools (psql, pg_dump, etc.)
   ];
 
   # Add user to plugdev group for Logitech device access

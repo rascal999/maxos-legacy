@@ -89,6 +89,12 @@
 
   # G16-specific overrides
   maxos.tools = {
+    # Disable blocky to fix WireGuard DNS resolution
+    blocky.enable = lib.mkForce false;
+    
+    # Enable screenshot tools (maim and scrot) for screenshot script
+    screenshot-tools.enable = true;
+    
     # Override backup subdirectory for G16
     restic = {
       hostSubdir = lib.mkForce "G16";
@@ -198,6 +204,11 @@
     device = "/swapfile";
     size = 16 * 1024; # 16GB
   }];
+
+  # Additional system packages
+  environment.systemPackages = with pkgs; [
+    postgresql # PostgreSQL client tools (psql, pg_dump, etc.)
+  ];
 
   # System configuration
   nixpkgs.config.allowUnfree = true;
