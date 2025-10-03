@@ -32,6 +32,7 @@ in {
       # Core development tools
       git
       neovim
+      gnumake  # GNU Make - fundamental build tool
     ] ++ optionals cfg.includeGitHub [
       gh
     ] ++ optionals cfg.includeSearchTools [
