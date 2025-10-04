@@ -128,7 +128,7 @@
       appendOnly = true;
       logLevel = "notice";
       redisInsight = {
-        enable = true;
+        enable = false;
         port = 8001;
         host = "127.0.0.1";
       };
