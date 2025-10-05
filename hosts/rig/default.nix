@@ -80,7 +80,7 @@
   
   # Enable MongoDB CE for document database development
   maxos.tools.mongodb-ce = {
-    enable = true;
+    enable = false;
     port = 27017;
     bind = "127.0.0.1";
     enableAuth = false;  # Disabled for local development
