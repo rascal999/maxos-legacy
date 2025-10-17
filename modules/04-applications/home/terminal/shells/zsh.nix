@@ -70,6 +70,9 @@ in {
       }
       historySetup >/dev/null 2>&1
 
+      # Enable immediate history persistence (write commands as soon as they're entered)
+      setopt INC_APPEND_HISTORY
+
       # Enable Powerlevel10k instant prompt
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
