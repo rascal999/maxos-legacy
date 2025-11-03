@@ -20,6 +20,7 @@
     ./03-services/system/mongodb-ce.nix
     ./03-services/system/open-iscsi.nix
     ./03-services/system/redis.nix
+    ./03-services/system/teamviewer.nix
     ./03-services/system/wireguard.nix
     
     # Layer 4: Applications (depends on services) - system-only tools

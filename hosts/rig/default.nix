@@ -63,6 +63,9 @@
   # Enable iSCSI storage support
   maxos.tools.open-iscsi.enable = true;
   
+  # Enable TeamViewer for remote access
+  maxos.tools.teamviewer.enable = true;
+  
   # Enable Redis for development and caching
   maxos.tools.redis = {
     enable = true;
