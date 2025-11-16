@@ -122,7 +122,7 @@
     
     # Enable Redis for development and caching
     redis = {
-      enable = true;
+      enable = false;
       maxMemory = "512mb";
       maxMemoryPolicy = "allkeys-lru";
       appendOnly = true;

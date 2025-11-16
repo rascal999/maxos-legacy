@@ -106,10 +106,6 @@ in {
         }
         {
           command = "urgent ignore";
-          criteria = { class = "^Slack$"; };
-        }
-        {
-          command = "urgent ignore";
           criteria = { class = "^Logseq$"; };
         }
         {
@@ -120,7 +116,7 @@ in {
 
       # Assign applications to workspaces
       assigns = {
-        "0: slack" = [{ class = "^Slack$"; }];
+        "0: workspace" = [];
         "1: web" = [{ class = "^Firefox$"; }];
         "8: logseq" = [{ class = "^Logseq$"; }];
         "9: pw" = [{ class = "^KeePassXC$"; }];
@@ -139,7 +135,6 @@ in {
         { command = "sleep 1 && ${pkgs.networkmanagerapplet}/bin/nm-applet"; notification = false; }
         { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
         { command = "sleep 2 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
-        { command = "sleep 4 && i3-msg 'workspace 0: slack; exec ${pkgs.slack}/bin/slack'"; notification = false; }
         { command = "sleep 6 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
         { command = "sleep 8 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code; mark vscode_default'"; notification = false; }
         { command = "sleep 12 && i3-msg 'workspace 1: web'"; notification = false; }
@@ -200,7 +195,7 @@ in {
         "Mod1+Shift+b" = "exec redshift -x";  # Reset redshift
 
         # Workspace switching
-        "Mod1+0" = "workspace number 0: slack";
+        "Mod1+0" = "workspace number 0: workspace";
         "Mod1+1" = "workspace number 1: web";
         "Mod1+2" = "workspace number 2: code";
         "Mod1+3" = "workspace number 3: term";
@@ -212,7 +207,7 @@ in {
         "Mod1+9" = "workspace number 9: pw";
 
         # Move container to workspace
-        "Mod1+Shift+0" = "move container to workspace 0: slack";
+        "Mod1+Shift+0" = "move container to workspace 0: workspace";
         "Mod1+Shift+1" = "move container to workspace 1: web";
         "Mod1+Shift+2" = "move container to workspace 2: code";
         "Mod1+Shift+3" = "move container to workspace 3: term";

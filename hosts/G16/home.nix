@@ -140,7 +140,7 @@
   # i3 configuration for G16
   xsession.windowManager.i3.config = {
     workspaceOutputAssign = [
-      { workspace = "0: slack"; output = "eDP-1"; }
+      { workspace = "0: workspace"; output = "eDP-1"; }
       { workspace = "1: web"; output = "eDP-1"; }
       { workspace = "2: wcode"; output = "eDP-1"; }
       { workspace = "3: pcode"; output = "eDP-1"; }

@@ -171,8 +171,8 @@
 
     # Workspace monitor assignments
     workspaceOutputAssign = [
-      # Left monitor - Communication
-      { workspace = "0: slack"; output = "DP-4"; }
+      # Left monitor - General workspace
+      { workspace = "0: workspace"; output = "DP-4"; }
       # All other workspaces on ultrawide
       { workspace = "1: web"; output = "DP-2"; }
       { workspace = "2: wcode"; output = "DP-2"; }

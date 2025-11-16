@@ -43,6 +43,13 @@
   # Enable screenshot tools (maim and scrot) for screenshot script
   maxos.tools.screenshot-tools.enable = true;
   
+  # Enable OBS Studio for screen recording and streaming
+  maxos.tools.obs = {
+    enable = true;
+    enablePlugins = true;
+    enableVirtualCamera = true;
+  };
+  
   # Enable Kubernetes tooling
   maxos.tools.helmfile.enable = true;
   maxos.tools.aws-cli.enable = true;
@@ -68,7 +75,7 @@
   
   # Enable Redis for development and caching
   maxos.tools.redis = {
-    enable = true;
+    enable = false;
     maxMemory = "1gb";
     maxMemoryPolicy = "allkeys-lru";
     appendOnly = true;
