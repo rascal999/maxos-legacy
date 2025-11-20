@@ -43,6 +43,13 @@
   # Enable screenshot tools (maim and scrot) for screenshot script
   maxos.tools.screenshot-tools.enable = true;
   
+  # Enable pandoc for document conversion
+  maxos.tools.pandoc.enable = true;
+  maxos.tools.pandoc.includeExtensions = true;
+  
+  # Enable Ollama AI language model server (uses CUDA by default)
+  maxos.tools.ollama.enable = true;
+  
   # Enable OBS Studio for screen recording and streaming
   maxos.tools.obs = {
     enable = true;
@@ -102,7 +109,6 @@
   };
   
   # Explicitly disable AI tools that might cause build issues
-  maxos.tools.ollama.enable = lib.mkForce false;
   maxos.tools.open-webui.enable = lib.mkForce false;
 
   # Rocket.Chat service disabled (module import commented out)
@@ -153,6 +159,7 @@
   # Add hosts entries
   networking.hosts = {
     "127.0.0.2" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
+    "0.0.0.0" = [ "reddit.com" "www.reddit.com" ];
   };
 
   # Udev rules for PTT script device access

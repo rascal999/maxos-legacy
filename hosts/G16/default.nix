@@ -95,6 +95,11 @@
     # Enable screenshot tools (maim and scrot) for screenshot script
     screenshot-tools.enable = true;
     
+    # Enable pandoc for document conversion
+    pandoc.enable = true;
+    pandoc.includeExtensions = true;
+    ollama.enable = true;
+    
     # Override backup subdirectory for G16
     restic = {
       hostSubdir = lib.mkForce "G16";

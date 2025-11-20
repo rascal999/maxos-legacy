@@ -53,6 +53,7 @@
     ./04-applications/system/tools/development/languages/npm.nix
     ./04-applications/system/tools/development/core-tools.nix
     ./04-applications/system/tools/development/languages/java.nix
+    ./04-applications/system/tools/development/pandoc.nix
     
     # Infrastructure
     ./04-applications/system/tools/infrastructure/cloud/aws-cli.nix
