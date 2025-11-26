@@ -35,6 +35,7 @@
     # Applications
     firefox.enable = true;
     logseq.enable = true;
+    appflowy.enable = true;
     remmina.enable = true;
   };
 

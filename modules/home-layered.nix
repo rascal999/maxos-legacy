@@ -20,6 +20,7 @@
     ./04-applications/home/development/environment/direnv.nix
     ./04-applications/home/browsers/firefox/default.nix
     ./04-applications/home/multimedia/knowledge/logseq.nix
+    ./04-applications/home/multimedia/knowledge/appflowy.nix
     ./04-applications/home/infrastructure/networking/remmina.nix
     ./04-applications/home/desktop/window-managers/i3/base.nix
     # Add more pure home-manager modules here:

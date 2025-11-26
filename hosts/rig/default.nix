@@ -80,6 +80,12 @@
   # Enable TeamViewer for remote access
   maxos.tools.teamviewer.enable = true;
   
+  # Enable Firecracker microVM virtualization
+  maxos.tools.firecracker = {
+    enable = true;
+    includeFirectl = true;
+  };
+  
   # Enable Redis for development and caching
   maxos.tools.redis = {
     enable = false;
@@ -159,7 +165,6 @@
   # Add hosts entries
   networking.hosts = {
     "127.0.0.2" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
-    "0.0.0.0" = [ "reddit.com" "www.reddit.com" ];
   };
 
   # Udev rules for PTT script device access

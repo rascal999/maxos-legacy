@@ -89,6 +89,7 @@
     
     # Virtualization
     ./04-applications/system/tools/virtualization/qemu.nix
+    ./04-applications/system/tools/virtualization/firecracker.nix
     
     # Communication
     ./04-applications/system/tools/communication/messaging.nix

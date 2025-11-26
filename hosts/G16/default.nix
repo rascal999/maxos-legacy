@@ -125,6 +125,12 @@
     # Enable iSCSI storage support
     open-iscsi.enable = true;
     
+    # Enable Firecracker microVM virtualization
+    firecracker = {
+      enable = true;
+      includeFirectl = true;
+    };
+    
     # Enable Redis for development and caching
     redis = {
       enable = false;
