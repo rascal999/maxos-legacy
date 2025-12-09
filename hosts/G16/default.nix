@@ -98,6 +98,13 @@
     # Enable pandoc for document conversion
     pandoc.enable = true;
     pandoc.includeExtensions = true;
+    
+    # Enable just command runner
+    just.enable = true;
+    
+    # Enable bun JavaScript runtime
+    bun.enable = true;
+    
     ollama.enable = true;
     
     # Override backup subdirectory for G16
@@ -124,6 +131,9 @@
     
     # Enable iSCSI storage support
     open-iscsi.enable = true;
+    
+    # Enable OpenVPN client
+    openvpn.enable = true;
     
     # Enable Firecracker microVM virtualization
     firecracker = {

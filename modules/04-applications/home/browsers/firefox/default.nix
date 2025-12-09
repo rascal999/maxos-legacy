@@ -55,11 +55,6 @@ in {
           install_url = "https://addons.mozilla.org/firefox/downloads/file/4228676/foxyproxy_standard-8.9.xpi";
           install_hash = "sha256:b1e1b85f4b3b047560f5329040e14a2fec9699edd4706391f6f2318b203ab023";
         };
-        "keepassxc-browser@keepassxc.org" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4410175/keepassxc_browser-1.9.6.xpi";
-          install_hash = "sha256:41cab3f7a1bdcc394d538ffd4106b85fe5916cc44735a61f1791bb6fe8ce790e";
-        };
       };
     };
     profiles.default = {

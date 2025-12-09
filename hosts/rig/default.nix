@@ -47,6 +47,12 @@
   maxos.tools.pandoc.enable = true;
   maxos.tools.pandoc.includeExtensions = true;
   
+  # Enable just command runner
+  maxos.tools.just.enable = true;
+  
+  # Enable bun JavaScript runtime
+  maxos.tools.bun.enable = true;
+  
   # Enable Ollama AI language model server (uses CUDA by default)
   maxos.tools.ollama.enable = true;
   
@@ -76,6 +82,9 @@
   
   # Enable iSCSI storage support
   maxos.tools.open-iscsi.enable = true;
+  
+  # Enable OpenVPN client
+  maxos.tools.openvpn.enable = true;
   
   # Enable TeamViewer for remote access
   maxos.tools.teamviewer.enable = true;
@@ -165,6 +174,7 @@
   # Add hosts entries
   networking.hosts = {
     "127.0.0.2" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
+    "10.129.4.188" = [ "gavel.htb" ];
   };
 
   # Udev rules for PTT script device access

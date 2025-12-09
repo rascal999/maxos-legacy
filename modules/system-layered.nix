@@ -19,6 +19,7 @@
     ./03-services/system/k3s.nix
     ./03-services/system/mongodb-ce.nix
     ./03-services/system/open-iscsi.nix
+    ./03-services/system/openvpn.nix
     ./03-services/system/redis.nix
     ./03-services/system/teamviewer.nix
     ./03-services/system/wireguard.nix
@@ -51,9 +52,11 @@
     ./04-applications/system/tools/development/api-tools/postman.nix
     ./04-applications/system/tools/development/languages/golang.nix
     ./04-applications/system/tools/development/languages/npm.nix
+    ./04-applications/system/tools/development/languages/bun.nix
     ./04-applications/system/tools/development/core-tools.nix
     ./04-applications/system/tools/development/languages/java.nix
     ./04-applications/system/tools/development/pandoc.nix
+    ./04-applications/system/tools/development/just.nix
     
     # Infrastructure
     ./04-applications/system/tools/infrastructure/cloud/aws-cli.nix

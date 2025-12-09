@@ -71,6 +71,8 @@ in {
     i3status-rust
     blueman
     networkmanagerapplet
+    pwgen
+    xclip
   ];
   # Copy i3status-rust configuration
   home.file.".config/i3status-rust/config-default.toml".source = ./config-default.toml;
@@ -147,6 +149,9 @@ in {
       keybindings = {
         # Terminal
         "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
+
+        # SSH into Kali container
+        "Mod1+space" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session '${pkgs.openssh}/bin/ssh root@localhost -p 2222'";
 
         # Work directory
         "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session '/home/user/git/github/monorepo/maxos/scripts/work-dir-tmux'";
@@ -244,6 +249,9 @@ in {
 
         # Insert timestamp
         "Mod1+Shift+t" = "exec /run/current-system/sw/bin/insert-timestamp";
+
+        # Generate password with pwgen and copy to clipboard
+        "Mod1+p" = "exec ${pkgs.pwgen}/bin/pwgen -1 22 | ${pkgs.coreutils}/bin/tr -d '\\n' | ${pkgs.xclip}/bin/xclip -selection clipboard";
       };
 
 
