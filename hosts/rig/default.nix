@@ -56,6 +56,9 @@
   # Enable Ollama AI language model server (uses CUDA by default)
   maxos.tools.ollama.enable = true;
   
+  # Enable OpenAI Codex CLI tool
+  maxos.tools.codex.enable = true;
+  
   # Enable OBS Studio for screen recording and streaming
   maxos.tools.obs = {
     enable = true;

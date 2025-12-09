@@ -107,6 +107,9 @@
     
     ollama.enable = true;
     
+    # Enable OpenAI Codex CLI tool
+    codex.enable = true;
+    
     # Override backup subdirectory for G16
     restic = {
       hostSubdir = lib.mkForce "G16";
