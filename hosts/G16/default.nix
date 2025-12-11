@@ -69,7 +69,7 @@
     enableGaming = true;
     enableSecurity = true;
     enableMultimedia = true;
-    enableInfrastructure = true;  # Enable k3s infrastructure for G16
+    enableInfrastructure = false;  # Disable k3s infrastructure for G16
   };
 
   # Disable secrets management for now
@@ -105,7 +105,7 @@
     # Enable bun JavaScript runtime
     bun.enable = true;
     
-    ollama.enable = true;
+    #ollama.enable = true;
     
     # Enable OpenAI Codex CLI tool
     codex.enable = true;
@@ -116,21 +116,12 @@
       useSopsSecrets = false;
     };
     
-    # Enable Kubernetes tooling
-    helmfile.enable = true;
+    # Disable Kubernetes tooling
+    helmfile.enable = lib.mkForce false;
     aws-cli.enable = true;
-    k3s = {
-      enable = true;
-      role = "server";
-      traefik = {
-        enable = true;
-        hostPort = false;  # Disable hostPort in favor of static IP
-        staticIP = "127.0.0.2";  # Use secondary loopback IP for domains
-      };
-      extraFlags = [
-        # servicelb is automatically disabled when staticIP is configured
-      ];
-    };
+    k3s.enable = lib.mkForce false;
+    argocd.enable = lib.mkForce false;
+    terraform.enable = lib.mkForce false;
     
     # Enable iSCSI storage support
     open-iscsi.enable = true;
@@ -210,21 +201,10 @@
   # Enable zsh since user shell is set to zsh
   programs.zsh.enable = true;
 
-  # Networking
-  networking.hosts = {
-    "127.0.0.2" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
-  };
+  # Networking - K3s disabled, no static IP needed
   
   # Disable automatic /etc/hosts generation
   environment.etc.hosts.enable = false;
-
-  # K3s registry configuration
-  environment.etc."rancher/k3s/registries.yaml".text = ''
-    configs:
-      "registry.localhost":
-        tls:
-          insecure_skip_verify: true
-  '';
 
   # Swap configuration
   swapDevices = [{
