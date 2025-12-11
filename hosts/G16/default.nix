@@ -214,6 +214,9 @@
   networking.hosts = {
     "127.0.0.2" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
   };
+  
+  # Disable automatic /etc/hosts generation
+  environment.etc.hosts.enable = false;
 
   # K3s registry configuration
   environment.etc."rancher/k3s/registries.yaml".text = ''

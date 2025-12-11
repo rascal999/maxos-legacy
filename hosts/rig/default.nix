@@ -179,6 +179,9 @@
     "127.0.0.2" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
     "10.129.4.188" = [ "gavel.htb" ];
   };
+  
+  # Disable automatic /etc/hosts generation
+  environment.etc.hosts.enable = false;
 
   # Udev rules for PTT script device access
   services.udev.extraRules = ''
