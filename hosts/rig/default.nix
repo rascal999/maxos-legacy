@@ -58,6 +58,9 @@
   
   # Enable OpenAI Codex CLI tool
   maxos.tools.codex.enable = true;
+
+  # Enable Wireshark for network analysis
+  maxos.tools.wireshark.enable = true;
   
   # Enable OBS Studio for screen recording and streaming
   maxos.tools.obs = {

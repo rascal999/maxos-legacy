@@ -109,6 +109,9 @@
     
     # Enable OpenAI Codex CLI tool
     codex.enable = true;
+
+    # Enable Wireshark for network analysis
+    wireshark.enable = true;
     
     # Override backup subdirectory for G16
     restic = {

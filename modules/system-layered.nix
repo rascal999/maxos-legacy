@@ -83,6 +83,7 @@
     ./04-applications/system/tools/security/scanners/semgrep.nix
     ./04-applications/system/tools/security/scanners/syft.nix
     ./04-applications/system/tools/security/scanners/trivy.nix
+    ./04-applications/system/tools/security/wireshark.nix
     
     # Terminal Tools
     ./04-applications/system/tools/terminal/emulators/alacritty-stub.nix
