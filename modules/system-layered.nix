@@ -65,6 +65,7 @@
     ./04-applications/system/tools/infrastructure/monitoring/grafana.nix
     ./04-applications/system/tools/infrastructure/networking/mosh.nix
     ./04-applications/system/tools/infrastructure/networking/sshfs.nix
+    ./04-applications/system/tools/infrastructure/networking/dig.nix
     
     # Multimedia
     ./04-applications/system/tools/multimedia/gaming/steam.nix

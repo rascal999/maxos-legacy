@@ -168,6 +168,9 @@
     # AI tools disabled for laptop
     ollama.enable = lib.mkForce false;
     open-webui.enable = lib.mkForce false;
+
+    # Enable dig for DNS troubleshooting
+    dig.enable = true;
   };
 
   # G16-specific system configuration
