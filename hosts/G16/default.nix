@@ -104,6 +104,9 @@
     
     # Enable bun JavaScript runtime
     bun.enable = true;
+
+    # Enable Python 3
+    python3.enable = true;
     
     #ollama.enable = true;
     

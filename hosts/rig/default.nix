@@ -52,6 +52,9 @@
   
   # Enable bun JavaScript runtime
   maxos.tools.bun.enable = true;
+
+  # Enable Python 3
+  maxos.tools.python3.enable = true;
   
   # Enable Ollama AI language model server (uses CUDA by default)
   maxos.tools.ollama.enable = true;
@@ -257,8 +260,6 @@
     # Qt theming
     libsForQt5.qt5ct
     adwaita-qt
-    python311
-    python3Packages.pip # Python package installer
     vegeta  # HTTP load testing tool
     nmap    # Network scanning tool
     
@@ -279,7 +280,6 @@
     clamav   # Antivirus scanner
 
     # For Python PTT script
-    python3
     python3Packages.evdev
     python3Packages.python-uinput
     solaar # Logitech device management tool
