@@ -54,7 +54,7 @@
   maxos.tools.bun.enable = true;
 
   # Enable Python 3
-  maxos.tools.python3.enable = true;
+  #maxos.tools.python3.enable = true;
   
   # Enable Ollama AI language model server (uses CUDA by default)
   maxos.tools.ollama.enable = true;
@@ -134,6 +134,9 @@
   
   # Explicitly disable AI tools that might cause build issues
   maxos.tools.open-webui.enable = lib.mkForce false;
+
+  # Enable Knot DNS for authoritative DNS testing
+  maxos.tools.knot-dns.enable = true;
 
   # Rocket.Chat service disabled (module import commented out)
 
@@ -260,6 +263,8 @@
     # Qt theming
     libsForQt5.qt5ct
     adwaita-qt
+    python311
+    python3Packages.pip
     vegeta  # HTTP load testing tool
     nmap    # Network scanning tool
     
@@ -280,6 +285,7 @@
     clamav   # Antivirus scanner
 
     # For Python PTT script
+    python3
     python3Packages.evdev
     python3Packages.python-uinput
     solaar # Logitech device management tool

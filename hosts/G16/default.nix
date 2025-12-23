@@ -174,6 +174,9 @@
 
     # Enable dig for DNS troubleshooting
     dig.enable = true;
+
+    # Enable Knot DNS for authoritative DNS testing
+    knot-dns.enable = true;
   };
 
   # G16-specific system configuration
