@@ -45,7 +45,7 @@ in rec {
               imports = [
                 ../modules/home-layered.nix  # Import layered home-manager modules
               ] ++ lib.optionals (homeConfigPath != null) [ homeConfigPath ];
-              home.stateVersion = "25.05";
+              home.stateVersion = "25.11";
               
               # Make system user config available in home-manager context
               _module.args.osConfig = osConfig;

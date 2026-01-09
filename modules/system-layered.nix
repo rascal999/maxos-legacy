@@ -75,6 +75,7 @@
     ./04-applications/system/tools/multimedia/recording/simplescreenrecorder.nix
     ./04-applications/system/tools/multimedia/recording/screenshot-tools.nix
     ./04-applications/system/tools/multimedia/recording/obs.nix
+    ./04-applications/system/tools/multimedia/recording/asciinema.nix
     ./04-applications/system/tools/multimedia/applications.nix
     
     # Security

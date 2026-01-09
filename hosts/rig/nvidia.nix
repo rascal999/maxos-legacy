@@ -65,7 +65,7 @@
 
   # Add NVIDIA-specific packages
   environment.systemPackages = with pkgs; [
-    glxinfo
+    mesa-demos
     vulkan-tools
     nvidia-vaapi-driver
     libva-utils

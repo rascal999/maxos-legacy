@@ -2,7 +2,7 @@
 
 # direct-push-to-talk.sh - Direct event monitoring for push-to-talk functionality
 # Author: Roo
-# Date: 2025-05-21
+# Date: 2025-11-21
 
 # This script directly monitors mouse button events and controls the microphone
 # without relying on keyd. It's an alternative approach if keyd isn't working.

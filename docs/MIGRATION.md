@@ -101,7 +101,7 @@ G16 = nixpkgs.lib.nixosSystem {
         backupFileExtension = lib.mkDefault "backup";
         users.user = { pkgs, ... }: {
           imports = [ ./hosts/G16/home.nix ];
-          home.stateVersion = "25.05";
+          home.stateVersion = "25.11";
         };
       };
     }

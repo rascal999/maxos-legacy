@@ -17,7 +17,7 @@ in {
   home.packages = with pkgs; [
     eza
     duf
-    du-dust
+    dust
   ];
 
   # tmux

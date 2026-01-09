@@ -42,6 +42,9 @@
   
   # Enable screenshot tools (maim and scrot) for screenshot script
   maxos.tools.screenshot-tools.enable = true;
+
+  # Enable asciinema terminal recorder and agg
+  maxos.tools.asciinema.enable = true;
   
   # Enable pandoc for document conversion
   maxos.tools.pandoc.enable = true;
@@ -257,7 +260,7 @@
     cudaPackages.cuda_cudart
 
     # Graphics utilities
-    glxinfo
+    mesa-demos
     xorg.xrandr
     edid-decode
     # Qt theming
@@ -397,5 +400,5 @@
   nixpkgs.config.allowUnfree = true;
 
   # Set system state version
-  system.stateVersion = "25.05"; # NO semicolon after the last attribute
+  system.stateVersion = "25.11"; # NO semicolon after the last attribute
 }

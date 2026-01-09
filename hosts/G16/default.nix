@@ -94,6 +94,9 @@
     
     # Enable screenshot tools (maim and scrot) for screenshot script
     screenshot-tools.enable = true;
+
+    # Enable asciinema terminal recorder and agg
+    asciinema.enable = true;
     
     # Enable pandoc for document conversion
     pandoc.enable = true;
@@ -231,7 +234,7 @@
 
   # System configuration
   nixpkgs.config.allowUnfree = true;
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
 
 # This configuration is ~80% smaller than the original while maintaining

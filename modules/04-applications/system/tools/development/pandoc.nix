@@ -33,7 +33,7 @@ in {
       freefont_ttf           # GNU FreeFont
       noto-fonts             # Google Noto fonts
       noto-fonts-cjk-sans    # CJK (Chinese, Japanese, Korean) support
-      noto-fonts-emoji       # Emoji support
+      noto-fonts-color-emoji # Emoji support
       font-awesome           # Icon fonts
       
       # Professional fonts
@@ -49,7 +49,7 @@ in {
       freefont_ttf
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       font-awesome
       source-sans-pro
       source-serif-pro

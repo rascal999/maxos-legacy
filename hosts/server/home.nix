@@ -20,7 +20,7 @@
   home = {
     username = "user";
     homeDirectory = "/home/user";
-    stateVersion = "25.05";
+    stateVersion = "25.11";
 
     packages = with pkgs; [
       # Packages provided by serverBundle via package-bundles

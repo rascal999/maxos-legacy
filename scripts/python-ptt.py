@@ -2,7 +2,7 @@
 
 # python-ptt.py - Python-based Push-to-Talk using evdev
 # Author: Roo
-# Date: 2025-05-21
+# Date: 2025-11-21
 
 import os
 import sys

@@ -87,7 +87,7 @@
   };
 
   # System state version
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
 
 # This configuration recognizes G16 as a high-performance gaming laptop

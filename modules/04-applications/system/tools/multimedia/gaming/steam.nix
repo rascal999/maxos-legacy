@@ -28,8 +28,8 @@ in
     # Ensure 32-bit userspace libraries are available for Steam and many games
     hardware.graphics.extraPackages = with pkgs; [
       intel-media-driver # VAAPI driver for Intel GPUs
-      vaapiIntel         # VAAPI driver for Intel GPUs (older)
-      vaapiVdpau         # VAAPI to VDPAU wrapper
+      intel-vaapi-driver # VAAPI driver for Intel GPUs (older)
+      libva-vdpau-driver # VAAPI to VDPAU wrapper
       libvdpau-va-gl     # VDPAU driver with VA-API/OpenGL backend
     ];
     hardware.graphics.extraPackages32 = with pkgs.pkgsi686Linux; [
@@ -43,7 +43,7 @@ in
     fonts.packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans # Corrected font name
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       liberation_ttf
       corefonts # Microsoft TrueType core fonts
     ];

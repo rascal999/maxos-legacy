@@ -87,7 +87,7 @@
   # Add required packages
   environment.systemPackages = with pkgs; [
     # Graphics utilities
-    glxinfo
+    mesa-demos
     xorg.xrandr
     # Qt theming
     libsForQt5.qt5ct
@@ -162,5 +162,5 @@
   };
 
   # Set system state version
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }

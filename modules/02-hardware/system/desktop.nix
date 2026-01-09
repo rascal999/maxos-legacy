@@ -140,7 +140,7 @@ in {
 
     # Desktop-specific packages
     environment.systemPackages = mkIf cfg.enable (with pkgs; [
-      glxinfo
+      mesa-demos
       vulkan-tools
       pciutils
       usbutils
