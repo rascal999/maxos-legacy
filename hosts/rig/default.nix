@@ -141,6 +141,11 @@
   # Enable Knot DNS for authoritative DNS testing
   maxos.tools.knot-dns.enable = true;
 
+  # Enable Prowlarr, Sonarr and qBittorrent
+  maxos.services.prowlarr.enable = true;
+  maxos.services.sonarr.enable = true;
+  maxos.services.qbittorrent.enable = true;
+
   # Rocket.Chat service disabled (module import commented out)
 
   # Disable system-wide Firefox

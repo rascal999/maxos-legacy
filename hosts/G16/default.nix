@@ -182,6 +182,11 @@
     knot-dns.enable = true;
   };
 
+  # Enable Prowlarr, Sonarr and qBittorrent
+  maxos.services.prowlarr.enable = true;
+  maxos.services.sonarr.enable = true;
+  maxos.services.qbittorrent.enable = true;
+
   # G16-specific system configuration
   services = {
     # X11 and i3 (from gaming-workstation profile, but customized)

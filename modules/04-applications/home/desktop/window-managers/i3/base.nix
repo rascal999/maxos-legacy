@@ -118,9 +118,8 @@ in {
 
       # Assign applications to workspaces
       assigns = {
-        "0: workspace" = [];
+        "0: workspace" = [{ class = "^Chromium-browser$"; }];
         "1: web" = [{ class = "^Firefox$"; }];
-        "8: logseq" = [{ class = "^Logseq$"; }];
         "9: pw" = [{ class = "^KeePassXC$"; }];
       };
 
@@ -130,13 +129,13 @@ in {
         # Set initial brightness and color temperature using redshift
         { command = "redshift -O 3500 -b 0.6"; notification = false; }
         # Start pwvucontrol for PipeWire volume control
-        { command = "pwvucontrol"; notification = false; }
+        #{ command = "pwvucontrol"; notification = false; }
         # Start bluetooth applet
         { command = "sleep 1 && ${pkgs.blueman}/bin/blueman-applet"; notification = false; }
         # Start network manager applet
         { command = "sleep 1 && ${pkgs.networkmanagerapplet}/bin/nm-applet"; notification = false; }
         { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
-        { command = "sleep 2 && i3-msg 'workspace 8: logseq; exec ${pkgs.logseq}/bin/logseq'"; notification = false; }
+        { command = "sleep 2 && i3-msg 'workspace 0: workspace; exec ${pkgs.chromium}/bin/chromium'"; notification = false; }
         { command = "sleep 6 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
         { command = "sleep 8 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code; mark vscode_default'"; notification = false; }
         { command = "sleep 11 && i3-msg 'workspace 4: burp; exec ${pkgs.jdk}/bin/java -jar $(find /home/user/Downloads -name 'burpsuite_pro*.jar' -type f | sort -r | head -n1)'"; notification = false; }
@@ -209,7 +208,7 @@ in {
         "Mod1+5" = "workspace number 5: term";
         "Mod1+6" = "workspace number 6: term";
         "Mod1+7" = "workspace number 7: term";
-        "Mod1+8" = "workspace number 8: logseq";
+        "Mod1+8" = "workspace number 8: term";
         "Mod1+9" = "workspace number 9: pw";
 
         # Move container to workspace
@@ -221,7 +220,7 @@ in {
         "Mod1+Shift+5" = "move container to workspace 5: term";
         "Mod1+Shift+6" = "move container to workspace 6: term";
         "Mod1+Shift+7" = "move container to workspace 7: term";
-        "Mod1+Shift+8" = "move container to workspace 8: logseq";
+        "Mod1+Shift+8" = "move container to workspace 8: term";
         "Mod1+Shift+9" = "move container to workspace 9: pw";
 
         # Screen locking
