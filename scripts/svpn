@@ -1,27 +1,11 @@
 #!/usr/bin/env bash
 
 # Directory containing WireGuard profiles
-PROFILE_DIR="/home/user/share/Data/vpn"
+PROFILE_DIR="/home/user/share/Data/synlace"
 
-# European country codes (excluding GB)
-EUROPE_COUNTRIES=("at" "be" "bg" "hr" "cy" "cz" "dk" "ee" "fi" "fr" "de" "gr" "hu" "ie" "it" "lv" "lt" "lu" "mt" "nl" "pl" "pt" "ro" "sk" "si" "es" "se" "ch" "no" "is")
-
-# Function to get a random European country
-get_random_european_country() {
-  echo "${EUROPE_COUNTRIES[$RANDOM % ${#EUROPE_COUNTRIES[@]}]}"
-}
-
-# Function to get active interface pattern for European countries
+# Function to get active interface pattern
 get_active_interface() {
-  local pattern=""
-  for country in "${EUROPE_COUNTRIES[@]}"; do
-    if [ -z "$pattern" ]; then
-      pattern="${country}-[^:@]+"
-    else
-      pattern="${pattern}|${country}-[^:@]+"
-    fi
-  done
-  ip link show | grep -oP "^[0-9]+: \K(${pattern})(?=:)"
+  ip link show | grep -oP "^[0-9]+: \K(wg)(?=:)"
 }
 
 # Function to add iptables rules to allow localhost and Docker traffic
@@ -41,19 +25,14 @@ add_local_network_rules() {
 
 # Function to start a profile
 start_profile() {
-  local country_code=$1
-  # Modified to only select .conf files, not backups
-  local profiles=($(ls $PROFILE_DIR | grep "^${country_code}-" | grep "\.conf$" | grep -v "\.bak"))
+  local profile_path="$PROFILE_DIR/wg.conf"
 
-  if [ ${#profiles[@]} -eq 0 ]; then
-    echo "No profiles found for country code: $country_code"
+  if [ ! -f "$profile_path" ]; then
+    echo "Profile not found: $profile_path"
     exit 1
   fi
 
-  local random_profile=${profiles[$RANDOM % ${#profiles[@]}]}
-  local profile_path="$PROFILE_DIR/$random_profile"
-
-  echo "Starting profile: $random_profile"
+  echo "Starting profile: wg.conf"
   sudo wg-quick up $profile_path
   
   # Add rules to allow localhost and Docker traffic after VPN is up
@@ -70,7 +49,7 @@ stop_profile() {
   fi
 
   echo "Stopping interface: $active_interface"
-  local config_file="$PROFILE_DIR/${active_interface}.conf"
+  local config_file="$PROFILE_DIR/wg.conf"
   if [ ! -f "$config_file" ]; then
     echo "Configuration file not found: $config_file"
     exit 1
@@ -83,9 +62,9 @@ check_status() {
   local active_interface=$(get_active_interface)
 
   if [ -z "$active_interface" ]; then
-    echo '{"icon": "", "state": "Warning", "text": "mvpn off", "short_text": "mvpn off"}'
+    echo '{"icon": "", "state": "Warning", "text": "svpn off", "short_text": "svpn off"}'
   else
-    echo '{"icon": "", "state": "Info", "text": "mvpn on", "short_text": "mvpn on"}'
+    echo '{"icon": "", "state": "Info", "text": "svpn on", "short_text": "svpn on"}'
   fi
 }
 
@@ -94,8 +73,7 @@ toggle_vpn() {
   local active_interface=$(get_active_interface)
 
   if [ -z "$active_interface" ]; then
-    local random_country=$(get_random_european_country)
-    start_profile "$random_country"
+    start_profile
     sleep 1  # Give the interface time to come up
   else
     stop_profile
@@ -108,12 +86,7 @@ toggle_vpn() {
 # Main script logic
 case $1 in
   up)
-    if [ -z "$2" ]; then
-      local random_country=$(get_random_european_country)
-      start_profile "$random_country"
-    else
-      start_profile "$2"
-    fi
+    start_profile
     ;;
   down)
     stop_profile
@@ -129,8 +102,7 @@ case $1 in
     add_local_network_rules
     ;;
   *)
-    echo "Usage: mvpn {up [country code] | down | status | toggle | fix-local}"
-    echo "Available European countries: ${EUROPE_COUNTRIES[*]}"
+    echo "Usage: svpn {up | down | status | toggle | fix-local}"
     exit 1
     ;;
 esac

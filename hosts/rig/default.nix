@@ -97,6 +97,9 @@
   
   # Enable OpenVPN client
   maxos.tools.openvpn.enable = true;
+
+  # Enable SSHFS for remote filesystem mounting
+  maxos.tools.sshfs.enable = true;
   
   # Enable TeamViewer for remote access
   maxos.tools.teamviewer.enable = true;

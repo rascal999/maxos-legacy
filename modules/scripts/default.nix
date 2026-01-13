@@ -5,6 +5,7 @@ let
   redshiftBrightness = pkgs.writeShellScriptBin "redshift-brightness" (builtins.readFile ../../scripts/redshift-brightness);
   clearUrgent = pkgs.writeShellScriptBin "clear-urgent" (builtins.readFile ../../scripts/clear-urgent);
   mvpnScript = pkgs.writeShellScriptBin "mvpn" (builtins.readFile ../../scripts/mvpn);
+  svpnScript = pkgs.writeShellScriptBin "svpn" (builtins.readFile ../../scripts/svpn);
   screenshotScript = pkgs.writeShellScriptBin "screenshot" (builtins.readFile ../../scripts/screenshot);
   insertTimestamp = pkgs.writeShellScriptBin "insert-timestamp" (builtins.readFile ../../scripts/insert-timestamp);
 in
@@ -15,6 +16,7 @@ in
       redshiftBrightness
       clearUrgent
       mvpnScript
+      svpnScript
       screenshotScript
       insertTimestamp
       # Dependencies for redshift-brightness

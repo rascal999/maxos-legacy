@@ -137,6 +137,9 @@
     
     # Enable OpenVPN client
     openvpn.enable = true;
+
+    # Enable SSHFS for remote filesystem mounting
+    sshfs.enable = true;
     
     # Enable Firecracker microVM virtualization
     firecracker = {

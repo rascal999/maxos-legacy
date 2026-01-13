@@ -135,7 +135,7 @@ in {
         # Start network manager applet
         { command = "sleep 1 && ${pkgs.networkmanagerapplet}/bin/nm-applet"; notification = false; }
         { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
-        { command = "sleep 2 && i3-msg 'workspace 0: workspace; exec ${pkgs.chromium}/bin/chromium'"; notification = false; }
+        { command = "sleep 2 && i3-msg 'workspace 0: workspace; exec ${pkgs.chromium}/bin/chromium --password-store=basic'"; notification = false; }
         { command = "sleep 6 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
         { command = "sleep 8 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code; mark vscode_default'"; notification = false; }
         { command = "sleep 11 && i3-msg 'workspace 4: burp; exec ${pkgs.jdk}/bin/java -jar $(find /home/user/Downloads -name 'burpsuite_pro*.jar' -type f | sort -r | head -n1)'"; notification = false; }
@@ -236,7 +236,7 @@ in {
         "${config.xsession.windowManager.i3.config.modifier}+k" = "workspace 9: pw; exec ${pkgs.keepassxc}/bin/keepassxc";
         "${config.xsession.windowManager.i3.config.modifier}+Return" = "exec $HOME/.local/bin/rofi-launcher";
         "${config.xsession.windowManager.i3.config.modifier}+Shift+l" = "exec systemctl poweroff";
-        "Mod1+c" = "exec ${pkgs.chromium}/bin/chromium";
+        "Mod1+c" = "exec ${pkgs.chromium}/bin/chromium --password-store=basic";
 
         # Screenshot selection
         "--release Mod1+s" = "exec /run/current-system/sw/bin/screenshot --select";

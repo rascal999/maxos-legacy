@@ -51,6 +51,15 @@ button = "left"
 cmd = "/run/current-system/sw/bin/mvpn toggle"
 
 [[block]]
+block = "custom"
+command = "/run/current-system/sw/bin/svpn status"
+interval = 1
+json = true
+[[block.click]]
+button = "left"
+cmd = "/run/current-system/sw/bin/svpn toggle"
+
+[[block]]
 block = "disk_space"
 path = "/"
 info_type = "available"
