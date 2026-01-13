@@ -1,6 +1,6 @@
 # MaxOS
 
-A comprehensive NixOS configuration featuring desktop and server variants with a focus on security and development workflows.
+A comprehensive NixOS configuration featuring desktop and server variants with a focus on security and development workflows..
 
 Repository: https://github.com/rascal999/monorepo/tree/main/maxos
 
