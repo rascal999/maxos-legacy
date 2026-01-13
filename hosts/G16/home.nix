@@ -83,8 +83,8 @@
   # Git configuration
   programs.git = {
     enable = true;
-    userName = "Your Name";
-    userEmail = "your.email@example.com";
+    userName = "Aidan Marlin";
+    userEmail = "aidan@synlace.io";
     extraConfig = {
       init.defaultBranch = "main";
       pull.rebase = true;
