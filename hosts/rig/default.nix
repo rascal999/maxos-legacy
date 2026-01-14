@@ -312,6 +312,28 @@
     postgresql # PostgreSQL client tools (psql, pg_dump, etc.)
   ];
 
+  # Mount Storage Box via SSHFS
+  fileSystems."/home/user/media" = {
+    device = "u531385@u531385.your-storagebox.de:/";
+    fsType = "fuse.sshfs";
+    options = [
+      "allow_other"
+      "uid=1000"
+      "gid=100"
+      "idmap=user"
+      "IdentityFile=/home/user/.ssh/id_ed25519"
+      "ssh_command=${pkgs.openssh}/bin/ssh"
+      "StrictHostKeyChecking=no"
+      "UserKnownHostsFile=/dev/null"
+      "x-systemd.automount"
+      "_netdev"
+      "reconnect"
+      "ServerAliveInterval=15"
+      "ServerAliveCountMax=3"
+      "delay_connect"
+    ];
+  };
+
   # Add user to plugdev group for Logitech device access
   users.users.user.extraGroups = [ "plugdev" ];
 
