@@ -144,6 +144,9 @@
   # Enable Knot DNS for authoritative DNS testing
   maxos.tools.knot-dns.enable = true;
 
+  # Enable FileZilla FTP client
+  maxos.tools.filezilla.enable = true;
+
   # Enable Prowlarr, Sonarr and qBittorrent
   maxos.services.prowlarr.enable = true;
   maxos.services.sonarr.enable = true;

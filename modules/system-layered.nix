@@ -107,6 +107,7 @@
     
     # File Management
     ./04-applications/system/tools/file-management/managers.nix
+    ./04-applications/system/tools/file-management/filezilla.nix
     
     # System Utilities
     ./04-applications/system/tools/system/core-utilities.nix

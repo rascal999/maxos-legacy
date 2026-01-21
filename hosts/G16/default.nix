@@ -183,6 +183,9 @@
 
     # Enable Knot DNS for authoritative DNS testing
     knot-dns.enable = true;
+
+    # Enable FileZilla FTP client
+    filezilla.enable = true;
   };
 
   # Enable Prowlarr, Sonarr and qBittorrent
