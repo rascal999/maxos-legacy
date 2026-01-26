@@ -131,6 +131,8 @@
     # Disable Kubernetes tooling
     helmfile.enable = lib.mkForce false;
     aws-cli.enable = true;
+    google-cloud-sdk.enable = true;
+    stripe-cli.enable = true;
     k3s.enable = lib.mkForce false;
     argocd.enable = lib.mkForce false;
     terraform.enable = lib.mkForce false;

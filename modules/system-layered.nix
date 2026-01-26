@@ -53,6 +53,7 @@
     
     # Development Tools
     ./04-applications/system/tools/development/api-tools/postman.nix
+    ./04-applications/system/tools/development/api-tools/stripe-cli.nix
     ./04-applications/system/tools/development/languages/golang.nix
     ./04-applications/system/tools/development/languages/python3.nix
     ./04-applications/system/tools/development/languages/npm.nix
@@ -65,6 +66,7 @@
     
     # Infrastructure
     ./04-applications/system/tools/infrastructure/cloud/aws-cli.nix
+    ./04-applications/system/tools/infrastructure/cloud/google-cloud-sdk.nix
     ./04-applications/system/tools/infrastructure/cloud/terraform.nix
     ./04-applications/system/tools/infrastructure/monitoring/blocky.nix
     ./04-applications/system/tools/infrastructure/monitoring/grafana.nix
