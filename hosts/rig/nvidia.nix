@@ -7,7 +7,7 @@
     
     # Basic X11 configuration
     screenSection = ''
-      Option "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=Off, ForceCompositionPipeline=Off}"
+      Option "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On, ForceCompositionPipeline=On}"
       Option "TripleBuffer" "off"
       Option "AllowIndirectGLXProtocol" "off"
       Option "VariableRefresh" "off"
@@ -22,8 +22,8 @@
 
   # NVIDIA driver configuration
   hardware.nvidia = {
-    # Use the beta driver for better compatibility with newer kernels/features
-    package = config.boot.kernelPackages.nvidiaPackages.beta; # Changed from .production
+    # Use the production driver for stability
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     # Enable modesetting
     modesetting.enable = true;
@@ -31,8 +31,8 @@
     # Enable the NVIDIA settings menu
     nvidiaSettings = true;
 
-    # Use open-source kernel modules (fix for kernel 6.15 GPL symbol issue)
-    open = true;
+    # Use proprietary kernel modules for better stability on desktop
+    open = false;
 
     # OpenGL configuration
     prime = {

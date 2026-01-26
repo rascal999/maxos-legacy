@@ -108,6 +108,9 @@
     # Enable bun JavaScript runtime
     bun.enable = true;
 
+    # Enable Android Studio
+    android-studio.enable = true;
+
     # Enable Python 3
     python3.enable = true;
     

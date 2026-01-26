@@ -61,6 +61,7 @@
     ./04-applications/system/tools/development/languages/java.nix
     ./04-applications/system/tools/development/pandoc.nix
     ./04-applications/system/tools/development/just.nix
+    ./04-applications/system/tools/development/android-studio.nix
     
     # Infrastructure
     ./04-applications/system/tools/infrastructure/cloud/aws-cli.nix

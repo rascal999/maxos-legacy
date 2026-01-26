@@ -56,6 +56,9 @@
   # Enable bun JavaScript runtime
   maxos.tools.bun.enable = true;
 
+  # Enable Android Studio
+  maxos.tools.android-studio.enable = true;
+
   # Enable Python 3
   #maxos.tools.python3.enable = true;
   
