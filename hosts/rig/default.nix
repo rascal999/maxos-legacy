@@ -71,6 +71,9 @@
   # Enable Wireshark for network analysis
   maxos.tools.wireshark.enable = true;
   
+  # Enable mitmproxy for interactive HTTPS proxying
+  maxos.tools.mitmproxy.enable = true;
+  
   # Enable OBS Studio for screen recording and streaming
   maxos.tools.obs = {
     enable = true;

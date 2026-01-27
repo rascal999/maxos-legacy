@@ -53,6 +53,10 @@ in {
       
       # Password management
       keepassxc.enable = mkIf cfg.passwordManagement true;
+
+      # Network security
+      mitmproxy.enable = mkIf cfg.monitoring true;
+      wireshark.enable = mkIf cfg.monitoring true;
     };
   };
 }

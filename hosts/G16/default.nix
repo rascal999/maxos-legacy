@@ -122,6 +122,9 @@
     # Enable Wireshark for network analysis
     wireshark.enable = true;
     
+    # Enable mitmproxy for interactive HTTPS proxying
+    mitmproxy.enable = true;
+    
     # Override backup subdirectory for G16
     restic = {
       hostSubdir = lib.mkForce "G16";
