@@ -189,6 +189,9 @@
     # Enable dig for DNS troubleshooting
     dig.enable = true;
 
+    # Enable GNU Screen terminal multiplexer
+    screen.enable = true;
+
     # Enable Knot DNS for authoritative DNS testing
     knot-dns.enable = true;
 

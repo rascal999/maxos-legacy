@@ -152,6 +152,9 @@
   # Enable Knot DNS for authoritative DNS testing
   maxos.tools.knot-dns.enable = true;
 
+  # Enable GNU Screen terminal multiplexer
+  maxos.tools.screen.enable = true;
+
   # Enable FileZilla FTP client
   maxos.tools.filezilla.enable = true;
 

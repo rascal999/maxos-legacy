@@ -98,6 +98,7 @@
     
     # Terminal Tools
     ./04-applications/system/tools/terminal/emulators/alacritty-stub.nix
+    ./04-applications/system/tools/terminal/screen.nix
     
     # Version Control
     ./04-applications/system/tools/version-control/git-hybrid.nix
