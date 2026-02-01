@@ -10,11 +10,13 @@
   # Ensure screen locks before suspend
   services.logind = {
     lidSwitch = "suspend";
-    extraConfig = ''
-      HandleLidSwitch=suspend
-      HandleLidSwitchExternalPower=suspend
-      LidSwitchIgnoreInhibited=yes
-    '';
+    settings = {
+      Login = {
+        HandleLidSwitch = "suspend";
+        HandleLidSwitchExternalPower = lib.mkDefault "suspend";
+        LidSwitchIgnoreInhibited = "yes";
+      };
+    };
   };
 
   # Configure xss-lock with i3lock

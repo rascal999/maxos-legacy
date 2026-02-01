@@ -12,7 +12,6 @@
     ];
     extraModulePackages = with config.boot.kernelPackages; [ 
       acpi_call
-      asus-wmi-sensors
     ];
     kernelParams = [
       "asus.use_lid_flip_devid=0"

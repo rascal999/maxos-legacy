@@ -104,9 +104,11 @@ in {
     # Lid switch handling
     services.logind = mkIf cfg.display.autoSuspend {
       lidSwitch = "suspend";
-      extraConfig = ''
-        HandleLidSwitchExternalPower=ignore
-      '';
+      settings = {
+        Login = {
+          HandleLidSwitchExternalPower = mkForce "ignore";
+        };
+      };
     };
 
     # Wireless networking
