@@ -43,6 +43,7 @@ in {
     maxos.tools = {
       # Screen capture and recording
       simplescreenrecorder.enable = mkIf cfg.enableScreenCapture true;
+      imagemagick.enable = mkIf cfg.enableScreenCapture true;
       
       # Gaming
       steam.enable = mkIf cfg.enableGaming true;

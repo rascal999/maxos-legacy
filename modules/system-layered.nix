@@ -83,6 +83,7 @@
     ./04-applications/system/tools/multimedia/recording/obs.nix
     ./04-applications/system/tools/multimedia/recording/asciinema.nix
     ./04-applications/system/tools/multimedia/applications.nix
+    ./04-applications/system/tools/multimedia/imagemagick.nix
     
     # Security
     ./04-applications/system/tools/security/crypto/git-crypt.nix

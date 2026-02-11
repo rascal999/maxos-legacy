@@ -40,6 +40,7 @@ in {
       
       # Recording and streaming
       simplescreenrecorder.enable = mkIf cfg.enableRecording true;
+      imagemagick.enable = mkIf cfg.enableRecording true;
       
       # Essential for all gaming profiles
       chromium.enable = true;  # For web-based games and game launchers
