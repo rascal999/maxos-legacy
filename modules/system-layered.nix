@@ -54,6 +54,7 @@
     # Development Tools
     ./04-applications/system/tools/development/api-tools/postman.nix
     ./04-applications/system/tools/development/api-tools/stripe-cli.nix
+    ./04-applications/system/tools/development/api-tools/karate.nix
     ./04-applications/system/tools/development/languages/golang.nix
     ./04-applications/system/tools/development/languages/python3.nix
     ./04-applications/system/tools/development/languages/npm.nix
