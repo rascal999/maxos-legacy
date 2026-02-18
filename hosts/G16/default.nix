@@ -72,6 +72,9 @@
     enableInfrastructure = false;  # Disable k3s infrastructure for G16
   };
 
+  # Enable core system utilities (includes envsubst)
+  maxos.tools.system-utilities.enable = true;
+
   # Disable secrets management for now
   maxos.secrets = {
     enable = false;

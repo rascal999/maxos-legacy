@@ -33,6 +33,9 @@
     enableMultimedia = true;
     enableInfrastructure = true;
   };
+
+  # Enable core system utilities (includes envsubst)
+  maxos.tools.system-utilities.enable = true;
   
   # Override tool configurations to disable SOPS secrets
   maxos.tools.restic.useSopsSecrets = false;

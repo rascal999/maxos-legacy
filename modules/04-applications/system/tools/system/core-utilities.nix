@@ -25,6 +25,12 @@ in {
       default = true;
       description = "Include networking tools (wget, curl)";
     };
+
+    includeTemplating = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Include templating tools (envsubst)";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -40,6 +46,8 @@ in {
     ] ++ optionals cfg.includeNetworking [
       wget
       curl
+    ] ++ optionals cfg.includeTemplating [
+      envsubst
     ];
   };
 }
