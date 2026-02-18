@@ -201,6 +201,9 @@
 
     # Enable FileZilla FTP client
     filezilla.enable = true;
+
+    # Enable input-leap for KVM software
+    input-leap.enable = true;
   };
 
   # Enable Prowlarr, Sonarr and qBittorrent

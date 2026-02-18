@@ -48,6 +48,7 @@
     
     # Desktop Environment
     ./04-applications/system/tools/desktop/input/keyd.nix
+    ./04-applications/system/tools/desktop/input/input-leap.nix
     ./04-applications/system/tools/desktop/themes/gtk.nix
     ./04-applications/system/tools/desktop/monitoring.nix
     

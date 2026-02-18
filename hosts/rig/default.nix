@@ -162,6 +162,9 @@
   # Enable FileZilla FTP client
   maxos.tools.filezilla.enable = true;
 
+  # Enable input-leap for KVM software
+  maxos.tools.input-leap.enable = true;
+
   # Enable Prowlarr, Sonarr and qBittorrent
   maxos.services.prowlarr.enable = true;
   maxos.services.sonarr.enable = true;
