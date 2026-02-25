@@ -111,6 +111,9 @@
     # Enable bun JavaScript runtime
     bun.enable = true;
 
+    # Enable watchexec for file watching
+    watchexec.enable = true;
+
     # Enable Android Studio
     android-studio.enable = true;
 

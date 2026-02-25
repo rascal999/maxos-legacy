@@ -55,6 +55,9 @@
   
   # Enable just command runner
   maxos.tools.just.enable = true;
+
+  # Enable watchexec for file watching
+  maxos.tools.watchexec.enable = true;
   
   # Enable bun JavaScript runtime
   maxos.tools.bun.enable = true;
