@@ -46,6 +46,7 @@ in {
       k3s.enable = mkIf cfg.enableContainerPlatform true;
 
       # Layer 4 applications (now properly located)
+      docker-buildx.enable = mkIf cfg.enableContainerPlatform true;
       argocd.enable = mkIf cfg.enableCICD true;
       grafana.enable = mkIf cfg.enableMonitoring true;
       trivy.enable = mkIf cfg.enableSecurityScanning true;
