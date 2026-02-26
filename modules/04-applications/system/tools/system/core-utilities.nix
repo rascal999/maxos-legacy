@@ -36,6 +36,7 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       # Always include basic utilities
+      lsof
     ] ++ optionals cfg.includeMonitoring [
       htop
       btop
@@ -46,6 +47,7 @@ in {
     ] ++ optionals cfg.includeNetworking [
       wget
       curl
+      net-tools
     ] ++ optionals cfg.includeTemplating [
       envsubst
     ];
