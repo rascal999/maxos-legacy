@@ -117,6 +117,9 @@
     # Enable Android Studio
     android-studio.enable = true;
 
+    # Enable Playwright
+    playwright.enable = true;
+
     # Enable Python 3
     python3.enable = true;
     

@@ -65,6 +65,9 @@
   # Enable Android Studio
   maxos.tools.android-studio.enable = true;
 
+  # Enable Playwright
+  maxos.tools.playwright.enable = true;
+
   # Enable Python 3
   #maxos.tools.python3.enable = true;
   
