@@ -160,6 +160,9 @@
     # Enable SSHFS for remote filesystem mounting
     sshfs.enable = true;
     
+    # Enable AutoSSH for persistent SSH tunnels
+    autossh.enable = true;
+    
     # Enable Firecracker microVM virtualization
     firecracker = {
       enable = true;

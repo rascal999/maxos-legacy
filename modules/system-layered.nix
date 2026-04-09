@@ -80,6 +80,7 @@
     ./04-applications/system/tools/infrastructure/networking/sshfs.nix
     ./04-applications/system/tools/infrastructure/networking/dig.nix
     ./04-applications/system/tools/infrastructure/networking/knot-dns.nix
+    ./04-applications/system/tools/infrastructure/networking/autossh.nix
     
     # Multimedia
     ./04-applications/system/tools/multimedia/gaming/steam.nix

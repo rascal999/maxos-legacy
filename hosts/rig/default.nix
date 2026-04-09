@@ -120,6 +120,9 @@
   # Enable SSHFS for remote filesystem mounting
   maxos.tools.sshfs.enable = true;
   
+  # Enable AutoSSH for persistent SSH tunnels
+  maxos.tools.autossh.enable = true;
+  
   # Enable TeamViewer for remote access
   maxos.tools.teamviewer.enable = true;
   
