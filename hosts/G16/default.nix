@@ -111,6 +111,9 @@
     # Enable bun JavaScript runtime
     bun.enable = true;
 
+    # Enable Deno JavaScript/TypeScript runtime
+    deno.enable = true;
+
     # Enable watchexec for file watching
     watchexec.enable = true;
 

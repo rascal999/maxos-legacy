@@ -62,6 +62,7 @@
     ./04-applications/system/tools/development/languages/python3.nix
     ./04-applications/system/tools/development/languages/npm.nix
     ./04-applications/system/tools/development/languages/bun.nix
+    ./04-applications/system/tools/development/languages/deno.nix
     ./04-applications/system/tools/development/core-tools.nix
     ./04-applications/system/tools/development/playwright.nix
     ./04-applications/system/tools/development/languages/java.nix
