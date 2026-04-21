@@ -15,9 +15,4 @@
     };
   };
 
-  # Override default ollama service configuration
-  services.ollama.enable = lib.mkForce false;
-
-  # Ollama configuration disabled - using system ollama service instead
-  # Docker-based ollama setup was replaced with native NixOS ollama service
 }

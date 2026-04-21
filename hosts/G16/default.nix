@@ -126,8 +126,6 @@
     # Enable Python 3
     python3.enable = true;
     
-    #ollama.enable = true;
-    
     # Enable OpenAI Codex CLI tool
     codex.enable = true;
 
@@ -199,8 +197,8 @@
       databases = [ "development" "testing" ];
     };
     
-    # AI tools disabled for laptop
-    ollama.enable = lib.mkForce false;
+    # Enable ollama natively on G16 (CUDA via PRIME offload)
+    ollama.enable = true;
     open-webui.enable = lib.mkForce false;
 
     # Enable dig for DNS troubleshooting
