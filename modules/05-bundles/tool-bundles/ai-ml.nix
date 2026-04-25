@@ -43,6 +43,8 @@ in {
     maxos.tools = {
       # Local model hosting
       ollama.enable = mkIf cfg.enableLocalModels true;
+      llama-cpp.enable = mkIf cfg.enableLocalModels true;
+      vllm.enable = mkIf cfg.enableLocalModels true;
       
       # Web interfaces
       open-webui.enable = mkIf cfg.enableWebInterface true;

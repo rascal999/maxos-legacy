@@ -77,6 +77,18 @@
   # Enable Ollama AI language model server (uses CUDA by default)
   maxos.tools.ollama.enable = true;
   
+  # Enable llama.cpp with CUDA acceleration
+  maxos.tools.llama-cpp = {
+    enable = true;
+    cudaSupport = true;
+  };
+  
+  # Enable vLLM with CUDA acceleration
+  maxos.tools.vllm = {
+    enable = true;
+    cudaSupport = true;
+  };
+  
   # Enable OpenAI Codex CLI tool
   maxos.tools.codex.enable = true;
 

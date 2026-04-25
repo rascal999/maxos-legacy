@@ -200,6 +200,18 @@
     # Enable ollama natively on G16 (CUDA via PRIME offload)
     ollama.enable = true;
     open-webui.enable = lib.mkForce false;
+    
+    # Enable llama.cpp with CUDA acceleration
+    llama-cpp = {
+      enable = true;
+      cudaSupport = true;
+    };
+
+    # Enable vLLM with CUDA acceleration
+    vllm = {
+      enable = true;
+      cudaSupport = true;
+    };
 
     # Enable dig for DNS troubleshooting
     dig.enable = true;

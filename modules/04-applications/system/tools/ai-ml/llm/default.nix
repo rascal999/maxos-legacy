@@ -6,5 +6,7 @@
     ./open-webui.nix
     ./fabric-ai.nix
     ./codex.nix
+    ./llama-cpp.nix
+    ./vllm.nix
   ];
 }
