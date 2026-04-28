@@ -123,6 +123,9 @@
     # Enable Playwright
     playwright.enable = true;
 
+    # Enable web-ext Mozilla extension CLI tool
+    web-ext.enable = true;
+
     # Enable Python 3
     python3.enable = true;
     

@@ -69,6 +69,7 @@
     ./04-applications/system/tools/development/pandoc.nix
     ./04-applications/system/tools/development/just.nix
     ./04-applications/system/tools/development/watchexec.nix
+    ./04-applications/system/tools/development/web-ext.nix
     ./04-applications/system/tools/development/android-studio.nix
     
     # Infrastructure

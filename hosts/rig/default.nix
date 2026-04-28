@@ -71,6 +71,9 @@
   # Enable Playwright
   maxos.tools.playwright.enable = true;
 
+  # Enable web-ext Mozilla extension CLI tool
+  maxos.tools.web-ext.enable = true;
+
   # Enable Python 3
   #maxos.tools.python3.enable = true;
   
@@ -83,11 +86,8 @@
     cudaSupport = true;
   };
   
-  # Enable vLLM with CUDA acceleration
-  maxos.tools.vllm = {
-    enable = true;
-    cudaSupport = true;
-  };
+  # Disable vLLM - flashinfer dependency is marked broken in current nixpkgs
+  maxos.tools.vllm.enable = lib.mkForce false;
   
   # Enable OpenAI Codex CLI tool
   maxos.tools.codex.enable = true;
