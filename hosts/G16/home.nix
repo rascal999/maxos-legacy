@@ -29,7 +29,6 @@
     i3.enable = true;
     
     # Development tools
-    vscode.enable = true;
     direnv.enable = true;
     
     # Applications

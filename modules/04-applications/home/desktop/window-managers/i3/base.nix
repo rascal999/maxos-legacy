@@ -137,8 +137,8 @@ in {
         { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
         { command = "sleep 2 && i3-msg 'workspace 0: workspace; exec ${pkgs.chromium}/bin/chromium --password-store=basic'"; notification = false; }
         { command = "sleep 6 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
-        { command = "sleep 8 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code; mark vscode_default'"; notification = false; }
-        { command = "sleep 11 && i3-msg 'workspace 4: burp; exec ${pkgs.jdk}/bin/java -jar $(find /home/user/Downloads -name 'burpsuite_pro*.jar' -type f | sort -r | head -n1)'"; notification = false; }
+        { command = "sleep 8 && i3-msg 'workspace 4: burp; exec ${pkgs.jdk}/bin/java -jar $(find /home/user/Downloads -name 'burpsuite_pro*.jar' -type f | sort -r | head -n1)'"; notification = false; }
+        { command = "sleep 11 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code; mark vscode_default'"; notification = false; }
         { command = "sleep 16 && i3-msg 'workspace 1: web'"; notification = false; }
         # Clear urgent flags after all apps have launched
         { command = "sleep 18 && clear-urgent"; notification = false; }

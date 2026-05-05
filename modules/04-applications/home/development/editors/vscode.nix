@@ -38,6 +38,18 @@ in {
       "settingsSync.ignoredExtensions" = [];
       "settingsSync.ignoredKeyBindings" = [];
       "settingsSync.keybindingsPerPlatform" = false;
+      # Layout: Explorer (left sidebar) | Roo Code (middle, Ctrl+T) | File editor (right)
+      # VSCode cannot auto-restore extension webview tabs, so Ctrl+T opens Roo Code into
+      # the pre-configured left editor group on first use each session.
+      "workbench.editorLayout" = {
+        orientation = 0;
+        groups = [
+          { size = 0.4; }
+          { size = 0.6; }
+        ];
+      };
+      "window.restoreWindows" = "all";
+      "workbench.editor.restoreViewState" = true;
     };
     extensions = with pkgs.vscode-extensions; [
       vscodevim.vim
