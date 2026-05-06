@@ -200,21 +200,15 @@
       databases = [ "development" "testing" ];
     };
     
-    # Enable ollama natively on G16 (CUDA via PRIME offload)
-    ollama.enable = true;
+    # Disable ollama on G16
+    ollama.enable = lib.mkForce false;
     open-webui.enable = lib.mkForce false;
     
-    # Enable llama.cpp with CUDA acceleration
-    llama-cpp = {
-      enable = true;
-      cudaSupport = true;
-    };
+    # Disable llama-cpp on G16
+    llama-cpp.enable = lib.mkForce false;
 
-    # Enable vLLM with CUDA acceleration
-    vllm = {
-      enable = true;
-      cudaSupport = true;
-    };
+    # Disable vLLM - flashinfer dependency is marked broken in current nixpkgs
+    vllm.enable = lib.mkForce false;
 
     # Enable dig for DNS troubleshooting
     dig.enable = true;
