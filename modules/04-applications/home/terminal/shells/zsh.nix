@@ -204,13 +204,18 @@ in {
       # Copy most recent download to current directory
       function cpd() {
         local last_download
-        last_download=$(ls -t ~/Downloads | head -1)
+
+        last_download=$(find "$HOME/Downloads" -maxdepth 1 -type f -printf '%T@ %p\n' \
+            | sort -nr \
+            | head -n 1 \
+            | cut -d' ' -f2-)
+
         if [[ -n "$last_download" ]]; then
-          cp -v ~/Downloads/"$last_download" .
-          echo "\nCurrent directory contents:"
-          ls -la
+            cp -v -- "$last_download" .
+            printf '\nCurrent directory contents:\n'
+            ls --color=auto -la
         else
-          echo "No files found in ~/Downloads"
+            echo "No files found in ~/Downloads"
         fi
       }
 
