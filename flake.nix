@@ -11,6 +11,10 @@
     nur = {
       url = "github:nix-community/NUR";
     };
+    nix-openclaw = {
+      url = "github:openclaw/nix-openclaw";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +25,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nur, sops-nix, disko, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nur, sops-nix, disko, nix-openclaw, ... }@inputs:
   let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
@@ -31,7 +35,7 @@
     };
     
     # Import host configuration helpers
-    hostConfig = import ./lib/host-config.nix { inherit nixpkgs home-manager nur sops-nix disko self; };
+    hostConfig = import ./lib/host-config.nix { inherit nixpkgs home-manager nur sops-nix disko self nix-openclaw; };
   in {
     nixosModules = {
       # Core modules

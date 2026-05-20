@@ -36,6 +36,17 @@
     logseq.enable = true;
     appflowy.enable = true;
     remmina.enable = true;
+
+    # OpenClaw AI gateway — multi-channel AI messaging hub
+    # API keys are read from SOPS-decrypted files at /run/secrets/
+    # To activate: set maxos.secrets.enable = true in G16/default.nix
+    # and add anthropic_api_key / openai_api_key to secrets/hosts/G16/secrets.yaml
+    openclaw = {
+      enable = true;
+      model = "anthropic/claude-opus-4-6";
+      anthropicKeyFile = "/run/secrets/anthropic_api_key";
+      openaiKeyFile = "/run/secrets/openai_api_key";
+    };
   };
 
   # Home Manager needs a bit of information about you and the paths it should manage

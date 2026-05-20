@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, nur, sops-nix, disko, self }:
+{ nixpkgs, home-manager, nur, sops-nix, disko, self, nix-openclaw ? null }:
 
 let
   lib = nixpkgs.lib;
@@ -26,6 +26,9 @@ let
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = lib.mkDefault "backup";
+    # Pass flake inputs as special args so home modules can access them
+    # without triggering infinite recursion (unlike _module.args inside user modules)
+    extraSpecialArgs = { inherit nix-openclaw; };
   };
 
 in rec {

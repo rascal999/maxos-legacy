@@ -75,11 +75,31 @@
   # Enable core system utilities (includes envsubst)
   maxos.tools.system-utilities.enable = true;
 
-  # Disable secrets management for now
+  # Secrets management — set enable = true once SOPS age key is initialised.
+  # Run `maxos-secrets-init` to generate the age key, then encrypt secrets with:
+  #   sops secrets/hosts/G16/secrets.yaml
+  # Required keys: anthropic_api_key, openai_api_key
   maxos.secrets = {
     enable = false;
     age.generateKey = false;
-    # defaultSopsFile = "${config.maxos.user.secretsDirectory}/hosts/G16/secrets.yaml";
+    defaultSopsFile = "${config.maxos.user.secretsDirectory}/hosts/G16/secrets.yaml";
+  };
+
+  # SOPS secret declarations for OpenClaw API keys.
+  # These are only active when maxos.secrets.enable = true (sops-nix is configured).
+  # The decrypted values are written to /run/secrets/ at boot.
+  sops.secrets = lib.mkIf false {
+    # Set lib.mkIf condition to `config.maxos.secrets.enable` to activate.
+    anthropic_api_key = {
+      sopsFile = "${config.maxos.user.secretsDirectory}/hosts/G16/secrets.yaml";
+      owner = config.maxos.user.name;
+      mode = "0400";
+    };
+    openai_api_key = {
+      sopsFile = "${config.maxos.user.secretsDirectory}/hosts/G16/secrets.yaml";
+      owner = config.maxos.user.name;
+      mode = "0400";
+    };
   };
 
   # Security configuration

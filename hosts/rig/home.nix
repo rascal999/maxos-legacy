@@ -27,6 +27,17 @@
     logseq.enable = true;
     appflowy.enable = true;
     remmina.enable = true;
+
+    # OpenClaw AI gateway — multi-channel AI messaging hub
+    # API keys are read from SOPS-decrypted files at /run/secrets/
+    # For now, set ANTHROPIC_API_KEY / OPENAI_API_KEY env vars and run:
+    #   openclaw onboard --non-interactive --auth-choice anthropic --anthropic-api-key "$ANTHROPIC_API_KEY"
+    openclaw = {
+      enable = true;
+      model = "anthropic/claude-opus-4-6";
+      anthropicKeyFile = "/run/secrets/anthropic_api_key";
+      openaiKeyFile = "/run/secrets/openai_api_key";
+    };
   };
 
   # Home Manager needs a bit of information about you and the paths it should manage
