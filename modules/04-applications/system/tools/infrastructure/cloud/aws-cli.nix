@@ -75,7 +75,7 @@ in {
       (if cfg.version == "v2" then awscli2 else awscli)
     ] ++ optionals cfg.enableSessionManager [
       # AWS Systems Manager Session Manager plugin
-      awscli2
+      ssm-session-manager-plugin
     ] ++ optionals cfg.enableSAM [
       # AWS SAM CLI
       awscli2

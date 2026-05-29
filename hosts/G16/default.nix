@@ -166,7 +166,10 @@
     
     # Disable Kubernetes tooling
     helmfile.enable = lib.mkForce false;
-    aws-cli.enable = true;
+    aws-cli = {
+      enable = true;
+      enableSessionManager = true;
+    };
     google-cloud-sdk.enable = true;
     stripe-cli.enable = true;
     supabase-cli.enable = true;

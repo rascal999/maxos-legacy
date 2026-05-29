@@ -74,6 +74,7 @@
     
     # Infrastructure
     ./04-applications/system/tools/infrastructure/cloud/aws-cli.nix
+    ./04-applications/system/tools/infrastructure/cloud/flyctl.nix
     ./04-applications/system/tools/infrastructure/cloud/google-cloud-sdk.nix
     ./04-applications/system/tools/infrastructure/cloud/terraform.nix
     ./04-applications/system/tools/infrastructure/monitoring/blocky.nix

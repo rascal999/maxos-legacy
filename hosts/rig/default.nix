@@ -107,7 +107,10 @@
   
   # Enable Kubernetes tooling
   maxos.tools.helmfile.enable = true;
-  maxos.tools.aws-cli.enable = true;
+  maxos.tools.aws-cli = {
+    enable = true;
+    enableSessionManager = true;
+  };
   maxos.tools.google-cloud-sdk.enable = true;
   maxos.tools.stripe-cli.enable = true;
   maxos.tools.supabase-cli.enable = true;

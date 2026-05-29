@@ -150,7 +150,7 @@ in {
         "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
 
         # SSH into Kali container
-        "Mod1+space" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session '${pkgs.openssh}/bin/ssh root@localhost -p 2222'";
+        "Mod1+Tab" = "exec --no-startup-id bash -c 'sleep 0.5 && toggle-vscode'";
 
         # Work directory
         "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session '/home/user/git/github/monorepo/maxos/scripts/work-dir-tmux'";
