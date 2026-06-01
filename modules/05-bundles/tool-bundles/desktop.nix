@@ -56,7 +56,7 @@ in {
       # Essential desktop theming (provides dconf support)
       gtk-theme.enable = true;
       
-      # System utilities (htop, btop, neofetch, unzip, zip, wget, curl)
+      # System utilities (htop, btop, fastfetch, unzip, zip, wget, curl)
       system-utilities.enable = mkIf cfg.enableAll true;
       
       # Multimedia applications (VLC, GIMP, LibreOffice)

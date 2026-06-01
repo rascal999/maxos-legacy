@@ -47,7 +47,7 @@
   environment.systemPackages = with pkgs; [
     qpwgraph                  # PipeWire graph GUI
     easyeffects               # Audio effects for PipeWire
-    helvum                    # PipeWire patchbay
+    crosspipe                 # PipeWire patchbay (replaces helvum)
     pipewire                  # PipeWire tools including pw-top
     wireplumber               # Session manager for PipeWire
     pulseaudio                # For pactl utility

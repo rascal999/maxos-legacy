@@ -25,7 +25,7 @@
 
       # System tools
       htop
-      neofetch
+      fastfetch
       wget
       curl
       

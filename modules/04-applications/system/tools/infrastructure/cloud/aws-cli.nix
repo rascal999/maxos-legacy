@@ -81,7 +81,7 @@ in {
       awscli2
     ] ++ optionals cfg.enableCDK [
       # AWS CDK
-      nodePackages.aws-cdk
+      aws-cdk
     ];
 
     # Enable shell completions

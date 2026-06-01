@@ -17,7 +17,7 @@ in {
   config = mkIf (cfg.enable && dependenciesValid) {
     services.ollama = {
       enable = true;
-      acceleration = "cuda";
+      package = pkgs.ollama-cuda;
     };
     
     assertions = [

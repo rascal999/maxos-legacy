@@ -112,6 +112,9 @@
 
   # G16-specific overrides
   maxos.tools = {
+    # Enable Rust Token Killer
+    rtk.enable = true;
+    
     # Disable blocky to fix WireGuard DNS resolution
     blocky.enable = lib.mkForce false;
     
@@ -127,6 +130,9 @@
     
     # Enable just command runner
     just.enable = true;
+
+    # Enable SQLite database engine
+    sqlite.enable = true;
     
     # Enable bun JavaScript runtime
     bun.enable = true;

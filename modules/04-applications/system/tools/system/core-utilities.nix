@@ -11,7 +11,7 @@ in {
     includeMonitoring = mkOption {
       type = types.bool;
       default = true;
-      description = "Include system monitoring tools (htop, btop, neofetch)";
+      description = "Include system monitoring tools (htop, btop, fastfetch)";
     };
     
     includeArchiving = mkOption {
@@ -40,7 +40,7 @@ in {
     ] ++ optionals cfg.includeMonitoring [
       htop
       btop
-      neofetch
+      fastfetch
     ] ++ optionals cfg.includeArchiving [
       unzip
       zip

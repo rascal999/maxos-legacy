@@ -88,7 +88,7 @@
   environment.systemPackages = with pkgs; [
     # Graphics utilities
     mesa-demos
-    xorg.xrandr
+    xrandr
     # Qt theming
     libsForQt5.qt5ct
     adwaita-qt

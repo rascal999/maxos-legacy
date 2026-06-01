@@ -71,6 +71,8 @@
     ./04-applications/system/tools/development/watchexec.nix
     ./04-applications/system/tools/development/web-ext.nix
     ./04-applications/system/tools/development/android-studio.nix
+    ./04-applications/system/tools/development/rtk.nix
+    ./04-applications/system/tools/development/sqlite.nix
     
     # Infrastructure
     ./04-applications/system/tools/infrastructure/cloud/aws-cli.nix

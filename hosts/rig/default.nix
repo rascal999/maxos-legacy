@@ -34,6 +34,9 @@
     enableInfrastructure = true;
   };
 
+  # Enable Rust Token Killer
+  maxos.tools.rtk.enable = true;
+
   # Enable core system utilities (includes envsubst)
   maxos.tools.system-utilities.enable = true;
   
@@ -55,6 +58,9 @@
   
   # Enable just command runner
   maxos.tools.just.enable = true;
+
+  # Enable SQLite database engine
+  maxos.tools.sqlite.enable = true;
 
   # Enable watchexec for file watching
   maxos.tools.watchexec.enable = true;
@@ -318,12 +324,12 @@
 
     # Graphics utilities
     mesa-demos
-    xorg.xrandr
+    xrandr
     edid-decode
     # Qt theming
     libsForQt5.qt5ct
     adwaita-qt
-    python311
+    python3
     python3Packages.pip
     vegeta  # HTTP load testing tool
     nmap    # Network scanning tool

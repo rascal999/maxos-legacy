@@ -22,7 +22,7 @@
   maxos.fonts.enable = true;
 
   # Test individual tools that we know work
-  modules.tools = {
+  maxos.tools = {
     docker.enable = true;
     chromium.enable = true;
     keepassxc.enable = true;

@@ -9,6 +9,9 @@ let
       nixpkgs.config = {
         allowUnfree = true;
         android_sdk.accept_license = true;
+        permittedInsecurePackages = [
+          "electron-39.8.10"
+        ];
       };
       nixpkgs.overlays = [
         nur.overlays.default

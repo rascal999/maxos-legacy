@@ -62,6 +62,9 @@ in {
       # Go development (system-level)
       golang.enable = mkIf cfg.golang true;
       
+      # SQLite database (system-level)
+      sqlite.enable = mkIf cfg.enableAll true;
+      
       # Containerization (system-level)
       docker.enable = mkIf cfg.containerization true;
       
