@@ -4,83 +4,91 @@
 
 with lib;
 
-{
-  imports = [
-    # Core bundles for server
-    ../../05-bundles/tool-bundles/server-stack.nix
-    ../../05-bundles/tool-bundles/devops.nix
-    ../../05-bundles/tool-bundles/ai-ml.nix
-    ../../security/default.nix
-  ];
+let
+  cfg = config.maxos.profiles.homeServer;
+in {
+  options.maxos.profiles.homeServer = {
+    enable = mkEnableOption "Home server profile";
+  };
 
-  # Enable tool bundles with server-focused profiles
-  modules.toolBundles = {
-    serverStack = {
-      enable = mkDefault true;
-      profile = mkDefault "standard";
-      enableInfrastructure = mkDefault true;
-      enableMonitoring = mkDefault true;
-      enableBackup = mkDefault true;
+  config = mkIf cfg.enable {
+    imports = [
+      # Core bundles for server
+      ../../05-bundles/tool-bundles/server-stack.nix
+      ../../05-bundles/tool-bundles/devops.nix
+      ../../05-bundles/tool-bundles/ai-ml.nix
+      ../../security/default.nix
+    ];
+
+    # Enable tool bundles with server-focused profiles
+    modules.toolBundles = {
+      serverStack = {
+        enable = mkDefault true;
+        profile = mkDefault "standard";
+        enableInfrastructure = mkDefault true;
+        enableMonitoring = mkDefault true;
+        enableBackup = mkDefault true;
+      };
+      
+      devops = {
+        enable = mkDefault true;
+        profile = mkDefault "cicd";
+        enableContainerPlatform = mkDefault true;
+        enableCICD = mkDefault true;
+        enableMonitoring = mkDefault true;
+        enableSecurityScanning = mkDefault true;
+      };
+      
+      aiMl = {
+        enable = mkDefault true;
+        profile = mkDefault "selfhosted";
+        enableLocalModels = mkDefault true;
+        enableWebInterface = mkDefault true;
+      };
     };
-    
-    devops = {
-      enable = mkDefault true;
-      profile = mkDefault "cicd";
-      enableContainerPlatform = mkDefault true;
-      enableCICD = mkDefault true;
-      enableMonitoring = mkDefault true;
-      enableSecurityScanning = mkDefault true;
+
+    # Server-specific tools
+    maxos.tools = {
+      # Infrastructure
+      docker.enable = mkDefault true;
+      k3s.enable = mkDefault true;
+      blocky.enable = mkDefault true;
+      wireguard.enable = mkDefault true;
+      
+      # Monitoring and management
+      grafana.enable = mkDefault true;
+      argocd.enable = mkDefault true;
+      
+      # AI/ML self-hosting
+      ollama.enable = mkDefault true;
+      open-webui.enable = mkDefault true;
+      
+      # Backup and security
+      restic.enable = mkDefault true;
+      trivy.enable = mkDefault true;
     };
-    
-    aiMl = {
+
+    # Security hardening
+    security = {
       enable = mkDefault true;
-      profile = mkDefault "selfhosted";
-      enableLocalModels = mkDefault true;
-      enableWebInterface = mkDefault true;
+      sshHardening = mkDefault true;
+      firewallEnable = mkDefault true;
+      enableAudit = mkDefault true;
+      strongPasswords = mkDefault true;
     };
-  };
 
-  # Server-specific tools
-  maxos.tools = {
-    # Infrastructure
-    docker.enable = mkDefault true;
-    k3s.enable = mkDefault true;
-    blocky.enable = mkDefault true;
-    wireguard.enable = mkDefault true;
-    
-    # Monitoring and management
-    grafana.enable = mkDefault true;
-    argocd.enable = mkDefault true;
-    
-    # AI/ML self-hosting
-    ollama.enable = mkDefault true;
-    open-webui.enable = mkDefault true;
-    
-    # Backup and security
-    restic.enable = mkDefault true;
-    trivy.enable = mkDefault true;
-  };
+    # User configuration
+    maxos.user = {
+      workspaceDirectory = mkDefault "/home/user/server-configs";
+    };
 
-  # Security hardening
-  security = {
-    enable = mkDefault true;
-    sshHardening = mkDefault true;
-    firewallEnable = mkDefault true;
-    enableAudit = mkDefault true;
-    strongPasswords = mkDefault true;
-  };
-
-  # User configuration
-  maxos.user = {
-    workspaceDirectory = mkDefault "/home/user/server-configs";
-  };
-
-  # Server-specific system configuration
-  services.openssh = {
-    enable = mkDefault true;
-    settings = {
-      PasswordAuthentication = mkDefault false;
-      PermitRootLogin = mkDefault "no";
+    # Server-specific system configuration
+    services.openssh = {
+      enable = mkDefault true;
+      settings = {
+        PasswordAuthentication = mkDefault false;
+        PermitRootLogin = mkDefault "no";
+      };
     };
   };
 }
