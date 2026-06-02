@@ -27,7 +27,6 @@
   services = {
     asusd = {
       enable = true;
-      enableUserService = true;
     };
     supergfxd.enable = true;
     power-profiles-daemon.enable = false;
@@ -49,7 +48,6 @@
 
   # ROG-specific packages
   environment.systemPackages = with pkgs; [
-    light  # Backlight control utility
     asusctl  # ROG laptop control
     supergfxctl  # Graphics switching
   ];

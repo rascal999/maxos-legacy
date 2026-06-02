@@ -7,20 +7,20 @@ with lib;
 let
   cfg = config.maxos.profiles.gamingWorkstation;
 in {
+  imports = [
+    # Core bundles for gaming workstation
+    ../../05-bundles/tool-bundles/workstation.nix
+    ../../05-bundles/tool-bundles/gaming.nix
+    ../../05-bundles/tool-bundles/content-creation.nix
+    ../../05-bundles/tool-bundles/ai-ml.nix
+    # Browser tools configured via bundles
+  ];
+
   options.maxos.profiles.gamingWorkstation = {
     enable = mkEnableOption "Gaming workstation profile";
   };
 
   config = mkIf cfg.enable {
-    imports = [
-      # Core bundles for gaming workstation
-      ../../05-bundles/tool-bundles/workstation.nix
-      ../../05-bundles/tool-bundles/gaming.nix
-      ../../05-bundles/tool-bundles/content-creation.nix
-      ../../05-bundles/tool-bundles/ai-ml.nix
-      # Browser tools configured via bundles
-    ];
-
     # Enable tool bundles with appropriate profiles
     modules.toolBundles = {
       workstation = {

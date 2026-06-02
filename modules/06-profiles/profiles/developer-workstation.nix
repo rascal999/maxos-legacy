@@ -7,20 +7,20 @@ with lib;
 let
   cfg = config.maxos.profiles.developerWorkstation;
 in {
+  imports = [
+    # Core bundles for development
+    ../../05-bundles/tool-bundles/workstation.nix
+    ../../05-bundles/tool-bundles/webdev.nix
+    ../../05-bundles/tool-bundles/kubernetes.nix
+    ../../05-bundles/tool-bundles/ai-ml.nix
+    ../../05-bundles/tool-bundles/devops.nix
+  ];
+
   options.maxos.profiles.developerWorkstation = {
     enable = mkEnableOption "Developer workstation profile";
   };
 
   config = mkIf cfg.enable {
-    imports = [
-      # Core bundles for development
-      ../../05-bundles/tool-bundles/workstation.nix
-      ../../05-bundles/tool-bundles/webdev.nix
-      ../../05-bundles/tool-bundles/kubernetes.nix
-      ../../05-bundles/tool-bundles/ai-ml.nix
-      ../../05-bundles/tool-bundles/devops.nix
-    ];
-
     # Enable tool bundles with development-focused profiles
     modules.toolBundles = {
       workstation = {

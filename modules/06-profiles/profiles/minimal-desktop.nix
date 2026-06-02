@@ -7,17 +7,17 @@ with lib;
 let
   cfg = config.maxos.profiles.minimalDesktop;
 in {
+  imports = [
+    # Minimal bundle set
+    ../../05-bundles/tool-bundles/terminal.nix
+    ../../05-bundles/tool-bundles/desktop.nix
+  ];
+
   options.maxos.profiles.minimalDesktop = {
     enable = mkEnableOption "Minimal desktop profile";
   };
 
   config = mkIf cfg.enable {
-    imports = [
-      # Minimal bundle set
-      ../../05-bundles/tool-bundles/terminal.nix
-      ../../05-bundles/tool-bundles/desktop.nix
-    ];
-
     # Enable bundles with minimal profiles
     modules.toolBundles = {
       terminal = {

@@ -95,8 +95,7 @@ in {
       };
     };
 
-    # Backlight control
-    programs.light.enable = mkIf cfg.display.backlight true;
+    # Backlight control is handled by brightnessctl/acpilight
     
     # Add user to video group for backlight control
     users.users.${config.maxos.user.name}.extraGroups = mkIf cfg.display.backlight [ "video" ];
@@ -130,7 +129,6 @@ in {
         powertop
         brightnessctl
       ]) ++ (optionals cfg.display.backlight [
-        light
         acpilight
       ]) ++ (optionals cfg.wireless.bluetooth [
         bluez

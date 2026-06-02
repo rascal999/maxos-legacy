@@ -7,19 +7,19 @@ with lib;
 let
   cfg = config.maxos.profiles.homeServer;
 in {
+  imports = [
+    # Core bundles for server
+    ../../05-bundles/tool-bundles/server-stack.nix
+    ../../05-bundles/tool-bundles/devops.nix
+    ../../05-bundles/tool-bundles/ai-ml.nix
+    ../../security/default.nix
+  ];
+
   options.maxos.profiles.homeServer = {
     enable = mkEnableOption "Home server profile";
   };
 
   config = mkIf cfg.enable {
-    imports = [
-      # Core bundles for server
-      ../../05-bundles/tool-bundles/server-stack.nix
-      ../../05-bundles/tool-bundles/devops.nix
-      ../../05-bundles/tool-bundles/ai-ml.nix
-      ../../security/default.nix
-    ];
-
     # Enable tool bundles with server-focused profiles
     modules.toolBundles = {
       serverStack = {
