@@ -9,7 +9,6 @@
 
   # Ensure screen locks before suspend
   services.logind = {
-    lidSwitch = "suspend";
     settings = {
       Login = {
         HandleLidSwitch = "suspend";
@@ -70,7 +69,7 @@
 
       # Wireless power management
       WIFI_PWR_ON_AC = "off";  # Disable WiFi power management on AC
-      WIFI_PWR_ON_BAT = "on";
+      WIFI_PWR_ON_BAT = "off";
       WOL_DISABLE = "Y";
 
       # Platform specific settings

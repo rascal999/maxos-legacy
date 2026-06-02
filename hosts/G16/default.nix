@@ -308,6 +308,9 @@
   # Additional system packages
   environment.systemPackages = with pkgs; [
     postgresql # PostgreSQL client tools (psql, pg_dump, etc.)
+    gcc        # GNU Compiler Collection
+    pkg-config # Package config tool
+    devbox     # Isolated development environments tool
   ];
 
   # Mount Storage Box via SSHFS

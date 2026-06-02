@@ -102,9 +102,9 @@ in {
 
     # Lid switch handling
     services.logind = mkIf cfg.display.autoSuspend {
-      lidSwitch = "suspend";
       settings = {
         Login = {
+          HandleLidSwitch = "suspend";
           HandleLidSwitchExternalPower = mkForce "ignore";
         };
       };
