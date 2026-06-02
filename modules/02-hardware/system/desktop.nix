@@ -157,7 +157,6 @@ in {
     ]));
 
     # Wireless networking
-    networking.wireless.enable = mkIf cfg.wireless.enable (mkForce false); # Use NetworkManager instead
     networking.networkmanager.enable = mkIf cfg.wireless.enable true;
 
     # Bluetooth
