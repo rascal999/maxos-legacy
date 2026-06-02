@@ -67,6 +67,10 @@
       TERMINAL = "alacritty";
     };
 
+    sessionPath = [
+      "${config.home.homeDirectory}/.local/bin"
+    ];
+
     # File associations
     file = {
       ".config/mimeapps.list".text = ''

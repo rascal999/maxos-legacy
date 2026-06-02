@@ -58,6 +58,10 @@
       TERMINAL = "alacritty";
     };
 
+    sessionPath = [
+      "${config.home.homeDirectory}/.local/bin"
+    ];
+
     # File associations and scripts
     file = {
       ".screenlayout/dual-monitor.sh" = {
