@@ -148,6 +148,7 @@ in {
       keybindings = {
         # Terminal
         "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
+        "--whole-window button7" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
 
         # Toggle VSCode
         "Mod1+Tab" = "exec --no-startup-id toggle-vscode";
