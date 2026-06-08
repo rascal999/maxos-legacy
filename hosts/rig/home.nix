@@ -48,7 +48,10 @@
       # Only unique packages not available through layered modules:
       aider-chat
       openai-whisper
-      
+
+      # Debugging / input tools
+      xorg.xev
+
       # Fonts now managed centrally via maxos.fonts
     ];
 

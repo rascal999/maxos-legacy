@@ -149,8 +149,9 @@ in {
         # Terminal
         "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
 
-        # SSH into Kali container
+        # Toggle VSCode
         "Mod1+Tab" = "exec --no-startup-id toggle-vscode";
+        "--whole-window button6" = "exec --no-startup-id toggle-vscode";
 
         # Work directory
         "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session '/home/user/git/github/monorepo/maxos/scripts/work-dir-tmux'";
