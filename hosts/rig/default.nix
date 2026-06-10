@@ -37,6 +37,9 @@
   # Enable Rust Token Killer
   maxos.tools.rtk.enable = true;
 
+  # Enable OpenCode CLI
+  maxos.tools.opencode.enable = true;
+
   # Enable core system utilities (includes envsubst)
   maxos.tools.system-utilities.enable = true;
   
@@ -140,6 +143,9 @@
   
   # Enable OpenVPN client
   maxos.tools.openvpn.enable = true;
+
+  # Enable WireGuard VPN tools
+  maxos.tools.wireguard.enable = true;
 
   # Enable SSHFS for remote filesystem mounting
   maxos.tools.sshfs.enable = true;

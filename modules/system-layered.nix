@@ -72,6 +72,7 @@
     ./04-applications/system/tools/development/web-ext.nix
     ./04-applications/system/tools/development/android-studio.nix
     ./04-applications/system/tools/development/rtk.nix
+    ./04-applications/system/tools/development/opencode.nix
     ./04-applications/system/tools/development/sqlite.nix
     
     # Infrastructure

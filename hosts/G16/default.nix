@@ -115,6 +115,9 @@
     # Enable Rust Token Killer
     rtk.enable = true;
     
+    # Enable OpenCode CLI
+    opencode.enable = true;
+    
     # Disable blocky to fix WireGuard DNS resolution
     blocky.enable = lib.mkForce false;
     
@@ -189,6 +192,9 @@
     
     # Enable OpenVPN client
     openvpn.enable = true;
+
+    # Enable WireGuard VPN tools
+    wireguard.enable = true;
 
     # Enable SSHFS for remote filesystem mounting
     sshfs.enable = true;
