@@ -41,27 +41,34 @@
         }
       ];
     };
-    "99-disable-suspend" = {
+    # Force the pro-audio profile on the Jieli wireless mic receiver.
+    # The device only has "off" and "pro-audio" profiles; WirePlumber never
+    # auto-selects "pro-audio" (priority 1) so the device stays on "off" and
+    # no PipeWire source nodes are created. Setting device.profile.name here
+    # makes WirePlumber activate "pro-audio" on every enumeration, which creates
+    # alsa_input.usb-Jieli_...-00.pro-input-0 as the capture source.
+    "12-jieli-pro-audio" = {
       "monitor.alsa.rules" = [
         {
           matches = [
             {
-              "node.name" = "~alsa_input.*";
-            }
-            {
-              "node.name" = "~alsa_output.*";
+              "device.name" = "alsa_card.usb-Jieli_Technology_USB_Composite_Device_433130393139312E-00";
             }
           ];
           actions = {
             update-props = {
-              "session.suspend-timeout-seconds" = 0;
-              "node.always-process" = true;
+              "device.profile.name" = "pro-audio";
             };
           };
         }
       ];
     };
   };
+
+  # Keep Jieli wireless mic receiver's ALSA PCM permanently open so the
+  # wireless link never drops. A pw-record consumer connected after WirePlumber
+  # has fully enumerated the ALSA nodes keeps the source in RUNNING state,
+  # preventing the ~6s firmware re-sync on next use.
 
   # Audio control and debugging packages
   environment.systemPackages = with pkgs; [

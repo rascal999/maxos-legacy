@@ -172,7 +172,8 @@
   systemd.user.services.handy = {
     Unit = {
       Description = "Handy Speech-to-Text Assistant (Native Flake)";
-      After = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" "direct-ptt.service" ];
+      Requires = [ "direct-ptt.service" ];
     };
     Service = {
       ExecStart = "${pkgs.nix}/bin/nix run github:cjpais/Handy --extra-experimental-features 'nix-command flakes'";
@@ -195,6 +196,8 @@
     startup = [
       { command = "$HOME/.screenlayout/dual-monitor.sh"; notification = false; }
       { command = "i3-msg 'debuglog on; shmlog on; shmlog size 26214400'"; notification = false; }
+      # Delay unmuting and setting default source by 5 seconds to ensure PipeWire is fully initialized first on login
+      { command = "sh -c 'sleep 5 && ${pkgs.pulseaudio}/bin/pactl set-default-source alsa_input.usb-Jieli_Technology_USB_Composite_Device_433130393139312E-00.pro-input-0 && ${pkgs.pulseaudio}/bin/pactl set-source-mute alsa_input.usb-Jieli_Technology_USB_Composite_Device_433130393139312E-00.pro-input-0 0'"; notification = false; }
     ];
 
     # Workspace monitor assignments

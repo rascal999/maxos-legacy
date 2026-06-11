@@ -634,7 +634,7 @@
       RestartSec = "5s";
       # No User/Group needed as it's a user service, runs as the user enabling it.
       # Set PATH to include necessary commands for the script
-      Environment = "PATH=${lib.makeBinPath [ pkgs.coreutils pkgs.evsieve pkgs.wireplumber pkgs.gawk ]}";
+      Environment = "PATH=${lib.makeBinPath [ pkgs.coreutils pkgs.evsieve pkgs.wireplumber pkgs.gawk pkgs.pulseaudio pkgs.xdotool ]}";
     };
   };
 
