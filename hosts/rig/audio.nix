@@ -41,6 +41,26 @@
         }
       ];
     };
+    "99-disable-suspend" = {
+      "monitor.alsa.rules" = [
+        {
+          matches = [
+            {
+              "node.name" = "~alsa_input.*";
+            }
+            {
+              "node.name" = "~alsa_output.*";
+            }
+          ];
+          actions = {
+            update-props = {
+              "session.suspend-timeout-seconds" = 0;
+              "node.always-process" = true;
+            };
+          };
+        }
+      ];
+    };
   };
 
   # Audio control and debugging packages

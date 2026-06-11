@@ -264,7 +264,7 @@
   # Disable automatic /etc/hosts generation
   environment.etc.hosts.enable = false;
 
-  # Udev rules for PTT script device access
+  # Udev rules for PTT script device access and USB power management
   services.udev.extraRules = ''
     # Grant user 'user' read/write access to the specific mouse event device for PTT script
     KERNEL=="event3", SUBSYSTEM=="input", OWNER="user", MODE="0660"
@@ -274,6 +274,12 @@
     KERNEL=="uinput", SUBSYSTEM=="misc", GROUP="input", MODE="0660", TAG+="uaccess"
     # Logitech USB Receiver hidraw access
     SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", MODE="0660", GROUP="plugdev"
+
+    # Disable USB autosuspend for audio devices to prevent wake-up/initialization delays
+    # Jieli Technology USB Composite Device (wireless mic receiver)
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="4c4a", ATTR{idProduct}=="4155", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
+    # ASUSTek Computer, Inc. USB Audio
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0b05", ATTR{idProduct}=="1a53", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
   '';
 
   # X11 configuration
@@ -316,8 +322,153 @@
 
   # Add required packages
   environment.systemPackages = with pkgs; [
-    # AppImage support
-    appimage-run
+    # AppImage support with ALSA plugin directory and config wrappers for sandboxed audio
+    (let
+      alsaConfig = writeText "alsa-appimage.conf" ''
+        # Load standard ALSA config
+        <alsa.conf>
+
+        # --- Inlined from 50-pipewire.conf ---
+        defaults.pipewire.server "pipewire-0"
+        defaults.pipewire.node "-1"
+        defaults.pipewire.exclusive false
+        defaults.pipewire.role ""
+        defaults.pipewire.rate 0
+        defaults.pipewire.format ""
+        defaults.pipewire.channels 0
+        defaults.pipewire.period_bytes 0
+        defaults.pipewire.buffer_bytes 0
+
+        pcm.pipewire {
+          @args [ SERVER NODE EXCLUSIVE ROLE RATE FORMAT CHANNELS PERIOD_BYTES BUFFER_BYTES ]
+          @args.SERVER {
+            type string
+            default {
+              @func refer
+              name defaults.pipewire.server
+            }
+          }
+          @args.NODE {
+            type string
+            default {
+              @func refer
+              name defaults.pipewire.node
+            }
+          }
+          @args.EXCLUSIVE {
+            type integer
+            default {
+              @func refer
+              name defaults.pipewire.exclusive
+            }
+          }
+          @args.ROLE {
+            type string
+            default {
+              @func refer
+              name defaults.pipewire.role
+            }
+          }
+          @args.RATE {
+            type integer
+            default {
+              @func refer
+              name defaults.pipewire.rate
+            }
+          }
+          @args.FORMAT {
+            type string
+            default {
+              @func refer
+              name defaults.pipewire.format
+            }
+          }
+          @args.CHANNELS {
+            type integer
+            default {
+              @func refer
+              name defaults.pipewire.channels
+            }
+          }
+          @args.PERIOD_BYTES {
+            type integer
+            default {
+              @func refer
+              name defaults.pipewire.period_bytes
+            }
+          }
+          @args.BUFFER_BYTES {
+            type integer
+            default {
+              @func refer
+              name defaults.pipewire.buffer_bytes
+            }
+          }
+
+          type pipewire
+          server $SERVER
+          playback_node $NODE
+          capture_node $NODE
+          exclusive $EXCLUSIVE
+          role $ROLE
+          rate $RATE
+          format $FORMAT
+          channels $CHANNELS
+          period_bytes $PERIOD_BYTES
+          buffer_bytes $BUFFER_BYTES
+          hint {
+            show on
+            description "PipeWire Sound Server"
+          }
+        }
+
+        ctl.pipewire {
+          @args.SERVER {
+            type string
+            default {
+              @func refer
+              name defaults.pipewire.server
+            }
+          }
+          type pipewire
+          server $SERVER
+        }
+
+        # --- Inlined from 99-pipewire-default.conf ---
+        pcm.!default {
+          type pipewire
+          playback_node "-1"
+          capture_node  "-1"
+          hint {
+            show on
+            description "Default ALSA Output (currently PipeWire Media Server)"
+          }
+        }
+
+        ctl.!default {
+          type pipewire
+        }
+
+        # --- Custom overrides for relative plugin loading ---
+        pcm_type.pipewire {
+          libs.native = "libasound_module_pcm_pipewire.so"
+        }
+        ctl_type.pipewire {
+          libs.native = "libasound_module_ctl_pipewire.so"
+        }
+      '';
+    in pkgs.writeShellScriptBin "appimage-run" ''
+      export ALSA_CONFIG_PATH="${alsaConfig}"
+      export ALSA_PLUGIN_DIR="/usr/lib/alsa-lib"
+      export ALSA_PLUGIN_DIRS="/usr/lib/alsa-lib"
+      exec ${appimage-run.override {
+        extraPkgs = pkgs: [
+          pkgs.alsa-plugins
+          pkgs.pipewire
+          pkgs.libpulseaudio
+        ];
+      }}/bin/appimage-run "$@"
+    '')
 
     # Docker tools
     docker-compose

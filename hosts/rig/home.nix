@@ -168,6 +168,22 @@
     };
   };
 
+  # Systemd user service for Handy (Native Flake)
+  systemd.user.services.handy = {
+    Unit = {
+      Description = "Handy Speech-to-Text Assistant (Native Flake)";
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.nix}/bin/nix run github:cjpais/Handy --extra-experimental-features 'nix-command flakes'";
+      Restart = "on-failure";
+      RestartSec = "10s";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   # User service for Push-to-Talk
   # Note: Ensure the user 'user' is part of the 'input' group at the system level
   # (e.g., in users.nix: users.users.user.extraGroups = [ "input" ];)
