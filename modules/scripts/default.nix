@@ -9,6 +9,8 @@ let
   screenshotScript = pkgs.writeShellScriptBin "screenshot" (builtins.readFile ../../scripts/screenshot);
   insertTimestamp = pkgs.writeShellScriptBin "insert-timestamp" (builtins.readFile ../../scripts/insert-timestamp);
   toggleVSCode = pkgs.writeShellScriptBin "toggle-vscode" (builtins.readFile ../../scripts/toggle-vscode);
+  shiftFocusedWindow = pkgs.writeShellScriptBin "shift-focused-window" (builtins.readFile ../../scripts/shift-focused-window);
+  eccGitInit = pkgs.writeShellScriptBin "ecc-git-init" (builtins.readFile ../../scripts/ecc-git-init);
 in
 {
   config = {
@@ -21,6 +23,8 @@ in
       screenshotScript
       insertTimestamp
       toggleVSCode
+      shiftFocusedWindow
+      eccGitInit
       # Dependencies for redshift-brightness
       pkgs.bc  # For floating point calculations
       pkgs.jq  # For JSON output in get command

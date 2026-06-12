@@ -32,6 +32,13 @@ in {
 
   home.file.".p10k.zsh".source = ./zsh/p10k.zsh;
 
+  home.sessionVariables = {
+    CLAUDE_PACKAGE_MANAGER = "pnpm";
+    ECC_HOOK_PROFILE = "standard";
+    ECC_DISABLED_HOOKS = "pre:bash:tmux-reminder";
+    ECC_SESSION_START_MAX_CHARS = "4000";
+  };
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -328,6 +335,12 @@ in {
 
       # Alias for quick hostname update
       alias tuh='tmux_update_hostname'
+
+      # Load Bitwarden Secrets Manager token securely from the OS keyring on shell startup
+      if command -v secret-tool &> /dev/null; then
+        export BWS_SERVER_URL="https://vault.bitwarden.eu"
+        export BWS_ACCESS_TOKEN=$(secret-tool lookup service bws-token account synlace 2>/dev/null || echo "")
+      fi
     '';
 
     oh-my-zsh = {
@@ -348,6 +361,8 @@ in {
       ff = "firefox";
       f = "fabric_cmd";
       k = "kubectl";
+      oc = "opencode";
+      rtkoc = "rtk opencode";
     };
 
     plugins = [

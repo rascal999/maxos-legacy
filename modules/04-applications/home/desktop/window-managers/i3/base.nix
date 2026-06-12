@@ -15,6 +15,11 @@ in {
 
   options.maxos.tools.i3 = {
     enable = mkEnableOption "i3 window manager configuration";
+    autostartBurp = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to autostart Burp Suite on login";
+    };
   };
 
   config = mkIf (cfg.enable && dependenciesValid) {
@@ -91,12 +96,12 @@ in {
         # Force Firefox to always move to web workspace and focus it
         {
           command = "move to workspace \"1: web\", focus";
-          criteria = { class = "^Firefox$"; };
+          criteria = { class = "^[Ff]irefox$"; };
         }
         # Disable urgent hints for startup applications
         {
           command = "urgent ignore";
-          criteria = { class = "^Firefox$"; };
+          criteria = { class = "^[Ff]irefox$"; };
         }
         {
           command = "urgent ignore";
@@ -118,9 +123,9 @@ in {
 
       # Assign applications to workspaces
       assigns = {
-        "0: workspace" = [{ class = "^Chromium-browser$"; }];
-        "1: web" = [{ class = "^Firefox$"; }];
-        "9: pw" = [{ class = "^KeePassXC$"; }];
+        "\"0: workspace\"" = [{ class = "^Chromium-browser$"; }];
+        "\"1: web\"" = [{ class = "^[Ff]irefox$"; }];
+        "\"9: pw\"" = [{ class = "^KeePassXC$"; }];
       };
 
       # Autostart applications with delays to prevent race conditions
@@ -137,7 +142,9 @@ in {
         { command = "i3-msg 'workspace 3: term; exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux'"; notification = false; }
         { command = "sleep 2 && i3-msg 'workspace 0: workspace; exec ${pkgs.chromium}/bin/chromium --password-store=basic'"; notification = false; }
         { command = "sleep 6 && i3-msg 'workspace 1: web; exec ${pkgs.firefox}/bin/firefox'"; notification = false; }
+      ] ++ optionals cfg.autostartBurp [
         { command = "sleep 8 && i3-msg 'workspace 4: burp; exec ${pkgs.jdk}/bin/java -jar $(find /home/user/Downloads -name 'burpsuite_pro*.jar' -type f | sort -r | head -n1)'"; notification = false; }
+      ] ++ [
         { command = "sleep 11 && i3-msg 'workspace 2: code; exec ${pkgs.vscode}/bin/code; mark vscode_default'"; notification = false; }
         { command = "sleep 16 && i3-msg 'workspace 1: web'"; notification = false; }
         # Clear urgent flags after all apps have launched
@@ -150,8 +157,8 @@ in {
         "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
         "--whole-window button7" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
 
-        # Toggle VSCode
-        "Mod1+Tab" = "exec --no-startup-id toggle-vscode";
+        # Shift focused window / Toggle VSCode
+        "Mod1+Tab" = "exec --no-startup-id shift-focused-window";
         "--whole-window button6" = "exec --no-startup-id toggle-vscode";
 
         # Work directory

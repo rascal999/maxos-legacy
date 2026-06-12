@@ -18,6 +18,7 @@
     
     # Window manager
     i3.enable = true;
+    i3.autostartBurp = false;
     
     # Development tools
     direnv.enable = true;
@@ -30,6 +31,9 @@
 
     # LM Studio — local LLM GUI
     lmstudio.enable = true;
+
+    # OpenCode — dynamic agent & secret orchestration
+    opencode.enable = true;
 
   };
 

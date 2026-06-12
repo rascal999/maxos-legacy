@@ -1,0 +1,58 @@
+#!/bin/sh
+# Shift currently focused window between primary and secondary outputs based on custom state machine.
+
+# Get the currently focused output
+focused_output=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused) | .output')
+
+# Get the fullscreen mode of the currently focused window
+# (fullscreen_mode: 0 = none, 1 = output, 2 = global)
+fullscreen_mode=$(i3-msg -t get_tree | jq -r '.. | select(.focused? == true) | .fullscreen_mode // 0')
+
+# Dynamically detect primary output
+primary_output=$(i3-msg -t get_outputs | jq -r '.[] | select(.primary) | .name')
+if [ -z "$primary_output" ] || [ "$primary_output" = "null" ]; then
+    primary_output=$(i3-msg -t get_outputs | jq -r '.[] | select(.active) | .name' | head -n1)
+fi
+
+# Dynamically detect the other active output
+other_output=$(i3-msg -t get_outputs | jq -r --arg prim "$primary_output" '.[] | select(.active and .name != $prim) | .name' | head -n1)
+if [ -z "$other_output" ] || [ "$other_output" = "null" ]; then
+    other_output="next"
+fi
+
+# Check if there is any window currently fullscreen on the primary output
+fullscreen_window_id=$(i3-msg -t get_tree | jq -r --arg prim "$primary_output" '
+  .. | select(.type? == "workspace" and .output? == $prim) | .. | select(.window? != null and .fullscreen_mode? > 0) | .id
+' | head -n1)
+
+if [ -n "$fullscreen_window_id" ] && [ "$fullscreen_window_id" != "null" ]; then
+    # If window is fullscreen in primary output, move to secondary output, focus it, and "un" fullscreen
+    i3-msg "[con_id=\"$fullscreen_window_id\"] fullscreen disable; [con_id=\"$fullscreen_window_id\"] move container to output $other_output; [con_id=\"$fullscreen_window_id\"] focus"
+else
+    # If there is no fullscreen window on the primary output:
+    # Find the visible workspace on the other output
+    other_ws=$(i3-msg -t get_workspaces | jq -r --arg other "$other_output" '.[] | select(.output == $other and .visible) | .name')
+    
+    # Find the most recently focused window ID on that workspace
+    other_window_id=$(i3-msg -t get_tree | jq -r --arg ws "$other_ws" '
+      def find_focused:
+        if .focus and (.focus | length > 0) then
+          .focus[0] as $next_id |
+          (.nodes + .floating_nodes | .[] | select(.id == $next_id)) | find_focused
+        else
+          .
+        end;
+      (.. | select(.type? == "workspace" and .name? == $ws)) | find_focused | select(.window? != null) | .id
+    ' | head -n1)
+
+    if [ -n "$other_window_id" ] && [ "$other_window_id" != "null" ]; then
+        # Move the top window from secondary output to primary, focus it, and make it fullscreen
+        i3-msg "[con_id=\"$other_window_id\"] move container to output $primary_output; [con_id=\"$other_window_id\"] focus; [con_id=\"$other_window_id\"] fullscreen enable"
+    else
+        # Fallback: if there are no windows on the secondary output, make the currently focused window on primary fullscreen
+        focused_window_id=$(i3-msg -t get_tree | jq -r '.. | select(.focused? == true and .window? != null) | .id' | head -n1)
+        if [ -n "$focused_window_id" ] && [ "$focused_window_id" != "null" ]; then
+            i3-msg "[con_id=\"$focused_window_id\"] fullscreen enable"
+        fi
+    fi
+fi

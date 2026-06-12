@@ -1,0 +1,215 @@
+#!/usr/bin/env bash
+# ecc-git-init: Double-repo overlay initializer (Upstream + Custom ECC)
+# Private-by-default GitHub repository initialization with symlinked ECC configurations.
+
+set -euo pipefail
+
+REPO_NAME=""
+VISIBILITY="--private" # Default visibility
+
+# Parse arguments in any position
+for arg in "$@"; do
+  case "$arg" in
+    public|--public)
+      VISIBILITY="--public"
+      ;;
+    private|--private)
+      VISIBILITY="--private"
+      ;;
+    -h|--help|help)
+      echo "Usage: ecc-git-init <repo-name> [--public|--private]"
+      echo "Defaults to private visibility."
+      exit 0
+      ;;
+    *)
+      if [ -z "$REPO_NAME" ]; then
+        REPO_NAME="$arg"
+      else
+        echo "❌ Unknown or duplicate argument: $arg"
+        exit 1
+      fi
+      ;;
+  esac
+done
+
+# Require a repository name
+if [ -z "$REPO_NAME" ]; then
+    echo "❌ Error: Missing repository name."
+    echo "Usage: ecc-git-init <repo-name> [--public|--private]"
+    exit 1
+fi
+
+# Try to resolve LINEAR_API_KEY from environment, fallback to Bitwarden Secrets Manager (bws)
+RESOLVED_LINEAR_KEY="${LINEAR_API_KEY:-}"
+
+if [ -z "$RESOLVED_LINEAR_KEY" ]; then
+    if ! command -v bws &> /dev/null; then
+        echo "❌ Error: Bitwarden Secrets Manager CLI ('bws') is not installed or not in PATH."
+        exit 1
+    fi
+
+    # Determine BWS access token (either from env or lookup via secret-tool)
+    LOCAL_BWS_TOKEN="${BWS_ACCESS_TOKEN:-}"
+    if [ -z "$LOCAL_BWS_TOKEN" ] && command -v secret-tool &> /dev/null; then
+        echo "🔑 Securely querying BWS access token from OS Keyring..."
+        LOCAL_BWS_TOKEN=$(secret-tool lookup service bws-token account synlace 2>/dev/null || echo "")
+    fi
+
+    if [ -z "$LOCAL_BWS_TOKEN" ]; then
+        echo "❌ Error: LINEAR_API_KEY or BWS_ACCESS_TOKEN must be set in your environment (or stored in OS Keyring)."
+        echo "A Linear project is required for every repository. Please authenticate with Bitwarden Secrets Manager first."
+        exit 1
+    fi
+
+    # Export temporarily to query bws
+    export BWS_ACCESS_TOKEN="$LOCAL_BWS_TOKEN"
+    export BWS_SERVER_URL="https://vault.bitwarden.eu"
+
+    echo "🔑 Fetching Linear API key securely from Bitwarden Secrets Manager..."
+    RESOLVED_LINEAR_KEY=$(bws secret list | jq -r '.[] | select(.key == "Linear API Key") | .value' 2>/dev/null || echo "")
+
+    # Immediately clean up secret from environment memory of this script session
+    unset BWS_ACCESS_TOKEN
+    unset BWS_SERVER_URL
+
+    if [ -z "$RESOLVED_LINEAR_KEY" ]; then
+        echo "❌ Error: Could not retrieve 'Linear API Key' from Bitwarden Secrets Manager."
+        echo "Please verify that your Secrets Manager access token is valid and has Read-Only access to the 'Linear API Key' secret."
+        exit 1
+    fi
+fi
+
+UPSTREAM_DIR="$HOME/.config/opencode/ecc-upstream"
+CUSTOM_DIR="$HOME/.config/opencode/ecc-custom"
+
+# 1. Establish Upstream and Custom bases if missing
+if [ ! -d "$UPSTREAM_DIR" ]; then
+    echo "⬇️ Cloned upstream ECC base..."
+    git clone https://github.com/affaan-m/ECC.git "$UPSTREAM_DIR"
+    (cd "$UPSTREAM_DIR" && npm install && npm run build:opencode)
+fi
+
+if [ ! -d "$CUSTOM_DIR" ]; then
+    echo "🎨 Initializing empty private custom ECC directory..."
+    mkdir -p "$CUSTOM_DIR/commands" "$CUSTOM_DIR/prompts/agents" "$CUSTOM_DIR/instructions"
+    echo "# Custom Corporate Standards" > "$CUSTOM_DIR/instructions/CORPORATE_STANDARDS.md"
+fi
+
+echo "🚀 Initializing: ${REPO_NAME} with ${VISIBILITY} visibility..."
+mkdir -p "$REPO_NAME/.opencode/instructions"
+mkdir -p "$REPO_NAME/.opencode/prompts/agents"
+mkdir -p "$REPO_NAME/.opencode/commands"
+cd "$REPO_NAME"
+git init -b main
+
+# 2. Establish local symlink overlays
+echo "🔗 Building overlay symlinks..."
+# Link commands
+ln -s "$UPSTREAM_DIR/.opencode/commands" .opencode/commands/upstream
+ln -s "$CUSTOM_DIR/commands" .opencode/commands/custom
+
+# Link agent prompts
+ln -s "$UPSTREAM_DIR/.opencode/prompts/agents" .opencode/prompts/agents/upstream
+ln -s "$CUSTOM_DIR/prompts/agents" .opencode/prompts/agents/custom
+
+# Link custom rules/instructions
+ln -s "$CUSTOM_DIR/instructions/CORPORATE_STANDARDS.md" .opencode/instructions/custom-rules.md
+
+# 3. Create composite opencode.json
+cat << 'EOF' > opencode.json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-5",
+  "small_model": "anthropic/claude-haiku-4-5",
+  "plugin": ["ecc-universal"],
+  "instructions": [
+    ".opencode/instructions/custom-rules.md"
+  ]
+}
+EOF
+
+# 4. Generate standard language-agnostic .gitignore
+cat << 'EOF' > .gitignore
+.DS_Store
+.env
+.opencode/dist/
+.opencode/node_modules/
+EOF
+
+# 4.5 Generate baseline README.md
+cat << EOF > README.md
+# $REPO_NAME
+
+Initialized with a layered custom ECC harness.
+
+## Quick Start
+1. Run \`opencode\` in this folder.
+EOF
+
+# 4.6 Linear + BWS Integration
+echo "📊 Creating Linear project for $REPO_NAME..."
+
+PROJECT_RESPONSE=$(curl -s -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: $RESOLVED_LINEAR_KEY" \
+  --data '{
+    "query": "mutation { projectCreate(input: { name: \"'"$REPO_NAME"'\", teamIds: [\"dcdc39e6-cecb-4724-b936-a7dbd73a4d6a\"] }) { success project { id url } } }"
+  }' \
+  https://api.linear.app/graphql)
+
+SUCCESS=$(echo "$PROJECT_RESPONSE" | jq -r '.data.projectCreate.success' 2>/dev/null || echo "false")
+
+if [ "$SUCCESS" != "true" ]; then
+    echo "❌ Error: Failed to create Linear project."
+    echo "API Response: $PROJECT_RESPONSE"
+    exit 1
+fi
+
+PROJECT_ID=$(echo "$PROJECT_RESPONSE" | jq -r '.data.projectCreate.project.id')
+PROJECT_URL=$(echo "$PROJECT_RESPONSE" | jq -r '.data.projectCreate.project.url')
+echo "✓ Created Linear Project: $PROJECT_URL"
+
+cat << EOF >> README.md
+
+## Project Management
+- [Linear Workspace]($PROJECT_URL)
+EOF
+
+echo "📋 Bootstrapping default Linear issues..."
+for issue_title in "Scaffold local ECC configurations" "Setup initial test suite (TDD)"; do
+    curl -s -X POST \
+      -H "Content-Type: application/json" \
+      -H "Authorization: $RESOLVED_LINEAR_KEY" \
+      --data '{
+        "query": "mutation { issueCreate(input: { title: \"'"$issue_title"'\", teamId: \"dcdc39e6-cecb-4724-b936-a7dbd73a4d6a\", projectId: \"'"$PROJECT_ID"'\" }) { success } }"
+      }' \
+      https://api.linear.app/graphql > /dev/null
+done
+
+# 5. Create repository on GitHub and Push Baseline
+if ! command -v gh &> /dev/null; then
+    echo "❌ Error: GitHub CLI ('gh') is not installed."
+    exit 1
+fi
+
+echo "🐙 Creating GitHub repository..."
+gh repo create "$REPO_NAME" "$VISIBILITY" --source=. --remote=origin
+
+# Adjust the Git remote URL if it uses the synlace account to match the SSH config alias
+REMOTE_URL=$(git remote get-url origin || echo "")
+if [[ "$REMOTE_URL" == *"github.com/synlace/"* ]] || [[ "$REMOTE_URL" == *"git@github.com:synlace/"* ]]; then
+    # Extract the repository name from the end of the URL
+    REPO_NAME_EXT=$(basename "$REMOTE_URL")
+    REPO_NAME_CLEAN="${REPO_NAME_EXT%.git}"
+    ADJUSTED_URL="git@github-synlace:synlace/${REPO_NAME_CLEAN}.git"
+    echo "🔧 Adjusting remote origin to use SSH config alias 'github-synlace': $ADJUSTED_URL"
+    git remote set-url origin "$ADJUSTED_URL"
+fi
+
+echo "📤 Pushing baseline to GitHub..."
+git add .
+git commit -m "chore: initial commit with layered custom ECC harness"
+git push -u origin main
+
+echo "✅ Success! Overlay active."
+echo "👉 Run 'opencode' inside the directory to start."

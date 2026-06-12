@@ -15,6 +15,7 @@
     # Layer 4: Applications (home-manager only)
     ./04-applications/home/development/editors/vscode-unmanaged.nix
     ./04-applications/home/development/editors/lmstudio.nix
+    ./04-applications/home/development/editors/opencode.nix
     ./04-applications/home/terminal/shells/zsh.nix
     ./04-applications/home/terminal/emulators/alacritty.nix
     ./04-applications/home/terminal/multiplexers/tmux.nix

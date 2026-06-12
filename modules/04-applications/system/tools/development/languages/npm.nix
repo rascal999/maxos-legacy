@@ -8,6 +8,7 @@
   config = lib.mkIf config.maxos.tools.npm.enable {
     environment.systemPackages = with pkgs; [
       nodejs
+      pnpm
       esbuild  # Add esbuild JavaScript bundler
     ];
   };
