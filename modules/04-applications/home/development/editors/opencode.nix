@@ -55,12 +55,152 @@ in {
               "mcp-server-linear"
             ],
             "enabled": true
+          },
+          "gmail": {
+            "type": "local",
+            "command": [
+              "node",
+              "${config.home.homeDirectory}/git/github/monorepo/tools/gmail-local-mcp.js"
+            ],
+            "enabled": true
+          },
+          "calendar": {
+            "type": "local",
+            "command": [
+              "node",
+              "${config.home.homeDirectory}/git/github/monorepo/tools/calendar-local-mcp.js"
+            ],
+            "enabled": true
+          },
+          "drive": {
+            "type": "local",
+            "command": [
+              "node",
+              "${config.home.homeDirectory}/git/github/monorepo/tools/drive-local-mcp.js"
+            ],
+            "enabled": true
+          },
+          "people": {
+            "type": "local",
+            "command": [
+              "node",
+              "${config.home.homeDirectory}/git/github/monorepo/tools/people-local-mcp.js"
+            ],
+            "enabled": true
+          },
+          "maps": {
+            "type": "remote",
+            "url": "https://mapstools.googleapis.com/mcp",
+            "headers": {
+              "X-Goog-Api-Key": "@GOOGLE_MAPS_API_KEY@"
+            },
+            "enabled": true
           }
         },
+        "plugin": [
+          "./maps-fix-plugin.ts"
+        ],
         "permission": {
-          "linear_*": "allow"
+          "linear_*": "allow",
+          "gmail_*": "allow",
+          "calendar_*": "allow",
+          "drive_*": "allow",
+          "people_*": "allow",
+          "maps_*": "allow"
         }
       }
+    '';
+
+    home.file.".config/opencode/maps-fix-plugin.ts".text = ''
+      import type { Plugin } from "@opencode-ai/plugin";
+
+      export default (async () => {
+        return {
+          "tool.definition": async (input, output) => {
+            if (input.toolID === "maps_compute_routes") {
+              if (output.parameters && output.parameters.properties) {
+                const waypointSchema = {
+                  anyOf: [
+                    { type: "string" },
+                    {
+                      type: "object",
+                      properties: {
+                        address: { type: "string" },
+                        placeId: { type: "string" },
+                        place_id: { type: "string" },
+                        location: {
+                          type: "object",
+                          properties: {
+                            latLng: {
+                              type: "object",
+                              properties: {
+                                latitude: { type: "number" },
+                                longitude: { type: "number" }
+                              },
+                              required: ["latitude", "longitude"]
+                            },
+                            lat_lng: {
+                              type: "object",
+                              properties: {
+                                latitude: { type: "number" },
+                                longitude: { type: "number" }
+                              },
+                              required: ["latitude", "longitude"]
+                            }
+                          }
+                        },
+                        lat_lng: {
+                          type: "object",
+                          properties: {
+                            latitude: { type: "number" },
+                            longitude: { type: "number" }
+                          },
+                          required: ["latitude", "longitude"]
+                        }
+                      }
+                    }
+                  ]
+                };
+                output.parameters.properties.origin = waypointSchema;
+                output.parameters.properties.destination = waypointSchema;
+              }
+            } else if (input.toolID === "maps_search_places") {
+              output.description = (output.description || "") + 
+                "\n\nCRITICAL INSTRUCTION: Each place returned in the response contains a 'googleMapsLinks' object (with 'placeUrl', 'directionsUrl', etc.) and an 'attribution.url'. You MUST always present these Google Maps URLs as clickable Markdown links (e.g. '[Google Maps](url)') alongside the name and description of each place in your final response to the user. Do not omit them.";
+            }
+          },
+          "tool.execute.before": async (input, output) => {
+            if (input.tool === "maps_compute_routes") {
+              if (output.args) {
+                if (typeof output.args.origin === "string") {
+                  try {
+                    const parsed = JSON.parse(output.args.origin);
+                    if (parsed && typeof parsed === "object") {
+                      output.args.origin = parsed;
+                    } else {
+                      output.args.origin = { address: output.args.origin };
+                    }
+                  } catch {
+                    output.args.origin = { address: output.args.origin };
+                  }
+                }
+                if (typeof output.args.destination === "string") {
+                  try {
+                    const parsed = JSON.parse(output.args.destination);
+                    if (parsed && typeof parsed === "object") {
+                      output.args.destination = parsed;
+                    } else {
+                      output.args.destination = { address: output.args.destination };
+                    }
+                  } catch {
+                    output.args.destination = { address: output.args.destination };
+                  }
+                }
+              }
+            }
+          }
+        };
+      }) satisfies Plugin;
     '';
 
     home.file.".config/opencode/tui.json".text = ''
