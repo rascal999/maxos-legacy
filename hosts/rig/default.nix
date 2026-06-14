@@ -49,6 +49,9 @@
   # Disable blocky to fix WireGuard DNS resolution
   maxos.tools.blocky.enable = lib.mkForce false;
   
+  # Disable Grafana platform on rig host
+  maxos.tools.grafana.enable = lib.mkForce false;
+  
   # Enable screenshot tools (maim and scrot) for screenshot script
   maxos.tools.screenshot-tools.enable = true;
 
