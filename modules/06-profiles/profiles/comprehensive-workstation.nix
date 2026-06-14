@@ -123,13 +123,6 @@ in {
       
       blocky.enable = mkDefault cfg.enableInfrastructure;
       
-      # Backup and data management
-      restic = {
-        enable = mkDefault true;
-        hostSubdir = mkDefault "workstation";
-        useSopsSecrets = mkDefault true;
-      };
-      
       # Additional browsers
       brave.enable = mkDefault true;
       tor-browser.enable = mkDefault cfg.enableSecurity;

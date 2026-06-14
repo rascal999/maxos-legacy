@@ -100,9 +100,6 @@ in {
 # Edit with: sops ${cfg.defaultSopsFile}
         
 example_secret: changeme
-restic_password: ""
-b2_access_key: ""
-b2_secret_key: ""
 EOF
           echo "Example secrets file created at: ${cfg.defaultSopsFile}"
           echo "Edit it with: sops ${cfg.defaultSopsFile}"

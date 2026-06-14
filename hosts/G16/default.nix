@@ -27,8 +27,8 @@
     name = "user";
     homeDirectory = "/home/user";
     gitDirectory = "/home/user/git";
-    monorepoDirectory = "/home/user/git/github/monorepo";
-    secretsDirectory = "/home/user/git/github/monorepo/secrets";
+    monorepoDirectory = "/home/user/git/github/synlace/monorepo";
+    secretsDirectory = "/home/user/git/github/synlace/monorepo/secrets";
     workspaceDirectory = "/home/user/monorepo/tools/goose/workspace";
   };
 
@@ -166,12 +166,6 @@
     
     # Enable mitmproxy for interactive HTTPS proxying
     mitmproxy.enable = true;
-    
-    # Override backup subdirectory for G16
-    restic = {
-      hostSubdir = lib.mkForce "G16";
-      useSopsSecrets = false;
-    };
     
     # Disable Kubernetes tooling
     helmfile.enable = lib.mkForce false;

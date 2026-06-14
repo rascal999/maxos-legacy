@@ -27,7 +27,6 @@ in {
         profile = mkDefault "standard";
         enableInfrastructure = mkDefault true;
         enableMonitoring = mkDefault true;
-        enableBackup = mkDefault true;
       };
       
       devops = {
@@ -64,7 +63,6 @@ in {
       open-webui.enable = mkDefault true;
       
       # Backup and security
-      restic.enable = mkDefault true;
       trivy.enable = mkDefault true;
     };
 

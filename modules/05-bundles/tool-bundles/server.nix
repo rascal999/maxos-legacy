@@ -44,12 +44,6 @@ in {
       description = "Enable version control servers (Forgejo)";
     };
     
-    backup = mkOption {
-      type = types.bool;
-      default = cfg.enableAll;
-      description = "Enable backup solutions (Restic)";
-    };
-    
     virtualization = mkOption {
       type = types.bool;
       default = cfg.enableAll;
@@ -69,9 +63,6 @@ in {
       
       # Monitoring
       grafana.enable = mkIf cfg.monitoring true;
-      
-      # Backup
-      restic.enable = mkIf cfg.backup true;
       
       # Note: qemu module needs proper module format conversion
       # qemu.enable = mkIf cfg.virtualization true;

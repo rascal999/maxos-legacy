@@ -10,6 +10,7 @@ find_monorepo() {
 
     # Try common locations
     common_paths=(
+        "$HOME/git/github/synlace/monorepo"
         "$HOME/git/github/monorepo"
         "$HOME/github/monorepo"
         "$HOME/monorepo"

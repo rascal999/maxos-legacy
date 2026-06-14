@@ -92,7 +92,7 @@ missing_format = ""
 
 [[block]]
 block = "custom"
-command = "/home/user/git/github/monorepo/maxos/scripts/get_weather.sh"
+command = "/home/user/git/github/synlace/monorepo/maxos/scripts/get_weather.sh"
 interval = 900
 json = true
 format = " $text "

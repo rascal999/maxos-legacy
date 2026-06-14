@@ -32,13 +32,13 @@ in {
     
     monorepoDirectory = mkOption {
       type = types.str;
-      default = "/home/user/git/github/monorepo";
+      default = "/home/user/git/github/synlace/monorepo";
       description = "Path to the main monorepo";
     };
     
     secretsDirectory = mkOption {
       type = types.str;
-      default = "/home/user/git/github/monorepo/secrets";
+      default = "/home/user/git/github/synlace/monorepo/secrets";
       description = "Directory containing secret files";
     };
     

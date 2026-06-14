@@ -35,7 +35,7 @@ in {
         },
         "skills": {
           "paths": [
-            "${config.home.homeDirectory}/git/github/monorepo/skills"
+            "${config.home.homeDirectory}/git/github/synlace/monorepo/skills"
           ]
         },
         "mcp": {
@@ -60,7 +60,7 @@ in {
             "type": "local",
             "command": [
               "node",
-              "${config.home.homeDirectory}/git/github/monorepo/tools/gmail-local-mcp.js"
+              "${config.home.homeDirectory}/git/github/synlace/monorepo/tools/gmail-local-mcp.js"
             ],
             "enabled": true
           },
@@ -68,7 +68,7 @@ in {
             "type": "local",
             "command": [
               "node",
-              "${config.home.homeDirectory}/git/github/monorepo/tools/calendar-local-mcp.js"
+              "${config.home.homeDirectory}/git/github/synlace/monorepo/tools/calendar-local-mcp.js"
             ],
             "enabled": true
           },
@@ -76,7 +76,7 @@ in {
             "type": "local",
             "command": [
               "node",
-              "${config.home.homeDirectory}/git/github/monorepo/tools/drive-local-mcp.js"
+              "${config.home.homeDirectory}/git/github/synlace/monorepo/tools/drive-local-mcp.js"
             ],
             "enabled": true
           },
@@ -84,7 +84,7 @@ in {
             "type": "local",
             "command": [
               "node",
-              "${config.home.homeDirectory}/git/github/monorepo/tools/people-local-mcp.js"
+              "${config.home.homeDirectory}/git/github/synlace/monorepo/tools/people-local-mcp.js"
             ],
             "enabled": true
           },

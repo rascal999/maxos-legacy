@@ -45,7 +45,6 @@
     # Data Management
     ./04-applications/system/tools/data/analysis/linuxquota.nix
     ./04-applications/system/tools/data/analysis/qdirstat.nix
-    ./04-applications/system/tools/data/backup/restic.nix
     ./04-applications/system/tools/data/sync/syncthing.nix
     
     # Desktop Environment

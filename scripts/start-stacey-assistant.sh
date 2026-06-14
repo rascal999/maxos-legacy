@@ -7,7 +7,7 @@
 # Define the target directory for the Stacey assistant
 # Using absolute path based on user feedback to ensure correctness
 # when the script is run from a different location (e.g., ~/.local/bin by home-manager)
-STACEY_DIR="/home/user/git/github/monorepo/test_bed/stacey"
+STACEY_DIR="/home/user/git/github/synlace/monorepo/test_bed/stacey"
 DEVICE_NAME_TO_FIND="Jabra EVOLVE 20 MS: USB Audio"
 
 # Check if the Stacey directory exists

@@ -162,7 +162,7 @@ in {
         "--whole-window button6" = "exec --no-startup-id toggle-vscode";
 
         # Work directory
-        "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session '/home/user/git/github/monorepo/maxos/scripts/work-dir-tmux'";
+        "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session '/home/user/git/github/synlace/monorepo/maxos/scripts/work-dir-tmux'";
 
         # Program launcher
         "Mod1+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";

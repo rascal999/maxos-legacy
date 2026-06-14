@@ -30,7 +30,6 @@
     databases = true;
     monitoring = true;
     vcs = true;
-    backup = true;
   };
 
   # Enable security tools for server hardening

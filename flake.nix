@@ -49,7 +49,6 @@
       
       # Individual tools (selected tools for external use)
       docker = import ./modules/04-applications/system/tools/containers/docker/docker.nix;
-      restic = import ./modules/04-applications/system/tools/data/backup/restic.nix;
       zsh = import ./modules/04-applications/system/tools/terminal/shells/zsh.nix;
       vscode = import ./modules/04-applications/system/tools/development/editors/vscode.nix;
     };

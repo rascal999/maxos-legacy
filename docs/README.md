@@ -47,7 +47,6 @@ Create `hosts/your-hostname/default.nix`:
   # Enable individual tools
   modules.tools = {
     docker.enable = true;
-    restic.enable = true;
   };
 
   # System configuration
@@ -123,10 +122,6 @@ modules.tools = {
   docker.enable = true;
   docker.liveRestore = false;
   docker.enableExperimental = true;
-  
-  restic.enable = true;
-  restic.useSopsSecrets = true;
-  restic.schedule = "daily";
 };
 ```
 

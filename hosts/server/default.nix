@@ -74,8 +74,6 @@
     usbutils
     
     # Backup tools
-    restic
-    rclone
     goose-cli # Database migration tool
     
     # Deployment tools

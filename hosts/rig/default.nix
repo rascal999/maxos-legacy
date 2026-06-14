@@ -43,9 +43,6 @@
   # Enable core system utilities (includes envsubst)
   maxos.tools.system-utilities.enable = true;
   
-  # Override tool configurations to disable SOPS secrets
-  maxos.tools.restic.useSopsSecrets = false;
-  
   # Disable blocky to fix WireGuard DNS resolution
   maxos.tools.blocky.enable = lib.mkForce false;
   
@@ -253,8 +250,8 @@
     name = "user";
     homeDirectory = "/home/user";
     gitDirectory = "/home/user/git";
-    monorepoDirectory = "/home/user/git/github/monorepo";
-    secretsDirectory = "/home/user/git/github/monorepo/secrets";
+    monorepoDirectory = "/home/user/git/github/synlace/monorepo";
+    secretsDirectory = "/home/user/git/github/synlace/monorepo/secrets";
     workspaceDirectory = "/home/user/projects";
   };
   
@@ -632,7 +629,7 @@
       # IMPORTANT: Ensure this path is correct and the script is executable (chmod +x)
       # This assumes your monorepo is at /home/user/git/
       # A Nix-packaged script would be more robust.
-      ExecStart = "${pkgs.bash}/bin/bash /home/user/git/github/monorepo/maxos/scripts/direct-push-to-talk.sh";
+      ExecStart = "${pkgs.bash}/bin/bash /home/user/git/github/synlace/monorepo/maxos/scripts/direct-push-to-talk.sh";
       Restart = "on-failure";
       RestartSec = "5s";
       # No User/Group needed as it's a user service, runs as the user enabling it.

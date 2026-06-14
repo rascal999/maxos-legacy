@@ -49,12 +49,6 @@
       enableExperimental = true;
     };
     
-    restic = {
-      enable = true;
-      useSopsSecrets = true;
-      schedule = "*-*-* 02:00:00";  # Daily backup at 2 AM
-    };
-    
     zsh = {
       enable = true;
     };

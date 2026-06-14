@@ -35,10 +35,6 @@
       ethtool
       pciutils
       usbutils
-      
-      # Backup tools
-      restic
-      rclone
     ];
 
     # Environment variables

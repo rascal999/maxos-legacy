@@ -6,7 +6,7 @@
 # - Filter tickets using fzf
 
 # Source environment file for Jira credentials
-ENV_FILE="/home/user/git/github/monorepo/secrets/environments/mgp/env"
+ENV_FILE="/home/user/git/github/synlace/monorepo/secrets/environments/mgp/env"
 if [ ! -f "$ENV_FILE" ]; then
     echo "Error: Environment file not found at $ENV_FILE"
     exit 1

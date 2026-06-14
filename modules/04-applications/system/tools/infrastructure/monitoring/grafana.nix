@@ -15,7 +15,7 @@
     };
     dataDir = lib.mkOption {
       type = lib.types.str;
-      default = "/home/user/git/github/monorepo/tools/grafana/data";
+      default = "/home/user/git/github/synlace/monorepo/tools/grafana/data";
       description = "Directory to store Grafana data";
     };
     # MongoDB connection options
@@ -47,10 +47,10 @@
   config = lib.mkIf config.maxos.tools.grafana.enable {
     # Create directories for Grafana with proper permissions
     systemd.tmpfiles.rules = [
-      "d /home/user/git/github/monorepo/tools/grafana/data 0777 root root - -"
-      "d /home/user/git/github/monorepo/tools/grafana/provisioning 0777 root root - -"
-      "d /home/user/git/github/monorepo/tools/grafana/provisioning/datasources 0777 root root - -"
-      "d /home/user/git/github/monorepo/tools/grafana/provisioning/dashboards 0777 root root - -"
+      "d /home/user/git/github/synlace/monorepo/tools/grafana/data 0777 root root - -"
+      "d /home/user/git/github/synlace/monorepo/tools/grafana/provisioning 0777 root root - -"
+      "d /home/user/git/github/synlace/monorepo/tools/grafana/provisioning/datasources 0777 root root - -"
+      "d /home/user/git/github/synlace/monorepo/tools/grafana/provisioning/dashboards 0777 root root - -"
     ];
     
     # No need for activation scripts as docker-compose will handle the volumes
@@ -82,7 +82,7 @@
           fi
           
           # Change to the Grafana directory
-          cd /home/user/git/github/monorepo/tools/grafana
+          cd /home/user/git/github/synlace/monorepo/tools/grafana
           
           # Make sure directories exist with proper permissions
           mkdir -p data
@@ -95,7 +95,7 @@
         '';
         
         ExecStop = pkgs.writeShellScript "stop-grafana-docker" ''
-          cd /home/user/git/github/monorepo/tools/grafana
+          cd /home/user/git/github/synlace/monorepo/tools/grafana
           exec ${pkgs.docker-compose}/bin/docker-compose down
         '';
         

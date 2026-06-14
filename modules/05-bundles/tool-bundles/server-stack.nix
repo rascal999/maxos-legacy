@@ -25,12 +25,6 @@ in {
       default = cfg.profile != "minimal";
       description = "Enable monitoring and observability";
     };
-    
-    enableBackup = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Enable backup solutions";
-    };
   };
 
   config = mkIf cfg.enable {
@@ -40,7 +34,6 @@ in {
       docker.enable = true;  # Always needed for server workloads
       
       # Backup and storage
-      restic.enable = mkIf cfg.enableBackup true;
       linuxquota.enable = mkIf cfg.enableInfrastructure true;
       
       # Monitoring (standard and enterprise)
