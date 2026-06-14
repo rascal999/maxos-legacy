@@ -26,6 +26,7 @@
     ./03-services/system/prowlarr.nix
     ./03-services/system/sonarr.nix
     ./03-services/system/qbittorrent.nix
+    ./03-services/system/auto-shutdown.nix
     
     # Layer 4: Applications (depends on services) - system-only tools
     # AI & Machine Learning

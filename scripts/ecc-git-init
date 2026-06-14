@@ -132,6 +132,9 @@ EOF
 cat << 'EOF' > .gitignore
 .DS_Store
 .env
+.opencode/commands/
+.opencode/prompts/
+.opencode/instructions/
 .opencode/dist/
 .opencode/node_modules/
 EOF

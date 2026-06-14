@@ -638,6 +638,12 @@
     };
   };
 
+  # Enable automatic daily shutdown at 10:45 PM with notifications
+  maxos.services.auto-shutdown = {
+    enable = true;
+    time = "22:45";
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
