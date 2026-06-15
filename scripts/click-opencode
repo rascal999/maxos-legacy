@@ -1,12 +1,22 @@
 #!/bin/sh
-# Click on opencode in Firefox at known coordinates, then restore mouse position.
+# Click at given coordinates, then restore mouse position.
+# Usage: click-opencode <x> <y> [screen]
+
+X=$1
+Y=$2
+SCREEN=${3:-0}
+
+if [ -z "$X" ] || [ -z "$Y" ]; then
+    echo "Usage: click-opencode <x> <y> [screen]" >&2
+    exit 1
+fi
 
 # Save current mouse position
 OLD_X=$(xdotool getmouselocation | sed 's/.*x:\([0-9]*\) .*/\1/')
 OLD_Y=$(xdotool getmouselocation | sed 's/.*y:\([0-9]*\) .*/\1/')
 
 # Move to the target and click
-xdotool mousemove --screen 0 257 338
+xdotool mousemove --screen "$SCREEN" "$X" "$Y"
 xdotool click 1
 
 # Restore original position

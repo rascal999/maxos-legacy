@@ -155,11 +155,11 @@ in {
       keybindings = {
         # Terminal
         "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
-        "--whole-window button7" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
+        "--whole-window button7" = "exec --no-startup-id click-opencode 189 346";
 
         # Shift focused window / Click opencode in Firefox
         "Mod1+Tab" = "exec --no-startup-id shift-focused-window";
-        "--whole-window button6" = "exec --no-startup-id click-opencode";
+        "--whole-window button6" = "exec --no-startup-id click-opencode 245 347";
 
         # Work directory
         "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session '/home/user/git/github/synlace/monorepo/maxos/scripts/work-dir-tmux'";
