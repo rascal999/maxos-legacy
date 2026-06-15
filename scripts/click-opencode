@@ -1,5 +1,5 @@
 #!/bin/sh
-# Click at given coordinates, then restore mouse position.
+# Click at given coordinates, then restore mouse position, ONLY if on "1: web" workspace.
 # Usage: click-opencode <x> <y> [screen]
 
 X=$1
@@ -9,6 +9,11 @@ SCREEN=${3:-0}
 if [ -z "$X" ] || [ -z "$Y" ]; then
     echo "Usage: click-opencode <x> <y> [screen]" >&2
     exit 1
+fi
+
+# Only proceed if we are on the "1: web" workspace
+if ! i3-msg -t get_workspaces | jq -e '.[] | select(.focused and .name == "1: web")' >/dev/null 2>&1; then
+    exit 0
 fi
 
 # Save current mouse position
