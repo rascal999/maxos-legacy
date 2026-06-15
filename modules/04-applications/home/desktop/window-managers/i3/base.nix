@@ -157,9 +157,9 @@ in {
         "Mod1+t" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
         "--whole-window button7" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux";
 
-        # Shift focused window / Toggle VSCode
+        # Shift focused window / Click opencode in Firefox
         "Mod1+Tab" = "exec --no-startup-id shift-focused-window";
-        "--whole-window button6" = "exec --no-startup-id toggle-vscode";
+        "--whole-window button6" = "exec --no-startup-id click-opencode";
 
         # Work directory
         "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session '/home/user/git/github/synlace/monorepo/maxos/scripts/work-dir-tmux'";

@@ -1,0 +1,13 @@
+#!/bin/sh
+# Click on opencode in Firefox at known coordinates, then restore mouse position.
+
+# Save current mouse position
+OLD_X=$(xdotool getmouselocation | sed 's/.*x:\([0-9]*\) .*/\1/')
+OLD_Y=$(xdotool getmouselocation | sed 's/.*y:\([0-9]*\) .*/\1/')
+
+# Move to the target and click
+xdotool mousemove --screen 0 257 338
+xdotool click 1
+
+# Restore original position
+xdotool mousemove "$OLD_X" "$OLD_Y"

@@ -11,6 +11,7 @@ let
   toggleVSCode = pkgs.writeShellScriptBin "toggle-vscode" (builtins.readFile ../../scripts/toggle-vscode);
   shiftFocusedWindow = pkgs.writeShellScriptBin "shift-focused-window" (builtins.readFile ../../scripts/shift-focused-window);
   eccGitInit = pkgs.writeShellScriptBin "ecc-git-init" (builtins.readFile ../../scripts/ecc-git-init);
+  clickOpencode = pkgs.writeShellScriptBin "click-opencode" (builtins.readFile ../../scripts/click-opencode);
 in
 {
   config = {
@@ -25,6 +26,7 @@ in
       toggleVSCode
       shiftFocusedWindow
       eccGitInit
+      clickOpencode
       # Dependencies for redshift-brightness
       pkgs.bc  # For floating point calculations
       pkgs.jq  # For JSON output in get command
