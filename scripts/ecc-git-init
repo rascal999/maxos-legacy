@@ -333,7 +333,7 @@ stop:
 
 # Show running containers
 status:
-    @docker ps --filter "name=app-" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+    @docker ps --filter "name=app-" --format "table {{{{.Names}}}}\t{{{{.Status}}}}\t{{{{.Ports}}}}"
 JUSTFILE
 
 # 4.7 Linear + BWS Integration
