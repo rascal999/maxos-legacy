@@ -19,9 +19,12 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    opencode-orchestrator = {
+      url = "github:synlace/opencode-orchestrator";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nur, sops-nix, disko, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nur, sops-nix, disko, opencode-orchestrator, ... }@inputs:
   let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
@@ -31,7 +34,7 @@
     };
     
     # Import host configuration helpers
-    hostConfig = import ./lib/host-config.nix { inherit nixpkgs home-manager nur sops-nix disko self; };
+    hostConfig = import ./lib/host-config.nix { inherit nixpkgs home-manager nur sops-nix disko opencode-orchestrator self; };
   in {
     nixosModules = {
       # Core modules

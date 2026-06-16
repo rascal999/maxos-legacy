@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, opencode-orchestrator, ... }:
 
 let
   maxosScript = pkgs.writeShellScriptBin "maxos" (builtins.readFile ../../scripts/maxos);
@@ -10,7 +10,7 @@ let
   insertTimestamp = pkgs.writeShellScriptBin "insert-timestamp" (builtins.readFile ../../scripts/insert-timestamp);
   toggleVSCode = pkgs.writeShellScriptBin "toggle-vscode" (builtins.readFile ../../scripts/toggle-vscode);
   shiftFocusedWindow = pkgs.writeShellScriptBin "shift-focused-window" (builtins.readFile ../../scripts/shift-focused-window);
-  eccGitInit = pkgs.writeShellScriptBin "ecc-git-init" (builtins.readFile ../../scripts/ecc-git-init);
+  eccGitInit = pkgs.writeShellScriptBin "ecc-git-init" (builtins.readFile "${opencode-orchestrator}/ecc-git-init");
   clickOpencode = pkgs.writeShellScriptBin "click-opencode" (builtins.readFile ../../scripts/click-opencode);
 in
 {
