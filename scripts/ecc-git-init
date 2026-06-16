@@ -9,6 +9,13 @@ BWS_ACCOUNT="${BWS_ACCOUNT:-synlace}"
 LINEAR_TEAM_ID="${LINEAR_TEAM_ID:-}"
 DEFAULT_BRANCH="${DEFAULT_BRANCH:-main}"
 
+# Load .env files if present (non-secret config)
+for env_file in ".env" ".env.prod"; do
+    if [ -f "$env_file" ]; then
+        set -a; source "$env_file"; set +a
+    fi
+done
+
 # Cleanup trap: remove temp files and clear secrets on failure
 cleanup() {
     unset BWS_ACCESS_TOKEN BWS_SERVER_URL 2>/dev/null || true
