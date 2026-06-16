@@ -24,6 +24,11 @@ cleanup() {
 }
 trap cleanup EXIT
 
+# Ensure ~/.gitconfig exists as a writable file so 'git config --global' succeeds under NixOS/Home Manager
+if [ ! -e "$HOME/.gitconfig" ]; then
+    touch "$HOME/.gitconfig"
+fi
+
 REPO_NAME=""
 VISIBILITY="--private" # Default visibility
 
@@ -166,20 +171,20 @@ fi
 
 ECC_PKG="$HOME/.config/opencode/node_modules/ecc-universal/.opencode"
 
-# Fix ownership if .opencode is owned by root (from container runs)
-if [ "$(stat -c '%U' .opencode 2>/dev/null)" = "root" ]; then
-    if command -v sudo &>/dev/null; then
-        sudo chown -R "$(id -u):$(id -g)" .opencode 2>/dev/null || true
-    else
-        echo "⚠️ Warning: sudo not available, cannot fix .opencode ownership."
-    fi
-fi
 # Copy ECC .opencode config (commands, prompts, plugins, instructions)
 if [ -d "$ECC_PKG" ]; then
     echo "  Copying ECC config..."
+    # Fix ownership if .opencode is owned by root (from container runs)
+    if [ "$(stat -c '%U' .opencode 2>/dev/null)" = "root" ]; then
+        if command -v sudo &>/dev/null; then
+            sudo chown -R "$(id -u):$(id -g)" .opencode 2>/dev/null || true
+        else
+            echo "⚠️ Warning: sudo not available, cannot fix .opencode ownership."
+        fi
+    fi
     # Remove old directories and symlinks completely
     rm -rf .opencode/commands .opencode/prompts .opencode/plugins .opencode/tools .opencode/instructions 2>/dev/null || true
-    # Copy fresh from ECC package
+    # Copy fresh from ECC package (contents, not the directory itself)
     cp -r "$ECC_PKG/." .opencode/
     # Remove ECC package's opencode.json — the project root's opencode.json is authoritative
     rm -f .opencode/opencode.json 2>/dev/null || true
@@ -193,10 +198,14 @@ if [ -d "$ECC_PKG" ]; then
         touch "$FRONTMARKER_DONE"
     fi
 
-    # Sanitize example placeholder secrets that would trigger pre-commit hooks
-    if [ -f ".opencode/instructions/INSTRUCTIONS.md" ]; then
-        sed 's/"sk-proj-xxxxx"/"..."/g' .opencode/instructions/INSTRUCTIONS.md > .opencode/instructions/INSTRUCTIONS.md.tmp && \
-        mv .opencode/instructions/INSTRUCTIONS.md.tmp .opencode/instructions/INSTRUCTIONS.md
+    # Sanitize example placeholder secrets that would trigger pre-commit hooks (skip if already done)
+    SANITIZE_DONE="$HOME/.config/opencode/.ecc-sanitized"
+    if [ ! -f "$SANITIZE_DONE" ]; then
+        if [ -f ".opencode/instructions/INSTRUCTIONS.md" ]; then
+            sed 's/"sk-proj-xxxxx"/"..."/g' .opencode/instructions/INSTRUCTIONS.md > .opencode/instructions/INSTRUCTIONS.md.tmp && \
+            mv .opencode/instructions/INSTRUCTIONS.md.tmp .opencode/instructions/INSTRUCTIONS.md
+        fi
+        touch "$SANITIZE_DONE"
     fi
 fi
 
@@ -204,8 +213,9 @@ fi
 rm -rf commands prompts 2>/dev/null || true
 cp -r .opencode/prompts prompts
 cp -r .opencode/commands commands
-# Ensure copied project-level prompts are also sanitized
-if [ -f "prompts/agents/security-reviewer.txt" ]; then
+
+# Ensure copied project-level prompts are also sanitized (skip if already done)
+if [ ! -f "$SANITIZE_DONE" ] && [ -f "prompts/agents/security-reviewer.txt" ]; then
     sed 's/"sk-proj-xxxxx"/"..."/g' prompts/agents/security-reviewer.txt > prompts/agents/security-reviewer.txt.tmp && \
     mv prompts/agents/security-reviewer.txt.tmp prompts/agents/security-reviewer.txt
 fi
@@ -329,7 +339,7 @@ stop:
 
 # Show running containers
 status:
-    @docker ps --filter "name=app-" --format "table {{{{.Names}}}}\t{{{{.Status}}}}\t{{{{.Ports}}}}"
+    @docker ps --filter "name=app-" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 JUSTFILE
 
 # 4.7 Linear + BWS Integration
