@@ -193,7 +193,7 @@ if [ -d "$ECC_PKG" ]; then
     if [ ! -f "$FRONTMARKER_DONE" ]; then
         for f in .opencode/commands/*.md; do
             [ -f "$f" ] || continue
-            awk '/^---$/{if(!in_front){in_front=1;print;next}else{in_front=0;print;next}} in_front&&/^description:/{print;next} in_front{next}{print}' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+            awk '/^---$/{if(!in_front){in_front=1;print;next}else{in_front=0;print;next}} in_front&&/^description:/{print;next} in_front&&/^agent:/{print;next} in_front{next}{print}' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
         done
         touch "$FRONTMARKER_DONE"
     fi
@@ -271,8 +271,6 @@ cat << 'EOF' > .gitignore
 .env
 .env.dev
 .env.prod
-commands/
-prompts/
 .opencode/dist/
 .opencode/node_modules/
 EOF
