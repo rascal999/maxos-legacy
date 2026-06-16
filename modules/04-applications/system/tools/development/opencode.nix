@@ -6,7 +6,12 @@ let
   cfg = config.maxos.tools.opencode;
 
   opencodePkg = pkgs.writeShellScriptBin "opencode" ''
-    ORCHESTRATOR_PATH="$HOME/git/github/opencode-orchestrator"
+    ORCHESTRATOR_PATH="$HOME/git/github/synlace/opencode-orchestrator"
+
+    # 0. Load .env file if present (non-secret config)
+    if [ -f ".env" ]; then
+      set -a; source ".env"; set +a
+    fi
 
     # 0. Self-healing image compilation: Check if image has our custom entrypoint, if not, build/update it from the orchestrator repo!
     if ! docker inspect opencode-custom:latest &>/dev/null || [ "$(docker inspect --format='{{.Config.Entrypoint}}' opencode-custom:latest 2>/dev/null)" != "[/usr/local/bin/entrypoint.sh]" ]; then
@@ -19,23 +24,8 @@ let
       fi
     fi
 
-    # 1. Recreate/repair repository symlinks to match the host's actual HOME directory
-    if [ -d ".opencode" ]; then
-      echo "🔧 [Maxos] Re-aligning repository overlay symlinks to host $HOME..." >&2
-      mkdir -p .opencode/commands .opencode/prompts/agents .opencode/instructions
-
-      # Clean up existing symlinks
-      rm -f .opencode/commands/upstream .opencode/commands/custom
-      rm -f .opencode/prompts/agents/upstream .opencode/prompts/agents/custom
-      rm -f .opencode/instructions/custom-rules.md
-
-      # Create host-aligned symlinks
-      ln -sf "$HOME/.config/opencode/ecc-upstream/.opencode/commands" .opencode/commands/upstream
-      ln -sf "$HOME/.config/opencode/ecc-custom/commands" .opencode/commands/custom
-      ln -sf "$HOME/.config/opencode/ecc-upstream/.opencode/prompts/agents" .opencode/prompts/agents/upstream
-      ln -sf "$HOME/.config/opencode/ecc-custom/prompts/agents" .opencode/prompts/agents/custom
-      ln -sf "$HOME/.config/opencode/ecc-custom/instructions/CORPORATE_STANDARDS.md" .opencode/instructions/custom-rules.md
-    fi
+    # 1. Ensure ECC upstream + custom dirs exist on host (symlinks created by ecc-git-init inside container)
+    mkdir -p "$HOME/.config/opencode/ecc-upstream" "$HOME/.config/opencode/ecc-custom"
 
     # 2. Securely resolve BWS_ACCESS_TOKEN on host
     LOCAL_BWS_TOKEN="''${BWS_ACCESS_TOKEN:-}"
@@ -68,6 +58,7 @@ let
     exec docker run \
       -i $TTY_FLAG \
       --rm \
+      --user "$(id -u):$(id -g)" \
       --network host \
       $DOCKER_GID \
       -v "/var/run/docker.sock:/var/run/docker.sock" \
@@ -97,6 +88,11 @@ let
       -e GOOGLE_MAPS_API_KEY="''${GOOGLE_MAPS_API_KEY:-}" \
       -e OPENCODE_MODEL="''${OPENCODE_MODEL:-}" \
       -e SSH_PRIVATE_KEY="''${SSH_PRIVATE_KEY:-}" \
+      -e BWS_ACCOUNT="''${BWS_ACCOUNT:-synlace}" \
+      -e LINEAR_TEAM_ID="''${LINEAR_TEAM_ID:-}" \
+      -e DEFAULT_BRANCH="''${DEFAULT_BRANCH:-main}" \
+      -e GIT_USER_NAME="''${GIT_USER_NAME:-}" \
+      -e GIT_USER_EMAIL="''${GIT_USER_EMAIL:-}" \
       opencode-custom:latest "$@"
   '';
 in {
