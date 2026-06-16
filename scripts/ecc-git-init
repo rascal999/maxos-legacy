@@ -198,14 +198,10 @@ if [ -d "$ECC_PKG" ]; then
         touch "$FRONTMARKER_DONE"
     fi
 
-    # Sanitize example placeholder secrets that would trigger pre-commit hooks (skip if already done)
-    SANITIZE_DONE="$HOME/.config/opencode/.ecc-sanitized"
-    if [ ! -f "$SANITIZE_DONE" ]; then
-        if [ -f ".opencode/instructions/INSTRUCTIONS.md" ]; then
-            sed 's/"sk-proj-xxxxx"/"..."/g' .opencode/instructions/INSTRUCTIONS.md > .opencode/instructions/INSTRUCTIONS.md.tmp && \
-            mv .opencode/instructions/INSTRUCTIONS.md.tmp .opencode/instructions/INSTRUCTIONS.md
-        fi
-        touch "$SANITIZE_DONE"
+    # Sanitize example placeholder secrets that would trigger pre-commit hooks
+    if [ -f ".opencode/instructions/INSTRUCTIONS.md" ]; then
+        sed 's/"sk-proj-xxxxx"/"..."/g' .opencode/instructions/INSTRUCTIONS.md > .opencode/instructions/INSTRUCTIONS.md.tmp && \
+        mv .opencode/instructions/INSTRUCTIONS.md.tmp .opencode/instructions/INSTRUCTIONS.md
     fi
 fi
 
@@ -214,8 +210,8 @@ rm -rf commands prompts 2>/dev/null || true
 cp -r .opencode/prompts prompts
 cp -r .opencode/commands commands
 
-# Ensure copied project-level prompts are also sanitized (skip if already done)
-if [ ! -f "$SANITIZE_DONE" ] && [ -f "prompts/agents/security-reviewer.txt" ]; then
+# Ensure copied project-level prompts are also sanitized
+if [ -f "prompts/agents/security-reviewer.txt" ]; then
     sed 's/"sk-proj-xxxxx"/"..."/g' prompts/agents/security-reviewer.txt > prompts/agents/security-reviewer.txt.tmp && \
     mv prompts/agents/security-reviewer.txt.tmp prompts/agents/security-reviewer.txt
 fi
