@@ -196,11 +196,6 @@ if [ -d "$ECC_PKG" ]; then
     cp -r "$ECC_PKG/." .opencode/
     # Remove ECC package's opencode.json — the project root's opencode.json is authoritative
     rm -f .opencode/opencode.json 2>/dev/null || true
-    # Strip broken agent/subtask frontmatter from command files (always run, no marker)
-    for f in .opencode/commands/*.md; do
-        [ -f "$f" ] || continue
-        sed -i '/^agent:/d; /^subtask:/d' "$f"
-    done
 
     # Sanitize example placeholder secrets that would trigger pre-commit hooks
     if [ -f ".opencode/instructions/INSTRUCTIONS.md" ]; then
@@ -213,69 +208,18 @@ if [ -d "$ECC_PKG" ]; then
     fi
 fi
 
-# Copy prompts and commands to project root for {file:...} references
-rm -rf commands prompts 2>/dev/null || true
-cp -r .opencode/prompts prompts
-cp -r .opencode/commands commands
-
-# Strip broken agent/subtask frontmatter from project-root commands (always run)
-for f in commands/*.md; do
-    [ -f "$f" ] || continue
-    sed -i '/^agent:/d; /^subtask:/d' "$f"
-done
-
-# Ensure copied project-level prompts are also sanitized
-if [ -f "prompts/agents/security-reviewer.txt" ]; then
-    sed 's/"sk-proj-xxxxx"/"..."/g' prompts/agents/security-reviewer.txt > prompts/agents/security-reviewer.txt.tmp && \
-    mv prompts/agents/security-reviewer.txt.tmp prompts/agents/security-reviewer.txt
-fi
-
 # Link custom rules/instructions
 mkdir -p .opencode/instructions
 ln -sf "$(realpath --relative-to=.opencode/instructions "$CUSTOM_DIR/instructions/CORPORATE_STANDARDS.md")" .opencode/instructions/custom-rules.md
 
-# 3. Create opencode.json with full ECC config and OpenRouter models
+# 3. Create opencode.json with project-specific overrides only
+# Global config provides agents, commands, permissions, MCPs
 cat << 'EOF' > opencode.json
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["ecc-universal"],
-  "model": "openrouter/xiaomi/mimo-v2.5",
-  "small_model": "openrouter/xiaomi/mimo-v2.5",
-  "default_agent": "build",
   "instructions": [
     ".opencode/instructions/custom-rules.md"
-  ],
-  "agent": {
-    "build": {
-      "description": "Primary coding agent",
-      "mode": "primary",
-      "model": "openrouter/xiaomi/mimo-v2.5"
-    },
-    "planner": {
-      "description": "Expert planning specialist",
-      "mode": "subagent",
-      "model": "openrouter/xiaomi/mimo-v2.5"
-    }
-  },
-  "command": {
-    "plan": {
-      "description": "Create implementation plan",
-      "template": "{file:commands/plan.md}\n\n$ARGUMENTS",
-      "agent": "planner"
-    },
-    "build-fix": {
-      "description": "Fix build errors",
-      "template": "{file:commands/build-fix.md}\n\n$ARGUMENTS"
-    },
-    "code-review": {
-      "description": "Review code quality",
-      "template": "{file:commands/code-review.md}\n\n$ARGUMENTS"
-    },
-    "refactor-clean": {
-      "description": "Remove dead code",
-      "template": "{file:commands/refactor-clean.md}\n\n$ARGUMENTS"
-    }
-  }
+  ]
 }
 EOF
 
