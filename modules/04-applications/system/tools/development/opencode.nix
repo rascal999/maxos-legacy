@@ -9,7 +9,7 @@ let
     ORCHESTRATOR_PATH="$HOME/git/github/synlace/opencode-orchestrator"
 
     # 0. Load .env files if present (non-secret config)
-    for env_file in ".env" ".env.prod"; do
+    for env_file in ".env" ".env.prod" "$ORCHESTRATOR_PATH/.env.prod"; do
       if [ -f "$env_file" ]; then
         set -a; source "$env_file"; set +a
       fi
