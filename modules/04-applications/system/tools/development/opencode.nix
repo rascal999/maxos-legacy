@@ -8,10 +8,12 @@ let
   opencodePkg = pkgs.writeShellScriptBin "opencode" ''
     ORCHESTRATOR_PATH="$HOME/git/github/synlace/opencode-orchestrator"
 
-    # 0. Load .env file if present (non-secret config)
-    if [ -f ".env" ]; then
-      set -a; source ".env"; set +a
-    fi
+    # 0. Load .env files if present (non-secret config)
+    for env_file in ".env" ".env.prod"; do
+      if [ -f "$env_file" ]; then
+        set -a; source "$env_file"; set +a
+      fi
+    done
 
     # 0. Self-healing image compilation: Check if image has our custom entrypoint, if not, build/update it from the orchestrator repo!
     if ! docker inspect opencode-custom:latest &>/dev/null || [ "$(docker inspect --format='{{.Config.Entrypoint}}' opencode-custom:latest 2>/dev/null)" != "[/usr/local/bin/entrypoint.sh]" ]; then
