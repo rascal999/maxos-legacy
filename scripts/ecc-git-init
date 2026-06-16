@@ -196,15 +196,11 @@ if [ -d "$ECC_PKG" ]; then
     cp -r "$ECC_PKG/." .opencode/
     # Remove ECC package's opencode.json — the project root's opencode.json is authoritative
     rm -f .opencode/opencode.json 2>/dev/null || true
-    # Strip broken agent/subtask frontmatter from command files (skip if already done)
-    FRONTMARKER_DONE="$HOME/.config/opencode/.ecc-frontmatter-stripped"
-    if [ ! -f "$FRONTMARKER_DONE" ]; then
-        for f in .opencode/commands/*.md; do
-            [ -f "$f" ] || continue
-            awk '/^---$/{if(!in_front){in_front=1;print;next}else{in_front=0;print;next}} in_front&&/^description:/{next} in_front&&/^agent:/{next} in_front{next} 1' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
-        done
-        touch "$FRONTMARKER_DONE"
-    fi
+    # Strip broken agent/subtask frontmatter from command files (always run, no marker)
+    for f in .opencode/commands/*.md; do
+        [ -f "$f" ] || continue
+        sed -i '/^agent:/d; /^subtask:/d' "$f"
+    done
 
     # Sanitize example placeholder secrets that would trigger pre-commit hooks
     if [ -f ".opencode/instructions/INSTRUCTIONS.md" ]; then
@@ -221,6 +217,12 @@ fi
 rm -rf commands prompts 2>/dev/null || true
 cp -r .opencode/prompts prompts
 cp -r .opencode/commands commands
+
+# Strip broken agent/subtask frontmatter from project-root commands (always run)
+for f in commands/*.md; do
+    [ -f "$f" ] || continue
+    sed -i '/^agent:/d; /^subtask:/d' "$f"
+done
 
 # Ensure copied project-level prompts are also sanitized
 if [ -f "prompts/agents/security-reviewer.txt" ]; then
