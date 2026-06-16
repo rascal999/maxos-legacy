@@ -203,6 +203,10 @@ if [ -d "$ECC_PKG" ]; then
         sed 's/"sk-proj-xxxxx"/"..."/g' .opencode/instructions/INSTRUCTIONS.md > .opencode/instructions/INSTRUCTIONS.md.tmp && \
         mv .opencode/instructions/INSTRUCTIONS.md.tmp .opencode/instructions/INSTRUCTIONS.md
     fi
+    if [ -f ".opencode/prompts/agents/security-reviewer.txt" ]; then
+        sed 's/"sk-proj-xxxxx"/"..."/g' .opencode/prompts/agents/security-reviewer.txt > .opencode/prompts/agents/security-reviewer.txt.tmp && \
+        mv .opencode/prompts/agents/security-reviewer.txt.tmp .opencode/prompts/agents/security-reviewer.txt
+    fi
 fi
 
 # Copy prompts and commands to project root for {file:...} references
