@@ -1,6 +1,8 @@
-{ config, pkgs, lib, opencode-orchestrator, ... }:
+{ config, pkgs, lib, ... }:
 
 let
+  # Canonical source: /home/user/git/github/synlace/opencode-orchestrator/ecc-git-init
+  # Sync manually or via: cp ~/git/github/synlace/opencode-orchestrator/ecc-git-init scripts/ecc-git-init
   maxosScript = pkgs.writeShellScriptBin "maxos" (builtins.readFile ../../scripts/maxos);
   redshiftBrightness = pkgs.writeShellScriptBin "redshift-brightness" (builtins.readFile ../../scripts/redshift-brightness);
   clearUrgent = pkgs.writeShellScriptBin "clear-urgent" (builtins.readFile ../../scripts/clear-urgent);
@@ -10,7 +12,7 @@ let
   insertTimestamp = pkgs.writeShellScriptBin "insert-timestamp" (builtins.readFile ../../scripts/insert-timestamp);
   toggleVSCode = pkgs.writeShellScriptBin "toggle-vscode" (builtins.readFile ../../scripts/toggle-vscode);
   shiftFocusedWindow = pkgs.writeShellScriptBin "shift-focused-window" (builtins.readFile ../../scripts/shift-focused-window);
-  eccGitInit = pkgs.writeShellScriptBin "ecc-git-init" (builtins.readFile "${opencode-orchestrator}/ecc-git-init");
+  eccGitInit = pkgs.writeShellScriptBin "ecc-git-init" (builtins.readFile ../../scripts/ecc-git-init);
   clickOpencode = pkgs.writeShellScriptBin "click-opencode" (builtins.readFile ../../scripts/click-opencode);
 in
 {

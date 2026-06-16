@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, nur, sops-nix, disko, opencode-orchestrator, self }:
+{ nixpkgs, home-manager, nur, sops-nix, disko, self }:
 
 let
   lib = nixpkgs.lib;
@@ -16,7 +16,6 @@ let
       nixpkgs.overlays = [
         nur.overlays.default
       ];
-      _module.args.opencode-orchestrator = opencode-orchestrator;
     }
     ../modules/system-layered.nix   # Import layered system-level MaxOS modules
     self.nixosModules.scripts
