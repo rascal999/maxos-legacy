@@ -4,6 +4,18 @@
 
 set -euo pipefail
 
+# Configurable defaults (override via environment)
+BWS_ACCOUNT="${BWS_ACCOUNT:-synlace}"
+LINEAR_TEAM_ID="${LINEAR_TEAM_ID:-}"
+DEFAULT_BRANCH="${DEFAULT_BRANCH:-main}"
+
+# Cleanup trap: remove temp files and clear secrets on failure
+cleanup() {
+    unset BWS_ACCESS_TOKEN BWS_SERVER_URL 2>/dev/null || true
+    rm -f /tmp/ecc-linear-response.json 2>/dev/null || true
+}
+trap cleanup EXIT
+
 REPO_NAME=""
 VISIBILITY="--private" # Default visibility
 
@@ -32,11 +44,26 @@ for arg in "$@"; do
   esac
 done
 
-# Require a repository name
+# Fix dubious ownership for repos created by root (Docker)
+if [ "$(id -u)" -ne 0 ] && [ -d ".git" ]; then
+    ABS_PATH="$(pwd)"
+    SAFE_REPOS="$(git config --global --get-all safe.directory 2>/dev/null || echo "")"
+    if ! echo "$SAFE_REPOS" | grep -qF "$ABS_PATH"; then
+        git config --global --add safe.directory "$ABS_PATH"
+    fi
+fi
+
+# Require a repository name, or default to current directory if it is a git repository
 if [ -z "$REPO_NAME" ]; then
-    echo "❌ Error: Missing repository name."
-    echo "Usage: ecc-git-init <repo-name> [--public|--private]"
-    exit 1
+    if git rev-parse --is-inside-work-tree &>/dev/null; then
+        REPO_NAME=$(basename "$PWD")
+        echo "📂 Existing Git repository detected. Upgrading in-place: $REPO_NAME"
+    else
+        echo "❌ Error: Missing repository name and not inside a Git repository."
+        echo "Usage: ecc-git-init <repo-name> [--public|--private]"
+        echo "Or run 'ecc-git-init' with no arguments inside an existing repository to upgrade it."
+        exit 1
+    fi
 fi
 
 # Try to resolve LINEAR_API_KEY from environment, fallback to Bitwarden Secrets Manager (bws)
@@ -52,7 +79,7 @@ if [ -z "$RESOLVED_LINEAR_KEY" ]; then
     LOCAL_BWS_TOKEN="${BWS_ACCESS_TOKEN:-}"
     if [ -z "$LOCAL_BWS_TOKEN" ] && command -v secret-tool &> /dev/null; then
         echo "🔑 Securely querying BWS access token from OS Keyring..."
-        LOCAL_BWS_TOKEN=$(secret-tool lookup service bws-token account synlace 2>/dev/null || echo "")
+        LOCAL_BWS_TOKEN=$(secret-tool lookup service bws-token account "$BWS_ACCOUNT" 2>/dev/null || echo "")
     fi
 
     if [ -z "$LOCAL_BWS_TOKEN" ]; then
@@ -79,6 +106,13 @@ if [ -z "$RESOLVED_LINEAR_KEY" ]; then
     fi
 fi
 
+# Validate LINEAR_TEAM_ID is set
+if [ -z "$LINEAR_TEAM_ID" ]; then
+    echo "❌ Error: LINEAR_TEAM_ID environment variable is required."
+    echo "Set it to your Linear team UUID (e.g., export LINEAR_TEAM_ID='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')."
+    exit 1
+fi
+
 UPSTREAM_DIR="$HOME/.config/opencode/ecc-upstream"
 CUSTOM_DIR="$HOME/.config/opencode/ecc-custom"
 
@@ -89,52 +123,146 @@ if [ ! -d "$UPSTREAM_DIR" ]; then
     (cd "$UPSTREAM_DIR" && npm install && npm run build:opencode)
 fi
 
+echo "🛡️ Installing/updating global git hooks..."
+export ECC_GLOBAL_HOOKS_DIR="$HOME/.config/opencode/git-hooks"
+(cd "$UPSTREAM_DIR" && ./scripts/codex/install-global-git-hooks.sh)
+
 if [ ! -d "$CUSTOM_DIR" ]; then
     echo "🎨 Initializing empty private custom ECC directory..."
     mkdir -p "$CUSTOM_DIR/commands" "$CUSTOM_DIR/prompts/agents" "$CUSTOM_DIR/instructions"
     echo "# Custom Corporate Standards" > "$CUSTOM_DIR/instructions/CORPORATE_STANDARDS.md"
 fi
 
+# Determine if we are doing in-place upgrade or creating new directory
+IN_PLACE=false
+if git rev-parse --is-inside-work-tree &>/dev/null && [ "$(basename "$PWD")" = "$REPO_NAME" ]; then
+    IN_PLACE=true
+fi
+
 echo "🚀 Initializing: ${REPO_NAME} with ${VISIBILITY} visibility..."
-mkdir -p "$REPO_NAME/.opencode/instructions"
-mkdir -p "$REPO_NAME/.opencode/prompts/agents"
-mkdir -p "$REPO_NAME/.opencode/commands"
-cd "$REPO_NAME"
-git init -b main
 
-# 2. Establish local symlink overlays
-echo "🔗 Building overlay symlinks..."
-# Link commands
-ln -s "$UPSTREAM_DIR/.opencode/commands" .opencode/commands/upstream
-ln -s "$CUSTOM_DIR/commands" .opencode/commands/custom
+if [ "$IN_PLACE" = "true" ]; then
+    echo "🔄 In-place upgrade of existing directory."
+else
+    mkdir -p "$REPO_NAME"
+    cd "$REPO_NAME"
+    git init -b "$DEFAULT_BRANCH"
+fi
 
-# Link agent prompts
-ln -s "$UPSTREAM_DIR/.opencode/prompts/agents" .opencode/prompts/agents/upstream
-ln -s "$CUSTOM_DIR/prompts/agents" .opencode/prompts/agents/custom
+# 2. Install ecc-universal and copy ECC config
+echo "📦 Setting up ECC..."
+if [ ! -d "$HOME/.config/opencode/node_modules/ecc-universal" ]; then
+    echo "  Installing ecc-universal plugin..."
+    (cd "$HOME/.config/opencode" && npm install ecc-universal 2>/dev/null || true)
+fi
+
+ECC_PKG="$HOME/.config/opencode/node_modules/ecc-universal/.opencode"
+
+# Fix ownership if .opencode is owned by root (from container runs)
+if [ "$(stat -c '%U' .opencode 2>/dev/null)" = "root" ]; then
+    if command -v sudo &>/dev/null; then
+        sudo chown -R "$(id -u):$(id -g)" .opencode 2>/dev/null || true
+    else
+        echo "⚠️ Warning: sudo not available, cannot fix .opencode ownership."
+    fi
+fi
+# Copy ECC .opencode config (commands, prompts, plugins, instructions)
+if [ -d "$ECC_PKG" ]; then
+    echo "  Copying ECC config..."
+    # Remove old directories and symlinks completely
+    rm -rf .opencode/commands .opencode/prompts .opencode/plugins .opencode/tools .opencode/instructions 2>/dev/null || true
+    # Copy fresh from ECC package
+    cp -r "$ECC_PKG/." .opencode/
+    # Remove ECC package's opencode.json — the project root's opencode.json is authoritative
+    rm -f .opencode/opencode.json 2>/dev/null || true
+    # Strip broken agent/subtask frontmatter from command files (skip if already done)
+    FRONTMARKER_DONE="$HOME/.config/opencode/.ecc-frontmatter-stripped"
+    if [ ! -f "$FRONTMARKER_DONE" ]; then
+        for f in .opencode/commands/*.md; do
+            [ -f "$f" ] || continue
+            awk '/^---$/{if(!in_front){in_front=1;print;next}else{in_front=0;print;next}} in_front&&/^description:/{print;next} in_front{next}{print}' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+        done
+        touch "$FRONTMARKER_DONE"
+    fi
+
+    # Sanitize example placeholder secrets that would trigger pre-commit hooks (skip if already done)
+    SANITIZE_DONE="$HOME/.config/opencode/.ecc-sanitized"
+    if [ ! -f "$SANITIZE_DONE" ]; then
+        if [ -f ".opencode/instructions/INSTRUCTIONS.md" ]; then
+            sed 's/"sk-proj-xxxxx"/"..."/g' .opencode/instructions/INSTRUCTIONS.md > .opencode/instructions/INSTRUCTIONS.md.tmp && \
+            mv .opencode/instructions/INSTRUCTIONS.md.tmp .opencode/instructions/INSTRUCTIONS.md
+        fi
+        touch "$SANITIZE_DONE"
+    fi
+fi
+
+# Copy prompts and commands to project root for {file:...} references
+rm -rf commands prompts 2>/dev/null || true
+cp -r .opencode/prompts prompts
+cp -r .opencode/commands commands
+# Ensure copied project-level prompts are also sanitized (skip if already done)
+if [ ! -f "$SANITIZE_DONE" ] && [ -f "prompts/agents/security-reviewer.txt" ]; then
+    sed 's/"sk-proj-xxxxx"/"..."/g' prompts/agents/security-reviewer.txt > prompts/agents/security-reviewer.txt.tmp && \
+    mv prompts/agents/security-reviewer.txt.tmp prompts/agents/security-reviewer.txt
+fi
 
 # Link custom rules/instructions
-ln -s "$CUSTOM_DIR/instructions/CORPORATE_STANDARDS.md" .opencode/instructions/custom-rules.md
+mkdir -p .opencode/instructions
+ln -sf "$(realpath --relative-to=.opencode/instructions "$CUSTOM_DIR/instructions/CORPORATE_STANDARDS.md")" .opencode/instructions/custom-rules.md
 
-# 3. Create composite opencode.json
+# 3. Create opencode.json with full ECC config and OpenRouter models
 cat << 'EOF' > opencode.json
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "anthropic/claude-sonnet-4-5",
-  "small_model": "anthropic/claude-haiku-4-5",
   "plugin": ["ecc-universal"],
+  "model": "openrouter/xiaomi/mimo-v2.5",
+  "small_model": "openrouter/xiaomi/mimo-v2.5",
+  "default_agent": "build",
   "instructions": [
     ".opencode/instructions/custom-rules.md"
-  ]
+  ],
+  "agent": {
+    "build": {
+      "description": "Primary coding agent",
+      "mode": "primary",
+      "model": "openrouter/xiaomi/mimo-v2.5"
+    },
+    "planner": {
+      "description": "Expert planning specialist",
+      "mode": "subagent",
+      "model": "openrouter/xiaomi/mimo-v2.5"
+    }
+  },
+  "command": {
+    "plan": {
+      "description": "Create implementation plan",
+      "template": "{file:commands/plan.md}\n\n$ARGUMENTS",
+      "agent": "planner"
+    },
+    "build-fix": {
+      "description": "Fix build errors",
+      "template": "{file:commands/build-fix.md}\n\n$ARGUMENTS"
+    },
+    "code-review": {
+      "description": "Review code quality",
+      "template": "{file:commands/code-review.md}\n\n$ARGUMENTS"
+    },
+    "refactor-clean": {
+      "description": "Remove dead code",
+      "template": "{file:commands/refactor-clean.md}\n\n$ARGUMENTS"
+    }
+  }
 }
 EOF
 
-# 4. Generate standard language-agnostic .gitignore
+# 4. Generate .gitignore
 cat << 'EOF' > .gitignore
 .DS_Store
 .env
-.opencode/commands/
-.opencode/prompts/
-.opencode/instructions/
+.env.dev
+.env.prod
+commands/
+prompts/
 .opencode/dist/
 .opencode/node_modules/
 EOF
@@ -147,16 +275,67 @@ Initialized with a layered custom ECC harness.
 
 ## Quick Start
 1. Run \`opencode\` in this folder.
+
+## Environment Management
+- \`just dev\` — Run development environment (loads \`.env.dev\`)
+- \`just prod\` — Run production environment (loads \`.env.prod\`)
+- \`just build\` — Build the Docker image
+- \`just deploy <pr-number>\` — Merge PR, rebuild, and restart
 EOF
 
-# 4.6 Linear + BWS Integration
+# 4.6 Generate justfile for environment management
+cat << 'JUSTFILE' > justfile
+# justfile for environment management
+
+# Build the Docker image
+build:
+    docker build -t app:latest .
+
+# Run development environment (loads .env.dev)
+dev:
+    @if [ ! -f .env.dev ]; then echo "❌ .env.dev not found"; exit 1; fi
+    docker run --rm \
+        --name app-dev \
+        -i \
+        --network host \
+        --env-file .env.dev \
+        app:latest
+
+# Run production environment (loads .env.prod)
+prod:
+    @if [ ! -f .env.prod ]; then echo "❌ .env.prod not found"; exit 1; fi
+    docker run --rm \
+        --name app-prod \
+        -i \
+        --network host \
+        --env-file .env.prod \
+        app:latest
+
+# Deploy: merge PR, rebuild, restart
+deploy pr:
+    gh pr merge {{pr}} --merge && \
+    git pull origin main && \
+    docker build -t app:latest . && \
+    echo "✅ Deployed successfully"
+
+# Stop running containers
+stop:
+    @docker stop app-dev 2>/dev/null || true
+    @docker stop app-prod 2>/dev/null || true
+
+# Show running containers
+status:
+    @docker ps --filter "name=app-" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+JUSTFILE
+
+# 4.7 Linear + BWS Integration
 echo "📊 Creating Linear project for $REPO_NAME..."
 
 PROJECT_RESPONSE=$(curl -s -X POST \
   -H "Content-Type: application/json" \
   -H "Authorization: $RESOLVED_LINEAR_KEY" \
   --data '{
-    "query": "mutation { projectCreate(input: { name: \"'"$REPO_NAME"'\", teamIds: [\"dcdc39e6-cecb-4724-b936-a7dbd73a4d6a\"] }) { success project { id url } } }"
+    "query": "mutation { projectCreate(input: { name: \"'"$REPO_NAME"'\", teamIds: [\"'"$LINEAR_TEAM_ID"'\"] }) { success project { id url } } }"
   }' \
   https://api.linear.app/graphql)
 
@@ -172,6 +351,10 @@ PROJECT_ID=$(echo "$PROJECT_RESPONSE" | jq -r '.data.projectCreate.project.id')
 PROJECT_URL=$(echo "$PROJECT_RESPONSE" | jq -r '.data.projectCreate.project.url')
 echo "✓ Created Linear Project: $PROJECT_URL"
 
+# Store project ID for agent to reference when creating tickets
+echo "$PROJECT_ID" > .linear-project-id
+echo "$PROJECT_URL" >> .linear-project-id
+
 cat << EOF >> README.md
 
 ## Project Management
@@ -179,15 +362,18 @@ cat << EOF >> README.md
 EOF
 
 echo "📋 Bootstrapping default Linear issues..."
-for issue_title in "Scaffold local ECC configurations" "Setup initial test suite (TDD)"; do
-    curl -s -X POST \
-      -H "Content-Type: application/json" \
-      -H "Authorization: $RESOLVED_LINEAR_KEY" \
-      --data '{
-        "query": "mutation { issueCreate(input: { title: \"'"$issue_title"'\", teamId: \"dcdc39e6-cecb-4724-b936-a7dbd73a4d6a\", projectId: \"'"$PROJECT_ID"'\" }) { success } }"
-      }' \
-      https://api.linear.app/graphql > /dev/null
-done
+ISSUE_RESPONSE=$(curl -s -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: $RESOLVED_LINEAR_KEY" \
+  --data '{
+    "query": "mutation { firstIssue: issueCreate(input: { title: \"Scaffold local ECC configurations\", teamId: \"'"$LINEAR_TEAM_ID"'\", projectId: \"'"$PROJECT_ID"'\" }) { success } secondIssue: issueCreate(input: { title: \"Setup initial test suite (TDD)\", teamId: \"'"$LINEAR_TEAM_ID"'\", projectId: \"'"$PROJECT_ID"'\" }) { success } }"
+  }' \
+  https://api.linear.app/graphql)
+
+ISSUE_SUCCESS=$(echo "$ISSUE_RESPONSE" | jq -r '.data.firstIssue.success, .data.secondIssue.success' 2>/dev/null | grep -c false || true)
+if [ "$ISSUE_SUCCESS" -gt 0 ]; then
+    echo "⚠️ Warning: Some Linear issues failed to create."
+fi
 
 # 5. Create repository on GitHub and Push Baseline
 if ! command -v gh &> /dev/null; then
@@ -195,24 +381,26 @@ if ! command -v gh &> /dev/null; then
     exit 1
 fi
 
-echo "🐙 Creating GitHub repository..."
-gh repo create "$REPO_NAME" "$VISIBILITY" --source=. --remote=origin
-
-# Adjust the Git remote URL if it uses the synlace account to match the SSH config alias
-REMOTE_URL=$(git remote get-url origin || echo "")
-if [[ "$REMOTE_URL" == *"github.com/synlace/"* ]] || [[ "$REMOTE_URL" == *"git@github.com:synlace/"* ]]; then
-    # Extract the repository name from the end of the URL
-    REPO_NAME_EXT=$(basename "$REMOTE_URL")
-    REPO_NAME_CLEAN="${REPO_NAME_EXT%.git}"
-    ADJUSTED_URL="git@github-synlace:synlace/${REPO_NAME_CLEAN}.git"
-    echo "🔧 Adjusting remote origin to use SSH config alias 'github-synlace': $ADJUSTED_URL"
-    git remote set-url origin "$ADJUSTED_URL"
+HAS_ORIGIN=false
+if git remote get-url origin &>/dev/null; then
+    HAS_ORIGIN=true
 fi
 
-echo "📤 Pushing baseline to GitHub..."
-git add .
-git commit -m "chore: initial commit with layered custom ECC harness"
-git push -u origin main
+if [ "$HAS_ORIGIN" = "true" ]; then
+    echo "🐙 Existing GitHub remote origin detected. Skipping repository creation."
+else
+    echo "🐙 Creating GitHub repository..."
+    if ! gh repo create "$REPO_NAME" "$VISIBILITY" --source=. --remote=origin; then
+        echo "❌ Error: Failed to create GitHub repository."
+        exit 1
+    fi
+
+    echo "📤 Pushing baseline to GitHub..."
+    gh auth setup-git 2>/dev/null || true
+    git add .
+    git commit -m "chore: initial commit with layered custom ECC harness"
+    git push -u origin "$DEFAULT_BRANCH"
+fi
 
 echo "✅ Success! Overlay active."
 echo "👉 Run 'opencode' inside the directory to start."
