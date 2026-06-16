@@ -138,7 +138,15 @@ fi
 
 echo "🛡️ Installing/updating global git hooks..."
 export ECC_GLOBAL_HOOKS_DIR="$HOME/.config/opencode/git-hooks"
-(cd "$UPSTREAM_DIR" && ./scripts/codex/install-global-git-hooks.sh)
+mkdir -p "$ECC_GLOBAL_HOOKS_DIR"
+# Use local hooks from opencode-orchestrator instead of upstream ECC
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -d "$SCRIPT_DIR/git-hooks" ]; then
+    cp "$SCRIPT_DIR/git-hooks/"* "$ECC_GLOBAL_HOOKS_DIR/" 2>/dev/null || true
+    chmod +x "$ECC_GLOBAL_HOOKS_DIR/"* 2>/dev/null || true
+else
+    (cd "$UPSTREAM_DIR" && ./scripts/codex/install-global-git-hooks.sh)
+fi
 
 if [ ! -d "$CUSTOM_DIR" ]; then
     echo "🎨 Initializing empty private custom ECC directory..."
