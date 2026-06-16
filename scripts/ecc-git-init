@@ -10,7 +10,8 @@ LINEAR_TEAM_ID="${LINEAR_TEAM_ID:-}"
 DEFAULT_BRANCH="${DEFAULT_BRANCH:-main}"
 
 # Load .env files if present (non-secret config)
-for env_file in ".env" ".env.prod"; do
+ORCHESTRATOR_PATH="$HOME/git/github/synlace/opencode-orchestrator"
+for env_file in ".env" ".env.prod" "$ORCHESTRATOR_PATH/.env.prod"; do
     if [ -f "$env_file" ]; then
         set -a; source "$env_file"; set +a
     fi
