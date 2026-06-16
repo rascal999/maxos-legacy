@@ -283,6 +283,7 @@ cat << 'EOF' > .gitignore
 .env
 .env.dev
 .env.prod
+node_modules/
 .opencode/dist/
 .opencode/node_modules/
 EOF
@@ -333,6 +334,7 @@ prod:
 
 # Deploy: merge PR, rebuild, restart
 deploy pr:
+    @if [ -z "{{pr}}" ]; then echo "❌ Usage: just deploy <pr-number>"; exit 1; fi
     gh pr merge {{pr}} --merge && \
     git pull origin main && \
     docker build -t app:latest . && \
