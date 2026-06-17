@@ -33,6 +33,13 @@ in {
             "model": "openrouter/google/gemini-3.5-flash"
           }
         },
+        "command": {
+          "plan": {
+            "description": "Create implementation plan with risk assessment",
+            "template": "{file:${config.home.homeDirectory}/.config/opencode/ecc-upstream/.opencode/commands/plan.md}\n\n$ARGUMENTS",
+            "agent": "planner"
+          }
+        },
         "skills": {
           "paths": [
             "${config.home.homeDirectory}/git/github/synlace/monorepo/skills"

@@ -15,6 +15,7 @@
       Type = "oneshot";
       User = "user";
     };
+    path = [ pkgs.coreutils pkgs.gnutar pkgs.gzip pkgs.findutils ];
   };
 
   # Timer to run backup daily at 16:30
