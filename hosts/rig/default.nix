@@ -67,6 +67,9 @@
 
   # Enable watchexec for file watching
   maxos.tools.watchexec.enable = true;
+
+  # Enable Air for Go live-reload
+  maxos.tools.air.enable = true;
   
   # Enable bun JavaScript runtime
   maxos.tools.bun.enable = true;

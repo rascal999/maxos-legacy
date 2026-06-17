@@ -146,6 +146,9 @@
     # Enable watchexec for file watching
     watchexec.enable = true;
 
+    # Enable Air for Go live-reload
+    air.enable = true;
+
     # Enable Android Studio
     android-studio.enable = true;
 
