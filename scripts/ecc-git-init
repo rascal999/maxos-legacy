@@ -197,6 +197,12 @@ if [ -d "$ECC_PKG" ]; then
     # Remove ECC package's opencode.json — the project root's opencode.json is authoritative
     rm -f .opencode/opencode.json 2>/dev/null || true
 
+    # Strip broken agent/subtask frontmatter from copied command files
+    for f in .opencode/commands/*.md; do
+        [ -f "$f" ] || continue
+        sed -i '/^agent:/d; /^subtask:/d' "$f"
+    done
+
     # Sanitize example placeholder secrets that would trigger pre-commit hooks
     if [ -f ".opencode/instructions/INSTRUCTIONS.md" ]; then
         sed 's/"sk-proj-xxxxx"/"..."/g' .opencode/instructions/INSTRUCTIONS.md > .opencode/instructions/INSTRUCTIONS.md.tmp && \
@@ -223,18 +229,28 @@ cat << 'EOF' > opencode.json
 }
 EOF
 
-# 4. Generate .gitignore
-cat << 'EOF' > .gitignore
-.DS_Store
-.env
-.env.dev
-.env.prod
-node_modules/
-.opencode/dist/
-.opencode/node_modules/
-EOF
+# 4. Merge .gitignore (append missing entries, never overwrite)
+GITIGNORE_ENTRIES=(
+    ".DS_Store"
+    ".env"
+    ".env.dev"
+    ".env.prod"
+    "node_modules/"
+    ".opencode/dist/"
+    ".opencode/node_modules/"
+)
+if [ -f ".gitignore" ]; then
+    for entry in "${GITIGNORE_ENTRIES[@]}"; do
+        if ! grep -qF "$entry" .gitignore 2>/dev/null; then
+            echo "$entry" >> .gitignore
+        fi
+    done
+else
+    printf '%s\n' "${GITIGNORE_ENTRIES[@]}" > .gitignore
+fi
 
-# 4.5 Generate baseline README.md
+# 4.5 Generate baseline README.md (skip if exists)
+if [ ! -f "README.md" ]; then
 cat << EOF > README.md
 # $REPO_NAME
 
@@ -249,8 +265,10 @@ Initialized with a layered custom ECC harness.
 - \`just build\` — Build the Docker image
 - \`just deploy <pr-number>\` — Merge PR, rebuild, and restart
 EOF
+fi
 
-# 4.6 Generate justfile for environment management
+# 4.6 Generate justfile for environment management (skip if exists)
+if [ ! -f "justfile" ]; then
 cat << 'JUSTFILE' > justfile
 # justfile for environment management
 
@@ -295,6 +313,7 @@ stop:
 status:
     @docker ps --filter "name=app-" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 JUSTFILE
+fi
 
 # 4.7 Linear + BWS Integration
 echo "📊 Creating Linear project for $REPO_NAME..."
@@ -371,4 +390,9 @@ else
 fi
 
 echo "✅ Success! Overlay active."
+
+# Restart opencode web server to pick up new repo commands
+systemctl --user stop -t1 opencode-web 2>/dev/null || true
+systemctl --user start opencode-web 2>/dev/null || true
+
 echo "👉 Run 'opencode' inside the directory to start."
