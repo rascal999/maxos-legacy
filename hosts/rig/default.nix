@@ -165,6 +165,9 @@
     includeFirectl = true;
   };
   
+  # Enable crane for OCI image pulling (used by okayrun-agent)
+  maxos.tools.crane.enable = true;
+  
   # Enable Redis for development and caching
   maxos.tools.redis = {
     enable = false;

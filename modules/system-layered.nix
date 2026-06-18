@@ -38,6 +38,7 @@
     ./04-applications/system/tools/browsers/tor-browser/default.nix
     
     # Containers
+    ./04-applications/system/tools/containers/crane.nix
     ./04-applications/system/tools/containers/docker-buildx.nix
     ./04-applications/system/tools/containers/kubernetes/argocd.nix
     ./04-applications/system/tools/containers/kubernetes/helmfile.nix

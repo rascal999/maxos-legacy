@@ -205,6 +205,9 @@
       includeFirectl = true;
     };
     
+    # Enable crane for OCI image pulling (used by okayrun-agent)
+    crane.enable = true;
+    
     # Enable Redis for development and caching
     redis = {
       enable = false;
