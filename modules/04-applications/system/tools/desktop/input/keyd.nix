@@ -75,26 +75,8 @@ in {
         # The service starts as root, and keyd drops privileges itself.
       };
 
-      # Allow keyd (when started as root by its service) to change UID/GID.
-      # The keyd daemon attempts to setgid/setuid to 'keyd':'keyd'.
-      # The default systemd unit for keyd in Nixpkgs has RestrictSUIDSGID=true,
-      # which prevents this. We need to override it.
       systemd.services.keyd.serviceConfig = {
-        RestrictSUIDSGID = mkForce false; # Allow keyd to call setuid/setgid
-        # Ensure keyd has the capabilities to change UID/GID and other needed operations.
-        CapabilityBoundingSet = mkForce [
-          "CAP_SETUID"        # Needed for setuid
-          "CAP_SETGID"        # Needed for setgid
-          "CAP_SYS_NICE"      # From default NixOS keyd unit
-        ];
-        AmbientCapabilities = mkForce [
-          "CAP_SETUID"
-          "CAP_SETGID"
-          "CAP_SYS_NICE"
-        ];
-        # ExecStart is no longer overridden here;
-        # we revert to the default ExecStart provided by services.keyd.enable = true;
-        # This removes the -m (monitor/verbose) flag.
+        RestrictSUIDSGID = mkForce false;
       };
 
       # Configure keyd via environment.etc
