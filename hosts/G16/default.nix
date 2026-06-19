@@ -282,10 +282,10 @@
     };
     
     # Enable GNOME keyring service
-  services.gnome.gnome-keyring.enable = true;
+    gnome.gnome-keyring.enable = true;
 
-  # Disable conflicting services
-  redshift.enable = false;
+    # Disable conflicting services
+    redshift.enable = false;
   };
   
   # Display manager session and autologin configuration
