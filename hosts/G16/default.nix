@@ -281,8 +281,11 @@
       };
     };
     
-    # Disable conflicting services
-    redshift.enable = false;
+    # Enable GNOME keyring service
+  services.gnome.gnome-keyring.enable = true;
+
+  # Disable conflicting services
+  redshift.enable = false;
   };
   
   # Display manager session and autologin configuration
@@ -317,6 +320,7 @@
     gcc        # GNU Compiler Collection
     pkg-config # Package config tool
     devbox     # Isolated development environments tool
+    gnome-keyring
   ];
 
   # Mount Storage Box via SSHFS
