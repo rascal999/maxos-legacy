@@ -75,7 +75,7 @@
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.asusctl}/bin/asusctl slash -d";
+      ExecStart = "${pkgs.asusctl}/bin/asusctl slash --disable";
       RemainAfterExit = true;
     };
   };
