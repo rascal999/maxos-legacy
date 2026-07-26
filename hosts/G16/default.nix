@@ -69,11 +69,12 @@
     enableGaming = true;
     enableSecurity = true;
     enableMultimedia = true;
-    enableInfrastructure = false;  # Disable k3s infrastructure for G16
+    enableInfrastructure = true;  # Enable k3s infrastructure for G16
   };
 
   # Enable core system utilities (includes envsubst)
   maxos.tools.system-utilities.enable = true;
+  maxos.tools.genisoimage.enable = true;
 
   # Secrets management — set enable = true once SOPS age key is initialised.
   # Run `maxos-secrets-init` to generate the age key, then encrypt secrets with:
@@ -180,7 +181,6 @@
     stripe-cli.enable = true;
     supabase-cli.enable = true;
     karate.enable = true;
-    k3s.enable = lib.mkForce false;
     argocd.enable = lib.mkForce false;
     terraform.enable = lib.mkForce false;
     
@@ -204,6 +204,8 @@
       enable = true;
       includeFirectl = true;
     };
+
+    
     
     # Enable crane for OCI image pulling (used by okayrun-agent)
     crane.enable = true;
@@ -254,6 +256,9 @@
     # Enable Knot DNS for authoritative DNS testing
     knot-dns.enable = true;
 
+    # Wildcard DNS: *.int.alm.gg → localhost (Traefik ingress)
+    dnsmasq.enable = true;
+
     # Enable FileZilla FTP client
     filezilla.enable = true;
 
@@ -265,6 +270,9 @@
   maxos.services.prowlarr.enable = true;
   maxos.services.sonarr.enable = true;
   maxos.services.qbittorrent.enable = true;
+
+  # Enable QEMU/KVM with libvirt for Windows 11 and general VM workloads
+  maxos.qemu.enable = true;
 
   # G16-specific system configuration
   services = {

@@ -88,6 +88,7 @@
     ./04-applications/system/tools/infrastructure/networking/sshfs.nix
     ./04-applications/system/tools/infrastructure/networking/dig.nix
     ./04-applications/system/tools/infrastructure/networking/knot-dns.nix
+    ./04-applications/system/tools/infrastructure/networking/dnsmasq.nix
     ./04-applications/system/tools/infrastructure/networking/autossh.nix
     
     # Multimedia
@@ -129,6 +130,7 @@
     # File Management
     ./04-applications/system/tools/file-management/managers.nix
     ./04-applications/system/tools/file-management/filezilla.nix
+    ./04-applications/system/tools/file-management/genisoimage.nix
     
     # System Utilities
     ./04-applications/system/tools/system/core-utilities.nix

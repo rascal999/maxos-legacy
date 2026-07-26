@@ -215,9 +215,7 @@ in {
         ++ (if cfg.traefik.enable && cfg.traefik.hostPort then [ 80 443 ] else []);
     };
 
-    # Set up KUBECONFIG environment variable for all users
-    environment.variables = {
-      KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
-    };
+    # KUBECONFIG is set per-user via home-manager (see vscode.nix)
+    # System services use /etc/rancher/k3s/k3s.yaml directly in their Environment
   };
 }

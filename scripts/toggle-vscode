@@ -19,7 +19,7 @@ fi
 
 if [ "$vscode_output" != "DP-2" ]; then
     # VSCode is not on DP-2 — focus it first, move to DP-2 active workspace, fullscreen, and refocus on DP-2
-    # This prevents the mouse from being dragged or left on DP-4
+    # This prevents the mouse from being dragged or left on DP-2
     i3-msg "[class=\"^Code$\"] focus; move to workspace \"$dp2_ws\"; [class=\"^Code$\"] fullscreen enable; [class=\"^Code$\"] focus"
 else
     # VSCode is on DP-2 — focus it first, disable fullscreen, and move back to "2: code"

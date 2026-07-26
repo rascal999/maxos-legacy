@@ -7,7 +7,6 @@
     ./nvidia.nix
     ./audio.nix
     ./monitors.nix
-    ./keyd.nix # Import keyd configuration
     # Note: Individual tool imports removed - now handled by layered system
     # Tools are configured via modules.tools.* options below
   ];
@@ -127,18 +126,23 @@
   maxos.tools.stripe-cli.enable = true;
   maxos.tools.supabase-cli.enable = true;
   maxos.tools.karate.enable = true;
-  maxos.tools.k3s = {
+  maxos.tools.k3s = lib.mkForce {
     enable = true;
     role = "server";
     traefik = {
-      enable = false;  # Disabled in favor of standalone Traefik with MetalLB
-      hostPort = false;
-      staticIP = "";  # Cleared since traefik is disabled
+      enable = true;
+      hostPort = true;
+      staticIP = "";
     };
     extraFlags = [
-      # servicelb is automatically disabled when staticIP is configured
-      # disable-cloud-controller is automatically added for server role
+      "--disable-cloud-controller"
     ];
+  };
+  
+  # Wildcard DNS: *.int.alm.gg → 127.0.0.1 (Traefik ingress)
+  maxos.tools.dnsmasq = {
+    enable = true;
+    wildcardZone = "int.alm.gg";
   };
   
   # Enable iSCSI storage support
@@ -164,6 +168,9 @@
     enable = true;
     includeFirectl = true;
   };
+
+  # Enable QEMU/KVM with libvirt for Windows 11 and general VM workloads
+  maxos.qemu.enable = true;
   
   # Enable crane for OCI image pulling (used by okayrun-agent)
   maxos.tools.crane.enable = true;
@@ -207,6 +214,7 @@
 
   # Enable FileZilla FTP client
   maxos.tools.filezilla.enable = true;
+  maxos.tools.genisoimage.enable = true;
 
   # Enable input-leap for KVM software
   maxos.tools.input-leap.enable = true;

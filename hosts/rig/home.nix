@@ -35,6 +35,9 @@
     # OpenCode — dynamic agent & secret orchestration
     opencode.enable = true;
 
+    # Zed editor
+    zed-editor.enable = true;
+
   };
 
   # Home Manager needs a bit of information about you and the paths it should manage
@@ -206,7 +209,7 @@
 
     # Workspace monitor assignments
     workspaceOutputAssign = [
-      # Left monitor - General workspace
+      # Right monitor - General workspace
       { workspace = "0: workspace"; output = "DP-4"; }
       # Right monitor - Code
       { workspace = "2: code"; output = "DP-4"; }
