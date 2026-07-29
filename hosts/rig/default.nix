@@ -87,6 +87,9 @@
 
   # Enable Python 3
   #maxos.tools.python3.enable = true;
+
+  # Enable uv Python package manager
+  maxos.tools.uv.enable = true;
   
   # Enable Ollama AI language model server (uses CUDA by default)
   maxos.tools.ollama.enable = true;

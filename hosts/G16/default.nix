@@ -162,6 +162,9 @@
     # Enable Python 3
     python3.enable = true;
     
+    # Enable uv Python package manager
+    uv.enable = true;
+    
     # Enable OpenAI Codex CLI tool
     codex.enable = true;
 
