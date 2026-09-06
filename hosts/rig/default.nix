@@ -162,6 +162,9 @@
   
   # Enable AutoSSH for persistent SSH tunnels
   maxos.tools.autossh.enable = true;
+
+  # Enable sshpass for scripted SSH password auth
+  maxos.tools.sshpass.enable = true;
   
   # Enable TeamViewer for remote access
   maxos.tools.teamviewer.enable = true;

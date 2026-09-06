@@ -91,6 +91,7 @@
     ./04-applications/system/tools/infrastructure/networking/knot-dns.nix
     ./04-applications/system/tools/infrastructure/networking/dnsmasq.nix
     ./04-applications/system/tools/infrastructure/networking/autossh.nix
+    ./04-applications/system/tools/infrastructure/networking/sshpass.nix
     
     # Multimedia
     ./04-applications/system/tools/multimedia/gaming/steam.nix
