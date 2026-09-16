@@ -10,28 +10,24 @@ in {
       enable = true;
       allowedTCPPorts = [
         22    # SSH
-        80    # HTTP (for hostPort and localhost access)
-        443   # HTTPS (for hostPort and localhost access)
-        22000 # Syncthing Transfer Protocol
-        11434 # Ollama
-        3000  # Open WebUI
-        # Kubernetes/Kind ports
-        6443  # Kubernetes API server
-        2379  # etcd client requests
-        2380  # etcd peer communication
-        10250 # kubelet API
-        10251 # kube-scheduler
-        10252 # kube-controller-manager
-        10256 # kube-proxy health check
-        # NodePort range (commonly used by services)
-        30000 # Start of NodePort range
-        32767 # End of NodePort range
+        80    # HTTP (host Go service)
+        443   # HTTPS
+        22000 # Syncthing transfer
+      ];
+      # Lab listeners: unprivileged host services (staging, shells), outside the
+      # k3s NodePort range so kube-proxy does not intercept these SYNs.
+      allowedTCPPortRanges = [
+        { from = 40000; to = 40019; }
       ];
       allowedUDPPorts = [
-        22000 # Syncthing Transfer Protocol
-        21027 # Syncthing Discovery Protocol
-        # Kubernetes/Kind UDP ports
-        8472  # Flannel VXLAN (if using Flannel CNI)
+        22000 # Syncthing transfer
+        21027 # Syncthing discovery
+      ];
+      # Lab (HTB VPN): stateful UDP replies arrive from new ephemeral source
+      # ports (tftpd transfer sockets) and are not conntrack ESTABLISHED.
+      # Covers all client-side ephemeral dports. 2026-09-09, Expressway session.
+      allowedUDPPortRanges = [
+        { from = 1024; to = 65535; }
       ];
       # Allow traffic on Docker and Kubernetes bridge interfaces
       trustedInterfaces = [

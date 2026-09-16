@@ -108,7 +108,10 @@
 
   # Enable Wireshark for network analysis
   maxos.tools.wireshark.enable = true;
-  
+
+  # Enable hashcat for GPU-accelerated password recovery (RTX 4090)
+  maxos.tools.hashcat.enable = true;
+
   # Enable mitmproxy for interactive HTTPS proxying
   maxos.tools.mitmproxy.enable = true;
   
@@ -177,6 +180,9 @@
 
   # Enable QEMU/KVM with libvirt for Windows 11 and general VM workloads
   maxos.qemu.enable = true;
+
+  # Enable Packer for AnyCTF VM image builds
+  maxos.packer.enable = true;
   
   # Enable crane for OCI image pulling (used by okayrun-agent)
   maxos.tools.crane.enable = true;
@@ -666,6 +672,9 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Experimental nix features required by home-manager activation
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Set system state version
   system.stateVersion = "25.11"; # NO semicolon after the last attribute

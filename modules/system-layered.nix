@@ -114,6 +114,7 @@
     ./04-applications/system/tools/security/scanners/trivy.nix
     ./04-applications/system/tools/security/wireshark.nix
     ./04-applications/system/tools/security/mitmproxy.nix
+    ./04-applications/system/tools/security/hashcat.nix
     
     # Terminal Tools
     ./04-applications/system/tools/terminal/emulators/alacritty-stub.nix
@@ -125,6 +126,7 @@
     # Virtualization
     ./04-applications/system/tools/virtualization/qemu.nix
     ./04-applications/system/tools/virtualization/firecracker.nix
+    ./04-applications/system/tools/virtualization/packer.nix
     
     # Communication
     ./04-applications/system/tools/communication/messaging.nix
