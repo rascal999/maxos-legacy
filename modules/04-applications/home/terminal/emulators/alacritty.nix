@@ -46,7 +46,7 @@ in {
           family = "MesloLGS Nerd Font Mono";
           style = "Italic";
         };
-        size = 14.0;
+        size = 12.0;
         offset = {
           x = 0;
           y = 1;

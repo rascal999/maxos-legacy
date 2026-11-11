@@ -82,6 +82,13 @@ in {
   # Copy i3status-rust configuration
   home.file.".config/i3status-rust/config-default.toml".source = ./config-default.toml;
 
+  # Deploy the Alt+h work-directory script from the monorepo scripts/ dir.
+  # A Nix store path keeps the binding independent of the checkout location.
+  home.file.".local/bin/work-dir-tmux" = {
+    source = ../../../../../../scripts/work-dir-tmux;
+    executable = true;
+  };
+
   xsession.windowManager.i3 = {
     enable = true;
     config = {
@@ -162,7 +169,9 @@ in {
         "--whole-window button6" = "exec --no-startup-id click-opencode 245 347";
 
         # Work directory
-        "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session '/home/user/git/github/synlace/monorepo/maxos/scripts/work-dir-tmux'";
+        # Script is deployed to ~/.local/bin via home.file below, so the
+        # binding does not depend on the monorepo checkout location.
+        "Mod1+h" = "exec ${pkgs.alacritty}/bin/alacritty -e ${pkgs.tmux}/bin/tmux new-session ${config.home.homeDirectory}/.local/bin/work-dir-tmux";
 
         # Program launcher
         "Mod1+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";

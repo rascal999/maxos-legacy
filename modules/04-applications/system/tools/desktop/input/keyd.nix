@@ -77,6 +77,14 @@ in {
 
       systemd.services.keyd.serviceConfig = {
         RestrictSUIDSGID = mkForce false;
+        # keyd >= 2.6.0 calls setgid() to the "keyd" group at startup
+        # (ipc_create_server/chgid) so clients in the keyd group can use its
+        # socket. The upstream module hardening strips CAP_SETGID from the
+        # bounding set and its ~@privileged SystemCallFilter entry denies the
+        # setgid syscall, so keyd exits 255 with "setgid: Operation not
+        # permitted". Grant the capability and allow the syscall.
+        CapabilityBoundingSet = mkForce [ "CAP_SYS_NICE" "CAP_IPC_LOCK" "CAP_SETGID" ];
+        SystemCallFilter = mkForce [ "nice" "@system-service" "setgid" ];
       };
 
       # Configure keyd via environment.etc

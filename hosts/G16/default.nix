@@ -18,6 +18,9 @@
 
   # Basic system identification
   networking.hostName = "G16";
+
+  # Allow 8443/tcp (e.g. HTTPS-alt services) on all interfaces
+  networking.firewall.allowedTCPPorts = [ 8443 ];
   
   # Enable centralized font management
   maxos.fonts.enable = true;
@@ -153,6 +156,18 @@
     # Enable Android Studio
     android-studio.enable = true;
 
+    # Enable heimdall (Samsung flashing tool)
+    heimdall.enable = true;
+
+    # Enable lz4 compression tool
+    lz4.enable = true;
+
+    # Enable file type identification utility
+    file.enable = true;
+
+    # Enable Ghidra reverse engineering suite
+    ghidra.enable = true;
+
     # Enable Playwright
     playwright.enable = true;
 
@@ -164,6 +179,12 @@
     
     # Enable uv Python package manager
     uv.enable = true;
+
+    # Enable distrobox for running other Linux distributions
+    distrobox.enable = true;
+
+    # Enable krunvm for running OCI images as KVM microVMs
+    krunvm.enable = true;
     
     # Enable OpenAI Codex CLI tool
     codex.enable = true;
@@ -181,6 +202,8 @@
       enableSessionManager = true;
     };
     google-cloud-sdk.enable = true;
+    # Enable Azure CLI
+    azure-cli.enable = true;
     stripe-cli.enable = true;
     supabase-cli.enable = true;
     karate.enable = true;

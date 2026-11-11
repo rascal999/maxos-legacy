@@ -73,7 +73,12 @@
     ./04-applications/system/tools/development/watchexec.nix
     ./04-applications/system/tools/development/air.nix
     ./04-applications/system/tools/development/web-ext.nix
+    ./04-applications/system/tools/development/adb.nix
+    ./04-applications/system/tools/development/file.nix
+    ./04-applications/system/tools/development/ghidra.nix
     ./04-applications/system/tools/development/android-studio.nix
+    ./04-applications/system/tools/development/heimdall.nix
+    ./04-applications/system/tools/development/lz4.nix
     ./04-applications/system/tools/development/rtk.nix
     ./04-applications/system/tools/development/opencode.nix
     ./04-applications/system/tools/development/sqlite.nix
@@ -82,6 +87,7 @@
     ./04-applications/system/tools/infrastructure/cloud/aws-cli.nix
     ./04-applications/system/tools/infrastructure/cloud/flyctl.nix
     ./04-applications/system/tools/infrastructure/cloud/google-cloud-sdk.nix
+    ./04-applications/system/tools/infrastructure/cloud/azure-cli.nix
     ./04-applications/system/tools/infrastructure/cloud/terraform.nix
     ./04-applications/system/tools/infrastructure/monitoring/blocky.nix
     ./04-applications/system/tools/infrastructure/monitoring/grafana.nix
@@ -127,6 +133,8 @@
     ./04-applications/system/tools/virtualization/qemu.nix
     ./04-applications/system/tools/virtualization/firecracker.nix
     ./04-applications/system/tools/virtualization/packer.nix
+    ./04-applications/system/tools/virtualization/distrobox.nix
+    ./04-applications/system/tools/virtualization/krunvm.nix
     
     # Communication
     ./04-applications/system/tools/communication/messaging.nix

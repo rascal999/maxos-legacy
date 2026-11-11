@@ -1,5 +1,18 @@
 { config, lib, pkgs, ... }:
 
+let
+  # Handy STT AppImage pinned from GitHub releases.
+  # Run via the rig appimage-run wrapper so ALSA goes through PipeWire.
+  handy-appimage = pkgs.runCommand "handy-0.9.8-appimage" { } ''
+    mkdir -p $out/bin
+    cp ${pkgs.fetchurl {
+      url = "https://github.com/cjpais/Handy/releases/download/v0.9.8/Handy_0.9.8_amd64.AppImage";
+      hash = "sha256-1oPclnYvmkeXUEWrSAOS0zpbSRlo+zNtysR+L2XnGE8=";
+    }} $out/bin/handy
+    chmod +x $out/bin/handy
+  '';
+in
+
 {
   imports = [
     # Using layered home system like G16
@@ -26,6 +39,7 @@
     # Applications
     firefox.enable = true;
     logseq.enable = true;
+    obsidian.enable = true;
     appflowy.enable = true;
     remmina.enable = true;
 
@@ -37,6 +51,12 @@
 
     # Zed editor
     zed-editor.enable = true;
+
+    # Claude Code — agentic CLI coding tool
+    claude-code.enable = true;
+
+    # Happy Coder — mobile/web client for Claude Code
+    happy-coder.enable = true;
 
   };
 
@@ -78,8 +98,8 @@
         executable = true;
         text = ''
           #!/bin/sh
-          xrandr --output DP-2 --primary --mode 3440x1440 --rate 144 --pos 0x0
-	  xrandr --output DP-4 --mode 2560x1440 --rate 120 --right-of DP-2
+          xrandr --output DP-4 --primary --mode 3440x1440 --rate 144 --pos 0x0
+	  xrandr --output DP-2 --mode 2560x1440 --rate 120 --right-of DP-4
         '';
       };
       ".config/mimeapps.list".text = ''
@@ -175,20 +195,71 @@
     };
   };
 
-  # Systemd user service for Handy (Native Flake)
+  # Systemd user service for Handy (AppImage, pinned release)
   systemd.user.services.handy = {
     Unit = {
-      Description = "Handy Speech-to-Text Assistant (Native Flake)";
+      Description = "Handy Speech-to-Text Assistant (AppImage)";
       After = [ "graphical-session.target" "direct-ptt.service" ];
-      Requires = [ "direct-ptt.service" ];
+      # Wants instead of Requires: a direct-ptt restart must not stop Handy
+      Wants = [ "direct-ptt.service" ];
     };
     Service = {
-      ExecStart = "${pkgs.nix}/bin/nix run github:cjpais/Handy --extra-experimental-features 'nix-command flakes'";
+      # /run/current-system/sw/bin/appimage-run is the rig ALSA/PipeWire-aware wrapper
+      ExecStart = "/run/current-system/sw/bin/appimage-run ${handy-appimage}/bin/handy";
       Restart = "on-failure";
       RestartSec = "10s";
     };
     Install = {
       WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+  # Relay adb (5555) to WireGuard hosts: socat listens on the rig WireGuard
+  # address (bootstrap-2: 10.66.0.3) and forwards to the USB-attached phone
+  # through the adb server's forward. Requires the phone in tcpip mode once:
+  # adb tcpip 5555
+  systemd.user.services.adb-relay = {
+    Unit = {
+      Description = "adb 5555 relay to WireGuard hosts (socat -> adb forward)";
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      # -d selects the USB phone even while network adb devices are connected
+      ExecStartPre = "${pkgs.android-tools}/bin/adb start-server && ${pkgs.android-tools}/bin/adb -d forward tcp:5555 tcp:5555";
+      ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:5555,fork,reuseaddr,bind=10.66.0.3 TCP:127.0.0.1:5555";
+      Restart = "on-failure";
+      RestartSec = "10s";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+  # Keep the adb forward alive: a USB/transport bounce clears forwards while
+  # the socat listener keeps running (adb would show "offline"). --no-rebind
+  # only creates the forward when it is missing, so live sessions are safe.
+  systemd.user.services.adb-forward-keepalive = {
+    Unit = {
+      Description = "Re-assert adb forward for the 5555 relay";
+    };
+    Service = {
+      Type = "oneshot";
+      # -d selects the USB phone; --no-rebind keeps existing forwards untouched
+      ExecStart = "${pkgs.bash}/bin/sh -c '${pkgs.android-tools}/bin/adb start-server; ${pkgs.android-tools}/bin/adb -d forward --no-rebind tcp:5555 tcp:5555 || true'";
+    };
+  };
+
+  systemd.user.timers.adb-forward-keepalive = {
+    Unit = {
+      Description = "Re-assert adb forward every 30s";
+    };
+    Timer = {
+      OnBootSec = "15s";
+      OnUnitActiveSec = "30s";
+      AccuracySec = "5s";
+    };
+    Install = {
+      WantedBy = [ "timers.target" ];
     };
   };
 
@@ -210,17 +281,17 @@
     # Workspace monitor assignments
     workspaceOutputAssign = [
       # Right monitor - General workspace
-      { workspace = "0: workspace"; output = "DP-4"; }
+      { workspace = "0: workspace"; output = "DP-2"; }
       # Right monitor - Code
-      { workspace = "2: code"; output = "DP-4"; }
+      { workspace = "2: code"; output = "DP-2"; }
       # All other workspaces on ultrawide
-      { workspace = "1: web"; output = "DP-2"; }
-      { workspace = "3: pcode"; output = "DP-2"; }
-      { workspace = "4: term"; output = "DP-2"; }
-      { workspace = "5: burp"; output = "DP-2"; }
-      { workspace = "6: goose"; output = "DP-2"; }
-      { workspace = "8: logseq"; output = "DP-2"; }
-      { workspace = "9: pw"; output = "DP-2"; }
+      { workspace = "1: web"; output = "DP-4"; }
+      { workspace = "3: pcode"; output = "DP-4"; }
+      { workspace = "4: term"; output = "DP-4"; }
+      { workspace = "5: burp"; output = "DP-4"; }
+      { workspace = "6: goose"; output = "DP-4"; }
+      { workspace = "8: logseq"; output = "DP-4"; }
+      { workspace = "9: pw"; output = "DP-4"; }
     ];
   };
 }

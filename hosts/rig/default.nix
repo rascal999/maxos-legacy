@@ -79,6 +79,21 @@
   # Enable Android Studio
   maxos.tools.android-studio.enable = true;
 
+  # Enable adb/fastboot (systemd 258 uaccess handles device permissions)
+  maxos.tools.adb.enable = true;
+
+  # Enable heimdall (Samsung flashing tool)
+  maxos.tools.heimdall.enable = true;
+
+  # Enable lz4 compression tool
+  maxos.tools.lz4.enable = true;
+
+  # Enable file type identification utility
+  maxos.tools.file.enable = true;
+
+  # Enable Ghidra reverse engineering suite
+  maxos.tools.ghidra.enable = true;
+
   # Enable Playwright
   maxos.tools.playwright.enable = true;
 
@@ -90,6 +105,12 @@
 
   # Enable uv Python package manager
   maxos.tools.uv.enable = true;
+
+  # Enable distrobox for running other Linux distributions
+  maxos.tools.distrobox.enable = true;
+
+  # Enable krunvm for running OCI images as KVM microVMs
+  maxos.tools.krunvm.enable = true;
   
   # Enable Ollama AI language model server (uses CUDA by default)
   maxos.tools.ollama.enable = true;
@@ -129,6 +150,8 @@
     enableSessionManager = true;
   };
   maxos.tools.google-cloud-sdk.enable = true;
+  # Enable Azure CLI
+  maxos.tools.azure-cli.enable = true;
   maxos.tools.stripe-cli.enable = true;
   maxos.tools.supabase-cli.enable = true;
   maxos.tools.karate.enable = true;
@@ -286,6 +309,16 @@
     "127.0.0.2" = [ "management-api.fisheye.local" "auth-service.fisheye.local" ];
     "10.129.4.188" = [ "gavel.htb" ];
   };
+
+  # adb relay (socat, user service adb-relay): port 5555 reachable only via
+  # the WireGuard tunnel. Per-interface rule (iptables backend): all WG hosts
+  # arrive on bootstrap-2, so interface-scoping equals source-scoping to
+  # 10.66.0.0/24. NOTE: extraInputRules is nftables-only and is silently
+  # ignored while networking.nftables.enable = false.
+  networking.firewall.interfaces."bootstrap-2".allowedTCPPorts = [ 5555 ];
+
+  # Allow 8443/tcp (e.g. HTTPS-alt services) on all interfaces
+  networking.firewall.allowedTCPPorts = [ 8443 ];
   
   # Disable automatic /etc/hosts generation
   environment.etc.hosts.enable = false;
@@ -537,8 +570,9 @@
     python3
     python3Packages.evdev
     python3Packages.python-uinput
-    solaar # Logitech device management tool
-    usbutils # For lsusb
+solaar # Logitech device management tool
+usbutils # For lsusb
+socat # adb 5555 relay to WireGuard hosts (adb-relay user service)
     pkgs.evsieve # For advanced input event manipulation (PTT script)
     # goose-cli # Database migration tool (not available in 24.11)
     
@@ -587,6 +621,13 @@
 
   # Enable NVIDIA support for Docker (using the recommended approach)
   hardware.nvidia-container-toolkit.enable = true;
+
+  # Run prebuilt foreign binaries (e.g. uv/pip installed tools like strix)
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib # libstdc++
+    zlib
+  ];
 
   # Enable home-manager with backup support
   home-manager = {
@@ -652,10 +693,8 @@
 
     serviceConfig = {
       Type = "simple";
-      # IMPORTANT: Ensure this path is correct and the script is executable (chmod +x)
-      # This assumes your monorepo is at /home/user/git/
-      # A Nix-packaged script would be more robust.
-      ExecStart = "${pkgs.bash}/bin/bash /home/user/git/github/synlace/monorepo/maxos/scripts/direct-push-to-talk.sh";
+      # Script is imported into the Nix store, so it survives repo relocations.
+      ExecStart = "${pkgs.bash}/bin/bash ${../../scripts/direct-push-to-talk.sh}";
       Restart = "on-failure";
       RestartSec = "5s";
       # No User/Group needed as it's a user service, runs as the user enabling it.

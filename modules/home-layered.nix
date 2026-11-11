@@ -17,12 +17,15 @@
     ./04-applications/home/development/editors/lmstudio.nix
     ./04-applications/home/development/editors/opencode.nix
     ./04-applications/home/development/editors/zed-editor.nix
+    ./04-applications/home/development/editors/claude-code.nix
+    ./04-applications/home/development/editors/happy-coder.nix
     ./04-applications/home/terminal/shells/zsh.nix
     ./04-applications/home/terminal/emulators/alacritty.nix
     ./04-applications/home/terminal/multiplexers/tmux.nix
     ./04-applications/home/development/environment/direnv.nix
     ./04-applications/home/browsers/firefox/default.nix
     ./04-applications/home/multimedia/knowledge/logseq.nix
+    ./04-applications/home/multimedia/knowledge/obsidian.nix
     ./04-applications/home/multimedia/knowledge/appflowy.nix
     ./04-applications/home/infrastructure/networking/remmina.nix
     ./04-applications/home/desktop/window-managers/i3/base.nix

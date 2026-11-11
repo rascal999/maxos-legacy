@@ -35,6 +35,7 @@
     # Applications
     firefox.enable = true;
     logseq.enable = true;
+    obsidian.enable = true;
     appflowy.enable = true;
     remmina.enable = true;
 
@@ -46,6 +47,12 @@
 
     # Zed editor
     zed-editor.enable = true;
+
+    # Claude Code — agentic CLI coding tool
+    claude-code.enable = true;
+
+    # Happy Coder — mobile/web client for Claude Code
+    happy-coder.enable = true;
 
   };
 
